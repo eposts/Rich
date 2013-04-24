@@ -1,0 +1,25 @@
+Description: Output a debug if we can't open an existing keyfile
+Origin: upstream, http://bazaar.launchpad.net/~vcs-imports/openssh/main/revision/5873
+Author: Darren Tucker <dtucker@zip.com.au>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1694
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/505301
+Last-Update: 2010-02-27
+
+Index: b/auth.c
+===================================================================
+--- a/auth.c
++++ b/auth.c
+@@ -516,8 +516,12 @@
+ 	 * Open the file containing the authorized keys
+ 	 * Fail quietly if file does not exist
+ 	 */
+-	if ((fd = open(file, O_RDONLY|O_NONBLOCK)) == -1)
++	if ((fd = open(file, O_RDONLY|O_NONBLOCK)) == -1) {
++		if (errno != ENOENT)
++			debug("Could not open keyfile '%s': %s", file,
++			   strerror(errno));
+ 		return NULL;
++	}
+ 
+ 	if (fstat(fd, &st) < 0) {
+ 		close(fd);

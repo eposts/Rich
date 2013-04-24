@@ -1,0 +1,389 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh 3.6.1p2-11\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2004-02-02 18:48+1300\n"
+"Last-Translator: Hiei Xu <nicky@mail.edu.cn>\n"
+"Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid "Do you want to continue (and risk killing active ssh sessions)?"
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "您要继续吗(会有杀死活动的 ssh 会话的危险)？"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "The version of /etc/init.d/ssh that you have installed, is likely to kill "
+#| "all running sshd instances.  If you are doing this upgrade via an ssh "
+#| "session, that would be a Bad Thing(tm)."
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"您安装的 /etc/init.d/ssh 版本很可能会杀死所有运行中的 sshd 例程。如果您是在通"
+"过 ssh 会话进行这项升级，那可真是件糟糕的事情(tm)。"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "You can fix this by adding \"--pidfile /var/run/sshd.pid\" to the start-"
+#| "stop-daemon line in the stop section of the file."
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"您可以通过添加“--pidfile /var/run/sshd.pid”到这个文件的 stop 部分的 start-"
+"stop-daemon 行来修正这个问题。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"/etc/ssh/ssh_host_key 是由 IDEA 加密的旧密钥文件。OpenSSH 不能处理这种密钥文"
+"件，我也无法找到旧的(非自由的) SSH 安装所带的 ssh-keygen 密钥生成工具。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+#| msgid "You will need to generate a new host key."
+msgid "You need to manually generate a new host key."
+msgstr "您需要创建一个新的主机密钥。"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "生成新的配置文件"
+
+#, fuzzy
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "看来您正在从 Debian “Potato”升级，当前版本和 Debian “Potato”所带的 "
+#~ "OpenSSH 版本的配置文件对比有了相当多的改变。我现在可以生成适用于新服务器版"
+#~ "本的新配置文件 (/etc/ssh/sshd_config)，但是它不会保留您为旧版本定制的任何"
+#~ "配置。"
+
+#, fuzzy
+#~| msgid ""
+#~| "Please note that this new configuration file will set the value of "
+#~| "'PermitRootLogin' to yes (meaning that anyone knowing the root password "
+#~| "can ssh directly in as root). It is the opinion of the maintainer that "
+#~| "this is the correct default (see README.Debian for more details), but "
+#~| "you can always edit sshd_config and set it to no if you wish."
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "请注意新的配置文件将会把“PermitRootLogin”的值设置为 yes，(这意味着任何一个"
+#~ "知道 root 密码的人都可以直接以 root 登录)。维护者认为这是一个正确的默认值 "
+#~ "(详情请阅读 README.Debian)，但如果您希望，也可以编辑 sshd_config 文件将其"
+#~ "设置为 no。"
+
+#, fuzzy
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr "强烈建议让我为您生成一份新的配置文件。"
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "警告：您必须创建一个新的主机密钥"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr "警告：已经安装了 telnetd 服务器 --- 可能不是个好主意"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "我建议您删除 telnetd 包(如果您不是真的需要提供 telnet 访问)，或者安装 "
+#~ "telnetd-ssl，这样至少有时候 telnet 会话不会将未加密的 登录名/密码 和会话信"
+#~ "息通过网络发送。"
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr "警告：已经安装了 rsh 服务器 --- 可能不是个好主意"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "安装 rsh 服务器很可能会降低您想要通过安装 ssh 得到的安全性。我建议您删除这"
+#~ "个包。"
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr "您要将 ssh-keysign 安装为 SUID root 程序吗？"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr "您使用为 ssh-keysign 帮助者程序设置 SUID 位的选项。"
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "如果您为 ssh-keysign 设置了 SUID，您将可以使用 SSH 协议 2 的基于主机的认证"
+#~ "方式。"
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "如果有疑问，我建议您将它安装为 SUID。如果它带来麻烦，您可以通过运行：dpkg-"
+#~ "reconfigure ssh 来改变主意"
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "只允许 SSH 协议 2 (ssh2)。"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "这个版本的 OpenSSH 支持更加安全的第二版本 ssh 协议。我们鼓励您禁用 ssh 1，"
+#~ "然而这会降低低端机器速度，并且会阻止老版客户端的连接(“potato”所带的 ssh 客"
+#~ "户端会受到影响)。"
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "也请注意协议 1 所用的密钥是不同的，因此如果您只允许协议 2 连接将会导致不能"
+#~ "使用它们。"
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "如果您稍后想改变这个设置，README.Debian 上有说明告诉您如何修改 "
+#~ "sshd_Config 文件。"
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr "注意：X11 转发和认证默认被禁止。"
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "因为安全性原因，默认情况下 Debian 版本的 ssh 将 ForwardX11 和 "
+#~ "ForwardAgent 设置为 off。"
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "您可以为信赖的服务器启用这个选项，可以通过其中之一的配置文件或者使用 -X 命"
+#~ "令行选项来实现。"
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr "更多细节可以在 /usr/share/doc/ssh/README.Debian 找到"
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "ssh2 密钥被合并到配置文件"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "在 OpenSSH 第 3 版不再为 ssh1 和 ssh2 的密钥使用不同的文件。这意味着 "
+#~ "authorized_keys2 和 known_hosts2 文件将不再需要。但为了保持向后兼容性，它"
+#~ "们仍会被读取。"
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "您要运行 sshd 服务器吗？"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "这个软件包内含 ssh 客户端和 sshd 服务器。"
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr "通常 sshd 安全 Shell 服务器都会运行以便允许通过 ssh 进行远程登录。"
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "如果您只要在这台机器上使用 ssh 客户端对外连接，完全不想通过 ssh 登录到本"
+#~ "机，那么您可以在这里禁用 sshd 服务器。"
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr "密钥的环境选项已被废弃"
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "为了避免一些攻击(如 LD_PRELOAD)，这个版本的 OpenSSH 默认禁用了公钥上的环境"
+#~ "选项。如果您在某个授权密钥(authorized_keys)文件中用了这个参数，请注意除非"
+#~ "删除了此选项，否则这个可疑的密钥将不再起作用。"
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "要重新启用这个选项，升级完成后请在 /etc/ssh/sshd_config 中加入一"
+#~ "行：“PermitUserEnvironment yes”。请注意 sshd_config(5) 手册页中提到的警"
+#~ "告。"
+
+#~ msgid "Privilege separation"
+#~ msgstr "权限分离"
+
+#~ msgid ""
+#~ "Privilege separation is turned on by default, so if you decide you want "
+#~ "it turned off, you need to add \"UsePrivilegeSeparation no\" to /etc/ssh/"
+#~ "sshd_config."
+#~ msgstr ""
+#~ "权限分离选项是默认打开的。如果想要关闭此选项，您需要在 /etc/ssh/"
+#~ "sshd_config 文件中添加一行“UsePrivilegeSeparation no”。"
+
+#~ msgid "Enable Privilege separation"
+#~ msgstr "启用权限分离"
+
+#~ msgid ""
+#~ "This version of OpenSSH contains the new privilege separation option. "
+#~ "This significantly reduces the quantity of code that runs as root, and "
+#~ "therefore reduces the impact of security holes in sshd."
+#~ msgstr ""
+#~ "这个版本的 OpenSSH 包含了一个新的权限分离的选项，目的是为了减少以 root 运"
+#~ "行的代码数目，进而减少了 sshd 被安全漏洞影响的机会。"
+
+#~ msgid ""
+#~ "Unfortunately, privilege separation interacts badly with PAM. Any PAM "
+#~ "session modules that need to run as root (pam_mkhomedir, for example) "
+#~ "will fail, and PAM keyboard-interactive authentication won't work."
+#~ msgstr ""
+#~ "不幸的是，权限分离和 PAM 同时使用会很糟糕。任何需要以 root 运行的 PAM 会话"
+#~ "模块 (如 pam_mkhomedir) 都会失败，而且 PAM 键盘交互式认证都不起作用。"
+
+#~ msgid ""
+#~ "Since you've opted to have me generate an sshd_config file for you, you "
+#~ "can choose whether or not to have privilege separation turned on or not. "
+#~ "Unless you know you need to use PAM features that won't work with this "
+#~ "option, you should enable it."
+#~ msgstr ""
+#~ "因为您选择了让我为您生成 sshd_config 文件，您可以选择是否打开权限分离选"
+#~ "项。除非您知道需要使用 PAM 这个不能和权限分离同时工作的功能，否则就应该启"
+#~ "用它。"

@@ -1,0 +1,32 @@
+openssh (1:3.8.1p1-9) experimental; urgency=low
+
+  The ssh package has been split into openssh-client and openssh-server. If
+  you had previously requested that the sshd server should not be run, then
+  that request will still be honoured. However, the recommended approach is
+  now to remove the openssh-server package if you do not want to run sshd.
+  You can remove the old /etc/ssh/sshd_not_to_be_run marker file after doing
+  that.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  2 Aug 2004 20:48:54 +0100
+
+openssh (1:3.5p1-1) unstable; urgency=low
+
+  This version of OpenSSH disables the environment option for public keys by
+  default, in order to avoid certain attacks (for example, LD_PRELOAD). If
+  you are using this option in an authorized_keys file, beware that the keys
+  in question will no longer work until the option is removed.
+
+  To re-enable this option, set "PermitUserEnvironment yes" in
+  /etc/ssh/sshd_config after the upgrade is complete, taking note of the
+  warning in the sshd_config(5) manual page.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 26 Oct 2002 19:41:51 +0100
+
+openssh (1:3.0.1p1-1) unstable; urgency=high
+
+  As of version 3, OpenSSH no longer uses separate files for ssh1 and ssh2
+  keys. This means the authorized_keys2 and known_hosts2 files are no longer
+  needed. They will still be read in order to maintain backward
+  compatibility.
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 28 Nov 2001 17:43:01 +0000

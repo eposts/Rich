@@ -1,0 +1,117 @@
+Description: Adjust various OpenBSD-specific references in manual pages
+ No single bug reference for this patch, but history includes:
+  http://bugs.debian.org/154434 (login.conf(5))
+  http://bugs.debian.org/513417 (/etc/rc)
+  http://bugs.debian.org/530692 (ssl(8))
+  https://bugs.launchpad.net/bugs/456660 (ssl(8))
+Author: Colin Watson <cjwatson@debian.org>
+Forwarded: not-needed
+Last-Update: 2010-02-28
+
+Index: b/moduli.5
+===================================================================
+--- a/moduli.5
++++ b/moduli.5
+@@ -21,7 +21,7 @@
+ .Nd Diffie Hellman moduli
+ .Sh DESCRIPTION
+ The
+-.Pa /etc/moduli
++.Pa /etc/ssh/moduli
+ file contains prime numbers and generators for use by 
+ .Xr sshd 8
+ in the Diffie-Hellman Group Exchange key exchange method.
+@@ -111,7 +111,7 @@
+ Diffie Hellman output to sufficiently key the selected symmetric cipher.
+ .Xr sshd 8
+ then randomly selects a modulus from
+-.Fa /etc/moduli
++.Fa /etc/ssh/moduli
+ that best meets the size requirement.
+ .Pp
+ .Sh SEE ALSO
+Index: b/ssh-keygen.1
+===================================================================
+--- a/ssh-keygen.1
++++ b/ssh-keygen.1
+@@ -137,9 +137,7 @@
+ .Pa ~/.ssh/id_dsa
+ or
+ .Pa ~/.ssh/id_rsa .
+-Additionally, the system administrator may use this to generate host keys,
+-as seen in
+-.Pa /etc/rc .
++Additionally, the system administrator may use this to generate host keys.
+ .Pp
+ Normally this program generates the key and asks for a file in which
+ to store the private key.
+@@ -282,9 +280,7 @@
+ .It Fl q
+ Silence
+ .Nm ssh-keygen .
+-Used by
+-.Pa /etc/rc
+-when creating a new key.
++Used by system administration scripts when creating a new key.
+ .It Fl R Ar hostname
+ Removes all keys belonging to
+ .Ar hostname
+Index: b/ssh.1
+===================================================================
+--- a/ssh.1
++++ b/ssh.1
+@@ -749,6 +749,10 @@
+ .Sx HISTORY
+ section of
+ .Xr ssl 8
++(on non-OpenBSD systems, see
++.nh
++http://www.openbsd.org/cgi\-bin/man.cgi?query=ssl&sektion=8#HISTORY)
++.hy
+ contains a brief discussion of the two algorithms.
+ .Pp
+ The file
+Index: b/sshd.8
+===================================================================
+--- a/sshd.8
++++ b/sshd.8
+@@ -69,7 +69,7 @@
+ .Nm
+ listens for connections from clients.
+ It is normally started at boot from
+-.Pa /etc/rc .
++.Pa /etc/init.d/ssh .
+ It forks a new
+ daemon for each incoming connection.
+ The forked daemons handle
+@@ -781,7 +781,7 @@
+ .Xr ssh 1 ) .
+ It should only be writable by root.
+ .Pp
+-.It /etc/moduli
++.It /etc/ssh/moduli
+ Contains Diffie-Hellman groups used for the "Diffie-Hellman Group Exchange".
+ The file format is described in
+ .Xr moduli 5 .
+@@ -877,7 +877,6 @@
+ .Xr ssh-vulnkey 1 ,
+ .Xr chroot 2 ,
+ .Xr hosts_access 5 ,
+-.Xr login.conf 5 ,
+ .Xr moduli 5 ,
+ .Xr sshd_config 5 ,
+ .Xr inetd 8 ,
+Index: b/sshd_config.5
+===================================================================
+--- a/sshd_config.5
++++ b/sshd_config.5
+@@ -177,8 +177,7 @@
+ By default, no banner is displayed.
+ .It Cm ChallengeResponseAuthentication
+ Specifies whether challenge-response authentication is allowed (e.g. via
+-PAM or though authentication styles supported in
+-.Xr login.conf 5 )
++PAM).
+ The default is
+ .Dq yes .
+ .It Cm ChrootDirectory

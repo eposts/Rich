@@ -1,0 +1,224 @@
+# Romanian translation of openssh.
+# Copyright (C) 2006 THE openssh'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the openssh package.
+#
+# Stan Ioan-Eugen <stan.ieugen@gmail.com>, 2006.
+# Igor Stirbu <igor.stirbu@gmail.com>, 2007.
+# Cătălin Feștilă <catalinfest@gmail.com>,2008
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh 1.4\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-28 17:54+0200\n"
+"Last-Translator: Cătălin Feștilă <catalinfest@gmail.com>\n"
+"Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Doriți să riscați întreruperea sesiunilor ssh active?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Este foarte probabil ca această versiune de /etc/init.d/ssh pe care o aveți "
+"instalată să omoare toate instanțele sshd care rulează. Dacă faceți această "
+"actualizare printr-o sesiune ssh, atunci este posibil să fiți deconectați și "
+"actualizarea să rămână neterminată."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Puteți repară manual acest lucru adăugând „--pidfile /var/run/sshd.pid” la "
+"linia start-stop-daemon în secțiunea stop a fișierului."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "O cheie nouă este obligatorie"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Cheia curentă în /etc/ssh/ssh_host_key este criptată cu algoritmul IDEA. "
+"OpenSSH nu suportă acest tip de cheie, iar utilitarul ssh-keygen din "
+"versiunea SSH (non-liberă) anterior instalată nu pare să fie disponibil."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Va trebui să generați manual o nouă cheie pentru sistem."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Dezactivează modul de autentificare provocare-răspuns?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Autentificarea pe bază de parole pare dezactivată în configurația curentă a "
+"serverului OpenSSH. Pentru a împiedica utilizatorii să se autentifice "
+"folosind parole (probabil folosind doar autentificarea cu chei publice) în "
+"versiunile recente OpenSSH trebuie să dezactivați autentificarea tip "
+"provocare-răspuns, sau asigurați-vă că configurația PAM nu permite "
+"autentificarea cu fișierul de parole Unix."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Dacă dezactivați autentificarea pe bază de provocare-răspuns, utilizatorii "
+"nu vor mai putea să se autentifice folosind parolele. Dacă nu o dezactivați "
+"(răspunsul implicit), atunci opțiunea 'PasswordAuthentification no' va fi "
+"utilizabilă doar dacă modificați și configurația PAM din /etc/pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Cheile vulnerabile vor fi regenerate"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Unele dintre cheile serverului OpenSSH gazdă de pe acest sistem au fost "
+"generate cu o versiune de OpenSSL, care a avut un generator de numere "
+"aleatorii stricat. Ca rezultat, aceste chei gazda sunt un set binecunoscut, "
+"sunt supuse la atacuri brute-force și trebuie să fie regenerate."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Utilizatorii acestui sistem ar trebui să fie informați ce se schimbă, "
+"deoarece se va solicita cheia gazdă ce se schimba data viitoare când se "
+"autentifică. Folosiți 'ssh-keygen -l -f HOST_KEY_FILE' după ce faceți "
+"actualizare pentru a imprima amprentele digitale ale noilor chei gazdă."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Cheile gazdă afectate sunt:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Cheile utilizatorului de asemenea, pot fi afectate de această problemă. "
+"Comanda 'ssh-vulnkey' poate fi folosită ca un test parțial pentru acestea. A "
+"se vedea /usr/share/doc/openssh-server/README.compromised-keys.gz pentru mai "
+"multe detalii."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Să se genereze un fișier nou de configurare pentru OpenSSH?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Această versiune de OpenSSH are un fișier de configurare considerabil "
+#~ "modificat față de versiunea care vine cu Debian 'Potato', pe care se pare "
+#~ "că o actualizați. Acest pachet poate genera acum un nou fișier de "
+#~ "configurare (/etc/ssh/sshd.config), care va funcționa cu noua versiune de "
+#~ "server, dar nu va conține nici o personalizare făcută pentru versiunea "
+#~ "anterioară."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "A se reține că acest fișier nou de configurare va stabili valoarea "
+#~ "opțiunii 'PermitRootLogin' la „yes” (ceea ce înseamnă că cine știe parola "
+#~ "de root se poate autentifica prin ssh direct ca root). Părerea "
+#~ "responsabilului de pachet este că aceasta trebuie să fie valoarea "
+#~ "implicită (a se vedea fișierul README.Debian pentru detalii "
+#~ "suplimentare), dar, dacă doriți, puteți edita oricând fișierul "
+#~ "sshd_config pentru a stabili valoarea opțiunii la „no”."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Este indicat să alegeți acum generarea un nou fișier de configurare."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "Avertizare: trebuie să creați o nouă cheie pentru sistem"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr ""
+#~ "Avertizare: telnetd este instalat --- probabil că nu este o idee bună"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Un sfat bun este fie să ștergeți pachetul telnetd (dacă întradevăr nu-l "
+#~ "utilizați) fie să instalați telnetd-ssl astfel încât să existe "
+#~ "posibilitatea ca sesiunile telnet să nu trimită informații necriptate de "
+#~ "autentificare/parole prin rețea."
+
+#~ msgid "${HOST_KEYS}"
+#~ msgstr "${HOST_KEYS}"

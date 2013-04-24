@@ -1,0 +1,51 @@
+.TH GNOME-SSH-ASKPASS 1
+.SH NAME
+gnome\-ssh\-askpass \- prompts a user for a passphrase using GNOME
+.SH SYNOPSIS
+.B gnome\-ssh\-askpass
+.SH DESCRIPTION
+.B gnome\-ssh\-askpass
+is a GNOME-based passphrase dialog for use with OpenSSH.
+It is intended to be called by the
+.BR ssh\-add (1)
+program and not invoked directly.
+It allows
+.BR ssh\-add (1)
+to obtain a passphrase from a user, even if not connected to a terminal
+(assuming that an X display is available).
+This happens automatically in the case where
+.B ssh\-add
+is invoked from one's
+.B ~/.xsession
+or as one of the GNOME startup programs, for example.
+.PP
+In order to be called automatically by
+.BR ssh\-add ,
+.B gnome\-ssh\-askpass
+should be installed as
+.IR /usr/bin/ssh\-askpass .
+.SH "ENVIRONMENT VARIABLES"
+The following environment variables are recognized:
+.TP
+.I GNOME_SSH_ASKPASS_GRAB_SERVER
+Causes
+.B gnome\-ssh\-askpass
+to grab the X server before asking for a passphrase.
+.TP
+.I GNOME_SSH_ASKPASS_GRAB_POINTER
+Causes
+.B gnome\-ssh\-askpass
+to grab the mouse pointer using
+.IR gdk_pointer_grab ()
+before asking for a passphrase.
+.PP
+Regardless of whether either of these environment variables is set,
+.B gnome\-ssh\-askpass
+will grab the keyboard using
+.IR gdk_keyboard_grab ().
+.SH AUTHOR
+This manual page was written by Colin Watson <cjwatson@debian.org>
+for the Debian system (but may be used by others).
+It was based on that for
+.B x11\-ssh\-askpass
+by Philip Hands.

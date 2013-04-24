@@ -1,0 +1,30 @@
+Description: Look for $SHELL on the path for ProxyCommand/LocalCommand
+ There's some debate on the upstream bug about whether POSIX requires this.
+ I (Colin Watson) agree with Vincent and think it does.
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1494
+Bug-Debian: http://bugs.debian.org/492728
+Last-Update: 2010-02-27
+
+Index: b/sshconnect.c
+===================================================================
+--- a/sshconnect.c
++++ b/sshconnect.c
+@@ -139,7 +139,7 @@
+ 
+ 		/* Execute the proxy command.  Note that we gave up any
+ 		   extra privileges above. */
+-		execv(argv[0], argv);
++		execvp(argv[0], argv);
+ 		perror(argv[0]);
+ 		exit(1);
+ 	}
+@@ -1167,7 +1167,7 @@
+ 	pid = fork();
+ 	if (pid == 0) {
+ 		debug3("Executing %s -c \"%s\"", shell, args);
+-		execl(shell, shell, "-c", args, (char *)NULL);
++		execlp(shell, shell, "-c", args, (char *)NULL);
+ 		error("Couldn't execute %s -c \"%s\": %s",
+ 		    shell, args, strerror(errno));
+ 		_exit(1);

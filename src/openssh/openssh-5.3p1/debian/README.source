@@ -1,0 +1,212 @@
+Debian OpenSSH source package handling
+======================================
+
+The Debian package of OpenSSH is maintained in Bazaar
+(http://bazaar-vcs.org/, or the 'bzr' package in Debian). You will need at
+least version 1.16.1; the version in Debian testing as of the time of
+writing (2009-12-21) is fine, or you can use the version in lenny-backports.
+URLs are as follows:
+
+  Anonymous branch: http://bzr.debian.org/pkg-ssh/openssh/trunk
+  Web browsing:     http://bzr.debian.org/loggerhead/pkg-ssh/openssh/trunk
+  Authenticated, for developers with commit access only:
+                    bzr+ssh://bzr.debian.org/bzr/pkg-ssh/openssh/trunk
+
+Although it's possible that I may use something like bzr-loom in the future
+to better manage things like the Kerberos/GSSAPI patch, right now there's no
+funny business and all that developers need to do is:
+
+  # To check out:
+  bzr co bzr+ssh://bzr.debian.org/bzr/pkg-ssh/openssh/trunk openssh
+
+  # To update:
+  bzr up
+
+  # To edit:
+  # hack hack hack, and 'bzr add' any new files
+  debcommit # or bzr commit
+  # note that this pushes automatically; you can use 'bzr unbind' to
+  # temporarily prevent this, or 'bzr branch' to create a local branch which
+  # you can merge later
+
+  # To release:
+  dch -r && debcommit -r
+
+If you have lots of branches, you'll probably want to use a shared
+repository to save space. Run 'bzr init-repo .' in an ancestor directory of
+all your OpenSSH working directories. For example, I have a shared
+repository in ~/src/debian/openssh/, upstream checkouts in
+~/src/debian/openssh/upstream/, and my own working trees in
+~/src/debian/openssh/trunk/.
+
+Patch handling
+--------------
+
+This package uses quilt to manage all modifications to the upstream source.
+Changes are stored in the source package as diffs in debian/patches and
+applied automatically by dpkg-source when the source package is extracted.
+
+To configure quilt to use debian/patches instead of patches, you want either
+to export QUILT_PATCHES=debian/patches in your environment or use this
+snippet in your ~/.quiltrc:
+
+    for where in ./ ../ ../../ ../../../ ../../../../ ../../../../../; do
+        if [ -e ${where}debian/rules -a -d ${where}debian/patches ]; then
+                export QUILT_PATCHES=debian/patches
+                break
+        fi
+    done
+
+After unpacking the source package, all patches will be applied, and you can
+use quilt normally.
+
+If you check out the source code from bzr, then all patches will be applied,
+but you will need to inform quilt of this manually.  Do this by running:
+
+    debian/rules quilt-setup
+
+To add a new set of changes, first run quilt push -a, and then run:
+
+    quilt new <patch>
+
+where <patch> is a descriptive name for the patch, used as the filename in
+debian/patches.  Then, for every file that will be modified by this patch,
+run:
+
+    quilt add <file>
+
+before editing those files.  You must tell quilt with quilt add what files
+will be part of the patch before making changes or quilt will not work
+properly.  After editing the files, run:
+
+    quilt refresh
+
+to save the results as a patch.
+
+Alternately, if you already have an external patch and you just want to add
+it to the build system, run quilt push -a and then:
+
+    quilt import -P <patch> /path/to/patch
+    quilt push -a
+
+(add -p 0 to quilt import if needed). <patch> as above is the filename to
+use in debian/patches.  The last quilt push -a will apply the patch to make
+sure it works properly.
+
+To remove an existing patch from the list of patches that will be applied,
+run:
+
+    quilt delete <patch>
+
+You may need to run quilt pop -a to unapply patches first before running
+this command.
+
+You should only commit changes to bzr with all patches applied, i.e. after
+'quilt push -a'.
+
+Merging new upstream releases
+-----------------------------
+
+(Most developers will not need to read this section.)
+
+Thanks to the import from Portable OpenSSH CVS provided by Launchpad
+(https://code.launchpad.net/~vcs-imports/openssh/main, accessible by the
+shortcut 'lp:openssh' from the bzr client), the Debian branch is a true DVCS
+branch from upstream. This is a worthwhile property, but preserving it does
+take a little bit of work.
+
+Launchpad only imports CVS HEAD, but upstream sometimes produces releases
+from a branch. We use the same software used by Launchpad to import the
+branch as well, but a few small hacks are necessary to do good branch
+imports. In Bazaar, it's important that the same file in different branches
+should have the same file-id, otherwise merge attempts will try to delete
+and re-add the file which usually doesn't work out very well. Occasionally a
+file is added to CVS HEAD and then also added to a branch, and cscvs isn't
+quite smart enough to spot this and copy over the file-id. We need to help
+it out.
+
+To fetch the necessary code:
+
+  bzr get lp:~cjwatson/launchpad-cscvs/openssh-branch-imports
+  # or 'bzr pull' in the appropriate directory to update this, if you
+  # already have a copy
+
+To import a branch, V_5_3 in this example:
+
+  export PATH="/path/to/cscvs/openssh-branch-imports:$PATH"
+  export PYTHONPATH=/path/to/cscvs/openssh-branch-imports/modules:/path/to/cscvs/openssh-branch-imports
+  # in a CVS checkout of :ext:anoncvs@anoncvs.mindrot.org:/cvs module
+  # openssh:
+  cscvs cache -b
+  # or 'cscvs cache -u' if you've done this before and want to update
+  cvs up -rV_5_3
+
+  # Now we need to get a few bits of information from cscvs' cache.
+  sqlite CVS/Catalog.sqlite
+  sqlite> select csnum,log from changeset where branch = 'V_5_3' order by startdate;
+  # There will be a solid block of "Creation of branch V_5_3" changesets at
+  # the start; look for the first revision *after* this. Substitute this in
+  # the following wherever you see "CSX".
+  sqlite> select revision,filename from revision where branch = 'V_5_3' and csnum >= CSX and revision not like '%.%.%' order by filename;
+  # Anything listed here will need to be added to the openssh_ids dictionary
+  # in modules/CVS/StorageLayer.py in cscvs. Please send Colin Watson a
+  # patch if you do this.
+
+  # Next, look up the branchpoint revision in the main bzr import (bzr get
+  # lp:openssh). It's usually easiest to just look it up by commit message
+  # and double-check the timestamp. Substitute this revision number for
+  # "BPR" in the following. /path/to/openssh/main is wherever you've checked
+  # out lp:openssh.
+  bzr get -rBPR /path/to/openssh/main /path/to/openssh/5.3
+  # If you're using Bazaar signed commits with a GPG agent, make sure that
+  # your agent has seen your passphrase recently. Now you can start the
+  # actual import!
+  cscvs -D4 totla -SC V_5_3.CSX: /path/to/openssh/5.3
+  # If this fails at the end with a "directories differ" message, you may
+  # have forgotten to switch your CVS checkout to the appropriate branch
+  # with 'cvs up -r...' above. Otherwise you'll have to debug this for
+  # yourself. It's also worth double-checking that any files added to the
+  # branch have file-ids matching those on the trunk, using 'bzr ls -R
+  # --show-ids'.
+
+Now we have a Bazaar branch corresponding to what's in CVS. Previous such
+branches are available from Launchpad, for reference purposes:
+
+  https://code.launchpad.net/openssh
+
+However, upstream releases involve a 'make distprep' step as well to
+construct the tarball, and we need to import the results of this as well to
+get a clean package.
+
+Start by unpacking the upstream tarball (remember to check its GPG signature
+first!). Copy the .bzr directory from the upstream branch you prepared
+earlier. Now we have another branch, but with a working tree corresponding
+to the upstream tarball. Modifications and deletions are handled
+automatically, but we need to handle additions explicitly to make sure
+file-ids are correct (see above). Run:
+
+  bzr add --file-ids-from=/path/to/openssh/debian/trunk
+  bzr st --show-ids
+  # compare this with 'bzr ls --show-ids' in the Debian trunk to make sure
+  # the result will be mergeable
+  bzr ci -m 'Import 5.3p1 tarball'
+
+Next, merge this into the gssapi branch
+(bzr+ssh://bzr.debian.org/bzr/pkg-ssh/openssh/gssapi/). For this branch, we
+want to ignore the normal results of merging and take only the patch from
+http://www.sxw.org.uk/computing/patches/openssh.html; of course such a patch
+needs to exist first! To do this, run this in the gssapi branch:
+
+  bzr merge /path/to/openssh/tarball/branch
+  bzr revert -rrevno:-1:/path/to/openssh/tarball/branch .
+  patch -p1 </path/to/openssh/gssapi/patch
+  bzr add --file-ids-from=/path/to/openssh/debian/trunk
+  # you may need to deal with applying configure.ac changes to configure
+  # here
+  bzr ci -m 'import openssh-5.3p1-gsskex-all-20100124.patch'
+
+You should now be able to 'bzr merge' from the gssapi branch into the Debian
+trunk, resolve conflicts, and commit. If you see lots of "Contents conflict"
+messages, you may have got the file-ids wrong. Once you've committed the
+merge, you can throw away the tarball branch, as all its history will have
+been incorporated.

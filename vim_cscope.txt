@@ -1,0 +1,40 @@
+ vim 编译 cscope
+
+apt-get install libgtk2.0-dev
+
+./configure --with-features=huge --enable-cscope --enable-fontset --enable-multibyte --enable-perlinterp --enable-rubyinterp --enable-pythoninterp --enable-gui=gtk2
+
+------------------------------------------------------------------------------------------------------
+gvim最大化
+apt-get install wmctrl
+
+在 ~/.vimrc 中加上：
+" 最大化窗口
+function Maximize_Window()
+  silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+  endfunction
+
+在 ~/.bashrc 中加上：
+alias gvim='gvim -c "call Maximize_Window()"'
+
+gvim -c "call Maximize_Window()"   
+------------------------------------------------------------------------------------------------------
+
+当 前目录有main.c，其中调用了cstest.c中的print()，此函数在cstest.h中进行了声明。
+使用下面的命令生成代码 的符号索引文件：
+$ cscope -Rbkq
+这个命令会生成三个文件：cscope.out, cscope.in.out, cscope.po.out。
+
+其中cscope.out是基本的符号索引，后两个文件是使用"-q"选项生成的，可以加快cscope的索引速度。上面命令的参数含义如下：
+-R: 在生成索引文件时，搜索子目录树中的代码
+-b: 只生成索引文件，不进入cscope的界面
+-k: 在生成索引文件时，不搜索/usr/include目录
+-q: 生成cscope.in.out和cscope.po.out文件，加快cscope的索引速度
+-i: 如果保存文件列表的文件名不是cscope.files时，需要加此选项告诉cscope到哪儿去找源文件列表。可以使用"-"，表示由标准输入获得文件列表。
+-I dir: 在-I选项指出的目录中查找头文件
+-u: 扫描所有文件，重新生成交叉索引文件
+-C: 在搜索时忽略大小写
+-P path: 在以相对路径表示的文件前加上的path，这样，你不用切换到你数据库文件所在的目录也可以使用它了。
+
+
+在 缺省情况下，cscope在生成数据库后就会进入它自己的查询界面，一般不用这个界面，所以使用了"-b"选 项。如果已经进入了这个界面，按CTRL-D退出。

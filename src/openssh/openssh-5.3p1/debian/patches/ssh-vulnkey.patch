@@ -1,0 +1,1388 @@
+Description: Reject vulnerable keys to mitigate Debian OpenSSL flaw
+ In 2008, Debian (and derived distributions such as Ubuntu) shipped an
+ OpenSSL package with a flawed random number generator, causing OpenSSH to
+ generate only a very limited set of keys which were subject to private half
+ precomputation.  To mitigate this, this patch checks key authentications
+ against a blacklist of known-vulnerable keys, and adds a new ssh-vulnkey
+ program which can be used to explicitly check keys against that blacklist.
+ See CVE-2008-0166.
+Author: Colin Watson <cjwatson@ubuntu.com>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1469
+Last-Update: 2010-02-27
+
+Index: b/Makefile.in
+===================================================================
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -26,6 +26,7 @@
+ SFTP_SERVER=$(libexecdir)/sftp-server
+ SSH_KEYSIGN=$(libexecdir)/ssh-keysign
+ RAND_HELPER=$(libexecdir)/ssh-rand-helper
++SSH_DATADIR=$(datadir)/ssh
+ PRIVSEP_PATH=@PRIVSEP_PATH@
+ SSH_PRIVSEP_USER=@SSH_PRIVSEP_USER@
+ STRIP_OPT=@STRIP_OPT@
+@@ -37,7 +38,8 @@
+ 	-D_PATH_SSH_KEY_SIGN=\"$(SSH_KEYSIGN)\" \
+ 	-D_PATH_SSH_PIDDIR=\"$(piddir)\" \
+ 	-D_PATH_PRIVSEP_CHROOT_DIR=\"$(PRIVSEP_PATH)\" \
+-	-DSSH_RAND_HELPER=\"$(RAND_HELPER)\"
++	-DSSH_RAND_HELPER=\"$(RAND_HELPER)\" \
++	-D_PATH_SSH_DATADIR=\"$(SSH_DATADIR)\"
+ 
+ CC=@CC@
+ LD=@LD@
+@@ -60,7 +62,7 @@
+ INSTALL_SSH_PRNG_CMDS=@INSTALL_SSH_PRNG_CMDS@
+ INSTALL_SSH_RAND_HELPER=@INSTALL_SSH_RAND_HELPER@
+ 
+-TARGETS=ssh$(EXEEXT) sshd$(EXEEXT) ssh-add$(EXEEXT) ssh-keygen$(EXEEXT) ssh-keyscan${EXEEXT} ssh-keysign${EXEEXT} ssh-agent$(EXEEXT) scp$(EXEEXT) ssh-rand-helper${EXEEXT} sftp-server$(EXEEXT) sftp$(EXEEXT)
++TARGETS=ssh$(EXEEXT) sshd$(EXEEXT) ssh-add$(EXEEXT) ssh-keygen$(EXEEXT) ssh-keyscan${EXEEXT} ssh-keysign${EXEEXT} ssh-agent$(EXEEXT) scp$(EXEEXT) ssh-rand-helper${EXEEXT} sftp-server$(EXEEXT) sftp$(EXEEXT) ssh-vulnkey$(EXEEXT)
+ 
+ LIBSSH_OBJS=acss.o authfd.o authfile.o bufaux.o bufbn.o buffer.o \
+ 	canohost.o channels.o cipher.o cipher-acss.o cipher-aes.o \
+@@ -91,8 +93,8 @@
+ 	audit.o audit-bsm.o platform.o sftp-server.o sftp-common.o \
+ 	roaming_common.o
+ 
+-MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-rand-helper.8.out ssh-keysign.8.out sshd_config.5.out ssh_config.5.out
+-MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-rand-helper.8 ssh-keysign.8 sshd_config.5 ssh_config.5
++MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-rand-helper.8.out ssh-keysign.8.out ssh-vulnkey.1.out sshd_config.5.out ssh_config.5.out
++MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-rand-helper.8 ssh-keysign.8 ssh-vulnkey.1 sshd_config.5 ssh_config.5
+ MANTYPE		= @MANTYPE@
+ 
+ CONFIGFILES=sshd_config.out ssh_config.out moduli.out
+@@ -169,6 +171,9 @@
+ ssh-rand-helper${EXEEXT}: $(LIBCOMPAT) libssh.a ssh-rand-helper.o
+ 	$(LD) -o $@ ssh-rand-helper.o $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS)
+ 
++ssh-vulnkey$(EXEEXT): $(LIBCOMPAT) libssh.a ssh-vulnkey.o
++	$(LD) -o $@ ssh-vulnkey.o $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS)
++
+ # test driver for the loginrec code - not built by default
+ logintest: logintest.o $(LIBCOMPAT) libssh.a loginrec.o
+ 	$(LD) -o $@ logintest.o $(LDFLAGS) loginrec.o -lopenbsd-compat -lssh $(LIBS)
+@@ -268,6 +273,7 @@
+ 	$(INSTALL) -m 4711 $(STRIP_OPT) ssh-keysign $(DESTDIR)$(SSH_KEYSIGN)
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) sftp $(DESTDIR)$(bindir)/sftp
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) sftp-server $(DESTDIR)$(SFTP_SERVER)
++	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-vulnkey $(DESTDIR)$(bindir)/ssh-vulnkey
+ 	$(INSTALL) -m 644 ssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
+ 	$(INSTALL) -m 644 scp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
+ 	$(INSTALL) -m 644 ssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
+@@ -284,6 +290,7 @@
+ 	$(INSTALL) -m 644 sftp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/sftp.1
+ 	$(INSTALL) -m 644 sftp-server.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/sftp-server.8
+ 	$(INSTALL) -m 644 ssh-keysign.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-keysign.8
++	$(INSTALL) -m 644 ssh-vulnkey.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-vulnkey.1
+ 	-rm -f $(DESTDIR)$(bindir)/slogin
+ 	ln -s ./ssh$(EXEEXT) $(DESTDIR)$(bindir)/slogin
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/slogin.1
+@@ -365,6 +372,7 @@
+ 	-rm -f $(DESTDIR)$(bindir)/ssh-agent$(EXEEXT)
+ 	-rm -f $(DESTDIR)$(bindir)/ssh-keygen$(EXEEXT)
+ 	-rm -f $(DESTDIR)$(bindir)/ssh-keyscan$(EXEEXT)
++	-rm -f $(DESTDIR)$(bindir)/ssh-vulnkey$(EXEEXT)
+ 	-rm -f $(DESTDIR)$(bindir)/sftp$(EXEEXT)
+ 	-rm -f $(DESTDIR)$(sbindir)/sshd$(EXEEXT)
+ 	-rm -r $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
+@@ -377,6 +385,7 @@
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keygen.1
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/sftp.1
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keyscan.1
++	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-vulnkey.1
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/sshd.8
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-rand-helper.8
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/sftp-server.8
+Index: b/auth-rh-rsa.c
+===================================================================
+--- a/auth-rh-rsa.c
++++ b/auth-rh-rsa.c
+@@ -44,6 +44,9 @@
+ {
+ 	HostStatus host_status;
+ 
++	if (reject_blacklisted_key(client_host_key, 0) == 1)
++		return 0;
++
+ 	/* Check if we would accept it using rhosts authentication. */
+ 	if (!auth_rhosts(pw, cuser))
+ 		return 0;
+Index: b/auth-rsa.c
+===================================================================
+--- a/auth-rsa.c
++++ b/auth-rsa.c
+@@ -246,6 +246,9 @@
+ 			    "actual %d vs. announced %d.",
+ 			    file, linenum, BN_num_bits(key->rsa->n), bits);
+ 
++		if (reject_blacklisted_key(key, 0) == 1)
++			continue;
++
+ 		/* We have found the desired key. */
+ 		/*
+ 		 * If our options do not allow this key to be used,
+Index: b/auth.c
+===================================================================
+--- a/auth.c
++++ b/auth.c
+@@ -59,6 +59,7 @@
+ #include "servconf.h"
+ #include "key.h"
+ #include "hostfile.h"
++#include "authfile.h"
+ #include "auth.h"
+ #include "auth-options.h"
+ #include "canohost.h"
+@@ -398,6 +399,38 @@
+ 	return host_status;
+ }
+ 
++int
++reject_blacklisted_key(Key *key, int hostkey)
++{
++	char *fp;
++
++	if (blacklisted_key(key, &fp) != 1)
++		return 0;
++
++	if (options.permit_blacklisted_keys) {
++		if (hostkey)
++			error("Host key %s blacklisted (see "
++			    "ssh-vulnkey(1)); continuing anyway", fp);
++		else
++			logit("Public key %s from %s blacklisted (see "
++			    "ssh-vulnkey(1)); continuing anyway",
++			    fp, get_remote_ipaddr());
++		xfree(fp);
++	} else {
++		if (hostkey)
++			error("Host key %s blacklisted (see "
++			    "ssh-vulnkey(1))", fp);
++		else
++			logit("Public key %s from %s blacklisted (see "
++			    "ssh-vulnkey(1))",
++			    fp, get_remote_ipaddr());
++		xfree(fp);
++		return 1;
++	}
++
++	return 0;
++}
++
+ 
+ /*
+  * Check a given file for security. This is defined as all components
+Index: b/auth.h
+===================================================================
+--- a/auth.h
++++ b/auth.h
+@@ -178,6 +178,8 @@
+ check_key_in_hostfiles(struct passwd *, Key *, const char *,
+     const char *, const char *);
+ 
++int	reject_blacklisted_key(Key *, int);
++
+ /* hostkey handling */
+ Key	*get_hostkey_by_index(int);
+ Key	*get_hostkey_by_type(int);
+Index: b/auth2-hostbased.c
+===================================================================
+--- a/auth2-hostbased.c
++++ b/auth2-hostbased.c
+@@ -145,6 +145,9 @@
+ 	HostStatus host_status;
+ 	int len;
+ 
++	if (reject_blacklisted_key(key, 0) == 1)
++		return 0;
++
+ 	resolvedname = get_canonical_hostname(options.use_dns);
+ 	ipaddr = get_remote_ipaddr();
+ 
+Index: b/auth2-pubkey.c
+===================================================================
+--- a/auth2-pubkey.c
++++ b/auth2-pubkey.c
+@@ -254,6 +254,9 @@
+ 	int success;
+ 	char *file;
+ 
++	if (reject_blacklisted_key(key, 0) == 1)
++		return 0;
++
+ 	file = authorized_keys_file(pw);
+ 	success = user_key_allowed2(pw, key, file);
+ 	xfree(file);
+Index: b/authfile.c
+===================================================================
+--- a/authfile.c
++++ b/authfile.c
+@@ -65,6 +65,7 @@
+ #include "rsa.h"
+ #include "misc.h"
+ #include "atomicio.h"
++#include "pathnames.h"
+ 
+ /* Version identification string for SSH v1 identity files. */
+ static const char authfile_id_string[] =
+@@ -677,3 +678,140 @@
+ 	key_free(pub);
+ 	return NULL;
+ }
++
++/* Scan a blacklist of known-vulnerable keys in blacklist_file. */
++static int
++blacklisted_key_in_file(const Key *key, const char *blacklist_file, char **fp)
++{
++	int fd = -1;
++	char *dgst_hex = NULL;
++	char *dgst_packed = NULL, *p;
++	int i;
++	size_t line_len;
++	struct stat st;
++	char buf[256];
++	off_t start, lower, upper;
++	int ret = 0;
++
++	debug("Checking blacklist file %s", blacklist_file);
++	fd = open(blacklist_file, O_RDONLY);
++	if (fd < 0) {
++		ret = -1;
++		goto out;
++	}
++
++	dgst_hex = key_fingerprint(key, SSH_FP_MD5, SSH_FP_HEX);
++	/* Remove all colons */
++	dgst_packed = xcalloc(1, strlen(dgst_hex) + 1);
++	for (i = 0, p = dgst_packed; dgst_hex[i]; i++)
++		if (dgst_hex[i] != ':')
++			*p++ = dgst_hex[i];
++	/* Only compare least-significant 80 bits (to keep the blacklist
++	 * size down)
++	 */
++	line_len = strlen(dgst_packed + 12);
++	if (line_len > 32)
++		goto out;
++
++	/* Skip leading comments */
++	start = 0;
++	for (;;) {
++		ssize_t r;
++		char *newline;
++
++		r = atomicio(read, fd, buf, sizeof(buf));
++		if (r <= 0)
++			goto out;
++		if (buf[0] != '#')
++			break;
++
++		newline = memchr(buf, '\n', sizeof(buf));
++		if (!newline)
++			goto out;
++		start += newline + 1 - buf;
++		if (lseek(fd, start, SEEK_SET) < 0)
++			goto out;
++	}
++
++	/* Initialise binary search record numbers */
++	if (fstat(fd, &st) < 0)
++		goto out;
++	lower = 0;
++	upper = (st.st_size - start) / (line_len + 1);
++
++	while (lower != upper) {
++		off_t cur;
++		int cmp;
++
++		cur = lower + (upper - lower) / 2;
++
++		/* Read this line and compare to digest; this is
++		 * overflow-safe since cur < max(off_t) / (line_len + 1) */
++		if (lseek(fd, start + cur * (line_len + 1), SEEK_SET) < 0)
++			break;
++		if (atomicio(read, fd, buf, line_len) != line_len)
++			break;
++		cmp = memcmp(buf, dgst_packed + 12, line_len);
++		if (cmp < 0) {
++			if (cur == lower)
++				break;
++			lower = cur;
++		} else if (cmp > 0) {
++			if (cur == upper)
++				break;
++			upper = cur;
++		} else {
++			debug("Found %s in blacklist", dgst_hex);
++			ret = 1;
++			break;
++		}
++	}
++
++out:
++	if (dgst_packed)
++		xfree(dgst_packed);
++	if (ret != 1 && dgst_hex) {
++		xfree(dgst_hex);
++		dgst_hex = NULL;
++	}
++	if (fp)
++		*fp = dgst_hex;
++	if (fd >= 0)
++		close(fd);
++	return ret;
++}
++
++/*
++ * Scan blacklists of known-vulnerable keys. If a vulnerable key is found,
++ * its fingerprint is returned in *fp, unless fp is NULL.
++ */
++int
++blacklisted_key(const Key *key, char **fp)
++{
++	Key *public;
++	char *blacklist_file;
++	int ret, ret2;
++
++	public = key_demote(key);
++	if (public->type == KEY_RSA1)
++		public->type = KEY_RSA;
++
++	xasprintf(&blacklist_file, "%s.%s-%u",
++	    _PATH_BLACKLIST, key_type(public), key_size(public));
++	ret = blacklisted_key_in_file(public, blacklist_file, fp);
++	xfree(blacklist_file);
++	if (ret > 0) {
++		key_free(public);
++		return ret;
++	}
++
++	xasprintf(&blacklist_file, "%s.%s-%u",
++	    _PATH_BLACKLIST_CONFIG, key_type(public), key_size(public));
++	ret2 = blacklisted_key_in_file(public, blacklist_file, fp);
++	xfree(blacklist_file);
++	if (ret2 > ret)
++		ret = ret2;
++
++	key_free(public);
++	return ret;
++}
+Index: b/authfile.h
+===================================================================
+--- a/authfile.h
++++ b/authfile.h
+@@ -23,4 +23,6 @@
+ Key	*key_load_private_pem(int, int, const char *, char **);
+ int	 key_perm_ok(int, const char *);
+ 
++int	 blacklisted_key(const Key *key, char **fp);
++
+ #endif
+Index: b/pathnames.h
+===================================================================
+--- a/pathnames.h
++++ b/pathnames.h
+@@ -18,6 +18,10 @@
+ #define SSHDIR				ETCDIR "/ssh"
+ #endif
+ 
++#ifndef _PATH_SSH_DATADIR
++#define _PATH_SSH_DATADIR		"/usr/share/ssh"
++#endif
++
+ #ifndef _PATH_SSH_PIDDIR
+ #define _PATH_SSH_PIDDIR		"/var/run"
+ #endif
+@@ -43,6 +47,9 @@
+ /* Backwards compatibility */
+ #define _PATH_DH_PRIMES			SSHDIR "/primes"
+ 
++#define _PATH_BLACKLIST			_PATH_SSH_DATADIR "/blacklist"
++#define _PATH_BLACKLIST_CONFIG		SSHDIR "/blacklist"
++
+ #ifndef _PATH_SSH_PROGRAM
+ #define _PATH_SSH_PROGRAM		"/usr/bin/ssh"
+ #endif
+Index: b/readconf.c
+===================================================================
+--- a/readconf.c
++++ b/readconf.c
+@@ -123,6 +123,7 @@
+ 	oGlobalKnownHostsFile2, oUserKnownHostsFile2, oPubkeyAuthentication,
+ 	oKbdInteractiveAuthentication, oKbdInteractiveDevices, oHostKeyAlias,
+ 	oDynamicForward, oPreferredAuthentications, oHostbasedAuthentication,
++	oUseBlacklistedKeys,
+ 	oHostKeyAlgorithms, oBindAddress, oSmartcardDevice,
+ 	oClearAllForwardings, oNoHostAuthenticationForLocalhost,
+ 	oEnableSSHKeysign, oRekeyLimit, oVerifyHostKeyDNS, oConnectTimeout,
+@@ -152,6 +153,7 @@
+ 	{ "passwordauthentication", oPasswordAuthentication },
+ 	{ "kbdinteractiveauthentication", oKbdInteractiveAuthentication },
+ 	{ "kbdinteractivedevices", oKbdInteractiveDevices },
++	{ "useblacklistedkeys", oUseBlacklistedKeys },
+ 	{ "rsaauthentication", oRSAAuthentication },
+ 	{ "pubkeyauthentication", oPubkeyAuthentication },
+ 	{ "dsaauthentication", oPubkeyAuthentication },		    /* alias */
+@@ -459,6 +461,10 @@
+ 		intptr = &options->challenge_response_authentication;
+ 		goto parse_flag;
+ 
++	case oUseBlacklistedKeys:
++		intptr = &options->use_blacklisted_keys;
++		goto parse_flag;
++
+ 	case oGssAuthentication:
+ 		intptr = &options->gss_authentication;
+ 		goto parse_flag;
+@@ -1048,6 +1054,7 @@
+ 	options->kbd_interactive_devices = NULL;
+ 	options->rhosts_rsa_authentication = -1;
+ 	options->hostbased_authentication = -1;
++	options->use_blacklisted_keys = -1;
+ 	options->batch_mode = -1;
+ 	options->check_host_ip = -1;
+ 	options->strict_host_key_checking = -1;
+@@ -1150,6 +1157,8 @@
+ 		options->rhosts_rsa_authentication = 0;
+ 	if (options->hostbased_authentication == -1)
+ 		options->hostbased_authentication = 0;
++	if (options->use_blacklisted_keys == -1)
++		options->use_blacklisted_keys = 0;
+ 	if (options->batch_mode == -1)
+ 		options->batch_mode = 0;
+ 	if (options->check_host_ip == -1)
+Index: b/readconf.h
+===================================================================
+--- a/readconf.h
++++ b/readconf.h
+@@ -54,6 +54,7 @@
+ 	int     kbd_interactive_authentication; /* Try keyboard-interactive auth. */
+ 	char	*kbd_interactive_devices; /* Keyboard-interactive auth devices. */
+ 	int     zero_knowledge_password_authentication;	/* Try jpake */
++	int	use_blacklisted_keys;	/* If true, send */
+ 	int     batch_mode;	/* Batch mode: do not ask for passwords. */
+ 	int     check_host_ip;	/* Also keep track of keys for IP address */
+ 	int     strict_host_key_checking;	/* Strict host key checking. */
+Index: b/servconf.c
+===================================================================
+--- a/servconf.c
++++ b/servconf.c
+@@ -99,6 +99,7 @@
+ 	options->password_authentication = -1;
+ 	options->kbd_interactive_authentication = -1;
+ 	options->challenge_response_authentication = -1;
++	options->permit_blacklisted_keys = -1;
+ 	options->permit_empty_passwd = -1;
+ 	options->permit_user_env = -1;
+ 	options->use_login = -1;
+@@ -227,6 +228,8 @@
+ 		options->kbd_interactive_authentication = 0;
+ 	if (options->challenge_response_authentication == -1)
+ 		options->challenge_response_authentication = 1;
++	if (options->permit_blacklisted_keys == -1)
++		options->permit_blacklisted_keys = 0;
+ 	if (options->permit_empty_passwd == -1)
+ 		options->permit_empty_passwd = 0;
+ 	if (options->permit_user_env == -1)
+@@ -302,7 +305,7 @@
+ 	sListenAddress, sAddressFamily,
+ 	sPrintMotd, sPrintLastLog, sIgnoreRhosts,
+ 	sX11Forwarding, sX11DisplayOffset, sX11UseLocalhost,
+-	sStrictModes, sEmptyPasswd, sTCPKeepAlive,
++	sStrictModes, sPermitBlacklistedKeys, sEmptyPasswd, sTCPKeepAlive,
+ 	sPermitUserEnvironment, sUseLogin, sAllowTcpForwarding, sCompression,
+ 	sAllowUsers, sDenyUsers, sAllowGroups, sDenyGroups,
+ 	sIgnoreUserKnownHosts, sCiphers, sMacs, sProtocol, sPidFile,
+@@ -410,6 +413,7 @@
+ 	{ "x11uselocalhost", sX11UseLocalhost, SSHCFG_ALL },
+ 	{ "xauthlocation", sXAuthLocation, SSHCFG_GLOBAL },
+ 	{ "strictmodes", sStrictModes, SSHCFG_GLOBAL },
++	{ "permitblacklistedkeys", sPermitBlacklistedKeys, SSHCFG_GLOBAL },
+ 	{ "permitemptypasswords", sEmptyPasswd, SSHCFG_ALL },
+ 	{ "permituserenvironment", sPermitUserEnvironment, SSHCFG_GLOBAL },
+ 	{ "uselogin", sUseLogin, SSHCFG_GLOBAL },
+@@ -976,6 +980,10 @@
+ 		intptr = &options->tcp_keep_alive;
+ 		goto parse_flag;
+ 
++	case sPermitBlacklistedKeys:
++		intptr = &options->permit_blacklisted_keys;
++		goto parse_flag;
++
+ 	case sEmptyPasswd:
+ 		intptr = &options->permit_empty_passwd;
+ 		goto parse_flag;
+@@ -1643,6 +1651,7 @@
+ 	dump_cfg_fmtint(sX11UseLocalhost, o->x11_use_localhost);
+ 	dump_cfg_fmtint(sStrictModes, o->strict_modes);
+ 	dump_cfg_fmtint(sTCPKeepAlive, o->tcp_keep_alive);
++	dump_cfg_fmtint(sPermitBlacklistedKeys, o->permit_blacklisted_keys);
+ 	dump_cfg_fmtint(sEmptyPasswd, o->permit_empty_passwd);
+ 	dump_cfg_fmtint(sPermitUserEnvironment, o->permit_user_env);
+ 	dump_cfg_fmtint(sUseLogin, o->use_login);
+Index: b/servconf.h
+===================================================================
+--- a/servconf.h
++++ b/servconf.h
+@@ -101,6 +101,7 @@
+ 	int     challenge_response_authentication;
+ 	int     zero_knowledge_password_authentication;
+ 					/* If true, permit jpake auth */
++	int     permit_blacklisted_keys;	/* If true, permit */
+ 	int     permit_empty_passwd;	/* If false, do not permit empty
+ 					 * passwords. */
+ 	int     permit_user_env;	/* If true, read ~/.ssh/environment */
+Index: b/ssh-add.1
+===================================================================
+--- a/ssh-add.1
++++ b/ssh-add.1
+@@ -75,6 +75,10 @@
+ .Nm
+ to work.
+ .Pp
++Any keys recorded in the blacklist of known-compromised keys (see
++.Xr ssh-vulnkey 1 )
++will be refused.
++.Pp
+ The options are as follows:
+ .Bl -tag -width Ds
+ .It Fl c
+@@ -174,6 +178,7 @@
+ .Xr ssh 1 ,
+ .Xr ssh-agent 1 ,
+ .Xr ssh-keygen 1 ,
++.Xr ssh-vulnkey 1 ,
+ .Xr sshd 8
+ .Sh AUTHORS
+ OpenSSH is a derivative of the original and free
+Index: b/ssh-add.c
+===================================================================
+--- a/ssh-add.c
++++ b/ssh-add.c
+@@ -139,7 +139,7 @@
+ add_file(AuthenticationConnection *ac, const char *filename)
+ {
+ 	Key *private;
+-	char *comment = NULL;
++	char *comment = NULL, *fp;
+ 	char msg[1024];
+ 	int fd, perms_ok, ret = -1;
+ 
+@@ -184,6 +184,14 @@
+ 			    "Bad passphrase, try again for %.200s: ", comment);
+ 		}
+ 	}
++	if (blacklisted_key(private, &fp) == 1) {
++		fprintf(stderr, "Public key %s blacklisted (see "
++		    "ssh-vulnkey(1)); refusing to add it\n", fp);
++		xfree(fp);
++		key_free(private);
++		xfree(comment);
++		return -1;
++	}
+ 
+ 	if (ssh_add_identity_constrained(ac, private, comment, lifetime,
+ 	    confirm)) {
+Index: b/ssh-keygen.1
+===================================================================
+--- a/ssh-keygen.1
++++ b/ssh-keygen.1
+@@ -451,6 +451,7 @@
+ .Xr ssh 1 ,
+ .Xr ssh-add 1 ,
+ .Xr ssh-agent 1 ,
++.Xr ssh-vulnkey 1 ,
+ .Xr moduli 5 ,
+ .Xr sshd 8
+ .Rs
+Index: b/ssh-vulnkey.1
+===================================================================
+--- /dev/null
++++ b/ssh-vulnkey.1
+@@ -0,0 +1,242 @@
++.\" Copyright (c) 2008 Canonical Ltd.  All rights reserved.
++.\"
++.\" Redistribution and use in source and binary forms, with or without
++.\" modification, are permitted provided that the following conditions
++.\" are met:
++.\" 1. Redistributions of source code must retain the above copyright
++.\"    notice, this list of conditions and the following disclaimer.
++.\" 2. Redistributions in binary form must reproduce the above copyright
++.\"    notice, this list of conditions and the following disclaimer in the
++.\"    documentation and/or other materials provided with the distribution.
++.\"
++.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++.\" OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++.\" IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++.\" INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++.\" NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++.\" DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++.\" THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++.\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++.\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++.\"
++.Dd $Mdocdate: May 12 2008 $
++.Dt SSH-VULNKEY 1
++.Os
++.Sh NAME
++.Nm ssh-vulnkey
++.Nd check blacklist of compromised keys
++.Sh SYNOPSIS
++.Nm
++.Op Fl q | Fl v
++.Ar file ...
++.Nm
++.Fl a
++.Sh DESCRIPTION
++.Nm
++checks a key against a blacklist of compromised keys.
++.Pp
++A substantial number of keys are known to have been generated using a broken
++version of OpenSSL distributed by Debian which failed to seed its random
++number generator correctly.
++Keys generated using these OpenSSL versions should be assumed to be
++compromised.
++This tool may be useful in checking for such keys.
++.Pp
++Keys that are compromised cannot be repaired; replacements must be generated
++using
++.Xr ssh-keygen 1 .
++Make sure to update
++.Pa authorized_keys
++files on all systems where compromised keys were permitted to authenticate.
++.Pp
++The argument list will be interpreted as a list of paths to public key files
++or
++.Pa authorized_keys
++files.
++If no suitable file is found at a given path,
++.Nm
++will append
++.Pa .pub
++and retry, in case it was given a private key file.
++If no files are given as arguments,
++.Nm
++will check
++.Pa ~/.ssh/id_rsa ,
++.Pa ~/.ssh/id_dsa ,
++.Pa ~/.ssh/identity ,
++.Pa ~/.ssh/authorized_keys
++and
++.Pa ~/.ssh/authorized_keys2 ,
++as well as the system's host keys if readable.
++.Pp
++If
++.Dq -
++is given as an argument,
++.Nm
++will read from standard input.
++This can be used to process output from
++.Xr ssh-keyscan 1 ,
++for example:
++.Pp
++.Dl $ ssh-keyscan -t rsa remote.example.org | ssh-vulnkey -
++.Pp
++Unless the
++.Cm PermitBlacklistedKeys
++option is used,
++.Xr sshd 8
++will reject attempts to authenticate with keys in the compromised list.
++.Pp
++The output from
++.Nm
++looks like this:
++.Pp
++.Bd -literal -offset indent
++/etc/ssh/ssh_host_key:1: COMPROMISED: RSA1 2048 xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx root@host
++/home/user/.ssh/id_dsa:1: Not blacklisted: DSA 1024 xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx /home/user/.ssh/id_dsa.pub
++/home/user/.ssh/authorized_keys:3: Unknown (blacklist file not installed): RSA 1024 xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx user@host
++.Ed
++.Pp
++Each line is of the following format (any lines beginning with
++.Dq #
++should be ignored by scripts):
++.Pp
++.Dl Ar filename : Ns Ar line : Ar status : Ar type Ar size Ar fingerprint Ar comment
++.Pp
++It is important to distinguish between the possible values of
++.Ar status :
++.Pp
++.Bl -tag -width Ds
++.It COMPROMISED
++These keys are listed in a blacklist file, normally because their
++corresponding private keys are well-known.
++Replacements must be generated using
++.Xr ssh-keygen 1 .
++.It Not blacklisted
++A blacklist file exists for this key type and size, but this key is not
++listed in it.
++Unless there is some particular reason to believe otherwise, this key
++may be used safely.
++(Note that DSA keys used with the broken version of OpenSSL distributed
++by Debian may be compromised in the event that anyone captured a network
++trace, even if they were generated with a secure version of OpenSSL.)
++.It Unknown (blacklist file not installed)
++No blacklist file exists for this key type and size.
++You should find a suitable published blacklist and install it before
++deciding whether this key is safe to use.
++.El
++.Pp
++The options are as follows:
++.Bl -tag -width Ds
++.It Fl a
++Check keys of all users on the system.
++You will typically need to run
++.Nm
++as root to use this option.
++For each user,
++.Nm
++will check
++.Pa ~/.ssh/id_rsa ,
++.Pa ~/.ssh/id_dsa ,
++.Pa ~/.ssh/identity ,
++.Pa ~/.ssh/authorized_keys
++and
++.Pa ~/.ssh/authorized_keys2 .
++It will also check the system's host keys.
++.It Fl q
++Quiet mode.
++Normally,
++.Nm
++outputs the fingerprint of each key scanned, with a description of its
++status.
++This option suppresses that output.
++.It Fl v
++Verbose mode.
++Normally,
++.Nm
++does not output anything for keys that are not listed in their corresponding
++blacklist file (although it still produces output for keys for which there
++is no blacklist file, since their status is unknown).
++This option causes
++.Nm
++to produce output for all keys.
++.El
++.Sh EXIT STATUS
++.Nm
++will exit zero if any of the given keys were in the compromised list,
++otherwise non-zero.
++.Sh BLACKLIST FILE FORMAT
++The blacklist file may start with comments, on lines starting with
++.Dq # .
++After these initial comments, it must follow a strict format:
++.Pp
++.Bl -bullet -offset indent -compact
++.It
++All the lines must be exactly the same length (20 characters followed by a
++newline) and must be in sorted order.
++.It
++Each line must consist of the lower-case hexadecimal MD5 key fingerprint,
++without colons, and with the first 12 characters removed (that is, the least
++significant 80 bits of the fingerprint).
++.El
++.Pp
++The key fingerprint may be generated using
++.Xr ssh-keygen 1 :
++.Pp
++.Dl $ ssh-keygen -l -f /path/to/key
++.Pp
++This strict format is necessary to allow the blacklist file to be checked
++quickly, using a binary-search algorithm.
++.Sh FILES
++.Bl -tag -width Ds
++.It Pa ~/.ssh/id_rsa
++If present, contains the protocol version 2 RSA authentication identity of
++the user.
++.It Pa ~/.ssh/id_dsa
++If present, contains the protocol version 2 DSA authentication identity of
++the user.
++.It Pa ~/.ssh/identity
++If present, contains the protocol version 1 RSA authentication identity of
++the user.
++.It Pa ~/.ssh/authorized_keys
++If present, lists the public keys (RSA/DSA) that can be used for logging in
++as this user.
++.It Pa ~/.ssh/authorized_keys2
++Obsolete name for
++.Pa ~/.ssh/authorized_keys .
++This file may still be present on some old systems, but should not be
++created if it is missing.
++.It Pa /etc/ssh/ssh_host_rsa_key
++If present, contains the protocol version 2 RSA identity of the system.
++.It Pa /etc/ssh/ssh_host_dsa_key
++If present, contains the protocol version 2 DSA identity of the system.
++.It Pa /etc/ssh/ssh_host_key
++If present, contains the protocol version 1 RSA identity of the system.
++.It Pa /usr/share/ssh/blacklist. Ns Ar TYPE Ns Pa - Ns Ar LENGTH
++If present, lists the blacklisted keys of type
++.Ar TYPE
++.Pf ( Dq RSA
++or
++.Dq DSA )
++and bit length
++.Ar LENGTH .
++The format of this file is described above.
++RSA1 keys are converted to RSA before being checked in the blacklist.
++Note that the fingerprints of RSA1 keys are computed differently, so you
++will not be able to find them in the blacklist by hand.
++.It Pa /etc/ssh/blacklist. Ns Ar TYPE Ns Pa - Ns Ar LENGTH
++Same as
++.Pa /usr/share/ssh/blacklist. Ns Ar TYPE Ns Pa - Ns Ar LENGTH ,
++but may be edited by the system administrator to add new blacklist entries.
++.El
++.Sh SEE ALSO
++.Xr ssh-keygen 1 ,
++.Xr sshd 8
++.Sh AUTHORS
++.An -nosplit
++.An Colin Watson Aq cjwatson@ubuntu.com
++.Pp
++Florian Weimer suggested the option to check keys of all users, and the idea
++of processing
++.Xr ssh-keyscan 1
++output.
+Index: b/ssh-vulnkey.c
+===================================================================
+--- /dev/null
++++ b/ssh-vulnkey.c
+@@ -0,0 +1,388 @@
++/*
++ * Copyright (c) 2008 Canonical Ltd.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include "includes.h"
++
++#include <sys/types.h>
++#include <sys/stat.h>
++
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <fcntl.h>
++#include <unistd.h>
++
++#include <openssl/evp.h>
++
++#include "xmalloc.h"
++#include "ssh.h"
++#include "log.h"
++#include "key.h"
++#include "authfile.h"
++#include "pathnames.h"
++#include "uidswap.h"
++#include "misc.h"
++
++extern char *__progname;
++
++/* Default files to check */
++static char *default_host_files[] = {
++	_PATH_HOST_RSA_KEY_FILE,
++	_PATH_HOST_DSA_KEY_FILE,
++	_PATH_HOST_KEY_FILE,
++	NULL
++};
++static char *default_files[] = {
++	_PATH_SSH_CLIENT_ID_RSA,
++	_PATH_SSH_CLIENT_ID_DSA,
++	_PATH_SSH_CLIENT_IDENTITY,
++	_PATH_SSH_USER_PERMITTED_KEYS,
++	_PATH_SSH_USER_PERMITTED_KEYS2,
++	NULL
++};
++
++static int verbosity = 0;
++
++static int some_keys = 0;
++static int some_unknown = 0;
++static int some_compromised = 0;
++
++static void
++usage(void)
++{
++	fprintf(stderr, "usage: %s [-aqv] [file ...]\n", __progname);
++	fprintf(stderr, "Options:\n");
++	fprintf(stderr, "  -a          Check keys of all users.\n");
++	fprintf(stderr, "  -q          Quiet mode.\n");
++	fprintf(stderr, "  -v          Verbose mode.\n");
++	exit(1);
++}
++
++void
++describe_key(const char *filename, u_long linenum, const char *msg,
++    const Key *key, const char *comment, int min_verbosity)
++{
++	char *fp;
++
++	fp = key_fingerprint(key, SSH_FP_MD5, SSH_FP_HEX);
++	if (verbosity >= min_verbosity) {
++		if (strchr(filename, ':'))
++			printf("\"%s\"", filename);
++		else
++			printf("%s", filename);
++		printf(":%lu: %s: %s %u %s %s\n", linenum, msg,
++		    key_type(key), key_size(key), fp, comment);
++	}
++	xfree(fp);
++}
++
++int
++do_key(const char *filename, u_long linenum,
++    const Key *key, const char *comment)
++{
++	Key *public;
++	int blacklist_status;
++	int ret = 1;
++
++	some_keys = 1;
++
++	public = key_demote(key);
++	if (public->type == KEY_RSA1)
++		public->type = KEY_RSA;
++
++	blacklist_status = blacklisted_key(public, NULL);
++	if (blacklist_status == -1) {
++		describe_key(filename, linenum,
++		    "Unknown (blacklist file not installed)", key, comment, 0);
++		some_unknown = 1;
++	} else if (blacklist_status == 1) {
++		describe_key(filename, linenum,
++		    "COMPROMISED", key, comment, 0);
++		some_compromised = 1;
++		ret = 0;
++	} else
++		describe_key(filename, linenum,
++		    "Not blacklisted", key, comment, 1);
++
++	key_free(public);
++
++	return ret;
++}
++
++int
++do_filename(const char *filename, int quiet_open)
++{
++	FILE *f;
++	char line[SSH_MAX_PUBKEY_BYTES];
++	char *cp;
++	u_long linenum = 0;
++	Key *key;
++	char *comment = NULL;
++	int found = 0, ret = 1;
++
++	/* Copy much of key_load_public's logic here so that we can read
++	 * several keys from a single file (e.g. authorized_keys).
++	 */
++
++	if (strcmp(filename, "-") != 0) {
++		int save_errno;
++		f = fopen(filename, "r");
++		save_errno = errno;
++		if (!f) {
++			char pubfile[MAXPATHLEN];
++			if (strlcpy(pubfile, filename, sizeof pubfile) <
++			    sizeof(pubfile) &&
++			    strlcat(pubfile, ".pub", sizeof pubfile) <
++			    sizeof(pubfile))
++				f = fopen(pubfile, "r");
++		}
++		errno = save_errno; /* earlier errno is more useful */
++		if (!f) {
++			if (!quiet_open)
++				perror(filename);
++			return -1;
++		}
++		if (verbosity > 0)
++			printf("# %s\n", filename);
++	} else
++		f = stdin;
++	while (read_keyfile_line(f, filename, line, sizeof(line),
++		    &linenum) != -1) {
++		int i;
++		char *space;
++		int type;
++		char *end;
++
++		/* Chop trailing newline. */
++		i = strlen(line) - 1;
++		if (line[i] == '\n')
++			line[i] = '\0';
++
++		/* Skip leading whitespace, empty and comment lines. */
++		for (cp = line; *cp == ' ' || *cp == '\t'; cp++)
++			;
++		if (!*cp || *cp == '\n' || *cp == '#')
++			continue;
++
++		/* Cope with ssh-keyscan output and options in
++		 * authorized_keys files.
++		 */
++		space = strchr(cp, ' ');
++		if (!space)
++			continue;
++		*space = '\0';
++		type = key_type_from_name(cp);
++		*space = ' ';
++		/* Leading number (RSA1) or valid type (RSA/DSA) indicates
++		 * that we have no host name or options to skip.
++		 */
++		if ((strtol(cp, &end, 10) == 0 || *end != ' ') &&
++		    type == KEY_UNSPEC) {
++			int quoted = 0;
++
++			for (; *cp && (quoted || (*cp != ' ' && *cp != '\t')); cp++) {
++				if (*cp == '\\' && cp[1] == '"')
++					cp++;	/* Skip both */
++				else if (*cp == '"')
++					quoted = !quoted;
++			}
++			/* Skip remaining whitespace. */
++			for (; *cp == ' ' || *cp == '\t'; cp++)
++				;
++			if (!*cp)
++				continue;
++		}
++
++		/* Read and process the key itself. */
++		key = key_new(KEY_RSA1);
++		if (key_read(key, &cp) == 1) {
++			while (*cp == ' ' || *cp == '\t')
++				cp++;
++			if (!do_key(filename, linenum,
++			    key, *cp ? cp : filename))
++				ret = 0;
++			found = 1;
++		} else {
++			key_free(key);
++			key = key_new(KEY_UNSPEC);
++			if (key_read(key, &cp) == 1) {
++				while (*cp == ' ' || *cp == '\t')
++					cp++;
++				if (!do_key(filename, linenum,
++				    key, *cp ? cp : filename))
++					ret = 0;
++				found = 1;
++			}
++		}
++		key_free(key);
++	}
++	if (f != stdin)
++		fclose(f);
++
++	if (!found && filename) {
++		key = key_load_public(filename, &comment);
++		if (key) {
++			if (!do_key(filename, 1, key, comment))
++				ret = 0;
++			found = 1;
++		}
++		if (comment)
++			xfree(comment);
++	}
++
++	return ret;
++}
++
++int
++do_host(int quiet_open)
++{
++	int i;
++	struct stat st;
++	int ret = 1;
++
++	for (i = 0; default_host_files[i]; i++) {
++		if (stat(default_host_files[i], &st) < 0 && errno == ENOENT)
++			continue;
++		if (!do_filename(default_host_files[i], quiet_open))
++			ret = 0;
++	}
++
++	return ret;
++}
++
++int
++do_user(const char *dir)
++{
++	int i;
++	char *file;
++	struct stat st;
++	int ret = 1;
++
++	for (i = 0; default_files[i]; i++) {
++		xasprintf(&file, "%s/%s", dir, default_files[i]);
++		if (stat(file, &st) < 0 && errno == ENOENT) {
++			xfree(file);
++			continue;
++		}
++		if (!do_filename(file, 0))
++			ret = 0;
++		xfree(file);
++	}
++
++	return ret;
++}
++
++int
++main(int argc, char **argv)
++{
++	int opt, all_users = 0;
++	int ret = 1;
++	extern int optind;
++
++	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
++	sanitise_stdfd();
++
++	__progname = ssh_get_progname(argv[0]);
++
++	SSLeay_add_all_algorithms();
++	log_init(argv[0], SYSLOG_LEVEL_INFO, SYSLOG_FACILITY_USER, 1);
++
++	/* We don't need the RNG ourselves, but symbol references here allow
++	 * ld to link us properly.
++	 */
++	init_rng();
++	seed_rng();
++
++	while ((opt = getopt(argc, argv, "ahqv")) != -1) {
++		switch (opt) {
++		case 'a':
++			all_users = 1;
++			break;
++		case 'q':
++			verbosity--;
++			break;
++		case 'v':
++			verbosity++;
++			break;
++		case 'h':
++		default:
++			usage();
++		}
++	}
++
++	if (all_users) {
++		struct passwd *pw;
++
++		if (!do_host(0))
++			ret = 0;
++
++		while ((pw = getpwent()) != NULL) {
++			if (pw->pw_dir) {
++				temporarily_use_uid(pw);
++				if (!do_user(pw->pw_dir))
++					ret = 0;
++				restore_uid();
++			}
++		}
++	} else if (optind == argc) {
++		struct passwd *pw;
++
++		if (!do_host(1))
++			ret = 0;
++
++		if ((pw = getpwuid(geteuid())) == NULL)
++			fprintf(stderr, "No user found with uid %u\n",
++			    (u_int)geteuid());
++		else {
++			if (!do_user(pw->pw_dir))
++				ret = 0;
++		}
++	} else {
++		while (optind < argc)
++			if (!do_filename(argv[optind++], 0))
++				ret = 0;
++	}
++
++	if (verbosity >= 0) {
++		if (some_unknown) {
++			printf("#\n");
++			printf("# The status of some keys on your system is unknown.\n");
++			printf("# You may need to install additional blacklist files.\n");
++		}
++		if (some_compromised) {
++			printf("#\n");
++			printf("# Some keys on your system have been compromised!\n");
++			printf("# You must replace them using ssh-keygen(1).\n");
++		}
++		if (some_unknown || some_compromised) {
++			printf("#\n");
++			printf("# See the ssh-vulnkey(1) manual page for further advice.\n");
++		} else if (some_keys && verbosity > 0) {
++			printf("#\n");
++			printf("# No blacklisted keys!\n");
++		}
++	}
++
++	return ret;
++}
+Index: b/ssh.1
+===================================================================
+--- a/ssh.1
++++ b/ssh.1
+@@ -1396,6 +1396,7 @@
+ .Xr ssh-agent 1 ,
+ .Xr ssh-keygen 1 ,
+ .Xr ssh-keyscan 1 ,
++.Xr ssh-vulnkey 1 ,
+ .Xr tun 4 ,
+ .Xr hosts.equiv 5 ,
+ .Xr ssh_config 5 ,
+Index: b/ssh.c
+===================================================================
+--- a/ssh.c
++++ b/ssh.c
+@@ -1229,7 +1229,7 @@
+ static void
+ load_public_identity_files(void)
+ {
+-	char *filename, *cp, thishost[NI_MAXHOST];
++	char *filename, *cp, thishost[NI_MAXHOST], *fp;
+ 	char *pwdir = NULL, *pwname = NULL;
+ 	int i = 0;
+ 	Key *public;
+@@ -1276,6 +1276,22 @@
+ 		public = key_load_public(filename, NULL);
+ 		debug("identity file %s type %d", filename,
+ 		    public ? public->type : -1);
++		if (public && blacklisted_key(public, &fp) == 1) {
++			if (options.use_blacklisted_keys)
++				logit("Public key %s blacklisted (see "
++				    "ssh-vulnkey(1)); continuing anyway", fp);
++			else
++				logit("Public key %s blacklisted (see "
++				    "ssh-vulnkey(1)); refusing to send it",
++				    fp);
++			xfree(fp);
++			if (!options.use_blacklisted_keys) {
++				key_free(public);
++				xfree(filename);
++				filename = NULL;
++				public = NULL;
++			}
++		}
+ 		xfree(options.identity_files[i]);
+ 		options.identity_files[i] = filename;
+ 		options.identity_keys[i] = public;
+Index: b/ssh_config.5
+===================================================================
+--- a/ssh_config.5
++++ b/ssh_config.5
+@@ -1041,6 +1041,23 @@
+ .Dq any .
+ The default is
+ .Dq any:any .
++.It Cm UseBlacklistedKeys
++Specifies whether
++.Xr ssh 1
++should use keys recorded in its blacklist of known-compromised keys (see
++.Xr ssh-vulnkey 1 )
++for authentication.
++If
++.Dq yes ,
++then attempts to use compromised keys for authentication will be logged but
++accepted.
++It is strongly recommended that this be used only to install new authorized
++keys on the remote system, and even then only with the utmost care.
++If
++.Dq no ,
++then attempts to use compromised keys for authentication will be prevented.
++The default is
++.Dq no .
+ .It Cm UsePrivilegedPort
+ Specifies whether to use a privileged port for outgoing connections.
+ The argument must be
+Index: b/sshconnect2.c
+===================================================================
+--- a/sshconnect2.c
++++ b/sshconnect2.c
+@@ -1418,6 +1418,8 @@
+ 
+ 	/* list of keys stored in the filesystem */
+ 	for (i = 0; i < options.num_identity_files; i++) {
++		if (options.identity_files[i] == NULL)
++			continue;
+ 		key = options.identity_keys[i];
+ 		if (key && key->type == KEY_RSA1)
+ 			continue;
+@@ -1508,7 +1510,7 @@
+ 		if (id->key && id->key->type != KEY_RSA1) {
+ 			debug("Offering public key: %s", id->filename);
+ 			sent = send_pubkey_test(authctxt, id);
+-		} else if (id->key == NULL) {
++		} else if (id->key == NULL && id->filename) {
+ 			debug("Trying private key: %s", id->filename);
+ 			id->key = load_identity_file(id->filename);
+ 			if (id->key != NULL) {
+Index: b/sshd.8
+===================================================================
+--- a/sshd.8
++++ b/sshd.8
+@@ -871,6 +871,7 @@
+ .Xr ssh-agent 1 ,
+ .Xr ssh-keygen 1 ,
+ .Xr ssh-keyscan 1 ,
++.Xr ssh-vulnkey 1 ,
+ .Xr chroot 2 ,
+ .Xr hosts_access 5 ,
+ .Xr login.conf 5 ,
+Index: b/sshd.c
+===================================================================
+--- a/sshd.c
++++ b/sshd.c
+@@ -1518,6 +1518,11 @@
+ 			sensitive_data.host_keys[i] = NULL;
+ 			continue;
+ 		}
++		if (reject_blacklisted_key(key, 1) == 1) {
++			key_free(key);
++			sensitive_data.host_keys[i] = NULL;
++			continue;
++		}
+ 		switch (key->type) {
+ 		case KEY_RSA1:
+ 			sensitive_data.ssh1_host_key = key;
+Index: b/sshd_config.5
+===================================================================
+--- a/sshd_config.5
++++ b/sshd_config.5
+@@ -685,6 +685,20 @@
+ Specifies whether password authentication is allowed.
+ The default is
+ .Dq yes .
++.It Cm PermitBlacklistedKeys
++Specifies whether
++.Xr sshd 8
++should allow keys recorded in its blacklist of known-compromised keys (see
++.Xr ssh-vulnkey 1 ) .
++If
++.Dq yes ,
++then attempts to authenticate with compromised keys will be logged but
++accepted.
++If
++.Dq no ,
++then attempts to authenticate with compromised keys will be rejected.
++The default is
++.Dq no .
+ .It Cm PermitEmptyPasswords
+ When password authentication is allowed, it specifies whether the
+ server allows login to accounts with empty password strings.

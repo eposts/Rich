@@ -1,0 +1,197 @@
+# translation of openssh-templates.po to basque
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Piarres Beobide <pi@beobide.net>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh-templates\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2007-04-27 12:10+0200\n"
+"Last-Translator: Piarres Beobide <pi@beobide.net>\n"
+"Language-Team: librezale <librezale@librezale.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 0.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Irekirik dauden SSH saioak ixteko arriskua hartu nahi duzu?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Instalaturik dagoen /etc/init.d/ssh bertsioak martxan dauden sshd "
+"instantziak hilko ditu. Bertsio berritze hau SSH bidez egiten ari bazara, "
+"ziurrenik deskonektatu egingo zara eta bertsio berritze prozedura ez da "
+"behar bezala amaituko."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Hau eskuz konpondu daiteke  \"--pidfile /var/run/sshd.pid\" gehituaz start-"
+"stop-daemon lerroan fitxategiaren \"stop\" atalean."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Ostalari gako berria beharrezkoa"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"/etc/ssh/ssh_host_key-ko ostalari gakoa IDEA algoritmoaren bidez "
+"enkriptaturik dago. OpenSSH ez da ostalari gako mota hau kudeatzeko gai eta "
+"SSH instalazio zaharreko (ez-librea) ssh-keygen lanabesa dirudienez ez dago "
+"erabilgarri."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Ostalari gako berri bat eskuz sortu behar duzu."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "erronka-erantzun autentifikazioa desgaitu?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Pasahitz egiaztapena dirudienez desgaiturik dago instalaturik dagoen OpenSSH "
+"konfigurazioan. Pasahitzak erabiliaz OpenSSH bertsio berrietan saio hastea "
+"ezintzeko (agian gako publiko autentifikazioa bakarrik erabiliaz), erronka-"
+"erantzun (challenge-response) autentifikazioa desgaitu edo zure PAM "
+"konfigurazioak UNIX pasahitz fitxategi autentifikazioa onartzen ez duela "
+"ziurtatu beharko duzu."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Erronka-erantzun autentifikazioa des\tgaituaz gero erabiltzaileak ez dira "
+"pasahitza erabiliaz saio hasteko gai izango. Berau gaiturik utziaz gero "
+"(lehenetsiriko erantzuna), 'PasswordAuthentication no' aukerak ez du "
+"ondoriorik izango /etc/pam.d/ssh-eko PAM konfigurazioa doitzen ez baduzu."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Ostalari gako ahulak birsortu egingo dira"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Sistema honetako zenbait OpenSSH ostalari gako hondaturiko ausazko zenbasi "
+"sortzaile bat zuen OpenSSL bertsio batez sortuak izan ziren. Hau dela eta, "
+"ostalari gako horiek ezagutza handiko pertsona batek indarrezko erasoei "
+"ahulak dira eta birsortuak izango dira."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Sistema honetako erabiltzaileak aldaketa honetaz ohartu beharko ziren, saio "
+"hasten duten hurrengoan ostalari gako aldaketaz galdetuko zaie eta. 'ssh-"
+"keygen -l -f OSTALARI_GAKO_FITX' erabili bertsio-berritzearen ondoren "
+"ostalari gako berrien hatzmarkak inprimatzeko."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Ostalari gako hauei eragingo die:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Erabiltzaile gakoak ere arazo honengatik eragindak egon daitezke. 'ssh-"
+"vulnkey' komandoak honetarako proba bezala erdi-ziur erabili daiteke. Ikusi /"
+"usr/share/doc/openssh-server/README.compromised-keys.gz xehetasun "
+"gehiagorako."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "OpenSSH-rentzat konfigurazio fitxategi berri bat sortu?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "OpenSSH bertsio honek konfigurazio fitxategia nahiko aldatu du Debian "
+#~ "'Potato' bertsioak banatu zuenetik, dirudienez zu bertsio horretatik "
+#~ "eguneratzen ari zara. Pakete honek konfigurazio fitxategi berri bat sortu "
+#~ "dezake (/etc/ssh/sshd.config) bertsio honetarako funtziona dezan baina ez "
+#~ "ditu zuk bertsio zaharrari egin ahal izan diezazkiokezun "
+#~ "pertsonalizazioak edukiko."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Kontutan izan konfigurazio fitxategi berri honek 'PermitRootLogin' "
+#~ "parametroan balioa 'yes' bezala ezarriko duela (honek root erabiltzaileak "
+#~ "ssh bidez sartzeko aukera emango du). Mesedez irakurri README.Debian "
+#~ "fitxategia ezarpen honen xehetasun gehiagorako."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr "Gomendagarria da konfigurazio fitxategi berri bat orain sortzea."

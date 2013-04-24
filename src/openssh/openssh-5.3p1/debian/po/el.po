@@ -1,0 +1,451 @@
+# translation of el.po to Greek
+# translation of templates.po to Greek
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans#
+#    Developers do not need to manually edit POT or PO files.
+# Konstantinos Margaritis <markos@debian.org>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: el\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2004-10-14 21:34+0300\n"
+"Last-Translator: Konstantinos Margaritis <markos@debian.org>\n"
+"Language-Team: Greek <debian-l10n-greek@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid "Do you want to continue (and risk killing active ssh sessions)?"
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr ""
+"Θέλετε να συνεχίσετε (με κίνδυνο τερματισμού των ενεργών συνεδριών ssh);"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "The version of /etc/init.d/ssh that you have installed, is likely to kill "
+#| "all running sshd instances.  If you are doing this upgrade via an ssh "
+#| "session, that would be a Bad Thing(tm)."
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Η τρέχουσα έκδοση του /etc/init.d/ssh που είναι εγκατεστημένη, πιθανότατα θα "
+"τερματίσει όλες τις συνεδρίες του sshd.  Αν κάνετε αυτήν την αναβάθμιση μέσω "
+"μιας συνεδρίας ssh, αυτό είναι μάλλον κακή ιδέα..."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "You can fix this by adding \"--pidfile /var/run/sshd.pid\" to the start-"
+#| "stop-daemon line in the stop section of the file."
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Μπορείτε να το διορθώσετε αυτό προσθέτοντας \"--pidfile /var/run/sshd.pid\" "
+"στη γραμμή start-stop-daemon στο τμήμα \"stop\" του αρχείου."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Υπάρχει ένα παλαιότερο κλειδί /etc/ssh/ssh_host_key, που είναι "
+"κρυπτογραφημένο με τον αλγόριθμο IDEA. Το OpenSSH δε μπορεί να χειριστεί "
+"αυτό το κλειδί και δεν έχει βρεθεί το εργαλείο ssh-keygen από την παλιά (μη "
+"ελεύθερη) εγκατάσταση του SSH."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+#| msgid "You will need to generate a new host key."
+msgid "You need to manually generate a new host key."
+msgstr "Πρέπει να δημιουργήσετε ένα νέο κλειδί για τον υπολογιστή (host key)."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Να απενεργοποιηθεί η πιστοποίηση challenge-response;"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+#, fuzzy
+#| msgid ""
+#| "Password authentication appears to be disabled in your current OpenSSH "
+#| "server configuration. In order to prevent users from logging in using "
+#| "passwords (perhaps using only public key authentication instead) with "
+#| "recent versions of OpenSSH, you must disable challenge-response "
+#| "authentication, or else ensure that your PAM configuration does not allow "
+#| "Unix password file authentication."
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Η πιστοποίηση με κωδικό είναι απενεργοποιημένη στο τωρινό OpenSSH "
+"εξυπηρετητή. Για να αποτρέψετε την είσοδο τον χρηστών με χρήση κωδικού (για "
+"παράδειγμα να γίνεται χρήση μόνο του δημοσίου κλειδιού) με την πρόσφατες "
+"εκδόσεις του OpenSSH, θα πρέπει να απενεργοποιήσετε την πιστοποίηση "
+"challenge-response ή να επιβεβαιώσετε ότι η διαμόρφωση του PAM δεν επιτρέπει "
+"την πιστοποίηση με αρχείο κωδικών."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Εάν απενεργοποιήσετε την πιστοποίηση challenge-response, οι χρήστες δεν θα "
+"μπορούν να εισέλθουν χρησιμοποιώντας τον κωδικό τους. Εάν το αφήσετε "
+"ενεργοποιημένο (προεπιλογή), τότε η επιλογή 'PasswordAuthetication no' δεν "
+"θα επιδρά εκτός και εάν ρυθμίσετε και το PAM στο αρχείο /etc/pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Δημιουργία νέου αρχείου ρυθμίσεων"
+
+#, fuzzy
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Αυτή η έκδοση του OpenSSH έχει σημαντικά διαφοροποιημένο αρχείο ρυθμίσεων "
+#~ "από την έκδοση που περιλαμβάνεται στη διανομή 'Potato' του Debian, από "
+#~ "την οποία φαίνεται ότι πραγματοποιείτε την αναβάθμιση. Στο σημείο αυτό, "
+#~ "σας δίνεται η δυνατότητα να δημιουργήσετε ένα νέο αρχείο ρυθμίσεων (/etc/"
+#~ "ssh/sshd_config), το οποίο χρησιμοποιείται από τη νέα έκδοση του δαίμονα, "
+#~ "αλλά δεν θα περιέχει οποιαδήποτε παραμετροποίηση έχετε ήδη κάνει στην "
+#~ "παλιά έκδοση."
+
+#, fuzzy
+#~| msgid ""
+#~| "Please note that this new configuration file will set the value of "
+#~| "'PermitRootLogin' to yes (meaning that anyone knowing the root password "
+#~| "can ssh directly in as root). It is the opinion of the maintainer that "
+#~| "this is the correct default (see README.Debian for more details), but "
+#~| "you can always edit sshd_config and set it to no if you wish."
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Σημειώστε ότι το νέο αρχείο ρυθμίσεων θα καθορίσει την τιμή της επιλογής "
+#~ "'PermitRootLogin' σε yes (εννοώντας ότι οποιοσδήποτε γνωρίζει τον κωδικό "
+#~ "πρόσβασης του root μπορεί να συνδεθεί ως χρήστης root). Κατά τον "
+#~ "συντηρητή αυτή είναι και η σωστή προκαθορισμένη ρύθμιση (δείτε το README."
+#~ "Debian για περισσότερες λεπτομέρειες), αλλά μπορείτε οποιαδήποτε στιγμή "
+#~ "να αλλάξετε την τιμή σε no στο αρχείο sshd_config."
+
+#, fuzzy
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr "Συνιστάται να επιλέξετε την δημιουργία του νέου αρχείου ρυθμίσεων."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr ""
+#~ "Προσοχή: πρέπει να δημιουργήσετε ένα νέο κλειδί για τον υπολογιστή (host "
+#~ "key)"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr ""
+#~ "Προσοχή: είναι ήδη εγκατεστημένος ο telnetd --- όχι και τοσο καλή ιδέα"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Συνιστάται είτε να αφαιρέσετε το πακέτο telnetd (αν δεν είναι πραγματικά "
+#~ "απαραίτητη η πρόσβαση μέσω telnet) ή να εγκαταστήσετε το πακέτο telnetd-"
+#~ "ssl, ώστε να υπάρχει τουλάχιστον μια πιθανότητα οι συνδέσεις telnet να "
+#~ "μην αποστέλλουν μη κρυπτογραφημένες πληροφορίες κωδικών πρόσβασης και "
+#~ "συνεδριών μέσω δικτύου."
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr ""
+#~ "Προσοχή: είναι ήδη εγκατεστημένος ο rsh-server --- όχι και τοσο καλή ιδέα"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "Η παρουσία του rsh-server υπονομεύει την ασφάλεια του συστήματος, την "
+#~ "οποία θέλετε να εξασφαλίσετε με την εγκατάσταση του ssh. Συνιστάται η "
+#~ "αφαίρεση αυτού του πακέτου."
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr "Θέλετε να εγκαταστήσετε το ssh-keysign ως SUID;"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr ""
+#~ "Έχετε την επιλογή της εγκατάστασης του εργαλείου ssh-keysign με το bit "
+#~ "SUID ενεργοποιημένο."
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "Αν εγκαταστήσετε το ssh-keysign SUID, θα μπορείτε να χρησιμοποιήσετε την "
+#~ "πιστοποίηση υπολογιστή (host-based authentication) του πρωτοκόλου SSH 2."
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "Αν έχετε αμφιβολίες, συνιστάται να το εγκαταστήσετε SUID.  Αν "
+#~ "διαπιστώσετε προβλήματα μπορείτε να αλλάξετε τη ρύθμιση αυτή εκτελώντας:  "
+#~ "dpkg-reconfigure ssh"
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "Να επιτρέπεται μόνο η χρήση του πρωτοκόλλου SSH 2"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "Αυτή η έκδοση του OpenSSH υποστηρίζει την έκδοση 2 του πρωτοκόλλου ssh, "
+#~ "που είναι πολύ πιο ασφαλής.  Συνιστάται η απενεργοποίηση της έκδοσης 1, "
+#~ "ωστόσο αυτό θα γίνει εις βάρος της ταχύτητας σε χαμηλότερων επιδόσεων "
+#~ "συστήματα και θα απαγορέψει τη σύνδεση σε παλαιότερα προγράμματα-πελάτες "
+#~ "(π.χ. ο πελάτης ssh που διανέμεται με την έκδοση \"potato\")."
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "Επίσης, σημειώστε ότι τα κλειδιά που χρησιμοποιούνταν στο πρωτόκολλο 1 "
+#~ "είναι διαφορετικά και δε θα είναι δυνατή η χρήση τους αν επιτρέψετε μόνο "
+#~ "τις συνδέσεις με το πρωτόκολλο 2."
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "Αν αποφασίσετε διαφορετικά αργότερα για αυτή τη ρύθμιση, το αρχείο README."
+#~ "Debian έχει οδηγίες για την κατάλληλη τροποποίηση του αρχείου sshd_config."
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr ""
+#~ "ΣΗΜΕΙΩΣΗ: Η προώθηση των πακέτων X11 και πιστοποίησης είναι "
+#~ "απενεργοποιημένηεξ ορισμού."
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "Για λόγους ασφαλείας, η έκδοση του ssh στο Debian έχει τις επιλογές "
+#~ "ForwardX11 και ForwardAgent ορισμένες σε ``off'' εξ ορισμού."
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "Μπορείτε να τα ενεργοποιήσετε για διακομιστές που εμπιστεύεστε, είτε σε "
+#~ "ένα από τα αρχεία ρυθμίσεων, είτε μέσω της επιλογής -X στη γραμμή εντολών."
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr ""
+#~ "Περισσότερες λεπτομέρειες μπορείτε να βρείτε στο αρχείο /usr/share/doc/"
+#~ "ssh/README.Debian"
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "Τα κλειδιά ssh2 συγχωνεύτηκαν στα αρχεία ρυθμίσεων"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "Από την έκδοση 3 και έπειτα, το OpenSSH δεν χρησιμοποιεί πλέον ξεχωριστά "
+#~ "αρχεία για τα κλειδιά των ssh1 και ssh2. Αυτό σημαίνει ότι τα αρχεία "
+#~ "authorized_keys2 και known_hosts2 δεν είναι πλέον απαραίτητα. Θα "
+#~ "χρησιμοποιούνται μόνο για λόγους συμβατότητας."
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "Θέλετε να εκτελέσετε τον δαίμονα sshd;"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "Το πακέτο αυτό περιέχει το πελάτη ssh και το δαίμονα sshd."
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr ""
+#~ "Κανονικά ο δαίμονας sshd (Δαίμονας Ασφαλούς Κελύφους) θα εκτελείται για "
+#~ "απομακρυσμένες συνδέσεις μέσω ssh."
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "Αν ενδιαφέρεστε μόνο για τη χρήση του πελάτη ssh για εξερχόμενες "
+#~ "συνδέσεις από αυτόν τον υπολογιστή και δεν επιθυμείτε να συνδέεστε σε "
+#~ "αυτόν μέσω ssh, τότε μπορείτε να απενεργοποιήσετε τον sshd στο σημείο "
+#~ "αυτό."
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr ""
+#~ "Οι επιλογές περιβάλλοντος κελύφους για τα κλειδιά είναι πλέον παρωχημένες."
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "Αυτή η έκδοση του OpenSSH απενεργοποιεί τις επιλογές περιβάλλοντος "
+#~ "κελύφους για δημόσια κλειδιά εξ ορισμού, ώστε να αποφευχθούν ορισμένου "
+#~ "τύπου επιθέσεις (για παράδειγμα, LD_PRELOAD). Αν χρησιμοποιείτε αυτήν την "
+#~ "επιλογή σε ένα αρχείο authorized_keys, έχετε υπόψιν σας ότι τα "
+#~ "συγκεκριμένα κλειδιά δεν θα χρησιμοποιούνται έως ότου αφαιρεθεί η επιλογή "
+#~ "αυτή."
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "Για να επανενεργοποιήσετε αυτήν την επιλογή, ορίστε "
+#~ "\"PermitUserEnvironment yes\" στο αρχείο /etc/ssh/sshd_config μετά το "
+#~ "τέλος της αναβάθμισης, έχοντας υπόψιν την προειδοποίηση στη σελίδα "
+#~ "οδηγιών του sshd_config(5)."
+
+#~ msgid "Privilege separation"
+#~ msgstr "Διαχωρισμός Προνομίων"
+
+#~ msgid ""
+#~ "Privilege separation is turned on by default, so if you decide you want "
+#~ "it turned off, you need to add \"UsePrivilegeSeparation no\" to /etc/ssh/"
+#~ "sshd_config."
+#~ msgstr ""
+#~ "Ο διαχωρισμός προνομίων είναι ενεργοποιημένος εξ ορισμού, οπότε αν "
+#~ "αποφασίσετε ότι θέλετε να τον απενεργοποιήσετε, πρέπει να προσθέσετε την "
+#~ "ρύθμιση \"UsePrivilegeSeparation no\" στο αρχείο sshd_config."
+
+#~ msgid "Enable Privilege separation"
+#~ msgstr "Ενεργοποίηση Διαχωρισμού Προνομίων"
+
+#~ msgid ""
+#~ "This version of OpenSSH contains the new privilege separation option. "
+#~ "This significantly reduces the quantity of code that runs as root, and "
+#~ "therefore reduces the impact of security holes in sshd."
+#~ msgstr ""
+#~ "Αυτή η έκδοση του OpenSSH περιλαμβάνει τη νέα επιλογή διαχωρισμού "
+#~ "προνομίων. Αυτό μειώνει δραστικά το ποσοστό των προγραμμάτων που "
+#~ "εκτελούνται ως root, και κατά συνέπεια και τις τρύπες ασφαλείας του sshd."
+
+#~ msgid ""
+#~ "Unfortunately, privilege separation interacts badly with PAM. Any PAM "
+#~ "session modules that need to run as root (pam_mkhomedir, for example) "
+#~ "will fail, and PAM keyboard-interactive authentication won't work."
+#~ msgstr ""
+#~ "Δυστυχώς, ο διαχωρισμός προνομίων δεν συνεργάζεται σωστά με το PAM. "
+#~ "Οποιεσδήποτε μονάδες συνεδρίας (session modules) του PAM που πρέπει να "
+#~ "εκτελεστούν ως root (pam_mkhomedir, για παράδειγμα) θα αποτύχουν, και η "
+#~ "πιστοποίηση μέσω πληκτρολογίου στο PAM δεν θα λειτουργεί."
+
+#~ msgid ""
+#~ "Since you've opted to have me generate an sshd_config file for you, you "
+#~ "can choose whether or not to have privilege separation turned on or not. "
+#~ "Unless you know you need to use PAM features that won't work with this "
+#~ "option, you should enable it."
+#~ msgstr ""
+#~ "Εφόσον έχετε επιλέξει να δημιουργήθεί αυτόματα το αρχείο sshd_config, "
+#~ "μπορείτε να επιλέξετε επίσης αν θέλετε να ενεργοποιήσετε το διαχωρισμό "
+#~ "προνομίων ή όχι. Εκτός αν γνωρίζετε ότι χρειάζεστε να χρησιμοποιήσετε "
+#~ "χαρακτηριστικά του PAM που δε συνεργάζονται με αυτή την επιλογή, "
+#~ "συνιστάται να την ενεργοποιήσετε."

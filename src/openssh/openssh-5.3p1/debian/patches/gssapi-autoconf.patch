@@ -1,0 +1,29 @@
+Description: Update config.h.in following GSSAPI patch
+Author: Colin Watson <cjwatson@debian.org>
+Forwarded: not-needed
+Last-Updated: 2010-02-27
+
+Index: b/config.h.in
+===================================================================
+--- a/config.h.in
++++ b/config.h.in
+@@ -1372,6 +1372,9 @@
+ /* Use btmp to log bad logins */
+ #undef USE_BTMP
+ 
++/* platform uses an in-memory credentials cache */
++#undef USE_CCAPI
++
+ /* Use libedit for sftp */
+ #undef USE_LIBEDIT
+ 
+@@ -1390,6 +1393,9 @@
+ /* Define if you want smartcard support using sectok */
+ #undef USE_SECTOK
+ 
++/* platform has the Security Authorization Session API */
++#undef USE_SECURITY_SESSION_API
++
+ /* Define if you have Solaris process contracts */
+ #undef USE_SOLARIS_PROCESS_CONTRACTS
+ 

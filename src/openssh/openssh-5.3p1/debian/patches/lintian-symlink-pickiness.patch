@@ -1,0 +1,20 @@
+Description: Fix picky lintian errors about slogin symlinks
+Author: Colin Watson <cjwatson@debian.org>
+Last-Update: 2010-02-28
+
+Index: b/Makefile.in
+===================================================================
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -293,9 +293,9 @@
+ 	$(INSTALL) -m 644 ssh-keysign.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-keysign.8
+ 	$(INSTALL) -m 644 ssh-vulnkey.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-vulnkey.1
+ 	-rm -f $(DESTDIR)$(bindir)/slogin
+-	ln -s ./ssh$(EXEEXT) $(DESTDIR)$(bindir)/slogin
++	ln -s ssh$(EXEEXT) $(DESTDIR)$(bindir)/slogin
+ 	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/slogin.1
+-	ln -s ./ssh.1 $(DESTDIR)$(mandir)/$(mansubdir)1/slogin.1
++	ln -s ssh.1 $(DESTDIR)$(mandir)/$(mansubdir)1/slogin.1
+ 
+ install-sysconf:
+ 	if [ ! -d $(DESTDIR)$(sysconfdir) ]; then \

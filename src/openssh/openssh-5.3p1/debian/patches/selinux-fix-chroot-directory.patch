@@ -1,0 +1,35 @@
+Description: Make ChrootDirectory work with SELinux
+ After chroot() is called the SE Linux context setting won't work unless
+ /selinux and /proc are mounted in the chroot environment.  Even worse, if
+ the user has control over the chroot environment then they may be able to
+ control the context that they get (I haven't verified this).
+Author: Russell Coker <russell@coker.com.au>
+Bug-Debian: http://bugs.debian.org/556644
+Last-Update: 2010-02-27
+
+Index: b/session.c
+===================================================================
+--- a/session.c
++++ b/session.c
+@@ -1522,6 +1522,10 @@
+ # endif /* USE_LIBIAF */
+ #endif
+ 
++#ifdef WITH_SELINUX
++		ssh_selinux_setup_exec_context(pw->pw_name);
++#endif
++
+ 		if (options.chroot_directory != NULL &&
+ 		    strcasecmp(options.chroot_directory, "none") != 0) {
+                         tmp = tilde_expand_filename(options.chroot_directory,
+@@ -1550,10 +1554,6 @@
+ 
+ 	if (getuid() != pw->pw_uid || geteuid() != pw->pw_uid)
+ 		fatal("Failed to set uids to %u.", (u_int) pw->pw_uid);
+-
+-#ifdef WITH_SELINUX
+-	ssh_selinux_setup_exec_context(pw->pw_name);
+-#endif
+ }
+ 
+ static void

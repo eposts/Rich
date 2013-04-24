@@ -1,0 +1,22 @@
+Description: Don't duplicate backslashes when displaying server banner
+Origin: vendor, http://bugs.gentoo.org/show_bug.cgi?id=244222
+Author: Michał Górny <gentoo@mgorny.alt.pl>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1533
+Bug-Debian: http://bugs.debian.org/505378
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/425346
+Bug-Gentoo: http://bugs.gentoo.org/show_bug.cgi?id=244222
+Last-Update: 2010-02-27
+
+Index: b/sshconnect2.c
+===================================================================
+--- a/sshconnect2.c
++++ b/sshconnect2.c
+@@ -477,7 +477,7 @@
+ 		if (len > 65536)
+ 			len = 65536;
+ 		msg = xmalloc(len * 4 + 1); /* max expansion from strnvis() */
+-		strnvis(msg, raw, len * 4 + 1, VIS_SAFE|VIS_OCTAL);
++		strnvis(msg, raw, len * 4 + 1, VIS_SAFE|VIS_OCTAL|VIS_NOSLASH);
+ 		fprintf(stderr, "%s", msg);
+ 		xfree(msg);
+ 	}

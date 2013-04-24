@@ -1,0 +1,22 @@
+Description: ssh(1): Document that '-S none' disables connection sharing.
+Author: martin f krafft <madduck@debian.org>
+Author: Colin Watson <cjwatson@debian.org>
+Bug-Debian: http://bugs.debian.org/471437
+Last-Update: 2010-02-28
+
+Index: b/ssh.1
+===================================================================
+--- a/ssh.1
++++ b/ssh.1
+@@ -559,7 +559,10 @@
+ the listen port will be dynamically allocated on the server and reported
+ to the client at run time.
+ .It Fl S Ar ctl_path
+-Specifies the location of a control socket for connection sharing.
++Specifies the location of a control socket for connection sharing,
++or the string
++.Dq none
++to disable connection sharing.
+ Refer to the description of
+ .Cm ControlPath
+ and

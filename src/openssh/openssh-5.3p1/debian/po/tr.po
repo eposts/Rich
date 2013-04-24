@@ -1,0 +1,377 @@
+# Turkish translation of ssh.
+# This file is distributed under the same license as the ssh package.
+# Mert Dirik <mertdirik@gmail.com>, 2008.
+# Recai Oktaş <roktas@omu.edu.tr>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ssh\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-23 16:24+0200\n"
+"Last-Translator: Mert Dirik <mertdirik@gmail.com>\n"
+"Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Etkin SSH oturumlarının öldürülmesi riskini göze alıyor musunuz?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Kurmuş olduğunuz /etc/init.d/ssh sürümü büyük olasılıkla, çalışıyor olan tüm "
+"sshd süreçlerini öldürecek. Bu yükseltmeyi bir ssh oturumu üzerinden "
+"yapıyorsanız büyük olasılıkla bağlantınız kopacak ve yükseltme işlemi yarım "
+"kalacak."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Bu sorunu dosyanın (/etc/init.d/ssh) stop bölümündeki start-stop-daemon "
+"satırına \"--pidfile /var/run/sshd.pid\" ekleyerek düzeltebilirsiniz."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Yeni makine anahtarı zorunlu"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Şu anda kullandığınız makine anahtarı, /etc/ssh/ssh_host_key, IDEA "
+"algoritmasıyla şifrelenmiş. OpenSSH bu anahtar dosyasını yönetemez; ayrıca "
+"eski (özgür olmayan) SSH kurulumuna ait ssh-keygen aracı da ulaşılabilir "
+"değil."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Yeni bir makine anahtarı oluşturmanız gerekiyor."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Sorgula-yanıtla yöntemiyle kimlik doğrulama devre dışı bırakılsın mı?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Şu anda kullanılan OpenSSH yapılandırmasında parola ile kimlik doğrulama "
+"devre dışı gibi görünüyor. OpenSSH'ın yeni versiyonlarında kullanıcıların "
+"parola kullanarak oturum açmalarını engellemek için (belki  bunun yerine "
+"açık anahtar yöntemiyle kimlik doğrulamayı kullanabilirsiniz) sorgula-"
+"yanıtla yöntemiyle kimlik doğrulamayı devre dışı bırakmalı ya da PAM "
+"yapılandırmanızın Unix parola dosyası yöntemiyle kimlik doğrulamaya izin "
+"vermediğinden emin olmalısınız."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Sorgula-yanıtla kimlik doğrulamayı devre dışı bırakırsanız, kullanıcılar "
+"parola kullanarak oturum açamayacaklar. Eğer sorgula-yanıtla kimlik "
+"doğrulamayı etkin halde bırakırsanız (öntanımlı yanıt); /etc/pam.d/ssh'daki "
+"PAM yapılandırmasını ayarlamadığınız sürece 'PasswordAuthentication no' "
+"seçeneği bir işe yaramayacak."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Saldırıya açık makine anahtarları yeniden yaratılacak"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Bu sistemdeki OpenSSH sunucusu makine anahtarlarından bazıları OpenSSL'in "
+"rastgele sayı üreticisi bozuk olan bir versiyonuyla oluşturulmuş. Sonuç "
+"olarak, bu makine anahtarları iyi bilinen bir gruptan ve kaba kuvvet "
+"saldırılarına açık. Bu anahtarlar yeniden oluşturulmalı."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Bu sistemin kullanıcılarını makine anahtarı değişikliğinden haberdar "
+"etmelisiniz, çünkü  kullanıcılar sisteme ilk oturum açışlarında uyarılacak "
+"ve kullanıcılara oturum açmaya devam etmek isteyip istemedikleri sorulacak. "
+"Yeni makine anahtarlarının parmak izlerini görmek için yükseltmeden sonra "
+"'ssh-keygen -l -f MAKİNE_ANAHTARI_DOSYASI' komutunu kullanın."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Etkilenmiş makine anahtarları:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Kullanıcı anahtarları da bu sorundan etkilenebilir.  'ssh-vulnkey' komutu bu "
+"sorun için kısmi bir test olarak kullanılabilir. Ayrıntılar için  /usr/share/"
+"doc/openssh-server/README.compromised-keys.gz belgesine bakın."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "OpenSSH için yeni yapılandırma dosyası oluşturulsun mu?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Debian 'Potato' dağıtımından yükseltme yapmış gibi görünüyorsunuz. "
+#~ "OpenSSH'ın bu sürümü Debian 'Potato' ile birlikte gelen sürümden çok "
+#~ "farklı bir yapılandırma dosyası kullanmakta. Bu paket şimdi sizin için "
+#~ "yeni bir yapılandırma dosyası (/etc/ssh/sshd.config) üretebilir. Bu dosya "
+#~ "yeni sunucu sürümüyle çalışacak, fakat eski sürümde yaptığınız "
+#~ "özelleştirmeleri içermeyecek."
+
+#~| msgid ""
+#~| "Please note that this new configuration file will set the value of "
+#~| "'PermitRootLogin' to yes (meaning that anyone knowing the root password "
+#~| "can ssh directly in as root). It is the opinion of the maintainer that "
+#~| "this is the correct default (see README.Debian for more details), but "
+#~| "you can always edit sshd_config and set it to no if you wish."
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Yeni yapılandırma dosyasının 'PermitRootLogin' seçeneğini 'yes' olarak "
+#~ "ayarlayacağını (yani root parolasını bilen herhangi birisinin ssh ile "
+#~ "doğrudan sisteme girebileceğini) unutmayın. Öntanımlı ayarın böyle olması "
+#~ "gerektiği paket geliştiricisinin kanaatidir (ayrıntılar için README."
+#~ "Debian dosyasını okuyun)."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Şimdi yeni bir yapılandırma dosyası üretmeyi seçmeniz kuvvetle tavsiye "
+#~ "edilir."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "Uyarı: yeni bir makine anahtarı oluşturmalısınız"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr "Uyarı: telnetd kurulmuş --- bu muhtemelen iyi bir fikir değil"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Telnetd paketini (eğer gerçekten telnet erişimi sunmak gibi bir "
+#~ "zorunluluğunuz yoksa) kaldırmanızı veya en azından, telnet oturumlarında "
+#~ "şifrelenmemiş giriş/parola ve oturum bilgilerinin ağ üzerinden "
+#~ "gönderilmemesi olanağını sunan telnetd-ssl paketini kurmanızı öneririm."
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr "Uyarı: rsh-server kurulmuş --- bu muhtemelen iyi bir fikir değil"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "rsh-server'ın kurulu durumda olması muhtemelen ssh'ı kurmakla elde "
+#~ "edilmesini istediğiniz güvenliği gölgeliyor. Bu paketi kaldırmanızı "
+#~ "öneririm."
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr ""
+#~ "ssh-keysign'ın root haklarıyla kurulmasını (SUID root) ister misiniz?"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr ""
+#~ "ssh-keysign yardımcı aracının SUID bit'i etkinleştirilerek kurulması "
+#~ "seçeneğine sahipsiniz."
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "Eğer ssh-keysign'ı SUID yaparsanız, SSH'ın makine tabanlı Protokol 2 "
+#~ "yetkilendirmesini kullanabileceksiniz."
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "Bu konuda şüpheliyseniz, size SUID'li kurulumu öneririm. Eğer bu "
+#~ "sorunlara yol açarsa ileride fikrinizi değiştirmek için şu komutu "
+#~ "çalıştırabilirsiniz: dpkg-reconfigure ssh"
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "Sadece SSH protokol 2'ye izin ver"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "OpenSSH'ın bu sürümü ssh'ın çok daha güvenli olan sürüm 2 protokolünü "
+#~ "destekler. Sürüm 1 protokolünün etkisizleştirilmesini teşvik ediyoruz, "
+#~ "bununla beraber böyle yapılması halinde düşük düzeyli makinelerde "
+#~ "işlemler yavaşlayacak ve eski sürüm ssh istemcilerinden (\"potato\" ile "
+#~ "birlikte gelen ssh istemcisi gibi) bağlantı kurulamayacaktır."
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "Protokol 1 anahtarları çok farklı olduğundan, sadece protokol 2 "
+#~ "bağlantılarına izin vermeniz halinde bu anahtarları kullanamayacağınızı "
+#~ "da lütfen not edin."
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "Bu ayar hakkındaki fikriniz ileride değişirse, sshd_config dosyasında "
+#~ "yapacağınız işlemlerle ilgili talimatları README.Debian dosyasında "
+#~ "bulabilirsiniz."
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr ""
+#~ "NOT: X11 yönlendirme ve yetkilendirmesi öntanımlı olarak "
+#~ "etkisizleştirilmiştir."
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "Güvenlik gerekçeleriyle ssh'ın Debian sürümünde ForwardX11 ve "
+#~ "ForwardAgent seçenekleri öntanımlı ``off'' değerine ayarlıdır."
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "Güvendiğiniz sunucular için bu seçeneği yapılandırma dosyalarından "
+#~ "birinde veya -X komut satırı seçeneğiyle etkinleştirebilirsiniz."
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr ""
+#~ "Daha ayrıntılı bilgi /usr/share/doc/ssh/README.Debian dosyasında "
+#~ "bulunabilir."
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "yapılandırma dosyalarındaki ssh2 anahtarları birleştirildi"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "Sürüm 3 itibarıyla OpenSSH artık, ssh1 ve ssh2 için ayrı yapılandırma "
+#~ "dosyaları kullanmamaktadır. Bu, authorized_keys2 ve known_hosts2 "
+#~ "dosyalarının artık gerekmediği anlamına gelir. Geriye doğru uyumluluğu "
+#~ "korumak için bu dosyalar yine de okunacaktır."
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "SSH sunucusu sshd'yi çalıştırmak istiyor musunuz?"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "Bu paket hem ssh istemcisini hem de sshd sunucusunu içeriyor."
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr ""
+#~ "Güvenli Kabuk Sunucusu sshd, normalde ssh ile uzaktan girişlere izin "
+#~ "vermek için çalıştırılacaktır."
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "Eğer amacınız sadece bu makinedeki dış bağlantılar için ssh istemcisini "
+#~ "kullanmak ise ve bu makineye ssh'la girmek gibi bir şeyi de "
+#~ "istemiyorsanız, sshd sunucusunu bu adımda etkisizleştirebilirsiniz."
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr "Anahtarlara ilişkin ortam seçenekleri geçerliliğini kaybetmiştir"
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "OpenSSH'ın bu sürümü belirli atakları önlemek için (ör. LD_PRELOAD) ortak "
+#~ "anahtarlara ait ortam seçeneklerini öntanımlı olarak etkisizleştirir. "
+#~ "Eğer bu seçeneği bir authorized_keys dosyasında kullanıyorsanız, ilgili "
+#~ "seçenek silininceye kadar bu anahtarın artık çalışmayacağını unutmayın."
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "Bu seçeneği tekrar etkinleştirmek için, sshd_config(5) kılavuz "
+#~ "sayfasındaki uyarı notunu dikkate alarak, sshd yükseltmesi "
+#~ "tamamlandığında /etc/ssh/ssh_config dosyasında \"PermitUserEnvironment yes"
+#~ "\" satırını kullanın."

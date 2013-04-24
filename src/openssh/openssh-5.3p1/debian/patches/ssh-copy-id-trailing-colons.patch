@@ -1,0 +1,25 @@
+Description: ssh-copy-id: Strip trailing colons from hostname
+Author: Karl Goetz <karl@kgoetz.id.au>
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1530
+Bug-Debian: http://bugs.debian.org/226172
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/249706
+Last-Update: 2010-02-27
+
+Index: b/contrib/ssh-copy-id
+===================================================================
+--- a/contrib/ssh-copy-id
++++ b/contrib/ssh-copy-id
+@@ -38,10 +38,10 @@
+   exit 1
+ fi
+ 
+-{ eval "$GET_ID" ; } | ssh $1 "umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys" || exit 1
++{ eval "$GET_ID" ; } | ssh ${1%:} "umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys" || exit 1
+ 
+ cat <<EOF
+-Now try logging into the machine, with "ssh '$1'", and check in:
++Now try logging into the machine, with "ssh '${1%:}'", and check in:
+ 
+   .ssh/authorized_keys
+ 

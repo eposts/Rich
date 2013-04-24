@@ -1,0 +1,121 @@
+Secure your Linux server with a chroot jail or TCP wrappers
+
+Solution provider's takeaway: Ensure that the servers in your customers' Linux environments are secure by learning about the chroot jail utility or TCP wrappers. Read how to send commands and perform other tasks with each of these methods.
+This chapter excerpt on System Administration: Core Concepts (download PDF) is taken from A Practical Guide to Fedora and Red Hat Enterprise Linux (5th Edition). Solution providers will get information and analysis on Fedora 12 and RHEL 5, including topics such as the Linux command line, new GUIs and desktop customization. Learn best practices for system/network administration tasks, including new coverage of network monitoring with Cacti.
+
+The job of a system administrator is to keep one or more systems in a useful and convenient state for users. On a Linux system, the administrator and user may both be you, with you and the computer being separated by only a few feet. Or the system administrator may be halfway around the world, supporting a network of systems, with you being simply one of thousands of users. A system administrator can be one person who works part-time taking care of a system and perhaps is also a user of the system. Or the administrator can be several people, all working full-time to keep many systems running.
+
+Securing a server
+ou may secure a server either by using TCP wrappers or by setting up a chroot jail.
+
+TCP Wrappers: Client/Server Security (hosts.allow and hosts.deny)
+When you open a local system to access from remote systems, you must ensure that the following criteria are met:
+
+    Open the local system only to systems you want to allow to access it.
+    Allow each remote system to access only the data you want it to access.
+    Allow each remote system to access data only in the appropriate manner (readonly, read/write, write only).
+
+As part of the client/server model, TCP wrappers, which can be used for any daemon that is linked against libwrap.so, rely on the /etc/hosts.allow and /etc/hosts.deny files as the basis of a simple access control language. This access control language defines rules that selectively allow clients to access server daemons on a local system based on the client's address and the daemon the client tries to access.
+
+Each line in the hosts.allow and hosts.deny files has the following format:
+
+daemon_list : client_list [: command]
+
+where daemon_list is a comma-separated list of one or more server daemons (such as rpcbind, vsftpd, or sshd), client_list is a comma-separated list of one or more clients (see Table 11-3, "Specifying a client," on page 442), and the optional command is the command that is executed when a client from client_list tries to access a server daemon from daemon_list.
+
+When a client requests a connection with a local server, the hosts.allow and hosts.denyfiles are consulted in the following manner until a match is found:
+
+    If the daemon/client pair matches a line in hosts.allow, access is granted.
+    If the daemon/client pair matches a line in hosts.deny, access is denied.
+    If there is no match in either the hosts.allow or hosts.deny files, access is granted.
+
+The first match determines whether the client is allowed to access the server. When either hosts.allow or hosts.deny does not exist, it is as though that file was empty. Although it is not recommended, you can allow access to all daemons for all clients by removing both files.
+
+Examples For a more secure system, put the following line in hosts.deny to block all access:
+
+$ cat /etc/hosts.deny
+...
+ALL : ALL : echo '%c tried to connect to %d and was blocked' >> /var/log/tcpwrappers.log
+
+This line prevents any client from connecting to any service, unless specifically permitted in hosts.allow. When this rule is matched, it adds a line to the file named /var/log/tcpwrappers.log. The %c expands to client information and the %d expands to the name of the daemon the client attempted to connect to.
+
+With the preceding hosts.deny file in place, you can include lines in hosts.allow that explicitly allow access to certain services and systems. For example, the following hosts.allow file allows anyone to connect to the OpenSSH daemon (ssh, scp, sftp) but allows telnet connections only from the same network as the local system and users on the 192.168. subnet:
+
+$ cat /etc/hosts.allow
+sshd : ALL
+in.telnet : LOCAL
+in.telnet : 192.168.* 127.0.0.1
+...
+
+The first line allows connection from any system (ALL) to sshd. The second line allows connection from any system in the same domain as the server (LOCAL). The third line matches any system whose IP address starts with 192.168. as well as the local system.
+
+Setting up a chroot jail
+On early UNIX systems, the root directory was a fixed point in the filesystem. On modern UNIX variants, including Linux, you can define the root directory on a perprocess basis. The chroot utility allows you to run a process with a root directory other than /.
+
+The root directory appears at the top of the directory hierarchy and has no parent: A process cannot access any files above the root directory (because they do not exist). If, for example, you run a program (process) and specify its root directory as /home/sam/jail, the program would have no concept of any files in /home/sam or above: jail is the program's root directory and is labeled / (not jail).
+
+By creating an artificial root directory, frequently called a (chroot) jail, you prevent a program from accessing or modifying—possibly maliciously—files outside the directory hierarchy starting at its root. You must set up a chroot jail properly to increase security: If you do not set up the chroot jail correctly, you can actually make it easier for a malicious user to gain access to a system than if there were no chroot jail.
+
+Using chroot
+
+Creating a chroot jail is simple: Working as root, give the command /usr/sbin/chroot directory. The directory becomes the root directory and the process attempts to run the default shell. Working with root privileges from the /home/sam directory, give the following command to set up a chroot jail in the (existing) /home/sam/jail directory:
+
+#/usr/sbin/chroot /home/sam/jail
+/usr/sbin/chroot: cannot run command '/bin/bash': No such file or directory
+
+This example sets up a chroot jail, but when it attempts to run the bash shell, the operation fails. Once the jail is set up, the directory that was named jail takes on the name of the root directory, /, so chroot cannot find the file identified by the pathname /bin/bash. In this situation the chroot jail is working but is not useful.
+
+Getting a chroot jail to work the way you want is a bit more complicated. To have the preceding example run bash in a chroot jail, you need to create a bin directory in jail (/home/sam/jail/bin) and copy /bin/bash to this directory. Because the bash binary is dynamically linked to shared libraries, you need to copy these libraries into jail as well. The libraries go in lib.
+
+The next example creates the necessary directories, copies bash, uses ldd to display the shared library dependencies of bash, and copies the necessary libraries into lib. The linux-gate.so.1 file is a dynamically shared object (DSO) provided by the kernel to speed system calls; you do not need to copy it to the lib directory.
+
+$ pwd
+/home/sam/jail
+$ mkdir bin lib
+$ cp /bin/bash bin
+$ ldd bin/bash
+linux-gate.so.1 => (0x0089c000)
+libtinfo.so.5 => /lib/libtinfo.so.5 (0x00cdb000)
+libdl.so.2 => /lib/libdl.so.2 (0x00b1b000)
+libc.so.6 => /lib/libc.so.6 (0x009cb000)
+/lib/ld-linux.so.2 (0x009ae000)
+$ cp /lib/{libtinfo.so.5,libdl.so.2,libc.so.6,ld-linux.so.2} lib
+
+Now that everything is set up, you can start the chroot jail again. Although all of the setup can be done by an ordinary user, you have to run chroot as Superuser:
+
+$ su
+Password:
+# /usr/sbin/chroot .
+bash-3.2# pwd
+/
+bash-3.2# ls
+bash: ls: command not found
+bash-3.2#
+
+This time the chroot finds and starts bash, which displays its default prompt (bash- 3.2#). The pwd command works because it is a shell builtin (page 247). However, bash cannot find the ls utility (it is not in the chroot jail). You can copy /bin/ls and its libraries into the jail if you want users in the jail to be able to use ls.
+
+To set up a useful chroot jail, first determine which utilities the users of the chroot jail will need. Then copy the appropriate binaries and their libraries into the jail. Alternatively, you can build static copies of the binaries and put them in the jail without installing separate libraries. (The statically linked binaries are considerably larger than their dynamic counterparts. The base system with bash and the core utilities exceeds 50 megabytes.) You can find the source code for most of the common utilities in the bash and coreutils SRPMS (source rpm) packages.
+
+Whichever technique you choose, you must put a copy of su in the jail. The su command is required to run programs while working as a user other than root. Because root can break out of a chroot jail, it is imperative that you run a program in the chroot jail as a user other than root.
+
+The dynamic version of su distributed by Fedora/RHEL requires PAM and will not work within a jail. You need to build a copy of su from the source to use in a jail. By default, any copy of su you build does not require PAM. Refer to "GNU Configure and Build System" on page 513 for instructions on how to build packages such as coreutils (which includes su).
+
+To use su, you must copy the relevant lines from the /etc/passwd and /etc/shadow files into files with the same names in the etc directory inside the jail.
+
+Tip
+Keeping multiple chrootjails
+If you plan to deploy multiple chroot jails, it is a good idea to keep a clean copy of the bin and libfiles somewhere other than in one of the active jails.
+
+Running a service in a chroot jail
+Running a shell inside a jail has limited usefulness. In reality, you are more likely to need to run a specific service inside the jail. To run a service inside a jail, you must make sure all files needed by that service are inside the jail. The format of a command to start a service in a chroot jail is
+
+# /usr/sbin/chroot jailpath /bin/su user daemonname &
+
+where jailpath is the pathname of the jail directory, user is the username that runs the daemon, and daemonname is the path (inside the jail) of the daemon that provides the service.
+
+Some servers are already set up to take advantage of chroot jails. For example, you can set up DNS so that named runs in a jail (page 804), and the vsftpd FTP server can automatically start chroot jails for clients (page 658).
+
+Security considerations
+Some services need to be run as root, but they release their root privileges once started (Procmail and vsftpd are examples). If you are running such a service, you do not need to put su inside the jail.
+
+A process run as root could potentially escape from a chroot jail. For this reason, you should always su to another user before starting a program running inside the jail. Also, be careful about which setuid (page 205) binaries you allow inside a jail—a security hole in one of them could compromise the security of the jail. In addition, make sure the user cannot access executable files that he uploads.

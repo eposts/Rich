@@ -1,0 +1,181 @@
+# translation of openssh.po to TAMIL
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dr.T.Vasudevan <agnihot3@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2007-04-24 20:52+0530\n"
+"Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
+"Language-Team: TAMIL <ubuntu-l10n-tam@lists.ubuntu.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr ""
+"செயலில் இருக்கும் எஸ்எஸ்ஹெச் அமர்வுகளை செயல் நீக்கம் செய்வதை அனுமதிக்க விரும்புகிறீகளா?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"இப்போது நிறுவியுள்ள /etc/init.d/ssh பதிப்பு எல்லா செயலில் இருக்கும் எஸ்எஸ்ஹெச் "
+"அமர்வுகளை செயல் நீக்கம் செய்யும். நீங்கள் இந்த மேம்படுத்தலை எஸ்எஸ்ஹெச் அமர்வு வழியாக செய்து "
+"கொண்டிருந்தால் வலை இணப்பு துண்டிக்கப்பட்டு மேம்படுத்தல் நிறைவுறாது."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"இது கைமுறையாக கோப்பின் நிறுத்து பகுதியில் ஆரம்பி-நிறுத்து-கிங்கரன் வரியில் \"--"
+"pidfile /var/run/sshd.pid\" என சேர்ப்பதால் சரி செய்யப்படும்."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "புதிய புரவலன் விசை கட்டாயமாகும்"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"இப்போதைய /etc/ssh/ssh_host_key இல் உள்ள புரவலன் விசை IDEA அல்காரிதத்தில் குறியீடு "
+"செய்யப்பட்டது. இந்த புரவலன் விசையை ஓபன் எஸ்எஸ்ஹெச் கையாள இயலாது. பழைய பதிப்பிலிருந்து "
+"ssh-keygen பயன்பாடு இருப்பில் இல்லை."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "நீங்கள் கைமுறையாக புதிய புரவலன் விசையை உருவாக்க வேண்டும்."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "கேள்வி பதில் உறுதிப்படுத்தலை செயலிழக்க செய்யவா?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"இப்போதைய ஓபன் எஸ்எஸ்ஹெச் சேவையக வடிவமைப்பில் கடவுச்சொல் உறுதிப்படுத்தலை செயலிழக்க "
+"செய்துள்ளது. (திறந்த விசையை பயன்படுத்தி) பயனர்கள் உள்நுழைவதை தடுக்க சமீபத்திய ஓபன் "
+"எஸ்எஸ்ஹெச் பதிப்புகளில் நீங்கள் கேள்வி பதில் உறுதிப்படுத்தலை செயலிழக்க செய்ய வேண்டும். அல்லது "
+"உங்கள் பாம் வடிவமைப்பு யூனிக்ஸ் கடவுச்சொல் கோப்பு உறுதிப்படுத்தலை ஏற்காதவாறு அமைக்க "
+"வேண்டும்."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"நீங்கள் கேள்வி பதில் உறுதிப்படுத்தலை செயலிழக்க செய்தால் பயனர்கள் கடவுச்சொற்களை பயன் படுத்தி "
+"உள் நுழைய இயலாது. அதை செயல் படச்செய்தால் (கடவுச்சொல் உறுதிப்படுத்தல் தேர்வு இல்லை) "
+"'PasswordAuthentication no'  தேர்வு /etc/pam.d/ssh இல் பாம் வடிவமைப்பை சரி "
+"செய்தால் ஒழிய பயன் தராது."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "ஓபன் எஸ்எஸ்ஹெச் க்கு புதிய வடிவமைப்பு கோப்பை உருவாக்கவா?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "இந்த பதிப்பு ஓபன் எஸ்எஸ்ஹெச் நீங்கள் மேம்படுத்தும் டெபியன் பொடாடோவில் அமைந்த பதிப்பை "
+#~ "காட்டிலும் மிக மாறிய வடிவம் உடையது. இந்த பொதி இப்போது புதிய வடிவமைப்பு கோப்பை "
+#~ "உருவாக்கும். (/etc/ssh/sshd.config). இது புதிய சேவையக பதிப்பில் வேலை செய்யும். "
+#~ "ஆனால் நீங்கள் பழைய பதிப்பில் செய்த தனிப்படுத்தல் இயலாது."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "இந்த புதிய வடிவமைப்பு கோப்பு 'PermitRootLogin மதிப்பை ஆம் என அமைக்கும் என "
+#~ "அறியவும். அதாவது ரூட் கடவுச்சொல் அறிந்த யாரும் ரூட்டாக ஓபன் எஸ்எஸ்ஹெச் வழியே "
+#~ "உள்நுழையலாம். இந்த வடிவமைப்பு குறித்து மேலும் README.Debian கோப்பில் காணவும்."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "நீங்கள் இப்போது புதிய வடிவமைப்பு கோப்பை உருவாக்க தேர்வு செய்ய பலமாக "
+#~ "பரிந்துரைக்கப்படுகிறது."

@@ -1,0 +1,22 @@
+To use the sample code provided, simple run the resultant 
+executable after performing a make. The binary expects one
+or more files or directories as arguments. If you run the 
+code in the background, you can then enter commands and see 
+the notification output interleaved with the commands, which 
+is useful for educational purposes.
+
+For example: 
+dowem@Heliotropic:~/Inotify-article/inotify-sample $ ./inotify_test /home/dowem
+
+
+This begins a watch on the directory /home/dowem. 
+From another terminal simply perform some file creations, deletions etc, 
+and watch as the information is presented in real time from the sample
+executable. 
+
+
+We trust that the code helps you understand the inotify Linux kernel 
+mechanism. Happy hacking!
+
+Note: File event_queue.c updated Sept 10, 2010 to correct problem
+with assignment involving null pointer. Thanks to Yann Stephan.

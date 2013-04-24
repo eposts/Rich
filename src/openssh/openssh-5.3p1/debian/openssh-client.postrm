@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+#DEBHELPER#
+
+abort_transfer_conffile () {
+	CONFFILE="$1"
+	if [ -e "$CONFFILE.moved-by-preinst" ]; then
+		echo >&2 "Aborting ownership transfer of conffile $CONFFILE ..."
+		mv -f "$CONFFILE.moved-by-preinst" "$CONFFILE"
+		return 0
+	fi
+}
+
+case $1 in
+	abort-install|abort-upgrade)
+		abort_transfer_conffile /etc/ssh/moduli
+		abort_transfer_conffile /etc/ssh/ssh_config
+		;;
+	purge)
+		# Remove all non-conffiles that ssh might create, so that we
+		# can smoothly remove /etc/ssh if and only if the user
+		# hasn't dropped some other files in there. Conffiles have
+		# already been removed at this point.
+		rm -f /etc/ssh/moduli /etc/ssh/primes
+		rm -f /etc/ssh/ssh_known_hosts /etc/ssh/ssh_known_hosts2
+		rmdir --ignore-fail-on-non-empty /etc/ssh
+
+		if which delgroup; then
+			delgroup --quiet ssh > /dev/null || true
+		fi
+		;;
+esac
+
+exit 0

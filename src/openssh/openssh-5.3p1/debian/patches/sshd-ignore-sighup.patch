@@ -1,0 +1,19 @@
+Description: sshd: Ignore subsequent SIGHUPs during re-exec
+ Prevents two HUPs in quick succession from resulting in sshd dying.
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1692
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/497781
+Last-Update: 2010-02-28
+
+Index: b/sshd.c
+===================================================================
+--- a/sshd.c
++++ b/sshd.c
+@@ -318,6 +318,7 @@
+ 	close_listen_socks();
+ 	close_startup_pipes();
+ 	alarm(0);  /* alarm timer persists across exec */
++	signal(SIGHUP, SIG_IGN); /* will be restored after exec */
+ 	execv(saved_argv[0], saved_argv);
+ 	logit("RESTART FAILED: av[0]='%.100s', error: %.100s.", saved_argv[0],
+ 	    strerror(errno));

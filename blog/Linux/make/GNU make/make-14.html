@@ -1,0 +1,1152 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第十四章 Makefile的约定</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+p.MsoBodyTextFirstIndent
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	line-height:150%;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_14"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第十四章</span><span lang="EN-US" style="font-size: 18.0pt"> Makefile</span><span style="font-size: 18.0pt; font-family: 楷体_GB2312">的约定</span></a></h1>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本章讨论书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时需要遵循的约定。工具“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Automake</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以帮助我们创建一个遵循这些约定的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">发布的软件包中的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">都是按照这些标准的约定来书写的。因此理解本章的内容，可帮助很快的熟悉那些开源代码的结构。而对于我们，在为一个工程书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，也尽量遵循这些约定。虽然并没有强求你这么做，但是建议你还是按照已约定的规则来书写自己的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span></p>
+<h2><a name="_gnu_make_14.1"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">基本的约定</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 18.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 4.5pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本节讨论书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时应遵循的一些基本约定，由于不同版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">之间的差异。可能在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">环境中正常工作的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，换成其它版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行时会发生错误。为了最大可能的兼容不同版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，这里给出了一些基本的约定。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+所有的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中应该包含这样一行：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">SHELL = /bin/sh</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+其目的是为了避免变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SHELL</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”在有些系统上可能继承同名的系统环境变量而导致错误。虽然在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中不会出现这种问题（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SHELL</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的默认值是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">/bin/sh</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，它不同于系统环境变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SHELL</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+小心处理后缀和隐含规则。不同</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">可识别后缀和隐含规则可能不同，它可能会导致混乱或者错误。因此在特定</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中明确限定可识别的后缀是一个不错的主意。在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中应该这样做：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.SUFFIXES:</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.SUFFIXES: .c 
+.o</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+第一行首先取消掉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">默认的可识别后缀列表，第二行重新指定可识别的后缀列表。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+小心处理规则中的路径。当需要处理指定目录的的文件时，应该明确给出路径。如“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">./</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”代表当前目录，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(srcdir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”代表源代码目录。没有指定明确路径，那么就意味着是当前目录。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">./</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（当前目录，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的发布软件包中的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录）和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(srcdir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的区别和重要，我们可以通过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”脚本的选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--srcdir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定源代码所在的目录（可参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">发布的软件包中的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">脚本）。当源代码目录和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录不同时，规则：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.1 : foo.man 
+sedscript</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp; sed –e 
+sedscript foo.man &gt; $@</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+将执行失败，是因为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">sedscript</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”并不在当前目录（当然，处理这种错误的手段可能有很多，诸如使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VPATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等）。当前目录只是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录，并不是软件包目录。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VPATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定搜索目录。当规则只有一个依赖文件时。应该使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">自动化变量</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$&lt;</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”代替出现在命令的依赖文件和目标文件（其它版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，只在隐含规则中设置自动化变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$&lt;</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。对于一个这样的规则：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.o : bar.c</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp; $(CC) –I. –I$(srcdir) 
+$(CFLAGS) –c bar.o –o foo.o</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们在</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中应该以这种方式来书写：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.o : bar.c</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp; $(CC) –I. –I$(srcdir) 
+$(CFLAGS) –c $&lt; –o $@</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+另外，对于有多个依赖的规则，为了规则能被正确执行。应该在规则的命令行中明确的指定文件的完整路径名。例如第一个例子就可以这样写（需要在规则之前使用“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VPATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定搜索目录）：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.1 : foo.man 
+sedscript</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp; sed –e $(srcdir)/sedscript 
+$(srcdir)/foo.man &gt; $@</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的发布软件包中，包括了很多非源代码的文件。诸如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的输出文件、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Automake</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Bison</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Flex</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等文件。这些文件在发布时也存在于源代码的目录中。因此</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中对它们的重建也应该是在源代码目录下，而不应该在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+相反的，对于那些本来就不存在于源代码目录下的文件，也不应该将它们创建在源代码的目录下。<b>要记住，</b></span><b><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的过程不应该以任何方式修改源代码，或者改变源代码目录的结构。</span></b></p>
+<h2><a name="_gnu_make_14.2"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+规则命令行的约定</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本节讨论书写规则命令的一些约定，在书写多系统兼容的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，需要注意不同系统的命令存在不兼容。这里对规则命令行做出了一些书写的基本约定：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，规则的命令（包括其他的脚本文件，如：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）应该是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">sh</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”而不是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">csh</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”所支持的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于创建和安装的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”脚本以及</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的命令，除使用下面所列出的之外，避免使用其它命令：</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-indent: 48.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">cat cmp cp diff 
+echo egrep expr false grep install-info</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ln ls mkdir mv 
+pwd rm rmdir sed sleep sort tar test touch true</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">dist</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的命令行中可以使用压缩工具“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gzip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对于可使用的这些工具命令，尽量使用它的通用选项。不要使用那些只在特定系统上有效的选项。如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mkdir 
+-p</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这个命令在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">系统上能够很好的工作，但是其它很多系统却并不支持“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mkdir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-p</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+尽量不要在规则的命令行中创建符号连接文件（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ln</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令）。因为有些系统不支持符号连接文件（对于类</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的系统我们基本上没有问题，可能这里所说的是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MS-DOS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">系统的系统。我想大家也没有兴趣或者说没有必要在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MS-DOS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">下写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，所以这个限制基本可以不考虑）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+重建或者安装目标（一般是伪目标）的命令行可使用编译器或者相关工具程序，这些命令使用一个变量来表示。这样做的好处是：当修改一个命令时，只需要更改代表命令的变量的值就可以了。对于以下的这些命令程序：</span></p>
+<p class="MsoNormal" style="text-indent: 48.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ar &nbsp;bison &nbsp;cc 
+&nbsp;flex &nbsp;install &nbsp;ld &nbsp;ldconfig &nbsp;lex</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">make &nbsp;makeinfo 
+&nbsp;ranlib &nbsp;texi2dvi &nbsp;yacc</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在规则中的命令中，使用以下这些变量来代表它们：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial">
+&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 10.5pt; font-family: Arial">$(AR) $(BISON) 
+$(CC) $(FLEX) $(INSTALL) $(LD) $(LDCONFIG)$(LEX)</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 10.5pt; font-family: Arial">$(MAKE) $(MAKEINFO) 
+$(RANLIB) $(TEXI2DVI) $(YACC)</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果规则的命令行需要使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ranlib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ldconfig</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等这些工具时，需要考虑当前的系统是否支持这些工具。当在不支持它的系统中执行包含此命令的规则时，要能够给出提示信息（提示原因是告诉用户系统不支持此命令，但不应该出现错误而退出执行）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对以上没有列出的其它命令，在规则的命令行使用时也应该都是通过变量的形式。例如如下的这些命令：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">chgrp chmod 
+chown mknod</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中为这些命令组件定义一个代表它的变量（如：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CHRP</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CHMOD</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">等，在命令行中就可以使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(CHMOD)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">来引用）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+书写多系统兼容</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时需要遵循以上的约定。如果只考虑一种系统时，以上的这些约定中可以灵活处理，比如：在命令组件的使用上，我们就可以使用这个系统独具的那些命令组件；系统支持符号链接时，我们就可以在命令行重创建一个符号链接文件。<b>对于上边的第</b></span><b><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">6</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">个约定，强烈建议大家都遵循。</span></b></p>
+<h2><a name="_gnu_make_14.3"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">代表命令变量</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在我们书写的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中应该讲所有的命令、选项作为变量定义，方便后期对命令的修改和对选项的修改。就是说用户可以通过修改一个变量值来重新指定所要执行的命令，或者来控制命令执行的选项、参数等。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+当使用变量来表示命令时，如果规则中需要使用此命令时，可通过引用代表此命令的变量来实现。例如：定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CC 
+= gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，规则中就可使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(CC)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来引用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。对于一些件管理器工具如“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ln</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">rm</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mv</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等，可以不为它们定义变量，而直接使用。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+所有命令执行的参数选项也应该定义一个变量（可称为命令的选项变量）。在命令变量（代表一个命令的变量）后添加“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">FLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来命名这个选项变量。例如：变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">编译器（命令变量为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CC</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）的命令行选项变量；变量</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">YFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时命令“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">yacc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（命令变量为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">YACC</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）选项变量；变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">LDFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是命令“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ld</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（命令变量为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">LD</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）的选项变量等。在所有需要执行预处理的命令行应该使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CCFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的执行参数；同样任何需要执行链接的命令行中使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">LDFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为命令的执行参数。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">编译器的编译选项变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中通常是为编译所有的源文件提供选项变量。为编译一个特定文件增加的选项，不应包含在变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中。编译特定文件（或者一类特定文件）时，如果需要使用特定的选项参数，可以将这些选项写在编译它所执行规则的命令行中（也可以使用</span><span lang="EN-US" style="font-family: 楷体_GB2312; font-size: 12.0pt; line-height: 150%; color: #0000FF">目标指定变量</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">或者</span><span style="font-family: 楷体_GB2312; font-size: 12.0pt; line-height: 150%; color: #0000FF">模式指定变量</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。例如：</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="SV" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">CFLAGS = -g</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ALL_CFLAGS = -I 
+$(CFLAGS)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.c.o:</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 41.2pt; margin-left: 30.9pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -c $(CPPFLAGS) 
+$(ALL_CFLAGS) $&lt;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="SV" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例子中，变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定编译选项为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-g</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，在本例中它作为缺省的编译选项。对于所有源文件的编译都使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-g</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。双后缀规则的命令行中为编译生成“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件指定了另外的选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-I. 
+-g </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+”</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在所有编译命令行中，变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”应该放在编译选项列表的最后。这样可以保证当命令行参数出现重复时，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”始终效的。另外，在任何调用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">编译器的命令行中都应该使用选项变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，无论是进行编译还是连接。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果需要在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中实现文件安装的规则，那么就需要在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">INSTALL</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。此变量代表安装命令（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。同时在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中也需要定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">INSTALL_PROGRAM</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">INSTALL_DATA</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">INSTALL_PROGRAM</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的缺省值都是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(INSTALL)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”；“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">INSTALL_DATA</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的缺省值是“</span>${INSTALL} 
+–m 644<span lang="EN-US" style="font-family: 楷体_GB2312; font-size: 12.0pt; line-height: 150%; color: black">”）。<span lang="EN-US">可以</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">使用这些变量，来安装可执行程序或者非可执行程序到指定位置。例如：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(INSTALL_PROGRAM) 
+foo $(bindir)/foo</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(INSTALL_DATA) 
+libfoo.a $(libdir)/libfoo.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+另外，也可以使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">DESTDIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来指定目标需要安装的目录。通常也可以不在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">DESTDIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，可通过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令行参数的形式来指定。例如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+DESTDIR=exec/ install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。因此上边的命令就可以这样实现：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(INSTALL_PROGRAM) 
+foo $(DESTDIR)$(bindir)/foo</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 41.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(INSTALL_DATA) 
+libfoo.a $(DESTDIR)$(libdir)/libfoo.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装命令中使用文件名而不是目录名作为第二个参数。每一个需要安装的文件使用单独的命令（包括安装一个目录）。</span></p>
+<h2><a name="_gnu_make_14.4"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.4<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">安装目录变量</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，安装目录同样需要使用变量来指定，这样就可以很方便的修改文件的安装路径。安装目录的标准命名下边将一一介绍。这些变量基于标准的文件系统结构，这些变量的变种在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SVR4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">4.4BSD</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Ultrix 
+v4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">以及其它现代操作系统中都有使用。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+以下所罗列的两个变量是指定安装文件的根目录。所有其它安装目录都是它们的子目录。注意：文件不能直接安装在这两个目录下。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+prefix</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个变量（通常作为实际文件安装目录的父目录，可以理解为其它实际文件安装目录的前缀）用于构造下列（除这两个安装根目录以外的其它目录变量）变量的缺省值。变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”缺省值是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。创建完整的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">系统时，变量</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的缺省值是空值，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的符号连接符文件。（如果使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具，它应该写成“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@prefix@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。注意：当更改了变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”以后重新执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make 
+install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，不会导致可执行程序（终极目标）的重建。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+exec_prefix</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个前缀用于构造下列变量的缺省值。变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">exec_prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”缺省值是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（如果使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具，它应该写为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@exec_prefix@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。通常，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(exec_prefix)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录中的子目录下存放和机器相关文件（例如可执行文件和例程库）。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录的子目录存放通用的一般文件。同样：改变“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">exec_prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值之后执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make 
+install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，不会重建可执行程序（终极目标）。</span></p>
+<p class="MsoNormal" style="text-indent: 24.0pt; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+文件（包括可执行程序、说明文档等）的安装目录：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+bindir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装一般用户可运行的可执行程序。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/bin</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(exec_prefix)/bin</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@bindir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+sbindir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装可在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中直接调用执行的程序。这些命令仅对系统管理员有用（系统管理工具）。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/sbin</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，要求在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(exec_prefix)/sbin</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@sbindir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+libexecdir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装那些通常不是由用户直接使用，而是由其它程序调用的可执行程序。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/libexec</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，要求在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(exec_prefix)/libexec</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@libexecdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+程序执行时使用的数据文件可从以下两个方面来分类：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: -21.0pt; margin-left: 57.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+是否可由程序更改。分为两类：程序可修改和不可修改的文件（虽然用户可编辑其中某些文件）。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: -21.0pt; margin-left: 57.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+是否和体系结构相关。分为两类：体系结构无关文件，可被所有类型的机器共享；体系结构相关文件，仅可被相同类型机器、操作系统共享；其它的就是那些不能被任何两个机器共享的文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这样就存在六种不同的可能。除编译生成的目标文件（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件）和库文件以外，不推荐使用那些和特定机器体系结构相关的文件，使用和体系无关的数据文件更加简洁，而且，它的实现也并不非常困难。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中应该使用以下变量为不同类型的文件指定对应的安装目录：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+datadir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装和机器体系结构无关的只读数据文件。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/share</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/share</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@datadir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(infodir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(includedir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为例外情况，参考后续对它们的详细描述。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+sysconfdir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装从属于特定机器的只读数据文件，包括：主机配置文件、邮件服务、网络配置文件、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/etc/passwd</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件等。所有该目录下的文件都应该是普通文本文件（可识别的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">ASCII</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”码文本文件）。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/etc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/etc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@sysconfdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+不要将可执行文件安装在这个目录下（可执行文件的安装目录应该是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(libexecdir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(sbindir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。也不要在这个目录下安装那些需要更改的文件（系统的配置文件等）。这些文件应该安装在目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(localstatedir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”下。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+sharedstatedir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装那些可由程序运行时修改的文件，这些文件与体系结构无关。通常它的值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/com</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，要求在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/com</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@sharedstatedir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+localstatedir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装那些可由程序运行时修改的文件，但这些文件和体系结构相关。用户没有必要通过直接修改这些文件来配置软件包，对于不同的配置文件，将它们放在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(datadir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(sysconfdir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录中。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(localstatedir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”值通常为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/var</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/var</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@localstatedir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+libdir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于存放编译后的目标文件（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）文件库文件（文档文件或者执行的共享库文件）。不要在此目录下安装可执行文件（可执行文件应该安装在目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(libexecdir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”下）。变量</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">libdir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">值通常为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/lib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(exec_prefix)/lib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@libdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+infodir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装软件包的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black"> 
+Info </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+文件。它的缺省值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@infodir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+lispdir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装软件包的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Emacs 
+Lisp </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+文件的目录。它的缺省值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/share/emacs/site-lisp</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/share/emacs/site-lisp</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。当使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具时，应将写为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@lispdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。为了保证“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@lispdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”能够正常工作，需要在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">configure.in</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件中包含如下部分：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+</span></p>
+<p class="MsoNormal" style="margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt;text-indent:13.8pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">lispdir</span><span lang="SV" style="font-size: 12.0pt; font-family: Arial">='${datadir}/emacs/site-lisp'</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt;text-indent:13.8pt"><b><i>
+<span lang="SV" style="font-size: 12.0pt; font-family: Arial">AC_SUBST(lispdir)</span></i></b></p>
+<p class="MsoNormal" style="margin-left: 42.0pt">
+<span lang="SV" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: blue">
+includedir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装用户程序源代码使用“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">#include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”包含的头文件。它的缺省值为：“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，使用时应写为：“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+（使用“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">@includedir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+除</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">外的大多数编译器不会在目录“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中搜寻头文件，因此这种方式只适用</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">编译器。这一点应该不是一个问题，因为很多情况下一些库需要</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">才能工作。对那些依靠其它编译器的库文件，需要将头文件安装在两个地方，一个由变量</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">includedir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定，另一个由变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">oldincludedir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+oldincludedir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+它所指定的目录也同样用于安装头文件，这些头文件用于非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的编译器。它的缺省值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。（使用“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@oldincludedir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在安装头文件时，需要判断变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">oldincludedir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值是否为空。如果为空，就不使用它进行头文件的安装（一般是安装完成“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”下的头文件之后才安装此目录下的头文件）。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一个软件包的安装不能替换该目录下已经存在的头文件，除非是同一个软件包（重新使用相同的软件包在此目录下安装头文件）。例如，软件包“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”需要在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">oldincludedir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的目录下安装一个头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">foo.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，可安装的条件为：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">1.
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(oldincludedir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录下不存在头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">foo.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”；</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">2.
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+已经存在头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">foo.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，存在的头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">foo.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是之前软件包“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”安装的。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+检查头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">foo.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是否来自于软件包</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，需要在头文件的注释中包含一个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">magic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”字符串，使用命令“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">grep</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来在该文件中查找这个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">magic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">风格的帮助文件需要安装在以下目录中：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: blue">mandir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装该软件包的帮助文档（如果有）的顶层目录。它的缺省值为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">/usr/local/man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，要求在使用时应写为：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(prefix)/man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具时，应该为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">@@mandir@@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+man1dir</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+用于安装帮助文档的第一节（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">man 
+1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。它的缺省值为：“</span>$(mandir)/man1<span lang="EN-US" style="font-family: 楷体_GB2312; font-size: 12.0pt; line-height: 150%; color: black">”。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+man2dir</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+用于安装帮助文档的第二节（</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man 
+2</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">）。它的缺省值为：“</span>$(mandir)/man2<span lang="EN-US" style="font-family: 楷体_GB2312; font-size: 12.0pt; color: black">”。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">...</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">不要将</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU
+</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+软件的原始文档作为帮助页。应该编写使用手册。帮助页仅仅是为了帮助用户在</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">上方便运行</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">软件，它是附属的运行程序。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+manext</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+文件名扩展字，它是对安装手册的扩展。以点号（</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">.</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">）开始的十进制数。缺省值为：“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">.1</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+man1ext</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">帮助文档的第一节（</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man 
+1</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">）的文件名扩展字。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+man2ext</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">帮助文档的第二节（</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man 
+2</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">）的文件名扩展字。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">...</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+当一个软件包的帮助手册有多个章节时，使用这些变量代替“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">manext</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”。（第一节“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man1ext</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”，第二节“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man2ext</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”，第三节“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">man3ext</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”……）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; layout-grid-mode: char; text-autospace: ideograph-numeric ideograph-other; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+而且下列这些变量也应该在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中定义：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+srcdir</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此变量指定的目录是需要编译的源文件所在的目录。该变量的值在使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”脚本对软件包进行配置时产生的。（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Autoconf</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具，应该书写为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">srcdir 
+= @srcdir@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例如：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装的普通目录路径前缀。</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+注意：该目录在开始安装前必须存在</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+prefix = /usr/local</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+exec_prefix = $(prefix)</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+放置“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令使用的可执行程序</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+bindir = $(exec_prefix)/bin</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+编译器需要的目录</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+libexecdir = $(exec_prefix)/libexec</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+软件包的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件所在目录</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+infodir = $(prefix)/info</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在用户标准指定的目录下安装大量文件时，可以将这些文件分类安装在指定目录的多个子目录下。可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中实现一个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”伪目标来描述安装这些文件的命令（包括创建子目录，安装文件到对应的子目录中）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在发布的软件包中，不能强制要求用户必须指定这些安装目录的变量。使用一套标准的安装目录变量来指定安装目录，当用户需要指定安装目录时，通过修改变量定义来指定具体的目录，在用户没有指定的情况下，使用默认的目录。</span></p>
+<h2><a name="_gnu_make_14.5"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.5<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Makefile</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">的标准目标名</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">发布的软件包的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，必须包含以下这些目标：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">all</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此目标的动作是编译整个软件包。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">all</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”应该为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的终极目标。该目标的动作不重建任何文档（只编译所有的源代码，生成可执行程序）；</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件应该作为发布文件的一部分，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">DVI</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件只在明确指定的时候才应该被重建。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+缺省情况下，对所有源程序的编译和连接应该使用选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">-g</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，是最终的可执行程序中包含调试信息。当最终的可执行程序不需要包含调试信息时，可使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”去掉可执行程序中的调试符号以减小最终的程序大小。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+install</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此目标的动作是完成程序的编译并将最终的可执行程序、库文件等拷贝到安装的目录。如果只是验证这些程序是否可被正确安装，它的动作应该是一个测试安装动作。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装时一般不要对可执行程序进行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（去掉可执行程序内部的调试信息）。存在另外一个目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，它实现安装的同时完成对可执行程序</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+保证目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的动作不更改程序创建目录（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">builid</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录）下的任何文件，对这个目录下文件的修改（重建或者更新）是目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">all</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”所要定义的动作。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目标定义的动作在安装目录不存在时，能够创建这些不存在的安装目录。这些目录包括：变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">exec_prefix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的目录和所有必要的子目录。完成此任务的方式可以使用下边介绍的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">installdirs</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目标。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在安装</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档的命令前使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">-</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”忽略这安装命令的错误，这样可以避免在没有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Unix 
+man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档的系统上执行安装时出现错误。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档的方法是使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">INSTALL_DATA</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”将</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档拷贝到“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(infodir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录下去，如果存在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令则执行它。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是一个编辑</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">dir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件的程序，更新或者修改“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文档的入口和目录；它是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Texinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">软件包的一部分。这里有一个安装</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档的例子：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(DESTDIR)$(infodir)/foo.info: foo.info</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(POST_INSTALL)</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可能在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（当前目录）存在一个新的文档，而不是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">srcdir</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+-if test -f foo.info; then d=.; \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+else d=$(srcdir); fi; \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(INSTALL_DATA) $$d/foo.info $(DESTDIR)$@; \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+#</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">如果</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install-info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令存在则运行它</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">if</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”代替在命令行前的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这样，就可以看到运行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install-info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">产生的真正错误</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(SHELL) 
+-c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是因为在一些</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+遇到未知的命令不会运行失败</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+if $(SHELL) -c 'install-info --version' \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 84.35pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&gt;/dev/null 2&gt;&amp;1; then \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;install-info --dir-file=$(DESTDIR)$(infodir)/dir \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;$(DESTDIR)$(infodir)/foo.info; \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else true; fi</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令需要分为三类：正常命令、预安装命令和安装后命令。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+uninstall</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+删除所有已安装文件——由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">创建的文件拷贝。规则所定义的命令不能修改编译目录下的文件，仅仅是删除安装目录下的文件。像</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目标的命令一样，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">uninstall</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目标的命令也分为三类。参考</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="#_安装命令列表">
+14.6 <span lang="EN-US" style="font-family: 楷体_GB2312">安装命令分类</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+install-strip</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的动作类似，但是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">指定的命令在安装时对可执行文件进行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（去掉程序内部的调试信息）。它的定义如下：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 63.25pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 10.5pt; line-height: 150%; font-family: Arial; color: black">
+install-strip:</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 63.25pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<b>
+<span lang="EN-US" style="font-size: 10.5pt; line-height: 150%; font-family: Arial; color: black">
+$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' &nbsp;</span><i><span lang="EN-US" style="font-size: 10.5pt; line-height: 150%; font-family: Arial">install</span></i></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果软件包的存在安装脚本时，目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">所定义的命令就不能是对目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的引用，它仅仅完成对可执行文件的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不应该直接在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录下对可执行文件进行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，应该是对安装目录下的可执行文件进行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。就是说“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">install-strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”所定义的命令不能对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目录下的文件产生影响。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一般不建议安装时对可执行文件进行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，因为去掉可执行文件的调试信息后，如果在程序中存在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">bug</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，就不能通过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gdb</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">对程序进行调试。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+clean</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+清除当前目录下编译生成的所有文件，这些文件在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">过程中产生。注意，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">动作不能删除软件包的配置文件，同时也不能删除</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时创建的那些文件（诸如：目录、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">生成的信息记录文件等）。因为这些文件都是发布版本的一部分。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">.dvi</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件，当它不作为发布版本的一部分时，可以删除。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+distclean</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+类似于目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，但增加删除当前目录下的的配置文件、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">build</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">过程产生的文件。目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">distclean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的删除命令应该删除软件包中所有非发布文件。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+mostlyclean</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+类似于目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，但是可保留一些编译生成的文件，避免在下次编译时对这些文件重建。例如，对于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">来说，此目标指定的命令不删除文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">libgcc.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，因为在绝大多数情况下它都不需要重新编译。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+maintainer-clean</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此目标所定义的命令几乎会删除所有当前目录下能够由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">重建的文件。典型的，包括目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">distclean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”删除的文件、由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Bison</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">生成的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">源文件、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tags</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">记录文件、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Ifon</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件等。但是有一个例外，就是执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make 
+maintainer-clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不能删除“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这个配置脚本文件，即使“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">生成。因为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">configure</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是软件包的配置脚本。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">maintainer-clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”应该只能由维护软件包的用户使用，而不能被普通用户使用。因为它会删除一些软件包的发布文件，而重建这些文件可能需要专门的工具。因此我们在使用此目标是需要小心。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+为了让用户能够在执行前得到提示，通常目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">maintainer-clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的命令以下两行为开始：</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+@echo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">“该命令用于维护此软件包的用户使用”；</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+@echo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">“它删除的文件可能需要使用特殊的工具来重建。”</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+TAGS</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">此目标所定义的命令完成对该程序的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tags</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">记录文件的更新。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tags</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件通常可被编辑器作为符号记录文件，例如</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">vim</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Emacs</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">等。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+info</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+产生必要的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档。此目标应该按照如下书写：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+</span></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">info: foo.info</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.info: 
+foo.texi chap1.texi chap2.texi</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(MAKEINFO) 
+$(srcdir)/foo.texi</span></i></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+必须在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">MAKEINFO</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，代表命令工具</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">makeinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，该工具是发布软件</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Texinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一部分。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的发布程序会和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档会被一同创建，这意味着</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档是在源文件的目录下。用户在创建发布软件时，一般情况下，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">不更新</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档，因为它们已经更新到最新了。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">dvi</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+为所有的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Texinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件创建对应的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">DVI</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。例如：</span></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">dvi: foo.dvi</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+</i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.dvi: 
+foo.texi chap1.texi chap2.texi</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 48.2pt; margin-left: 42.0pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(TEXI2DVI) $(srcdir)/foo.texi</span></i></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+必须在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">TEXI2DVI</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。它代表命令工具</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">texi2dvi</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，该工具是发布软件</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Texinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">一部分。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+规则中也可以没有命令行，这样</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">程序会自动为它推导对应的命令。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+dist</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此目标指定的命令创建发布程序的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。创建的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件应该是这个软件包的目录，文件名中也可以包含版本号（就是说创建的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件在解包之后应该是一个目录）。例如，发布的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc 
+1.40</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件解包的目录为“</span>gcc-1.40<span lang="EN-US" style="font-family: 楷体_GB2312; font-size: 12.0pt; line-height: 150%; color: black">”。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常的做法是是创建一个空目录，如使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">ln</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">或</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">cp</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将所需要的文件加入到这个目录中，之后对这个目录使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">进行打包。打包之后的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gzip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">压缩。例如，实际的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc 
+1.40</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版的发布文件叫“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">gcc-1.40.tar.gz</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">dist</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的依赖文件为软件包中所有的非源代码的文件，因此在使用目标进行发布软件打包压缩之前必须保证这些文件是最新的。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+check</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此目标指定的命令完成所有的自检功能。在执行检查之前，应确保所有程序已经被创建，可以不安装。为了对它们进行测试，需要实现在程序没有安装的情况下被执行的规则命令。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+installcheck</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行安装检查。在执行安装检查之前，确保所有程序已经被创建并且被安装。需要注意的是：安装目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">$(bindir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是否在搜索路径中。</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent:24.1pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: blue">
+installdirs</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">installdirs</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”创建安装目录以及它的子目录在很多场合是非常有用的。脚本“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">mkinstalldirs</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”就是为了实现这个目的而编写的；发布的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Texinfo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">软件包中就包含了这个脚本文件。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的规则可以这样书写：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+确保所有安装目录（例如</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+$(bindir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）存在，如有必要则创建这些目录</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+installdirs: mkinstalldirs</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(srcdir)/mkinstalldirs $(bindir) $(datadir) \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 96.4pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(libdir) $(infodir) \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 96.4pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(mandir)</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">&nbsp;</span></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+或者可以使用变量“</span><span lang="SV" style="font-size: 12.0pt; line-height: 150%; color: black">DESTDIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+# </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+确保所有安装目录（例如</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+$(bindir)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）存在，如有必要则创建这些目录</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+installdirs: mkinstalldirs</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 72.3pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 35.95pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(srcdir)/mkinstalldirs \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 60.25pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 71.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(DESTDIR)$(bindir)&nbsp; $(DESTDIR)$(datadir) \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 60.25pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 71.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(DESTDIR)$(libdir)&nbsp; $(DESTDIR)$(infodir) \</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 60.25pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 71.9pt">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+$(DESTDIR)$(mandir)</span></b></p>
+<p class="MsoBodyTextFirstIndent" style="text-indent: 0cm; margin-left: 36.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+该规则不能更改软件的编译目录，仅仅是创建程序的安装目录。</span></p>
+<h2><a name="_gnu_make_14.6"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">4.6<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">安装命令分类</span></a></h2>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	在为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">书写“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目标时，需要将其命令分为三类：正常命令、安装前命令和安装后命令。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+正常命令是把文件移动到合适的地方，并设置它们的模式。这个过程不修改任何文件，仅仅是把需要安装的文件从软件包中拷贝到安装目录。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装前命令和安装后命令可能修改某些文件；通常，修改一些配置文件和系统的数据库文件。典型地，安装前命令在正常命令之前执行，安装后命令在正常命令执行后执行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+大多数情况是，安装后命令是运行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install-info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”程序。它所完成的工作不能由正常命令完成，因为它更新了一个文件（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的目录），该文件不能单独的或者完整的从软件包来进行安装，因为它只能在正常安装命令完成安装软件包的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档之后才可正确执行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+大多数程序不需要安装前命令，但应该在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中提供。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”规则的命令分为这三类时，应该在命令之间插入分类行（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">category 
+lines</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。分类行说明了后续需要执行的命令的类别。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+分类行是由一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">[Tab]</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">字符开始的对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">特殊变量的引用，行尾是可选的注释内容。可以使用三个特殊的变量，每一个代表一种类别。分类行执行一个空动作，因为这三个特殊的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">变量没有定义（我们书写的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中也不能定义它们）。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+以下是三种可能的分类行，以及它们的解释：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">
+$(PRE_INSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # </span>
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是安装前命令</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">
+$(POST_INSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # </span>
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是安装后命令</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">
+$(NORMAL_INSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # </span>
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是正常命令</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果安装规则（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">所在的规则）的命令行没有使用分类行，那么在第一个出现的分类行之前的所有的命令行都被认为是正常命令。如果命令行中没有分类行，那么规则的所有命令行都都被认为是正常命令行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对应的，以下这三个是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">uninstall</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令的分类行：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(PRE_UNINSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+#</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是卸载前命令</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(POST_UNINSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+#</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是卸载后命令</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(NORMAL_UNINSTALL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+#</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312">以下是正常命令</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+卸载前命令应该是取消软件包</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Info</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档的入口。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">install</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">或</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+uninstall</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">存在依赖，其作为安装的子例程，那么就应该在每一个依赖目标的命令行开始使用分类行，同时目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">insall</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">uninstall</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行开始也需要使用分类行。这样就可以确保任何调用方式时每一条命令都被正确的分类。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+除下列命令外，安装前命令和安装后命令不应该使用其它命令：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">[ basename bash 
+cat chgrp chmod chown cmp cp dd diff echo</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">egrep expand 
+expr false fgrep find getopt grep gunzip gzip</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">hostname 
+install install-info kill ldconfig ln ls md5sum mkdir</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">mkfifo mknod mv 
+printenv pwd rm rmdir sed sort tee test</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">touch true 
+uname xargs yes</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+按照这种方式分类命令的原因是为了创建二进制的软件包。典型的二进制软件包包括可执行文件、必须安装的其它文件以及它自己的安装文件，因此二进制软件包就不需要任何正常命令、只需要安装前命令和安装后命令。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+创建二进制软件包的程序通过提取安装前命令和安装后命令工作。这里有一个抽取安装前命令的方法：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">make -n install 
+-o all \</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 37.95pt; margin-left: 29.9pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">PRE_INSTALL=pre-install 
+\</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 37.95pt; margin-left: 29.9pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">POST_INSTALL=post-install 
+\</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 37.95pt; margin-left: 29.9pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">NORMAL_INSTALL=normal-install 
+\</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 37.95pt; margin-left: 29.9pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">| gawk -f pre-install.awk</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">pre-install.awk</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可能包括以下内容：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$0 ~ /^\t[ 
+\t]*(normal_install|post_install)[ \t]*$/ {on = 0}</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">on {print $0}</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$0 ~ /^\t[ \t]*pre_install[ 
+\t]*$/ {on = 1}</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+安装前命令的执行结果和软件包的安装</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">脚本的结果一样。</span></p>
+	<hr size="1" width="100%" align="center">
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-15.html">下一章</a>
+	<a href="make-13.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+</body>
+
+</html>

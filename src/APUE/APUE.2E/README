@@ -1,0 +1,30 @@
+Read the file called DISCLAIMER.
+
+Some source changes needed to be made after the book went out for the first
+printing.  I forgot to make corresponding changes in the source tree on the
+system used to develop the book.  The changes are summarized below.
+
+1. lib/recvfd.c and sockets/recvfd.c - needed sys/uio.h on Mac OS X
+2. lib/sendfd.c and sockets/sendfd.c - needed sys/uio.h on Mac OS X
+3. stdio/buf.c - added code for Mac OS X
+4. threadctl/suspend.c - changed wait to waitloc to avoid symbol definition
+	clash on Solaris
+5. include/apue.h - FreeBSD compiles work better if we rely on the default
+	system settings.  Solaris needed a different XOPEN_SOURCE definition
+	and also a CMSG_LEN definition.
+
+To build the source, edit the Make.defines.* file for your system and set
+WKDIR to the pathname of the tree containing the source code.  Then just
+run "make".  It should figure out the system type and build the source for
+that platform automatically.  If you are running on a system other than
+FreeBSD, Linux, Mac OS X, or Solaris, you'll need to modify the makefiles
+to include the settings for your system.  Also, you'll probably need to
+modify the source code to get it to build on a different operating system.
+The example source was compiled and tested using FreeBSD 5.2.1, Linux 2.4.22,
+Mac OS X 10.3, and Solaris 9.
+
+For FAQs, updated source code, and the lost chapter, see http://www.apuebook.com.
+Please direct questions, suggestions, and bug reports to sar@apuebook.com.
+
+Steve Rago
+May 30, 2005

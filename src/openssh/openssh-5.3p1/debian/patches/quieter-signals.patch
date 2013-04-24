@@ -1,0 +1,26 @@
+Description: Reduce severity of "Killed by signal %d"
+ This produces irritating messages when using ProxyCommand or other programs
+ that use ssh under the covers (e.g. Subversion).  These messages are more
+ normally printed by the calling program, such as the shell.
+Author: Peter Samuelson <peter@p12n.org>
+Author: Colin Watson <cjwatson@debian.org>
+Bug-Debian: http://bugs.debian.org/313371
+Last-Update: 2010-02-27
+
+Index: b/clientloop.c
+===================================================================
+--- a/clientloop.c
++++ b/clientloop.c
+@@ -1526,8 +1526,10 @@
+ 		exit_status = 0;
+ 	}
+ 
+-	if (received_signal)
+-		fatal("Killed by signal %d.", (int) received_signal);
++	if (received_signal) {
++		debug("Killed by signal %d.", (int) received_signal);
++		cleanup_exit((int) received_signal + 128);
++	}
+ 
+ 	/*
+ 	 * In interactive mode (with pseudo tty) display a message indicating

@@ -1,0 +1,65 @@
+Description: Partial server keep-alive implementation for SSH1
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1712
+Last-Update: 2010-02-27
+
+Index: b/clientloop.c
+===================================================================
+--- a/clientloop.c
++++ b/clientloop.c
+@@ -502,16 +502,21 @@
+ static void
+ server_alive_check(void)
+ {
+-	if (packet_inc_alive_timeouts() > options.server_alive_count_max) {
+-		logit("Timeout, server not responding.");
+-		cleanup_exit(255);
++	if (compat20) {
++		if (packet_inc_alive_timeouts() > options.server_alive_count_max) {
++			logit("Timeout, server not responding.");
++			cleanup_exit(255);
++		}
++		packet_start(SSH2_MSG_GLOBAL_REQUEST);
++		packet_put_cstring("keepalive@openssh.com");
++		packet_put_char(1);     /* boolean: want reply */
++		packet_send();
++		/* Insert an empty placeholder to maintain ordering */
++		client_register_global_confirm(NULL, NULL);
++	} else {
++		packet_send_ignore(0);
++		packet_send();
+ 	}
+-	packet_start(SSH2_MSG_GLOBAL_REQUEST);
+-	packet_put_cstring("keepalive@openssh.com");
+-	packet_put_char(1);     /* boolean: want reply */
+-	packet_send();
+-	/* Insert an empty placeholder to maintain ordering */
+-	client_register_global_confirm(NULL, NULL);
+ }
+ 
+ /*
+@@ -572,7 +577,7 @@
+ 	 * event pending.
+ 	 */
+ 
+-	if (options.server_alive_interval == 0 || !compat20)
++	if (options.server_alive_interval == 0)
+ 		tvp = NULL;
+ 	else {
+ 		tv.tv_sec = options.server_alive_interval;
+Index: b/ssh_config.5
+===================================================================
+--- a/ssh_config.5
++++ b/ssh_config.5
+@@ -935,7 +935,10 @@
+ .Cm ServerAliveCountMax
+ is left at the default, if the server becomes unresponsive,
+ ssh will disconnect after approximately 45 seconds.
+-This option applies to protocol version 2 only.
++This option applies to protocol version 2 only; in protocol version
++1 there is no mechanism to request a response from the server to the
++server alive messages, so disconnection is the responsibility of the TCP
++stack.
+ .It Cm ServerAliveInterval
+ Sets a timeout interval in seconds after which if no data has been received
+ from the server,

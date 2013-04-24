@@ -1,0 +1,28 @@
+http://windowsdiskless.wordpress.com/how-to/overview-of-solution/
+
+    
+How-To
+    01  Overview of Solution
+    02  Instaling and configuring DHCP Server on Server
+    03  Instaling and configuring TFTP Server on Server
+    04  Putting the necessary files of grub4dos on TFTP Root folder
+    05  Instaling a virtual machine in VirtualBox with CCBoot Client
+    06  Converting the virtual machine .vmdk file to .img with StarWind V2V Converter
+    07  Instaling and configuring StarWind iSCSI SAN with image .img
+    08  Rebuilding the file ipxe.iso with UltraISO
+    09  Editing with notepad++ the menu file ¡®menu.lst¡¯ of TFTP Root
+    10  Testing the solution
+
+Software Requirements
+    CCBoot Client
+    DHCP Server
+    grub4dos
+    IPXE ISO demo
+    Notepad++
+    StartWind V2V Converter
+    StarWind Free SAN iSCSI
+    TFTP Server
+    UltraISO
+    VirtualBox
+    Windows Xp/7/8/2003 or 2008 ISO DVD.
+

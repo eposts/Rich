@@ -1,0 +1,19 @@
+Description: ssh-copy-id: Check exit status of 'ssh-add -L'
+ This fixes behaviour when an agent is running with no identities loaded.
+Author: Adeodato Simó <asp16@alu.ua.es>
+Bug-Debian: http://bugs.debian.org/221675
+Last-Update: 2010-02-27
+
+Index: b/contrib/ssh-copy-id
+===================================================================
+--- a/contrib/ssh-copy-id
++++ b/contrib/ssh-copy-id
+@@ -19,7 +19,7 @@
+     shift         # and this should leave $1 as the target name
+   fi
+ else
+-  if [ x$SSH_AUTH_SOCK != x ] ; then
++  if [ x$SSH_AUTH_SOCK != x ] && ssh-add -L >/dev/null 2>&1; then
+     GET_ID="$GET_ID ssh-add -L"
+   fi
+ fi

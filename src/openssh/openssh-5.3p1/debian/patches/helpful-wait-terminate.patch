@@ -1,0 +1,18 @@
+Description: Mention ~& when waiting for forwarded connections to terminate
+Author: Matthew Vernon <matthew@debian.org>
+Bug-Debian: http://bugs.debian.org/50308
+Last-Update: 2010-02-27
+
+Index: b/serverloop.c
+===================================================================
+--- a/serverloop.c
++++ b/serverloop.c
+@@ -680,7 +680,7 @@
+ 			if (!channel_still_open())
+ 				break;
+ 			if (!waiting_termination) {
+-				const char *s = "Waiting for forwarded connections to terminate...\r\n";
++				const char *s = "Waiting for forwarded connections to terminate... (press ~& to background)\r\n";
+ 				char *cp;
+ 				waiting_termination = 1;
+ 				buffer_append(&stderr_buffer, s, strlen(s));

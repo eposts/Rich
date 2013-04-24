@@ -1,0 +1,2 @@
+# <target name>	<source device>		<key file>	<options>
+pvcrypt             /dev/disk/by-uuid/f2cb3c56-d2da-4d0b-990e-3b74b7421779                   none             luks

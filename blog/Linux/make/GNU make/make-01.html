@@ -1,0 +1,161 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第一章 : 概述</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+span.CharChar
+	{font-family:Arial;
+	}
+h3
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-36.0pt;
+	page-break-after:avoid;
+	tab-stops:list 36.0pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+p
+	{margin-right:0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:宋体;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+ div.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+p.MsoBodyTextFirstIndent
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	line-height:150%;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+-->
+</style>
+</head>
+
+<body>
+
+	<span style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<h1 align="center" style="text-align: center"><font face="楷体_GB2312">
+	<a name="chapter_01">第一章：概述</a></font></h1>
+	</span>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+	<h3>
+<a name="_gnu_make_1.1"><span style="font-size: 14.0pt">1.1 make</span><font face="楷体_GB2312"><span style="font-size: 14pt">概述</span></font></a></h3>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">环境下的程序员如果不会使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">来构建和管理自己的工程，应该不能算是一个合格的专业程序员，至少不能称得上是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">程序员。在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）环境下使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具能够比较容易的构建一个属于你自己的工程，整个工程的编译只需要一个命令就可以完成编译、连接以至于最后的执行。不过这需要我们投入一些时间去完成一个或者多个称之为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的编写。此文件正是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">正常工作的基础。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	所要完成的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件描述了整个工程的编译、连接等规则。其中包括：工程中的哪些源文件需要编译以及如何编译、需要创建那些库文件以及如何创建这些库文件、如何最后产生我们想要得可执行文件。尽管看起来可能是很复杂的事情，但是为工程编写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的好处是能够使用一行命令来完成“自动化编译”，一旦提供一个（通常对于一个工程来说会是多个）正确的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。编译整个工程你所要做的唯一的一件事就是在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	提示符下输入</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令。整个工程完全自动编译，极大提高了效率。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">是一个命令工具，它解释</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的指令（应该说是规则）。在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中描述了整个工程所有文件的编译顺序、编译规则。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">有自己的书写格式、关键字、函数。像</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">语言有自己的格式、关键字和函数一样。而且在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中可以使用系统</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">所提供的任何命令来完成想要的工作。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（在其它的系统上可能是另外的文件名）在绝大多数的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">IDE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">开发环境中都在使用，已经成为一种工程的编译方法。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	目前，系统完整的介绍</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具和如何编写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的中文文档比较少。我整理这个文档就是希望能使众多的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">环境下的程序员能够比较容易的掌握和学会使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。本文所要介绍的是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，采用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Red 
+	Hat FC3</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（包括最新发布的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">系统）所集成的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GUN 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	本文中所有示例均采用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">语言的源程序，因为它是目前最普遍使用的一种语言。当然</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具不仅仅是用来管理</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">语言工程的，那些编译器只要能够在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">下运行的语言所构建的工程都可以使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具来管理。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工作不仅仅可以用来编译源代码，它也可以完成一些其它的功能。例如，有这样的需求：当我们修改了某个或者某些文件后，需要能够根据修改的文件来自动对相关文件进行重建或者更新。那么应该考虑使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具为我们实现这个目的提供了非常有利的支持。工程中根据源文件的修改情况来进行代码的编译正是使用了</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的这个特征。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行时，根据</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的规则检查文件的修改情况，决定是否执行定义的动作（那些修改过的文件将会被重新编译）。这是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的执行依据。</span></p>
+<h3><a name="_gnu_make_1.2"><span lang="EN-US" style="font-size: 14.0pt">1.2</span><span style="font-size: 14.0pt; font-family: 楷体_GB2312"> 准备知识</span></a></h3>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	在开始我们关于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的讨论之前，首先需要明确一些基本概念：</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	编译：把高级语言书写的代码转换为机器可识别的机器指令。编译高级语言后生成的指令虽然可被机器识别，但是还不能被执行。编译时，编译器检查高级语言的语法、函数与变量的声明是否正确。只有所有的语法正确、相关变量定义正确编译器就可以编译出中间目标文件。通常，一个高级语言的源文件都可对应一个目标文件。目标文件在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中默认后缀为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（如“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的目标文件为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<b>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	为了和规则的目标文件相区别。本文将编译高级语言后生成的目标文件成为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。</span></b></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	链接：将多</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件，或者</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件和库文件链接成为可被操作系统执行的可执行程序（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">环境下，可执行文件的格式为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ELF</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”格式）。链接器不检查函数所在的源文件，只检查所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中的定义的符号。将</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中使用的函数和其它</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">或者库文件中的相关符号进行合并，对所有文件中的符号进行重新安排（重定位），并链接系统相关文件（程序启动文件等）最终生成可执行程序。链接过程使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ld</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	静态库：又称为文档文件（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Archive 
+	File</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。它是多个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的集合。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中静态库文件的后缀为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。静态库中的各个成员（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件）没有特殊的存在格式，仅仅是一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的集合。使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”工具维护和管理静态库。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	共享库：也是多个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的集合，但是这些</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件时有编译器按照一种特殊的方式生成（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，共享库文件格式通常为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ELF</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”格式。共享库已经具备了可执行条件）。模块中各个成员的地址（变量引用和函数调用）都是相对地址。使用此共享库的程序在运行时，共享库被动态加载到内存并和主程序在内存中进行连接。多个可执行程序可共享库文件的代码段（多个程序可以共享的使用库中的某一个模块，共享代码，不共享数据）。另外共享库的成员对象可被执行（由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">libdl.so</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">提供支持）。</span></p>
+	<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">参考</span><span style="font-size: 12.0pt; font-family: Arial; color: black">
+	<span lang="EN-US">info ld</span></span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">了解更加详细的关于</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">ld</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">的说明和用法。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222"><hr size="1" width="100%" align="center"></span>
+
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<font size="4"><span style="font-family: 楷体_GB2312"><a href="make-02.html">下一章</a> 
+上一章 <a href="index.html#content">目录</a></span></font></p>
+
+</body>
+
+</html>

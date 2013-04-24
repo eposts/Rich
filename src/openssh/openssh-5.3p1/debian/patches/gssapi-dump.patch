@@ -1,0 +1,24 @@
+Description: GSSAPI configuration dump fixes
+ Add GSSAPIKeyExchange, GSSAPIStrictAcceptorCheck, and
+ GSSAPIStoreCredentialsOnRekey to sshd -T configuration dump.
+ .
+ Forwarded to Simon Wilkinson for inclusion in the GSSAPI patch.
+Author: Colin Watson <cjwatson@debian.org>
+Forwarded: yes
+Last-Updated: 2010-02-27
+
+Index: b/servconf.c
+===================================================================
+--- a/servconf.c
++++ b/servconf.c
+@@ -1624,7 +1624,10 @@
+ #endif
+ #ifdef GSSAPI
+ 	dump_cfg_fmtint(sGssAuthentication, o->gss_authentication);
++	dump_cfg_fmtint(sGssKeyEx, o->gss_keyex);
+ 	dump_cfg_fmtint(sGssCleanupCreds, o->gss_cleanup_creds);
++	dump_cfg_fmtint(sGssStrictAcceptor, o->gss_strict_acceptor);
++	dump_cfg_fmtint(sGssStoreRekey, o->gss_store_rekey);
+ #endif
+ #ifdef JPAKE
+ 	dump_cfg_fmtint(sZeroKnowledgePasswordAuthentication,

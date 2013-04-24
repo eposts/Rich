@@ -1,0 +1,17 @@
+Description: Install authorized_keys(5) as a symlink to sshd(8)
+Author: Tomas Pospisek <tpo_deb@sourcepole.ch>
+Bug-Debian: http://bugs.debian.org/441817
+Last-Update: 2010-02-28
+
+Index: b/Makefile.in
+===================================================================
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -284,6 +284,7 @@
+ 	$(INSTALL) -m 644 sshd_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/sshd_config.5
+ 	$(INSTALL) -m 644 ssh_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/ssh_config.5
+ 	$(INSTALL) -m 644 sshd.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/sshd.8
++	ln -s ../$(mansubdir)8/sshd.8 $(DESTDIR)$(mandir)/$(mansubdir)5/authorized_keys.5
+ 	if [ ! -z "$(INSTALL_SSH_RAND_HELPER)" ]; then \
+ 		$(INSTALL) -m 644 ssh-rand-helper.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-rand-helper.8 ; \
+ 	fi

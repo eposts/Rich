@@ -1,0 +1,70 @@
+#!/bin/sh
+
+set -e
+
+action="$1"
+oldversion="$2"
+
+if [ "$action" = configure ] ; then
+    if dpkg --compare-versions "$oldversion" lt-nl 1:4.3p2-7; then
+        # Replaced by /etc/init.d/ssh.
+        if [ -f /etc/init.d/ssh-krb5 ]; then
+            mv /etc/init.d/ssh-krb5 /etc/init.d/ssh-krb5.dpkg-old
+            update-rc.d ssh-krb5 remove || true
+        fi
+    fi
+
+    # Make sure that GSSAPI is enabled.  If there is no uncommented GSSAPI
+    # configuration, uncomment any commented-out configuration if present
+    # (this will catch the case of a fresh install of openssh-server).
+    # Otherwise, add configuration turning on GSSAPIAuthentication and
+    # GSSAPIKeyExchange.
+    #
+    # If there is some configuration, we may be upgrading from ssh-krb5.  It
+    # enabled GSSAPIKeyExchange without any configuration option.  Therefore,
+    # if it isn't explicitly set, always enable it for compatible behavior
+    # with ssh-krb5.
+    if dpkg --compare-versions "$oldversion" ge 1:4.3p2-9; then
+        :
+    else
+        changed=
+        if grep -qi '^[ 	]*GSSAPI' /etc/ssh/sshd_config ; then
+            if grep -qi '^[ 	]*GSSAPIKeyExchange' /etc/ssh/sshd_config ; then
+                :
+            else
+                changed=true
+                cat >> /etc/ssh/sshd_config <<EOF
+
+# GSSAPI key exchange (added by ssh-krb5 transitional package)
+GSSAPIKeyExchange yes
+EOF
+            fi
+        else
+            changed=true
+            if grep -qi '^#GSSAPI' /etc/ssh/sshd_config ; then
+                perl -pe 's/^\#(GSSAPI(Authentication|KeyExchange))\b.*/$1 yes/i' \
+                    < /etc/ssh/sshd_config > /etc/ssh/sshd_config.dpkg-new
+                chown --reference /etc/ssh/sshd_config \
+                    /etc/ssh/sshd_config.dpkg-new
+                chmod --reference /etc/ssh/sshd_config \
+                    /etc/ssh/sshd_config.dpkg-new
+                mv /etc/ssh/sshd_config.dpkg-new /etc/ssh/sshd_config
+            else
+                cat >> /etc/ssh/sshd_config <<EOF
+
+# GSSAPI authentication (added by ssh-krb5 transitional package)
+GSSAPIAuthentication yes
+GSSAPIKeyExchange yes
+EOF
+            fi
+        fi
+        if [ -n "$changed" ] && [ -e /etc/init/ssh.conf ] ; then
+            stop ssh || true
+            start ssh || true
+        fi
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

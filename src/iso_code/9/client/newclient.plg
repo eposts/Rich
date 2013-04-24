@@ -1,0 +1,26 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: newclient - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16F.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/newclient.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"G:\Book\sourcecode\第九章程序\client\newclient.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16F.tmp" 
+<h3>Output Window</h3>
+Compiling...
+newclient.c
+g:\book\sourcecode\第九章程序\client\newclient.c(165) : warning C4013: '_beginthread' undefined; assuming extern returning int
+
+
+
+<h3>Results</h3>
+newclient.obj - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

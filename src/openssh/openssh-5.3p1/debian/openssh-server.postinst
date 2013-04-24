@@ -1,0 +1,487 @@
+#!/bin/sh -e
+
+action="$1"
+oldversion="$2"
+
+. /usr/share/debconf/confmodule
+db_version 2.0
+
+umask 022
+
+if [ "$action" != configure ]
+  then
+  exit 0
+fi
+
+
+fix_doc_symlink() {
+	if [ ! -L /usr/share/doc/openssh-server ] && \
+	   dpkg --compare-versions "$oldversion" lt-nl 1:4.1p1-5; then
+		rm -rf /usr/share/doc/openssh-server
+		ln -s openssh-client /usr/share/doc/openssh-server
+	fi
+}
+
+check_idea_key() {
+	# check for old host_key files using IDEA, which openssh does not
+	# support
+	if [ -f /etc/ssh/ssh_host_key ] ; then
+		cp -a /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key.check_idea
+		if ssh-keygen -p -N '' -f /etc/ssh/ssh_host_key.check_idea 2>&1 | \
+				grep -q 'unknown cipher' 2>/dev/null; then
+			mv /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key.old
+			mv /etc/ssh/ssh_host_key.pub /etc/ssh/ssh_host_key.pub.old
+		fi
+		rm -f /etc/ssh/ssh_host_key.check_idea
+	fi
+}
+
+
+get_config_option() {
+	option="$1"
+
+	[ -f /etc/ssh/sshd_config ] || return
+
+	# TODO: actually only one '=' allowed after option
+	perl -lne 's/\s+/ /g; print if s/^\s*'"$option"'[[:space:]=]+//i' \
+	   /etc/ssh/sshd_config
+}
+
+
+set_config_option() {
+	option="$1"
+	value="$2"
+
+	perl -le '
+		$option = $ARGV[0]; $value = $ARGV[1]; $done = 0;
+		while (<STDIN>) {
+			chomp;
+			(my $match = $_) =~ s/\s+/ /g;
+			if ($match =~ s/^\s*\Q$option\E\s+.*/$option $value/) {
+				$_ = $match;
+				$done = 1;
+			}
+			print;
+		}
+		print "$option $value" unless $done;' \
+		"$option" "$value" \
+		< /etc/ssh/sshd_config > /etc/ssh/sshd_config.dpkg-new
+	chown --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	chmod --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	mv /etc/ssh/sshd_config.dpkg-new /etc/ssh/sshd_config
+}
+
+
+disable_config_option() {
+	option="$1"
+
+	value="$(get_config_option "$option")"
+	[ "$value" ] || return 0
+
+	perl -le '
+		$option = $ARGV[0];
+		while (<STDIN>) {
+			chomp;
+			(my $match = $_) =~ s/\s+/ /g;
+			# TODO: actually only one "=" allowed after option
+			if ($match =~ s/^(\s*\Q$option\E[[:space:]=]+.*)/#$1/i) {
+				$_ = $match;
+			}
+			print;
+		}' \
+		"$option" \
+		< /etc/ssh/sshd_config > /etc/ssh/sshd_config.dpkg-new
+	chown --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	chmod --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	mv /etc/ssh/sshd_config.dpkg-new /etc/ssh/sshd_config
+}
+
+
+rename_config_option() {
+	oldoption="$1"
+	newoption="$2"
+
+	value="$(get_config_option "$oldoption")"
+	[ "$value" ] || return 0
+
+	perl -le '
+		$oldoption = $ARGV[0]; $newoption = $ARGV[1];
+		while (<STDIN>) {
+			chomp;
+			(my $match = $_) =~ s/\s+/ /g;
+			# TODO: actually only one "=" allowed after option
+			if ($match =~ s/^(\s*)\Q$oldoption\E([[:space:]=]+)/$1$newoption$2/i) {
+				$_ = $match;
+			}
+			print;
+		}' \
+		"$oldoption" "$newoption" \
+		< /etc/ssh/sshd_config > /etc/ssh/sshd_config.dpkg-new
+	chown --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	chmod --reference /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-new
+	mv /etc/ssh/sshd_config.dpkg-new /etc/ssh/sshd_config
+}
+
+
+remove_obsolete_gssapi() {
+	disable_config_option GSSAPINoMICAuthentication
+	disable_config_option GSSUseSessionCCache
+	disable_config_option GSSAPIUseSessionCredCache
+}
+
+
+host_keys_required() {
+	hostkeys="$(get_config_option HostKey)"
+	if [ "$hostkeys" ]; then
+		echo "$hostkeys"
+	else
+		# No HostKey directives at all, so the server picks some
+		# defaults depending on the setting of Protocol.
+		protocol="$(get_config_option Protocol)"
+		[ "$protocol" ] || protocol=1,2
+		if echo "$protocol" | grep 1 >/dev/null; then
+			echo /etc/ssh/ssh_host_key
+		fi
+		if echo "$protocol" | grep 2 >/dev/null; then
+			echo /etc/ssh/ssh_host_rsa_key
+			echo /etc/ssh/ssh_host_dsa_key
+		fi
+	fi
+}
+
+
+create_key() {
+	msg="$1"
+	shift
+	hostkeys="$1"
+	shift
+	file="$1"
+	shift
+
+	if echo "$hostkeys" | grep -x "$file" >/dev/null && \
+	   [ ! -f "$file" ] ; then
+		echo -n $msg
+		ssh-keygen -q -f "$file" -N '' "$@"
+		echo
+		if which restorecon >/dev/null 2>&1; then
+			restorecon "$file.pub"
+		fi
+	fi
+}
+
+
+create_keys() {
+	hostkeys="$(host_keys_required)"
+
+	create_key "Creating SSH1 key; this may take some time ..." \
+		"$hostkeys" /etc/ssh/ssh_host_key -t rsa1
+
+	create_key "Creating SSH2 RSA key; this may take some time ..." \
+		"$hostkeys" /etc/ssh/ssh_host_rsa_key -t rsa
+	create_key "Creating SSH2 DSA key; this may take some time ..." \
+		"$hostkeys" /etc/ssh/ssh_host_dsa_key -t dsa
+}
+
+
+vulnerable_host_keys() {
+	# If the admin has explicitly put the vulnerable keys back, we
+	# assume they can look after themselves.
+	db_fget ssh/vulnerable_host_keys seen
+	if [ "$RET" = true ]; then
+		return 0
+	fi
+
+	hostkeys="$(host_keys_required)"
+	vulnerable=
+	for hostkey in $hostkeys; do
+		[ -f "$hostkey" ] || continue
+		if ssh-vulnkey -q "$hostkey"; then
+			vulnerable="${vulnerable:+$vulnerable }$hostkey"
+		fi
+	done
+	if [ "$vulnerable" ]; then
+		db_subst ssh/vulnerable_host_keys HOST_KEYS "$vulnerable"
+		db_input critical ssh/vulnerable_host_keys || true
+		db_go
+		for hostkey in $vulnerable; do
+			mv "$hostkey" "$hostkey.broken" || true
+			mv "$hostkey.pub" "$hostkey.pub.broken" || true
+		done
+		create_keys
+	fi
+}
+
+
+check_password_auth() {
+	passwordauth="$(get_config_option PasswordAuthentication)"
+	crauth="$(get_config_option ChallengeResponseAuthentication)"
+	if [ "$passwordauth" = no ] && \
+	   ([ -z "$crauth" ] || [ "$crauth" = yes ]); then
+		db_get ssh/disable_cr_auth
+		if [ "$RET" = true ]; then
+			set_config_option ChallengeResponseAuthentication no
+		fi
+	fi
+}
+
+
+move_subsystem_sftp() {
+	subsystem_sftp="$(get_config_option 'Subsystem sftp')"
+	if [ "$subsystem_sftp" = /usr/lib/sftp-server ] || \
+	   [ "$subsystem_sftp" = /usr/libexec/sftp-server ]; then
+		set_config_option 'Subsystem sftp' /usr/lib/openssh/sftp-server
+	fi
+}
+
+
+create_sshdconfig() {
+	if [ -e /etc/ssh/sshd_config ] ; then
+	    # Upgrade an existing sshd configuration.
+
+	    if (dpkg --compare-versions "$oldversion" lt-nl 1:3.8p1-1 && \
+		! grep -iq ^UsePAM /etc/ssh/sshd_config) || \
+	       grep -Eiq '^(PAMAuthenticationViaKbdInt|RhostsAuthentication)' \
+		 /etc/ssh/sshd_config ; then
+		# Upgrade from pre-3.7: UsePAM needed to maintain standard
+		# Debian configuration.
+		# Note that --compare-versions is sadly not reliable enough
+		# here due to the package split of ssh into openssh-client
+		# and openssh-server. The extra grep for some deprecated
+		# options should with any luck be a good enough heuristic.
+		echo -n 'Upgrading sshd_config (old version in .dpkg-old) ...'
+		cp -a /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-old
+		perl -pe 's/^(PAMAuthenticationViaKbdInt|RhostsAuthentication)\b/#$1/i' \
+		    /etc/ssh/sshd_config > /etc/ssh/sshd_config.dpkg-new
+		echo >> /etc/ssh/sshd_config.dpkg-new
+		echo 'UsePAM yes' >> /etc/ssh/sshd_config.dpkg-new
+		chown --reference /etc/ssh/sshd_config \
+				  /etc/ssh/sshd_config.dpkg-new
+		chmod --reference /etc/ssh/sshd_config \
+				  /etc/ssh/sshd_config.dpkg-new
+		mv /etc/ssh/sshd_config.dpkg-new /etc/ssh/sshd_config
+		echo
+	    fi
+
+	    # An empty version means we're upgrading from before the
+	    # package split, so check.
+	    if dpkg --compare-versions "$oldversion" lt 1:3.8.1p1-11; then
+		check_password_auth
+	    fi
+
+	    # libexecdir changed, so fix up 'Subsystem sftp'.
+	    if dpkg --compare-versions "$oldversion" lt 1:4.1p1-1; then
+		move_subsystem_sftp
+	    fi
+
+	    # Remove obsolete GSSAPI options.
+	    if dpkg --compare-versions "$oldversion" lt 1:4.3p2-8; then
+		remove_obsolete_gssapi
+	    fi
+
+	    # This option was renamed in 3.8p1, but we never took care
+	    # of adjusting the configuration file until now.
+	    if dpkg --compare-versions "$oldversion" lt 1:4.7p1-8; then
+		rename_config_option KeepAlive TCPKeepAlive
+	    fi
+
+	    return 0
+	fi
+
+	#Preserve old sshd_config before generating a new one
+	if [ -e /etc/ssh/sshd_config ] ; then 
+	    mv /etc/ssh/sshd_config /etc/ssh/sshd_config.dpkg-old
+	fi
+
+	cat <<EOF > /etc/ssh/sshd_config
+# Package generated configuration file
+# See the sshd_config(5) manpage for details
+
+# What ports, IPs and protocols we listen for
+Port 22
+# Use these options to restrict which interfaces/protocols sshd will bind to
+#ListenAddress ::
+#ListenAddress 0.0.0.0
+Protocol 2
+# HostKeys for protocol version 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+#Privilege Separation is turned on for security
+UsePrivilegeSeparation yes
+
+# Lifetime and size of ephemeral version 1 server key
+KeyRegenerationInterval 3600
+ServerKeyBits 768
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin yes
+StrictModes yes
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+#AuthorizedKeysFile	%h/.ssh/authorized_keys
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+# For this to work you will also need host keys in /etc/ssh_known_hosts
+RhostsRSAAuthentication no
+# similar for protocol version 2
+HostbasedAuthentication no
+# Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+#IgnoreUserKnownHosts yes
+
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords no
+
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+ChallengeResponseAuthentication no
+
+# Change to no to disable tunnelled clear text passwords
+#PasswordAuthentication yes
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosGetAFSToken no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+
+#MaxStartups 10:30:60
+#Banner /etc/issue.net
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+UsePAM yes
+EOF
+}
+
+fix_statoverride() {
+# Remove an erronous override for sshd (we should have overridden ssh)
+	if [ -x /usr/sbin/dpkg-statoverride ]; then
+		if dpkg-statoverride --list /usr/sbin/sshd >/dev/null ; then
+			dpkg-statoverride --remove /usr/sbin/sshd
+		fi
+	fi
+}
+
+fix_sshd_shell() {
+	if getent passwd sshd | grep -q ':/bin/false$'; then
+		usermod -s /usr/sbin/nologin sshd || true
+	fi
+}
+
+setup_sshd_user() {
+	if ! getent passwd sshd >/dev/null; then
+		adduser --quiet --system --no-create-home --home /var/run/sshd --shell /usr/sbin/nologin sshd
+	fi
+}
+
+fix_conffile_permissions() {
+	# Clean up after executable /etc/default/ssh in 1:3.5p1-5. dpkg
+	# doesn't do this for us; see bug #192981.
+	chmod 644 /etc/default/ssh
+}
+
+remove_old_init_links() {
+	# Yes, this only works with the SysV init script layout. I know.
+	# The important thing is that it doesn't actually *break* with
+	# file-rc ...
+	if [ -e /etc/rc2.d/S20ssh ]; then
+		update-rc.d -f ssh remove >/dev/null 2>&1
+	fi
+	rm -f /etc/rc0.d/K??ssh /etc/rc1.d/K??ssh /etc/rc6.d/K??ssh
+}
+
+setup_init() {
+	if [ -e /etc/init/ssh.conf ]; then
+		if dpkg --compare-versions "$oldversion" lt 1:5.1p1-8ubuntu2; then
+			if [ -x /usr/sbin/invoke-rc.d ]; then
+				invoke-rc.d ssh stop
+			else
+				/etc/init.d/ssh stop
+			fi
+		fi
+		stop ssh 2>/dev/null || true
+		start ssh || true
+	fi
+	update-rc.d -f ssh remove >/dev/null || true
+}
+
+commit_transfer_conffile () {
+	CONFFILE="$1"
+	if [ -e "$CONFFILE.moved-by-preinst" ]; then
+		rm -f "$CONFFILE.moved-by-preinst"
+	fi
+}
+
+commit_mv_conffile () {
+	OLDCONFFILE="$1"
+	NEWCONFFILE="$2"
+
+	if [ -e "$OLDCONFFILE.moving" ]; then
+		echo "Preserving user changes to $NEWCONFFILE ..."
+		mv -f "$NEWCONFFILE" "$NEWCONFFILE.dpkg-new"
+		mv -f "$OLDCONFFILE.moving" "$NEWCONFFILE"
+	elif [ -e "$OLDCONFFILE.dpkg-old" ]; then
+		rm -f "$OLDCONFFILE.dpkg-old"
+	fi
+}
+
+
+fix_doc_symlink
+create_sshdconfig
+check_idea_key
+create_keys
+vulnerable_host_keys
+fix_statoverride
+if dpkg --compare-versions "$2" lt 1:4.3p2-3; then
+    fix_sshd_shell
+fi
+setup_sshd_user
+if dpkg --compare-versions "$2" lt 1:3.6.1p2-2; then
+    fix_conffile_permissions
+fi
+if dpkg --compare-versions "$2" lt 1:5.2p1-1; then
+    remove_old_init_links
+fi
+setup_init
+commit_transfer_conffile /etc/default/ssh
+commit_transfer_conffile /etc/init.d/ssh
+commit_transfer_conffile /etc/pam.d/ssh
+commit_mv_conffile /etc/pam.d/ssh /etc/pam.d/sshd
+# Renamed to /etc/ssh/moduli in 2.9.9 (!)
+if dpkg --compare-versions "$2" lt 1:4.7p1-1; then
+    rm -f /etc/ssh/primes
+fi
+
+
+db_stop
+
+exit 0

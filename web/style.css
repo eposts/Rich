@@ -1,0 +1,398 @@
+/* 
+------------------------------
+ Backtrack 3 CSS STYLES
+ Author:Daniel Grimshaw
+------------------------------
+
+
+BT5 Facelift ~ DigiP 5/9/2011
+
+
+------------------------------
+ top elements
+------------------------------
+ */
+body {
+/*
+background-image:url(images/background.jpg);
+background-repeat:no-repeat;
+background-position:top center;
+*/	
+background-image:url(images/top-red.jpg);
+background-repeat:repeat-x;
+background-color:#000;
+margin:0px;
+}
+
+a img {
+border:none;
+}
+
+/* 
+------------------------------
+ Images
+------------------------------
+ */
+img.float-right {
+margin:.5em 0 1em 1em;
+}
+
+
+img.float-left {
+margin:.5em 1em 1em 20px;
+}
+
+
+/* 
+------------------------------
+ Tabbed Box
+------------------------------
+ */
+#tabbed_box {
+width:300px;
+margin:0 auto;
+}
+
+
+.tabbed_box h4 {
+font-family:Arial, Helvetica, sans-serif;
+font-size:23px;
+color:#fff;
+letter-spacing:-1px;
+margin:50px auto;
+width:1024px;
+}
+
+
+.tabbed_box h4 small {
+color:#e3e9ec;
+font-weight:400;
+font-size:9px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+text-transform:uppercase;
+position:relative;
+top:-4px;
+left:6px;
+letter-spacing:0;
+}
+
+.tabbed_box h4 {
+display:none;
+}
+
+div.tabbed_area:before {
+content:url(images/header.png);
+margin:10px auto 30px auto;
+width:1000px;
+display:block;
+}
+
+.tabbed_area {
+/*
+border:1px solid #2a2a2a;
+background-color:#101010;
+*/
+padding:8px;
+}
+
+
+/* 
+------------------------------
+ Tabs
+------------------------------
+ */
+ul.tabs {
+/*
+margin:10px 0 7px;
+padding:0
+*/
+
+margin:10px auto 0 auto;
+position:relative;
+left:2px;
+line-height:32px;
+height:32px; 
+width:1024px;
+
+}
+
+
+ul.tabs li {
+/*
+list-style:none;
+display:inline
+*/
+list-style-type:none;
+float:left;
+background-color:#000;
+border:solid transparent 1px;
+}
+
+
+/* 
+------------------------------
+ Optional Tab Images
+------------------------------
+ */
+ul.tabs li a {
+/*
+background-color:#2a2a2a;
+color:#d3dadd;
+text-decoration:none;
+font-size:9px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-weight:700;
+text-transform:uppercase;
+border:1px solid #101010;
+background-image:url(images/tab_off.jpg);
+background-repeat:repeat-x;
+background-position:bottom;
+padding:8px 14px;
+*/
+font-family:arial;
+font-weight:bold;
+color:#f5f5f5;
+text-transform:uppercase;
+font-size:13px;
+padding: 6px 15px 5px 15px;
+margin:0px 2px 0px 0px;
+text-decoration:none;
+}
+
+ul.tabs li:hover {
+position:relative;
+background-color:#121212;
+border:solid #222 1px;
+}
+
+ul.tabs li a:hover {
+/*
+background-color:#2f343a;
+border-top:1px solid #2a2a2a;
+border-left:1px solid #2a2a2a;
+border-right:1px solid #2a2a2a;
+*/
+color:#fff;
+background-color:transparent;
+
+}
+
+
+ul.tabs li a.active {
+background-color:#6d6e6f;
+color:#fff;
+border:1px solid #2a2a2a;
+border-bottom:1px solid #2a2a2a;
+background-image:url(images/tab_ons.jpg);
+background-repeat:repeat-x;
+background-position:top;
+}
+
+
+/* 
+------------------------------
+ Optional Content Highlighter
+------------------------------
+ */
+.content {
+background-color:#000;
+/*
+border:1px solid #2a2a2a;
+background-image:url(images/content_bottom.jpg);
+background-repeat:repeat-x;
+background-position:bottom;
+*/
+border:1px solid #2a2a2a;
+-webkit-border-radius:8px;
+-moz-border-radius:8px;
+border-radius:8px;
+padding:10px;
+width:980px;
+margin:20px auto;
+}
+
+
+.content p {
+color:#d3dadd;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+font-size:12px;
+padding:10px;
+}
+
+
+.content p strong {
+color:#fff;
+text-decoration:none;
+font-size:9px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-weight:700;
+text-transform:uppercase;
+padding:8px 0;
+}
+
+
+#content_2,#content_3 {
+display:none;
+}
+
+
+.content ul {
+margin:0;
+padding:0 20px;
+}
+
+
+.content ul li {
+list-style:none;
+border-bottom:1px solid #2a2a2a;
+padding-top:15px;
+padding-bottom:15px;
+font-size:13px;
+}
+
+
+/*.content ul li:hover  {
+background:url('images/highlight.jpg') repeat-x ;
+ color:#3e4346;
+
+}
+
+ */
+.content ul li a {
+text-decoration:none;
+color:#3e4346;
+font:bold 1em Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+font-size:12px;
+padding:8px 0 8px 14px;
+}
+
+
+.content ul li a:hover {
+text-decoration:none;
+color:#8b959c;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+font-size:12px;
+padding:8px 0 8px 14px;
+}
+
+
+.content ul li a small {
+color:#8b959c;
+font-size:11px;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+position:relative;
+left:4px;
+top:0;
+}
+
+
+.content ul li strong {
+color:#d3dadd;
+text-decoration:none;
+font-size:12px;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+font-weight:700;
+text-transform:uppercase;
+padding:8px 0;
+}
+
+
+.content ul li:last-child {
+border-bottom:none
+}
+
+
+/* 
+------------------------------
+ Footer
+------------------------------
+ */
+.footer {
+color:#d3dadd;
+text-decoration:none;
+font-size:11px;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+font-weight:700;
+text-transform:uppercase;
+padding:0px;
+width:950px;
+margin:10px auto 20px auto;
+text-align:center;
+}
+
+
+/* 
+------------------------------
+ rounded boxes videos
+------------------------------
+ */
+.boxes_holder {
+display:table;
+margin:0 auto;
+overflow:auto;
+}
+
+
+.boxes {
+width:450px;
+float:left;
+display:inline-block;
+/*
+background-color:#0e0e0e;
+*/
+margin:0px;
+padding:15px;
+}
+
+
+.boxes img {
+margin:0;
+}
+
+
+.boxes dl {
+width:380px;
+padding-bottom:15px;
+/*
+background-color:#0e0e0e;
+*/
+}
+
+
+.boxes dl dt {
+font-size:120%;
+font:bold 1em 'Trebuchet MS',Tahoma,Arial,Sans-serif;
+font-variant:small-caps;
+letter-spacing:1px;
+color:#fff;
+padding:0 15px 12px;
+}
+
+
+.boxes a {
+color:#3e4346;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-weight:700;
+text-transform:uppercase;
+font-size:9px;
+}
+
+
+.boxes dl dd {
+margin-left:5px;
+font-size:12px;
+color:#fff;
+font-family:Lucida Grande, Arial, Verdana, Helvetica, sans-serif;
+padding:3px 15px;
+}
+
+
+.content p a,.footer a {
+color:#3e4346;
+}
+
+
+.content p a:hover,.footer a:hover,.boxes a:hover {
+color:#8b959c;
+}
+

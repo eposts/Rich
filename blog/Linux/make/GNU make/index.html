@@ -1,0 +1,1168 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>GNU make中文手册</title>
+<style>
+<!--
+p
+	{margin-right:0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:宋体;
+	}
+p.a1
+	{margin-bottom:.0001pt;
+	text-align:center;
+	line-height:150%;
+	text-autospace:none;
+	font-size:22.0pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+div.a1
+	{margin-bottom:.0001pt;
+	text-align:center;
+	line-height:150%;
+	text-autospace:none;
+	font-size:22.0pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+p.a6
+	{margin-top:24.0pt;
+	margin-right:0pt;
+	margin-bottom:18.0pt;
+	margin-left:0pt;
+	text-align:center;
+	page-break-before:always;
+	page-break-after:avoid;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+p.MsoToc1
+	{margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:0pt;
+	margin-left:9.9pt;
+	margin-bottom:.0001pt;
+	text-indent:-5.65pt;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	}
+span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoToc2
+	{margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:0pt;
+	margin-left:22.65pt;
+	margin-bottom:.0001pt;
+	text-indent:-14.15pt;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	}
+p.MsoToc3
+	{margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:0pt;
+	margin-left:39.7pt;
+	margin-bottom:.0001pt;
+	text-indent:-22.7pt;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	}
+p.MsoBodyTextFirstIndent
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	line-height:150%;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+span.CharChar
+	{font-family:Arial;
+	}
+h3
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-36.0pt;
+	page-break-after:avoid;
+	tab-stops:list 36.0pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+ div.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+-->
+</style>
+</head>
+
+<body>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="a1"><b><span lang="EN-US">GNU make</span></b><b><span style="font-family: 楷体_GB2312">中文手册</span></b>
+</p>
+<p class="a1"><b>
+<span lang="EN-US" style="font-size: 14.0pt; line-height: 150%">ver - 3.8</span></b></p>
+<p class="a1"><span lang="EN-US" style="font-size: 14.0pt; line-height: 150%">&nbsp;</span></p>
+<p class="a1"><span lang="EN-US" style="font-size: 14.0pt; line-height: 150%">&nbsp;&nbsp;</span></p>
+
+<p class="a1"><span lang="EN-US">
+<img border=0 width=268 height=112
+src="image/mylogo.jpg"></span></p>
+<p class="a1"><span lang="EN-US" style="font-size: 14.0pt; line-height: 150%">&nbsp;</span></p>
+
+<p class="a1"><b>
+<span style="font-size: 14.0pt; line-height: 150%; font-family: 楷体_GB2312">
+翻译整理：徐海兵</span></b></p>
+<p class="a1"><span lang="EN-US" style="font-size: 14.0pt; line-height: 150%">
+2004-09-11</span></p>
+	<p class="MsoNormal" style="text-align: center; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+　</p>
+	<p class="MsoNormal" style="text-align: center; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+　</p>
+<div class="a1">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span></div>
+　<p class="MsoNormal" align="center" style="text-align: center; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+　</p>
+	<p class="MsoNormal" align="center" style="text-align: center; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+　</p>
+	<p class="MsoNormal" align="center" style="text-align: center; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b><span style="font-size: 24.0pt; line-height: 150%; font-family: 楷体_GB2312">
+关于本书</span></b></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	本文瑾献给所有热爱</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的程序员！本中文文档版权所有。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	本文比较完整的讲述</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具，涵盖</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的用法、语法。同时重点讨论如何为一个工程编写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。作为一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">程序员，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具的使用以及编写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">是必需的。系统、详细讲述</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的中文资料比较少，出于对广大中文</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linuxer</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的支持，本人在工作之余，花了</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">18</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">个多月时间完成对“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">info 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的翻译整理，完成这个中文版手册。本书不是一个纯粹的语言翻译版本，其中对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一些语法和用法根据我个人的工作经验进行了一些详细分析和说明，也加入了一些个人的观点和实践总结。本书的所有的例子都可以在支持</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">V3.8</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的系统中正确执行。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	由于个人水平限制，本文在一些地方存在描述不准确之处。恳请大家在阅读过程中，提出您宝贵的意见，也是对我个人的帮助。我的个人电子邮箱地址：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><a style="color: blue; text-decoration: underline; text-underline: single" href="mailto:xhbdahai@126.com">xhbdahai@126.com</a></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。非常愿意和大家交流！共同学习。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	阅读本书之前，读者应该对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的工具链和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一些常用编程工具有一定的了解。诸如：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">as</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ld</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">、</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">yacc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">等；同时在书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，需要能够进行一些基本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">编程。这些工具是维护一个工程的基础。如果大家对这些工具的用法不是很熟悉，可参考项目资料。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	阅读本文的几点建议：</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	如果之前你对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">没有了解、当前也不想深入的学习</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的读者。可只阅读本文各章节前半部分的内容（作为各章节的基础知识）。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	如果你已经对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">比较熟悉，你更需要关心此版本的新增特点、功能、和之前版本不兼容之处；也可以作为开发过程过程的参考手册。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	之前你对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">没有概念、或者刚开始接触，本身又想成为一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">下的专业程序员，那么建议：完整学习本文的各个章节，包括了基础知识和高级用法、技巧。它会为你在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">下的工程开发、工程管理提供非常有用的帮助。</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	此中文文档当前版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">v1.5</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，本文的所有勘误和最新版本可在主页</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: black"><a href="http://xhbdahai.cublog.cn">http://xhbdahai.cublog.cn</a></span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">上获取！！</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+	&nbsp;</span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312">
+	谢谢<span style="color: black">！</span></span></p>
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312">
+	徐海兵</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial">&nbsp;&nbsp;&nbsp; 
+	2005-12-31</span></p>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black; font-style:normal; font-variant:normal; font-weight:normal">
+<p class="a6"><b><a name="content"><span style="font-family: 楷体_GB2312"><font size="7">目</font></span><font size="7"><span lang="EN-US">&nbsp;
+</span><span style="font-family: 楷体_GB2312">录</span></font></a><span lang="EN-US"><font size="7">
+</font> </span></b></p>
+	<p class="MsoNormal"><span style="font-family: 楷体_GB2312"><font size="4">
+	<a target="_parent" href="make-01.html"><span style="text-decoration: none">第一章：概述</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-01.html#_gnu_make_1.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">1.1 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">概述</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-01.html#_gnu_make_1.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">1.2&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">准备知识</span></font></a></p>
+	<p class="MsoNormal"><a href="make-02.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第二章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration: none"><font size="4">GNU 
+	make </font></span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">介绍</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.1 &nbsp;&nbsp;Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">简介</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.2 &nbsp;&nbsp;Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">规则介绍</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.3 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">简单的示例</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.4 &nbsp;&nbsp;make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">如何工作</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.5 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">指定变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.6 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">自动推导规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.7 &nbsp;&nbsp;</span></font></span><span style="font-family: 楷体_GB2312; text-decoration: none"><font size="4">另类风格的</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">makefile</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-02.html#_gnu_make_2.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.8 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">清除工作目录过程文件</span></font></a></p>
+	<p class="MsoNormal"><a href="make-03.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第三章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration: none"><font size="4">Makefile
+	</font></span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">总述</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.1 &nbsp;&nbsp;Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的内容</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.2 &nbsp;&nbsp;makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件的命名</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.3 &nbsp;&nbsp;</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">包含其它</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">makefile</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.4 &nbsp;&nbsp;</span></font></span><span style="font-family: 楷体_GB2312; text-decoration: none"><font size="4">变量</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US"> 
+	MAKEFILES</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.5 &nbsp;&nbsp;</span></font></span><span style="font-family: 楷体_GB2312; text-decoration: none"><font size="4">变量</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US"> 
+	MAKEFILE_LIST</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.6 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">其他特殊变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.7 &nbsp;&nbsp;makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件的重建</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.8 &nbsp;&nbsp;</span></font></span><span style="font-family: 楷体_GB2312; text-decoration: none"><font size="4">重载另外一个</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">makefile</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.9">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.9 &nbsp;&nbsp;make</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">如何解析</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">makefile</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-03.html#_gnu_make_3.9.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.9.1&nbsp; </span></font></span>
+	<font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">
+	变量取值</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-03.html#_gnu_make_3.9.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.9.2&nbsp; </span></font></span>
+	<font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">
+	条件语句</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-03.html#_gnu_make_3.9.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.9.3&nbsp; </span></font></span>
+	<font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">
+	规则的定义</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-03.html#_gnu_make_3.10">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.10&nbsp; </span></font></span>
+	<font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">
+	总结</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-04.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第四章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">Makefile</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.1 &nbsp;&nbsp;</span></font></span><span style="text-decoration: none; font-family: 楷体_GB2312"><font size="4">一个例子</font></span></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.2 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">规则语法</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.3 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">依赖的类型</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.4 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件名使用通配符</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.4.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.4.1 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">统配符使用举例</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.4.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.4.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">通配符存在的缺陷</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.4.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.4.3&nbsp;
+	</span>
+	</font>
+	</span><span style="font-family: 楷体_GB2312; text-decoration:none"><font size="4">函数</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">wildcard</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">目录搜寻</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.1&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">一般搜索（变量</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">VPATH</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">）</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.2&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">选择性搜索（关键字</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">vpath</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">）</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.3&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">目录搜索的机制</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.4&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">命令行和搜索目录</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.5&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">隐含规则和搜索目录</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.5.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.5.6&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">库文件和搜索目录</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.6 
+	&nbsp;&nbsp;Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">伪目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.7 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">强制目标（没有命令或依赖的规则）</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.8&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">空目标文件</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.9">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.9 
+	&nbsp;&nbsp;Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的特殊目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.10">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.10 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">多目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.11">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.11 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">多规则目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.12">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.12 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">静态模式</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.12.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.12.1&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">静态模式规则的语法</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-04.html#_gnu_make_4.12.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.12.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">静态模式和隐含规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.13">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.13 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">双冒号规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-04.html#_gnu_make_4.14">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.14 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">自动产生依赖</span></font></a></p>
+	<p class="MsoNormal">
+	<span style="font-family: 楷体_GB2312"><font size="4"><a href="make-05.html">
+	<span style="text-decoration: none">第五章：规则的命令</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.1&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">命令回显</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.2&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">命令的执行</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.3&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">并发执行命令</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.4&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">命令执行的错误</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.5&nbsp; &nbsp;</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">中断</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">make</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的执行</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.6 &nbsp;&nbsp;make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的递归执行</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-05.html#_gnu_make_5.6.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.6.1 &nbsp;</span></font></span><span style="font-family: 楷体_GB2312; text-decoration:none"><font size="4">变量</font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">MAKE</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-05.html#_gnu_make_5.6.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.6.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">变量和递归</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-05.html#_gnu_make_5.6.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.6.3&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">命令行选项和递归</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-05.html#_gnu_make_5.6.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.6.4&nbsp; -w</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">选项</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.7 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">定义命令包</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-05.html#_gnu_make_5.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">5.8&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">空命令</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-06.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第六章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">Makefile</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">中的变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.1&nbsp; &nbsp;</span></font></span><span style="text-decoration: none; font-family: 楷体_GB2312"><font size="4">变量的引用</font></span></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.2&nbsp; &nbsp;</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">两种变量定义（赋值</font></span><span style="font-family: Arial"><font size="4">
+	</font>
+	</span></span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">）</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-06.html#_gnu_make_6.2.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.2.1&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">递归展开式变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-06.html#_gnu_make_6.2.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.2.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">直接展开式变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-06.html#_gnu_make_6.2.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.2.3&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">如何定义一个空格</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-06.html#_gnu_make_6.2.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.2.4&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">“</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">?=</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">”操作符</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.3&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">变量的高级用法</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 33.25pt">
+	<a href="make-06.html#_gnu_make_6.3.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.3.1&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">变量的替换引用</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 33.25pt">
+	<a href="make-06.html#_gnu_make_6.3.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.3.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">变量的套嵌引用</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.4&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">变量取值</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.5&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">如何设置变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.6&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">追加变量值</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.7&nbsp; 
+	&nbsp;override </span> </font> </span>
+	<font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">指示符</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.8 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">多行定义</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.9">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.9&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">系统环境变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.10">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.10 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">目标指定变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-06.html#_gnu_make_6.11">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">6.11 &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">模式指定变量</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-07.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第七章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">Makefile</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的条件执行</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-07.html#_gnu_make_7.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.1 &nbsp;&nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">一个例子</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-07.html#_gnu_make_7.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.2&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">条件判断的基本语法</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-07.html#_gnu_make_7.2.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.2.1&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">关键字“</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">ifeq</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">”</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-07.html#_gnu_make_7.2.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.2.2&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">关键字“</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">ifneq</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">”</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-07.html#_gnu_make_7.2.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.2.3&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">关键字“</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">ifdef</font></span><span style="font-family: 楷体_GB2312"><font size="4">”</font></span></span><font size="4"><span style="text-decoration: none; font-family: Arial">
+	</span>
+	</font>
+	</a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-07.html#_gnu_make_7.2.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.2.4&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">关键字“</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">ifndef</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">”</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-07.html#_gnu_make_7.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">7.3&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">标记测试的条件语句</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-08.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第八章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">make</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的内嵌函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.1&nbsp;&nbsp; </span>
+	</font>
+	</span><span style="text-decoration: none; font-family: 楷体_GB2312"><font size="4">函数的调用语法</font></span></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.2&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">文本处理函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.2.1"><span style="text-decoration: none">8.2.1 &nbsp;&nbsp;$(subst 
+	FROM,TO,TEXT)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.2"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.2 
+	&nbsp;&nbsp;$(patsubst PATTERN,REPLACEMENT,TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.3"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.3 
+	&nbsp;&nbsp;$(strip STRINT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.4"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.4 
+	&nbsp;&nbsp;$(findstring FIND,IN)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.5"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.5 
+	&nbsp;&nbsp;$(filter PATTERN…,TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.6"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.6 
+	&nbsp;&nbsp;$(filter-out PATTERN...,TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.7"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.7 
+	&nbsp;&nbsp;$(sort LIST)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.8"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.8 
+	&nbsp;&nbsp;$(word N,TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.9"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.9 
+	&nbsp;&nbsp;$(wordlist S,E,TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.10"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.10&nbsp; 
+	$(words TEXT)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-08.html#_gnu_make_8.2.11"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">.2.11&nbsp; 
+	$(firstword NAMES…)</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.3"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">8</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">.3&nbsp;&nbsp;
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">文件名处理函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.1"><span style="text-decoration: none">8.3.1&nbsp;&nbsp; 
+	$(dir NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.2"><span style="text-decoration: none">8.3.2&nbsp;&nbsp; 
+	$(notdir NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.3"><span style="text-decoration: none">8.3.3&nbsp;&nbsp; 
+	$(suffix NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.4"><span style="text-decoration: none">8.3.4&nbsp;&nbsp; 
+	$(basename NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.5"><span style="text-decoration: none">8.3.5&nbsp;&nbsp; 
+	$(addsuffix SUFFIX,NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.6"><span style="text-decoration: none">8.3.6&nbsp;&nbsp; 
+	$(addprefix PREFIX,NAMES…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.7"><span style="text-decoration: none">8.3.7&nbsp;&nbsp; 
+	$(join LIST1,LIST2)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.3.8"><span style="text-decoration: none">8.3.8&nbsp;&nbsp; 
+	$(wildcard PATTERN)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.4&nbsp;&nbsp; foreach </span> </font> </span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.5&nbsp;&nbsp; if </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.6&nbsp;&nbsp; call</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.7&nbsp;&nbsp; value</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.8&nbsp;&nbsp; eval</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.9">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.9&nbsp;&nbsp; 
+	origin</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.10">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.10 &nbsp;shell</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-08.html#_gnu_make_8.11">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">8.11&nbsp; make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的控制函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.11.1"><span style="text-decoration: none">
+	8.11.1&nbsp; 
+	$(error TEXT…)</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<a href="make-08.html#_gnu_make_8.11.2"><span style="text-decoration: none">
+	8.11.2&nbsp; 
+	$(warning TEXT…)</span></a></font></span></p>
+	<p class="MsoNormal">
+	<a href="make-09.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第九章：执行</span></font></span><font size="4"><span style="text-decoration: none; font-family: Arial" lang="EN-US">make</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.1&nbsp; &nbsp;</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">指定</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">makefile</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">文件</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.2&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">指定终极目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.3&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">替代命令的执行</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.4&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">防止特定文件重建</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.5&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">替换变量定义</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.6&nbsp;&nbsp; </span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">使用</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">make</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">进行编译测试</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-09.html#_gnu_make_9.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">9.7&nbsp;&nbsp; make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的命令行选项</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-10.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十章：</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">make</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的隐含规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.1"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">1</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">0.1&nbsp;&nbsp;
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">隐含规则的使用</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.2"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">1</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">0.2&nbsp;&nbsp; make</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的隐含规则一览</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.3"><span lang="en-us"><font size="4">
+	<span style="text-decoration: none; font-family: Arial">1</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">0.3 &nbsp;&nbsp;</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">隐含变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.3.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.3.1&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">代表命令的变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.3.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.3.2&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">命令参数的变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.4&nbsp;&nbsp; make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">隐含规则链</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">模式规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.1&nbsp; &nbsp;</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">模式规则介绍</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.2&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">模式规则示例</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.3&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">自动化变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.4&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">模式的匹配</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.5">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.5&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">万用规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-10.html#_gnu_make_10.5.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.5.6&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">重建内嵌隐含规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.6&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">缺省规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.7">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.7&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">后缀规则</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-10.html#_gnu_make_10.8">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">10.8&nbsp;&nbsp; </span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">隐含规则搜索算法</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-11.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十一章：使用</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4">make</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">更新静态库文件</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-11.html#_gnu_make_11.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">11.1&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">库成员作为目标</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-11.html#_gnu_make_11.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">11.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">静态库的更新</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 27.25pt">
+	<a href="make-11.html#_gnu_make_11.2.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">11.2.1
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">更新静态库的符号索引表</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-11.html#_gnu_make_11.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">11.3&nbsp; make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">静态库的注意事项</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-11.html#_gnu_make_11.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">11.4&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">静态库的后缀规则</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-12.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十二章</span></font></span><span style="text-decoration: none"><span style="font-family: Arial"><font size="4">
+	</font>
+	</span><span style="font-family: 楷体_GB2312"><font size="4">：</font></span><span lang="EN-US" style="font-family: Arial"><font size="4"> 
+	GNU make</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的特点</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-12.html#_gnu_make_12.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">12.1&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">源自</font></span><span lang="EN-US" style="font-family: Arial"><font size="4">System 
+	v</font></span></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的特点</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-12.html#_gnu_make_12.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">12.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">源自其他版本的特点</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-12.html#_gnu_make_12.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">12.3&nbsp; GNU 
+	make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">自身的特点</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-13.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十三章</span></font></span><span style="font-family: Arial; text-decoration:none"><font size="4">
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">和其它版本的兼容</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-14.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十四章</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4"> 
+	Makefile</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的约定</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.1">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.1&nbsp;
+	</span>
+	</font>
+	</span><span style="text-decoration: none; font-family: 楷体_GB2312"><font size="4">基本的约定</font></span></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.2">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.2&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">规则命令行的约定</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.3">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.3&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">代表命令变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.4&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">安装目录变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.4">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.5&nbsp; Makefile</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的标准目标名</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 15.35pt">
+	<a href="make-14.html#_gnu_make_14.6">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">14.6&nbsp;
+	</span>
+	</font>
+	</span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">安装命令分类</span></font></a></p>
+	<p class="MsoNormal">
+	<a href="make-15.html">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<span style="text-decoration: none">第十五章</span></font></span><span lang="EN-US" style="font-family: Arial; text-decoration:none"><font size="4"> 
+	make</font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的常见错误信息</span></font></a></p>
+	<p class="MsoNormal">
+	　</p>
+	<p class="MsoNormal">
+	<span style="font-family: 楷体_GB2312"><font size="4"><a href="appendix.html">
+	<span style="text-decoration: none">附录：关键字索引</span></a></font></span></p>
+	<p class="MsoNormal" style="text-indent: 18.0pt">
+	<a href="appendix.html#_gnu_make_appendix01">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">1.&nbsp; GNU make</span></font></span><span style="text-decoration: none"><span style="font-family: 楷体_GB2312"><font size="4">可识别的指示</font></span><span style="font-family: Arial"><font size="4">
+	</font>
+	</span></span><font size="4">
+	<span style="text-decoration: none; font-family: 楷体_GB2312">符</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 18.0pt">
+	<a href="appendix.html#_gnu_make_appendix02">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">2.&nbsp; GNU make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">函数</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 18.0pt">
+	<a href="appendix.html#_gnu_make_appendix03">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">3.&nbsp; GNU make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">的自动化变量</span></font></a></p>
+	<p class="MsoNormal" style="text-indent: 18.0pt">
+	<a href="appendix.html#_gnu_make_appendix04">
+	<span lang="EN-US" style="font-family: Arial"><font size="4">
+	<span style="text-decoration: none">4.&nbsp; GNU make</span></font></span><font size="4"><span style="text-decoration: none; font-family: 楷体_GB2312">环境变量</span></font></a></p>
+	<p class="MsoNormal">
+	<span style="font-family: 楷体_GB2312"><font size="4">
+	<a href="appendix.html#end"><span style="text-decoration: none">后序</span></a></font></span></p>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center">
+
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<font size="4"><span style="font-family: 楷体_GB2312"><a href="make-01.html">下一章</a> </font></p>
+
+</body>
+
+</html>

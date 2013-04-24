@@ -1,0 +1,51 @@
+etc/fstab文件的作用 :
+记录了计算机上硬盘分区的相关信息，启动 Linux 的时候，检查分区的 fsck 命令，和挂载分区的 mount 命令，都需要 fstab 中的信息，来正确的检查和挂载硬盘。 
+/etc/mtab文件的作用： 
+   
+先看它的英文是: 
+     This changes continuously as the file /proc/mount changes. In other words, when filesystems are mounted and unmounted, the change is immediately reflected in this file. 
+记载的是现在系统已经装载的文件系统，包括操作系统建立的虚拟文件等；而/etc/fstab是系统准备装载的。 
+ 每当 mount 挂载分区、umount 卸载分区，都会动态更新 mtab，mtab 总是保持着当前系统中已挂载的分区信息，fdisk、df 这类程序，必须要读取 mtab 文件，才能获得当前系统中的分区挂载情况。当然我们自己还可以通过读取/proc/mount也可以来获取当前挂载信息 
+
+详解/etc/fstab文件 
+
+在linux中/etc/fstab的数据项如下所示： 
+设备名称        挂载点          分区的类型   挂载选项     dump选项 fsck选项 
+     LABEL=/       /                   ext3        defaults             1                   1 
+     tmpfs       /dev/shm           tmpfs    defaults            0                    0 
+     devpts     /dev/pts          devpts  gid=5,mode=620    0                    0 
+     sysfs        /sys               sysfs       defaults            0                    0 
+     proc         /proc               proc         defaults           0                    0 
+1、设备名称项，可以是实际的设备名称/dev/sda1，也可以是实际设备的标签例如LABLE=/，我们可以知道 LABEL=/1是/dev/sda1的标签；那我们用什么命令来为实际的设备设置标签的方法，对于ext3和ext2文件系统，我们可以用e2label 来设置 e2label device [newlabel],比如我们想把文件系统为ext3 的分区/dev/hda1的标签设备为 /1 ，我们应该执行如下的命令：[root@localhost beinan]# e2label /dev/hda1  /1 
+2、挂载点，没什么多说的，/、 /usr、 swap 都是系统安装时分区的默认挂载点。方法如下： 
+    root@localhostbeinan]# mkdir /mnt/hda1 注：创建挂载/dev/hda1分区的目录； 
+     [root@localhost beinan]# chmod 777 /mnt/hda1 注：打开权限，所有用户可读可写可执行，执行完了以上两步就可以再/etc/fstab里      使用这个挂载点了 
+3、 文件系统类形: 
+      Linux file systems: ext2, ext3, jfs, reiserfs, reiser4, xfs, swap. 
+      Windows: 
+      vfat = FAT 32, FAT 16 
+      ntfs= NTFS 
+      Note: For NTFS rw ntfs-3g 
+      CD/DVD/iso: iso9660 
+      Network file systems: 
+      nfs: server:/shared_directory /mnt/nfs nfs <options> 0 0 
+      smb: //win_box/shared_folder /mnt/samba smbfs rw,credentials=/home/user_name/winbox-credentials.txt 0 0 
+      auto: The file system type (ext3, iso9660, etc) it detected automatically. Usually works. Used for removable devices   
+      (CD/DVD, Floppy drives, or USB/Flash drives) as the file system may vary on thesedevices. 
+4、 挂载选项,下面列举几个常用的：  
+        auto: 系统自动挂载，fstab默认就是这个选项 
+        defaults: rw, suid, dev, exec, auto, nouser, and async. 
+        noauto 开机不自动挂载 
+        nouser 只有超级用户可以挂载 
+        ro 按只读权限挂载 
+        rw 按可读可写权限挂载 
+        user 任何用户都可以挂载 
+        请注意光驱和软驱只有在装有介质时才可以进行挂载，因此它是noauto 
+     
+5、dump选项，设置是否让备份程序dump备份文件系统，0为忽略，1为备份,如果上次用dump备份，将显示备份至今的天数。 
+      
+6、fsck选项，告诉fsck程序以什么顺序检查文件系统，为0就表示不检查，（/）分区永远都是1，其它的分区只能从2开始，当数字相同就    
+   同时检查（但不能有两1）, 
+注意：
+1、当你修改了/etc/fstab后，一定要重新引导系统才会有效。
+2、/etc/mtab和/etc/fstab个字段含义相同。 

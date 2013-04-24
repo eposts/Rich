@@ -1,0 +1,3211 @@
+openssh (1:5.3p1-3ubuntu3) lucid; urgency=low
+
+  * Fix syntax error in openssh-server apport hook (LP: #534365).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 08 Mar 2010 15:24:44 +0000
+
+openssh (1:5.3p1-3ubuntu2) lucid; urgency=low
+
+  * Always set child processes' OOM adjustment to 0, since Upstart will have
+    set sshd's OOM adjustment on startup and so simply restoring the startup
+    value won't work (LP: #293000).  Thanks to Karsten Suehring for
+    analysis.
+  * Limit automatic respawning to 10 times in 5 seconds (thanks to Fumihito
+    YOSHIDA for the suggestion; LP: #533352).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sat, 06 Mar 2010 22:00:19 +0000
+
+openssh (1:5.3p1-3ubuntu1) lucid; urgency=low
+
+  * Resynchronise with Debian.  Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Convert to Upstart.  The init script is still here for the benefit of
+      people running sshd in chroots.
+    - Install apport hook.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 01 Mar 2010 22:01:14 +0000
+
+openssh (1:5.3p1-3) unstable; urgency=low
+
+  * Convert to source format 3.0 (quilt).
+  * Update README.source to match, and add a 'quilt-setup' target to
+    debian/rules for the benefit of those checking out the package from
+    revision control.
+  * All patches are now maintained separately and tagged according to DEP-3.
+  * Add GSSAPIStoreCredentialsOnRekey to 'sshd -T' configuration dump.
+  * Remove documentation of building for Debian 3.0 in README.Debian.
+    Support for this was removed in 1:4.7p1-2.
+  * Remove obsolete header from README.Debian dating from when people
+    expected non-free SSH.
+  * Update copyright years for GSSAPI patch.
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 28 Feb 2010 01:35:53 +0000
+
+openssh (1:5.3p1-2) unstable; urgency=low
+
+  * Link with -Wl,--as-needed (closes: #560155).
+  * Install upstream sshd_config as an example (closes: #415008).
+  * Use dh_lintian.
+  * Honour DEB_BUILD_OPTIONS=nocheck.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 22 Feb 2010 12:43:24 +0000
+
+openssh (1:5.3p1-1ubuntu2) lucid; urgency=low
+
+  [ Chuck Short ]
+  * Install apport hook; part of the server-lucid-apport-hooks
+    specification.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sun, 14 Feb 2010 02:21:13 +0000
+
+openssh (1:5.3p1-1ubuntu1) lucid; urgency=low
+
+  * Resynchronise with Debian.  Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Convert to Upstart.  The init script is still here for the benefit of
+      people running sshd in chroots.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 26 Jan 2010 13:07:40 +0000
+
+openssh (1:5.3p1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update to GSSAPI patch from
+    http://www.sxw.org.uk/computing/patches/openssh-5.3p1-gsskex-all-20100124.patch.
+  * Backport from upstream:
+    - Do not fall back to adding keys without constraints (ssh-add -c / -t
+      ...) when the agent refuses the constrained add request. This was a
+      useful migration measure back in 2002 when constraints were new, but
+      just adds risk now (LP: #209447).
+  * Drop change from 1:3.8p1-3 to avoid setresuid() and setresgid() system
+    calls.  This only applied to Linux 2.2, which it's no longer feasible to
+    run anyway (see 1:5.2p1-2 changelog).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 26 Jan 2010 11:55:29 +0000
+
+openssh (1:5.2p1-2ubuntu1) lucid; urgency=low
+
+  * Resynchronise with Debian.  Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Convert to Upstart.  The init script is still here for the benefit of
+      people running sshd in chroots.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sat, 16 Jan 2010 03:58:17 +0000
+
+openssh (1:5.2p1-2) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Backport from upstream:
+    - After sshd receives a SIGHUP, ignore subsequent HUPs while sshd
+      re-execs itself.  Prevents two HUPs in quick succession from resulting
+      in sshd dying (LP: #497781).
+    - Output a debug if we can't open an existing keyfile (LP: #505301).
+  * Use host compiler for ssh-askpass-gnome when cross-compiling.
+  * Don't run tests when cross-compiling.
+  * Drop change from 1:3.6.1p2-5 to disable cmsg_type check for file
+    descriptor passing when running on Linux 2.0.  The previous stable
+    release of Debian dropped support for Linux 2.4, let alone 2.0, so this
+    very likely has no remaining users depending on it.
+
+  [ Kees Cook ]
+  * Implement DebianBanner server configuration flag that can be set to "no"
+    to allow sshd to run without the Debian-specific extra version in the
+    initial protocol handshake (closes: #562048).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 16 Jan 2010 01:28:58 +0000
+
+openssh (1:5.2p1-1ubuntu1) lucid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+  * Convert to Upstart. The init script is still here for the benefit of
+    people running sshd in chroots. Note that the Upstart job does not
+    support /etc/default/ssh, because it's much more straightforward to edit
+    the job (/etc/init/ssh.conf) than it was to edit the init script.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 04 Jan 2010 13:45:21 +0000
+
+openssh (1:5.2p1-1) unstable; urgency=low
+
+  * New upstream release (closes: #536182). Yes, I know 5.3p1 has been out
+    for a while, but there's no GSSAPI patch available for it yet.
+    - Change the default cipher order to prefer the AES CTR modes and the
+      revised "arcfour256" mode to CBC mode ciphers that are susceptible to
+      CPNI-957037 "Plaintext Recovery Attack Against SSH".
+    - Add countermeasures to mitigate CPNI-957037-style attacks against the
+      SSH protocol's use of CBC-mode ciphers. Upon detection of an invalid
+      packet length or Message Authentication Code, ssh/sshd will continue
+      reading up to the maximum supported packet length rather than
+      immediately terminating the connection. This eliminates most of the
+      known differences in behaviour that leaked information about the
+      plaintext of injected data which formed the basis of this attack
+      (closes: #506115, LP: #379329).
+    - ForceCommand directive now accepts commandline arguments for the
+      internal-sftp server (closes: #524423, LP: #362511).
+    - Add AllowAgentForwarding to available Match keywords list (closes:
+      #540623).
+    - Make ssh(1) send the correct channel number for
+      SSH2_MSG_CHANNEL_SUCCESS and SSH2_MSG_CHANNEL_FAILURE messages to
+      avoid triggering 'Non-public channel' error messages on sshd(8) in
+      openssh-5.1.
+    - Avoid printing 'Non-public channel' warnings in sshd(8), since the
+      ssh(1) has sent incorrect channel numbers since ~2004 (this reverts a
+      behaviour introduced in openssh-5.1; closes: #496017).
+    - Disable nonfunctional ssh(1) ~C escape handler in multiplex slave
+      connections (closes: #507541).
+    - Fix "whitepsace" typo in ssh_config(5) (closes: #514313, LP: #303835).
+  * Update to GSSAPI patch from
+    http://www.sxw.org.uk/computing/patches/openssh-5.2p1-gsskex-all-20090726.patch,
+    including cascading credentials support (LP: #416958).
+  * Use x11.pc when compiling/linking gnome-ssh-askpass2 (closes: #555951).
+  * Moved to bzr.debian.org; add Vcs-Bzr and Vcs-Browser control fields.
+  * Add debian/README.source with instructions on bzr handling.
+  * Make ChrootDirectory work with SELinux (thanks, Russell Coker; closes:
+    #556644).
+  * Initialise sc to NULL in ssh_selinux_getctxbyname (thanks, Václav Ovsík;
+    closes: #498684).
+  * Don't duplicate backslashes when displaying server banner (thanks,
+    Michał Górny; closes: #505378, LP: #425346).
+  * Use hardening-includes for hardening logic (thanks, Kees Cook; closes:
+    #561887).
+  * Update OpenSSH FAQ to revision 1.110.
+  * Remove ssh/new_config, only needed for direct upgrades from potato which
+    are no longer particularly feasible anyway (closes: #420682).
+  * Cope with insserv reordering of init script links.
+  * Remove init script stop link in rc1, as killprocs handles it already.
+  * Adjust short descriptions to avoid relying on previous experience with
+    rsh, based on suggestions from Reuben Thomas (closes: #512198).
+  * Remove manual page references to login.conf, which aren't applicable on
+    non-BSD systems (closes: #154434).
+  * Remove/adjust manual page references to BSD-specific /etc/rc (closes:
+    #513417).
+  * Refer to sshd_config(5) rather than sshd(8) in postinst-written
+    /etc/ssh/sshd_config, and add UsePAM commentary from upstream-shipped
+    configuration file (closes: #415008, although unfortunately this will
+    only be conveniently visible on new installations).
+  * Include URL to OpenBSD's ssl(8) in ssh(1), since I don't see a better
+    source for the same information among Debian's manual pages (closes:
+    #530692, LP: #456660).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 04 Jan 2010 13:23:35 +0000
+
+openssh (1:5.1p1-8ubuntu2) lucid; urgency=low
+
+  * Add -Wl,-z,now to LDFLAGS to enhance the existing RELRO hardening
+    done by the Ubuntu compiler (Debian bug 561887).
+
+ -- Kees Cook <kees@ubuntu.com>  Wed, 23 Dec 2009 21:59:05 -0800
+
+openssh (1:5.1p1-8ubuntu1) lucid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 02 Dec 2009 20:21:06 +0000
+
+openssh (1:5.1p1-8) unstable; urgency=low
+
+  * Build with just -fPIC on mips/mipsel, not -fPIE as well (thanks, LIU Qi;
+    closes: #538313).
+  * Build-depend on libselinux1-dev on sh4 too (thanks, Nobuhiro Iwamatsu;
+    closes: #547103).
+  * Fix grammar in if-up script (closes: #549128).
+  * Pass $SSHD_OPTS when checking configuration too (thanks, "sobtwmxt";
+    closes: #548662).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 05 Oct 2009 13:30:49 +0100
+
+openssh (1:5.1p1-7) unstable; urgency=low
+
+  * Update config.guess and config.sub from autotools-dev 20090611.1
+    (closes: #538301).
+  * Set umask to 022 in the init script as well as postinsts (closes:
+    #539030).
+  * Add ${misc:Depends} to keep Lintian happy.
+  * Use 'which' rather than 'type' in maintainer scripts.
+  * Upgrade to debhelper v7.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 31 Jul 2009 16:28:10 +0100
+
+openssh (1:5.1p1-6ubuntu2) karmic; urgency=low
+
+  * No change rebuild to fix misbuilt binaries on armel.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Wed, 21 Oct 2009 14:48:08 +0200
+
+openssh (1:5.1p1-6ubuntu1) karmic; urgency=low
+
+  * Merge from Debian unstable, remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 09 Jun 2009 02:33:10 +0000
+
+openssh (1:5.1p1-6) unstable; urgency=low
+
+  * Open /proc/self/oom_adj with O_RDONLY or O_WRONLY as necessary, rather
+    than O_RDWR.
+  * Disable OOM adjustment for vserver/OpenVZ (thanks, Karl Chen; closes:
+    #511771).
+  * Add ufw integration (thanks, Didier Roche; see
+    https://wiki.ubuntu.com/UbuntuFirewall#Integrating%20UFW%20with%20Packages;
+    LP: #261884).
+  * Add a comment above PermitRootLogin in sshd_config pointing to
+    README.Debian.
+  * Check if delgroup is present in openssh-client.postrm (closes: #530501).
+  * Build with -fPIC on mips/mipsel (thanks, Luk Claes; closes: #531942).
+  * Remove /var/run/sshd from openssh-server package; it will be created at
+    run-time before starting the server.
+  * Use invoke-rc.d in openssh-server's if-up script.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 05 Jun 2009 11:56:03 +0100
+
+openssh (1:5.1p1-5ubuntu2) karmic; urgency=low
+
+  * No-change rebuild against libkrb5-3.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Wed, 03 Jun 2009 23:59:09 +0000
+
+openssh (1:5.1p1-5ubuntu1) jaunty; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Add ufw integration.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 28 Jan 2009 14:34:21 +0000
+
+openssh (1:5.1p1-5) unstable; urgency=low
+
+  * Backport from upstream CVS (Markus Friedl):
+    - packet_disconnect() on padding error, too. Should reduce the success
+      probability for the CPNI-957037 Plaintext Recovery Attack to 2^-18.
+  * Check that /var/run/sshd.pid exists and that the process ID listed there
+    corresponds to sshd before running '/etc/init.d/ssh reload' from if-up
+    script; SIGHUP is racy if called at boot before sshd has a chance to
+    install its signal handler, but fortunately the pid file is written
+    after that which lets us avoid the race (closes: #502444).
+  * While the above is a valuable sanity-check, it turns out that it doesn't
+    really fix the bug (thanks to Kevin Price for testing), so for the
+    meantime we'll just use '/etc/init.d/ssh restart', even though it is
+    unfortunately heavyweight.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 14 Jan 2009 00:34:08 +0000
+
+openssh (1:5.1p1-4ubuntu1) jaunty; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Add ufw integration.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sun, 23 Nov 2008 14:55:17 +0000
+
+openssh (1:5.1p1-4) unstable; urgency=low
+
+  * ssh-copy-id: Strip trailing colons from hostname (closes: #226172,
+    LP: #249706; thanks to Karl Goetz for nudging this along; forwarded
+    upstream as https://bugzilla.mindrot.org/show_bug.cgi?id=1530).
+  * Backport from upstream CVS (Markus Friedl):
+    - Only send eow and no-more-sessions requests to openssh 5 and newer;
+      fixes interop problems with broken ssh v2 implementations (closes:
+      #495917).
+  * Fix double-free when failing to parse a forwarding specification given
+    using ~C (closes: #505330; forwarded upstream as
+    https://bugzilla.mindrot.org/show_bug.cgi?id=1539).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 23 Nov 2008 14:46:10 +0000
+
+openssh (1:5.1p1-3ubuntu1) intrepid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+    - Add ufw integration.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 13 Oct 2008 19:40:53 +0100
+
+openssh (1:5.1p1-3) unstable; urgency=low
+
+  * Remove unnecessary ssh-vulnkey output in non-verbose mode when no
+    compromised or unknown keys were found (closes: #496495).
+  * Configure with --disable-strip; dh_strip will deal with stripping
+    binaries and will honour DEB_BUILD_OPTIONS (thanks, Bernhard R. Link;
+    closes: #498681).
+  * Fix handling of zero-length server banners (thanks, Tomas Mraz; closes:
+    #497026).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 30 Sep 2008 23:09:58 +0100
+
+openssh (1:5.1p1-2) unstable; urgency=low
+
+  * Look for $SHELL on the path when executing ProxyCommands or
+    LocalCommands (closes: #492728).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 29 Jul 2008 15:31:25 +0100
+
+openssh (1:5.1p1-1ubuntu2) intrepid; urgency=low
+
+  * add ufw integration (see
+    https://wiki.ubuntu.com/UbuntuFirewall#Integrating%20UFW%20with%20Packages)
+    (LP: #261884)
+    - debian/control: suggest ufw for openssh-server
+    - add openssh-server.ufw.profile with one profile and install it to
+      /etc/ufw/applications.d/openssh-server
+
+ -- Didier Roche <didrocks@ubuntu-fr.org>  Wed, 27 Aug 2008 18:00:07 +0200
+
+openssh (1:5.1p1-1ubuntu1) intrepid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+    - Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+      take up a lot of CD space, and I suspect that rolling them out in
+      security updates has covered most affected systems now.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 25 Jul 2008 11:46:28 +0100
+
+openssh (1:5.1p1-1) unstable; urgency=low
+
+  * New upstream release (closes: #474301). Important changes not previously
+    backported to 4.7p1:
+    - 4.9/4.9p1 (http://www.openssh.com/txt/release-4.9):
+      + Added chroot(2) support for sshd(8), controlled by a new option
+        "ChrootDirectory" (closes: #139047, LP: #24777).
+      + Linked sftp-server(8) into sshd(8). The internal sftp server is used
+        when the command "internal-sftp" is specified in a Subsystem or
+        ForceCommand declaration. When used with ChrootDirectory, the
+        internal sftp server requires no special configuration of files
+        inside the chroot environment.
+      + Added a protocol extension method "posix-rename@openssh.com" for
+        sftp-server(8) to perform POSIX atomic rename() operations; sftp(1)
+        prefers this if available (closes: #308561).
+      + Removed the fixed limit of 100 file handles in sftp-server(8).
+      + ssh(8) will now skip generation of SSH protocol 1 ephemeral server
+        keys when in inetd mode and protocol 2 connections are negotiated.
+        This speeds up protocol 2 connections to inetd-mode servers that
+        also allow Protocol 1.
+      + Accept the PermitRootLogin directive in a sshd_config(5) Match
+        block. Allows for, e.g. permitting root only from the local network.
+      + Reworked sftp(1) argument splitting and escaping to be more
+        internally consistent (i.e. between sftp commands) and more
+        consistent with sh(1). Please note that this will change the
+        interpretation of some quoted strings, especially those with
+        embedded backslash escape sequences.
+      + Support "Banner=none" in sshd_config(5) to disable sending of a
+        pre-login banner (e.g. in a Match block).
+      + ssh(1) ProxyCommands are now executed with $SHELL rather than
+        /bin/sh.
+      + ssh(1)'s ConnectTimeout option is now applied to both the TCP
+        connection and the SSH banner exchange (previously it just covered
+        the TCP connection). This allows callers of ssh(1) to better detect
+        and deal with stuck servers that accept a TCP connection but don't
+        progress the protocol, and also makes ConnectTimeout useful for
+        connections via a ProxyCommand.
+      + scp(1) incorrectly reported "stalled" on slow copies (closes:
+        #140828).
+      + scp(1) date underflow for timestamps before epoch.
+      + ssh(1) used the obsolete SIG DNS RRtype for host keys in DNS,
+        instead of the current standard RRSIG.
+      + Correctly drain ACKs when a sftp(1) upload write fails midway,
+        avoids a fatal() exit from what should be a recoverable condition.
+      + Fixed ssh-keygen(1) selective host key hashing (i.e. "ssh-keygen -HF
+        hostname") to not include any IP address in the data to be hashed.
+      + Make ssh(1) skip listening on the IPv6 wildcard address when a
+        binding address of 0.0.0.0 is used against an old SSH server that
+        does not support the RFC4254 syntax for wildcard bind addresses.
+      + Enable IPV6_V6ONLY socket option on sshd(8) listen socket, as is
+        already done for X11/TCP forwarding sockets (closes: #439661).
+      + Fix FD leak that could hang a ssh(1) connection multiplexing master.
+      + Make ssh(1) -q option documentation consistent with reality.
+      + Fixed sshd(8) PAM support not calling pam_session_close(), or
+        failing to call it with root privileges (closes: #372680).
+      + Fix activation of OpenSSL engine support when requested in configure
+        (LP: #119295).
+      + Cache SELinux status earlier so we know if it's enabled after a
+        chroot (LP: #237557).
+    - 5.1/5.1p1 (http://www.openssh.com/txt/release-5.1):
+      + Introduce experimental SSH Fingerprint ASCII Visualisation to ssh(1)
+        and ssh-keygen(1). Visual fingerprint display is controlled by a new
+        ssh_config(5) option "VisualHostKey". The intent is to render SSH
+        host keys in a visual form that is amenable to easy recall and
+        rejection of changed host keys.
+      + sshd_config(5) now supports CIDR address/masklen matching in "Match
+        address" blocks, with a fallback to classic wildcard matching.
+      + sshd(8) now supports CIDR matching in ~/.ssh/authorized_keys
+        from="..." restrictions, also with a fallback to classic wildcard
+        matching.
+      + Added an extended test mode (-T) to sshd(8) to request that it write
+        its effective configuration to stdout and exit. Extended test mode
+        also supports the specification of connection parameters (username,
+        source address and hostname) to test the application of
+        sshd_config(5) Match rules. 
+      + ssh(1) now prints the number of bytes transferred and the overall
+        connection throughput for SSH protocol 2 sessions when in verbose
+        mode (previously these statistics were displayed for protocol 1
+        connections only).
+      + sftp-server(8) now supports extension methods statvfs@openssh.com
+        and fstatvfs@openssh.com that implement statvfs(2)-like operations.
+      + sftp(1) now has a "df" command to the sftp client that uses the
+        statvfs@openssh.com to produce a df(1)-like display of filesystem
+        space and inode utilisation (requires statvfs@openssh.com support on
+        the server).
+      + Added a MaxSessions option to sshd_config(5) to allow control of the
+        number of multiplexed sessions supported over a single TCP
+        connection. This allows increasing the number of allowed sessions
+        above the previous default of 10, disabling connection multiplexing
+        (MaxSessions=1) or disallowing login/shell/subsystem sessions
+        entirely (MaxSessions=0).
+      + Added a no-more-sessions@openssh.com global request extension that
+        is sent from ssh(1) to sshd(8) when the client knows that it will
+        never request another session (i.e. when session multiplexing is
+        disabled). This allows a server to disallow further session requests
+        and terminate the session in cases where the client has been
+        hijacked.
+      + ssh-keygen(1) now supports the use of the -l option in combination
+        with -F to search for a host in ~/.ssh/known_hosts and display its
+        fingerprint.
+      + ssh-keyscan(1) now defaults to "rsa" (protocol 2) keys, instead of
+        "rsa1" (LP: #129794).
+      + Added an AllowAgentForwarding option to sshd_config(8) to control
+        whether authentication agent forwarding is permitted. Note that this
+        is a loose control, as a client may install their own unofficial
+        forwarder.
+      + ssh(1) and sshd(8): avoid unnecessary malloc/copy/free when
+        receiving network data, resulting in a ~10% speedup.
+      + ssh(1) and sshd(8) will now try additional addresses when connecting
+        to a port forward destination whose DNS name resolves to more than
+        one address. The previous behaviour was to try the only first
+        address and give up if that failed.
+      + ssh(1) and sshd(8) now support signalling that channels are
+        half-closed for writing, through a channel protocol extension
+        notification "eow@openssh.com". This allows propagation of closed
+        file descriptors, so that commands such as "ssh -2 localhost od
+        /bin/ls | true" do not send unnecessary data over the wire.
+      + sshd(8): increased the default size of ssh protocol 1 ephemeral keys
+        from 768 to 1024 bits.
+      + When ssh(1) has been requested to fork after authentication ("ssh
+        -f") with ExitOnForwardFailure enabled, delay the fork until after
+        replies for any -R forwards have been seen. Allows for robust
+        detection of -R forward failure when using -f.
+      + "Match group" blocks in sshd_config(5) now support negation of
+        groups. E.g. "Match group staff,!guests".
+      + sftp(1) and sftp-server(8) now allow chmod-like operations to set
+        set[ug]id/sticky bits.
+      + The MaxAuthTries option is now permitted in sshd_config(5) match
+        blocks.
+      + Multiplexed ssh(1) sessions now support a subset of the ~ escapes
+        that are available to a primary connection.
+      + ssh(1) connection multiplexing will now fall back to creating a new
+        connection in most error cases (closes: #352830).
+      + Make ssh(1) deal more gracefully with channel requests that fail.
+        Previously it would optimistically assume that requests would always
+        succeed, which could cause hangs if they did not (e.g. when the
+        server runs out of file descriptors).
+      + ssh(1) now reports multiplexing errors via the multiplex slave's
+        stderr where possible (subject to LogLevel in the mux master).
+      + Fixed an UMAC alignment problem that manifested on Itanium
+        platforms.
+  * Remove our local version of moduli(5) now that there's one upstream.
+  * Say "GTK+" rather than "GTK" in ssh-askpass-gnome's description.
+  * Add lintian overrides for empty /usr/share/doc/openssh-client
+    directories in openssh-server and ssh (necessary due to being symlink
+    targets).
+  * Merge from Ubuntu:
+    - Add 'status' action to openssh-server init script, requiring lsb-base
+      (>= 3.2-13) (thanks, Dustin Kirkland).
+  * debconf template translations:
+    - Update Korean (thanks, Sunjae Park; closes: #484821).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 25 Jul 2008 10:45:08 +0100
+
+openssh (1:4.7p1-13) unstable; urgency=low
+
+  * Add some helpful advice to the end of ssh-vulnkey's output if there are
+    unknown or compromised keys (thanks, Dan Jacobson; closes: #483756).
+  * Check compromised key blacklist in ssh or ssh-add, as well as in the
+    server (LP: #232391). To override the blacklist check in ssh
+    temporarily, use 'ssh -o UseBlacklistedKeys=yes'; there is no override
+    for the blacklist check in ssh-add.
+  * Add cross-references to ssh-vulnkey(1) to ssh(1), ssh-add(1),
+    ssh-keygen(1), and sshd(8) (closes: #484451).
+  * Change openssh-client-udeb's Installer-Menu-Item from 99900 to 99999
+    (thanks, Frans Pop).
+  * Drop openssh-client-udeb isinstallable hack, as main-menu (>= 1.26) now
+    takes care of that (thanks, Frans Pop; closes: #484404).
+  * Update DEB_BUILD_OPTIONS parsing code from policy 3.8.0.
+  * Add documentation on removing openssh-blacklist locally (see #484269).
+  * Clarify documentation of SSHD_OOM_ADJUST, and make setting it to the
+    empty string actually skip adjustment as intended (closes: #487325).
+  * Remove empty /usr/share/applications directory in ssh-askpass-gnome.
+  * debconf template translations:
+    - Update Romanian (thanks, Cătălin Feștilă; closes: #485415).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 21 Jul 2008 12:18:28 +0100
+
+openssh (1:4.7p1-12ubuntu4) intrepid; urgency=low
+
+  * Really move openssh-blacklist and openssh-blacklist-extra to Suggests,
+    not Conflicts!
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 14 Jul 2008 14:07:16 +0100
+
+openssh (1:4.7p1-12ubuntu3) intrepid; urgency=low
+
+  * Drop openssh-blacklist and openssh-blacklist-extra to Suggests; they
+    take up a lot of CD space, and I suspect that rolling them out in
+    security updates has covered most affected systems now.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 14 Jul 2008 09:48:01 +0100
+
+openssh (1:4.7p1-12ubuntu2) intrepid; urgency=low
+
+  * debian/control: Depend on lsb-base >= 3.2-12ubuntu3, which has the
+    status_of_proc() function.
+  * debian/openssh-server.init: Add the 'status' action (LP: #247103).
+
+ -- Dustin Kirkland <kirkland@ubuntu.com>  Thu, 10 Jul 2008 10:45:01 -0500
+
+openssh (1:4.7p1-12ubuntu1) intrepid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 29 May 2008 21:50:22 +0100
+
+openssh (1:4.7p1-12) unstable; urgency=low
+
+  * Fill in CVE identifier for ssh-vulnkey bug fixed in 1:4.7p1-10.
+  * Refactor rejection of blacklisted user keys into a single
+    reject_blacklisted_key function in auth.c (thanks, Dmitry V. Levin).
+  * Fix memory leak of blacklisted host keys (thanks, Dmitry V. Levin).
+  * debconf template translations:
+    - Update Dutch (thanks, Bart Cornelis; closes: #483004).
+    - Update Brazilian Portuguese (thanks, Eder L. Marques; closes:
+      #483142).
+    - Update Slovak (thanks, Ivan Masár; closes: #483517).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 29 May 2008 21:41:29 +0100
+
+openssh (1:4.7p1-11) unstable; urgency=low
+
+  * Make init script depend on $syslog, and fix some other dependency
+    glitches (thanks, Petter Reinholdtsen; closes: #481018).
+  * Remove 0 and 6 from Default-Stop in init script (thanks, Kel Modderman;
+    closes: #481151).
+  * Restore OOM killer adjustment for child processes (thanks, Vaclav Ovsik;
+    closes: #480020).
+  * Allow building with heimdal-dev (LP: #125805).
+
+  * Check RSA1 keys without the need for a separate blacklist. Thanks to
+    Simon Tatham for the idea.
+  * Generate two keys with the PID forced to the same value and test that
+    they differ, to defend against recurrences of the recent Debian OpenSSL
+    vulnerability.
+  * Recommend openssh-blacklist from openssh-client (closes: #481187).
+  * Recommend openssh-blacklist-extra from openssh-client and
+    openssh-server.
+  * Make ssh-vulnkey report the file name and line number for each key
+    (thanks, Heiko Schlittermann and Christopher Perry; closes: #481398).
+  * Check for blacklists in /usr/share/ssh/ as well as /etc/ssh/ (see
+    #481283).
+  * Log IP addresses of hosts attempting to use blacklisted keys (closes:
+    #481721).
+  * Incorporate various ssh-vulnkey suggestions from Hugh Daniel:
+    - Add -v (verbose) option, and don't print output for keys that have a
+      blacklist file but that are not listed unless in verbose mode.
+    - Move exit status documentation to a separate section.
+    - Document key status descriptions.
+    - Add key type to output.
+    - Fix error output if ssh-vulnkey fails to read key files, with the
+      exception of host keys unless -a was given.
+    - In verbose mode, output the name of each file examined.
+  * Handle leading IP addresses in ssh-vulnkey input (LP: #230497).
+  * Fix various ssh-vulnkey problems pointed out by Solar Designer:
+    - Fix some buffer handling inconsistencies.
+    - Use xasprintf to build user key file names, avoiding truncation
+      problems.
+    - Drop to the user's UID when reading user keys with -a.
+    - Use EUID rather than UID when run with no file names and without -a.
+    - Reword "Unknown (no blacklist information)" to "Unknown (blacklist
+      file not installed)".
+
+  * Fix typo in ssh/vulnerable_host_keys message (thanks, Esko Arajärvi).
+  * debconf template translations:
+    - Update Finnish (thanks, Esko Arajärvi; closes: #481530).
+    - Update French (thanks, Christian Perrier; closes: #481576).
+    - Update Norwegian Bokmål (thanks, Bjørn Steensrud; closes: #481591).
+    - Update Galician (thanks, Jacobo Tarrio; closes: #481596).
+    - Update Japanese (thanks, Kenshi Muto; closes: #481621).
+    - Update Czech (thanks, Miroslav Kure; closes: #481624).
+    - Update German (thanks, Helge Kreutzmann; closes: #481676).
+    - Update Portuguese (thanks, Ricardo Silva; closes: #481781).
+    - Update Basque (thanks, Piarres Beobide; closes: #481836).
+    - Update Bulgarian (thanks, Damyan Ivanov; closes: #481870).
+    - Update Vietnamese (thanks, Clytie Siddall; closes: #481876).
+    - Update Spanish (thanks, Javier Fernandez-Sanguino Peña; closes:
+      #482341).
+    - Update Turkish (thanks, Mert Dirik; closes: #482548).
+    - Update Russian (thanks, Yuri Kozlov; closes: #482887).
+    - Update Swedish (thanks, Martin Bagge; closes: #482464).
+    - Update Italian (thanks, Luca Monducci; closes: #482808).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 26 May 2008 12:21:39 +0100
+
+openssh (1:4.7p1-10ubuntu1) intrepid; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 14 May 2008 13:25:45 +0100
+
+openssh (1:4.7p1-10) unstable; urgency=low
+
+  * Add a FILES section to ssh-vulnkey(1) (thanks, Hugh Daniel).
+  * CVE-2008-2285: ssh-vulnkey handles options in authorized_keys
+    (LP: #230029), and treats # as introducing a comment even if it is
+    preceded by whitespace.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 14 May 2008 12:35:05 +0100
+
+openssh (1:4.7p1-9ubuntu1) intrepid; urgency=critical
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 13 May 2008 12:36:59 +0100
+
+openssh (1:4.7p1-9) unstable; urgency=critical
+
+  * Fill in CVE identifier for security vulnerability fixed in 1:4.7p1-8.
+  * Mitigate OpenSSL security vulnerability (CVE-2008-0166):
+    - Add key blacklisting support. Keys listed in
+      /etc/ssh/blacklist.TYPE-LENGTH will be rejected for authentication by
+      sshd, unless "PermitBlacklistedKeys yes" is set in
+      /etc/ssh/sshd_config.
+    - Add a new program, ssh-vulnkey, which can be used to check keys
+      against these blacklists.
+    - Depend on openssh-blacklist.
+    - Force dependencies on libssl0.9.8 / libcrypto0.9.8-udeb to at least
+      0.9.8g-9.
+    - Automatically regenerate known-compromised host keys, with a
+      critical-priority debconf note. (I regret that there was no time to
+      gather translations.)
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 13 May 2008 12:33:38 +0100
+
+openssh (1:4.7p1-8ubuntu1) hardy; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sun, 06 Apr 2008 12:44:11 +0100
+
+openssh (1:4.7p1-8) unstable; urgency=high
+
+  * Fill in CVE identifier for security vulnerability fixed in 1:4.7p1-5.
+  * Rename KeepAlive to TCPKeepAlive in sshd_config, cleaning up from old
+    configurations (LP: #211400).
+  * Tweak scp's reporting of filenames in verbose mode to be a bit less
+    confusing with spaces (thanks, Nicolas Valcárcel; LP: #89945).
+  * Backport from 4.9p1:
+    - CVE-2008-1657: Ignore ~/.ssh/rc if a sshd_config ForceCommand is
+      specified.
+    - Add no-user-rc authorized_keys option to disable execution of
+      ~/.ssh/rc.
+  * Backport from Simon Wilkinson's GSSAPI key exchange patch for 5.0p1:
+    - Add code to actually implement GSSAPIStrictAcceptorCheck, which had
+      somehow been omitted from a previous version of this patch (closes:
+      #474246).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 06 Apr 2008 12:34:19 +0100
+
+openssh (1:4.7p1-7ubuntu1) hardy; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 31 Mar 2008 16:30:53 +0100
+
+openssh (1:4.7p1-7) unstable; urgency=low
+
+  * Ignore errors writing to oom_adj (closes: #473573).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 31 Mar 2008 16:24:44 +0100
+
+openssh (1:4.7p1-6ubuntu1) hardy; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sun, 30 Mar 2008 21:32:41 +0100
+
+openssh (1:4.7p1-6) unstable; urgency=low
+
+  * Disable the Linux kernel's OOM-killer for the sshd parent; tweak
+    SSHD_OOM_ADJUST in /etc/default/ssh to change this (closes: #341767).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 30 Mar 2008 21:14:12 +0100
+
+openssh (1:4.7p1-5ubuntu1) hardy; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sat, 22 Mar 2008 12:41:13 +0000
+
+openssh (1:4.7p1-5) unstable; urgency=low
+
+  * Recommends: xauth rather than Suggests: xbase-clients.
+  * Document in ssh(1) that '-S none' disables connection sharing
+    (closes: #471437).
+  * Patch from Red Hat / Fedora:
+    - CVE-2008-1483: Don't use X11 forwarding port which can't be bound on
+      all address families, preventing hijacking of X11 forwarding by
+      unprivileged users when both IPv4 and IPv6 are configured (closes:
+      #463011).
+  * Use printf rather than echo -en (a bashism) in openssh-server.config and
+    openssh-server.preinst.
+  * debconf template translations:
+    - Update Finnish (thanks, Esko Arajärvi; closes: #468563).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 22 Mar 2008 12:37:00 +0000
+
+openssh (1:4.7p1-4ubuntu1) hardy; urgency=low
+
+  * Add support for registering ConsoleKit sessions on login.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 13 Feb 2008 19:58:17 +0000
+
+openssh (1:4.7p1-4) unstable; urgency=low
+
+  [ Caleb Case ]
+  * Fix configure detection of getseuserbyname and
+    get_default_context_with_level (closes: #465614, LP: #188136).
+
+  [ Colin Watson ]
+  * Include the autogenerated debian/copyright in the source package.
+  * Move /etc/pam.d/ssh to /etc/pam.d/sshd, allowing us to stop defining
+    SSHD_PAM_SERVICE (closes: #255870).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 13 Feb 2008 18:18:52 +0000
+
+openssh (1:4.7p1-3) unstable; urgency=low
+
+  * Improve grammar of ssh-askpass-gnome description.
+  * Backport from upstream:
+    - Use the correct packet maximum sizes for remote port and agent
+      forwarding. Prevents the server from killing the connection if too
+      much data is queued and an excessively large packet gets sent
+      (https://bugzilla.mindrot.org/show_bug.cgi?id=1360).
+  * Allow passing temporary daemon parameters on the init script's command
+    line, e.g. '/etc/init.d/ssh start "-o PermitRootLogin=yes"' (thanks,
+    Marc Haber; closes: #458547).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 01 Feb 2008 21:59:59 +0000
+
+openssh (1:4.7p1-2) unstable; urgency=low
+
+  * Adjust many relative links in faq.html to point to
+    http://www.openssh.org/ (thanks, Dan Jacobson; mentioned in #459807).
+  * Pass --with-mantype=doc to configure rather than build-depending on
+    groff (closes: #460121).
+  * Add armel to architecture list for libselinux1-dev build-dependency
+    (closes: #460136).
+  * Drop source-compatibility with Debian 3.0:
+    - Remove support for building with GNOME 1. This allows simplification
+      of our GNOME build-dependencies (see #460136).
+    - Remove hacks to support the old PAM configuration scheme.
+    - Remove compatibility for building without po-debconf.
+  * Build-depend on libgtk2.0-dev rather than libgnomeui-dev. As far as I
+    can see, the GTK2 version of ssh-askpass-gnome has never required
+    libgnomeui-dev.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 11 Jan 2008 00:14:10 +0000
+
+openssh (1:4.7p1-1) unstable; urgency=low
+
+  * New upstream release (closes: #453367).
+    - CVE-2007-4752: Prevent ssh(1) from using a trusted X11 cookie if
+      creation of an untrusted cookie fails; found and fixed by Jan Pechanec
+      (closes: #444738).
+    - sshd(8) in new installations defaults to SSH Protocol 2 only. Existing
+      installations are unchanged.
+    - The SSH channel window size has been increased, and both ssh(1)
+      sshd(8) now send window updates more aggressively. These improves
+      performance on high-BDP (Bandwidth Delay Product) networks.
+    - ssh(1) and sshd(8) now preserve MAC contexts between packets, which
+      saves 2 hash calls per packet and results in 12-16% speedup for
+      arcfour256/hmac-md5.
+    - A new MAC algorithm has been added, UMAC-64 (RFC4418) as
+      "umac-64@openssh.com". UMAC-64 has been measured to be approximately
+      20% faster than HMAC-MD5.
+    - Failure to establish a ssh(1) TunnelForward is now treated as a fatal
+      error when the ExitOnForwardFailure option is set.
+    - ssh(1) returns a sensible exit status if the control master goes away
+      without passing the full exit status.
+    - When using a ProxyCommand in ssh(1), set the outgoing hostname with
+      gethostname(2), allowing hostbased authentication to work.
+    - Make scp(1) skip FIFOs rather than hanging (closes: #246774).
+    - Encode non-printing characters in scp(1) filenames. These could cause
+      copies to be aborted with a "protocol error".
+    - Handle SIGINT in sshd(8) privilege separation child process to ensure
+      that wtmp and lastlog records are correctly updated.
+    - Report GSSAPI mechanism in errors, for libraries that support multiple
+      mechanisms.
+    - Improve documentation for ssh-add(1)'s -d option.
+    - Rearrange and tidy GSSAPI code, removing server-only code being linked
+      into the client.
+    - Delay execution of ssh(1)'s LocalCommand until after all forwardings
+      have been established.
+    - In scp(1), do not truncate non-regular files.
+    - Improve exit message from ControlMaster clients.
+    - Prevent sftp-server(8) from reading until it runs out of buffer space,
+      whereupon it would exit with a fatal error (closes: #365541).
+    - pam_end() was not being called if authentication failed
+      (closes: #405041).
+    - Manual page datestamps updated (closes: #433181).
+  * Install the OpenSSH FAQ in /usr/share/doc/openssh-client.
+    - Includes documentation on copying files with colons using scp
+      (closes: #303453).
+  * Create /var/run/sshd on start even if /etc/ssh/sshd_not_to_be_run exists
+    (closes: #453285).
+  * Fix "overriden" typo in ssh(1) (thanks, A. Costa; closes: #390699).
+  * Refactor debian/rules configure and make invocations to make development
+    easier.
+  * Remove the hideously old /etc/ssh/primes on upgrade (closes: #123013).
+  * Update moduli(5) to revision 1.11 from OpenBSD CVS.
+  * Document the non-default options we set as standard in ssh_config(5) and
+    sshd_config(5) (closes: #327886, #345628).
+  * Recode LICENCE to UTF-8 when concatenating it to debian/copyright.
+  * Override desktop-file-but-no-dh_desktop-call lintian warning; the
+    .desktop file is intentionally not installed (see 1:3.8.1p1-10).
+  * Update copyright dates for Kerberos patch in debian/copyright.head.
+  * Policy version 3.7.3: no changes required.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 24 Dec 2007 16:43:02 +0000
+
+openssh (1:4.6p1-7) unstable; urgency=low
+
+  * Don't build PIE executables on m68k (closes: #451192).
+  * Use autotools-dev's recommended configure --build and --host options.
+  * Adjust README.Debian to suggest mailing debian-ssh@lists.debian.org
+    rather than Matthew.
+  * Check whether deluser exists in postrm (closes: #454085).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 03 Dec 2007 11:11:02 +0000
+
+openssh (1:4.6p1-6) unstable; urgency=low
+
+  * Remove blank line between head comment and first template in
+    debian/openssh-server.templates.master; apparently it confuses some
+    versions of debconf.
+  * Install authorized_keys(5) as a symlink to sshd(8) (thanks, Tomas
+    Pospisek; closes: #441817).
+  * Discard error output from dpkg-query in preinsts, in case the ssh
+    metapackage is not installed.
+  * Fix sshd/inittab advice in README.Debian to account for rc.d movement
+    (closes: #450632).
+  * Suppress error from debian/rules if lsb-release is not installed.
+  * Don't ignore errors from 'make -C contrib clean'.
+  * Adjust categories in ssh-askpass-gnome.desktop to comply with the
+    Desktop Menu Specification.
+  * debconf template translations:
+    - Add Slovak (thanks, Ivan Masár; closes: #441690).
+    - Update Brazilian Portuguese (thanks, Eder L. Marques;
+      closes: #447145).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 12 Nov 2007 11:47:28 +0000
+
+openssh (1:4.6p1-5) unstable; urgency=low
+
+  * Identify ssh as a metapackage rather than a transitional package. It's
+    still useful as a quick way to install both the client and the server.
+  * ssh-copy-id now checks the exit status of ssh-add -L (thanks, Adeodato
+    Simó; closes: #221675).
+  * ssh-copy-id no longer prints the output of expr (thanks, Peter
+    Eisentraut; closes: #291534).
+  * ssh-copy-id defaults to ~/.ssh/id_rsa.pub rather than
+    ~/.ssh/identity.pub, in line with ssh-keygen (thanks, Greg Norris;
+    closes: #234627).
+  * Build-depend on libselinux1-dev on lpia.
+  * openssh-client Suggests: keychain.
+  * debconf template translations:
+    - Update Catalan (thanks, Jordà Polo; closes: #431970).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 30 Jul 2007 09:34:38 +0100
+
+openssh (1:4.6p1-4) unstable; urgency=low
+
+  * Don't build PIE executables on hppa, as they crash.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 05 Jul 2007 11:06:54 +0100
+
+openssh (1:4.6p1-3) unstable; urgency=low
+
+  * Only build PIE executables on Linux and NetBSD (closes: #430455).
+  * Fix broken switch fallthrough when SELinux is running in permissive mode
+    (closes: #430838).
+  * Document that HashKnownHosts may break tab-completion (closes: #430154).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 29 Jun 2007 07:15:38 +0100
+
+openssh (1:4.6p1-2) unstable; urgency=low
+
+  * Fix ordering of SYSLOG_LEVEL_QUIET and SYSLOG_LEVEL_FATAL.
+  * Clarify that 'ssh -q -q' still prints errors caused by bad arguments
+    (i.e. before the logging system is initialised).
+  * Suppress "Connection to <host> closed" and "Connection to master closed"
+    messages at loglevel SILENT (thanks, Jaap Eldering; closes: #409788).
+  * Suppress "Pseudo-terminal will not be allocated because stdin is not a
+    terminal" message at loglevels QUIET and SILENT (closes: #366814).
+  * Document the SILENT loglevel in sftp-server(8), ssh_config(5), and
+    sshd_config(5).
+  * Add try-restart action to init script.
+  * Add /etc/network/if-up.d/openssh-server to restart sshd when new
+    interfaces appear (LP: #103436).
+  * Backport from upstream:
+    - Move C/R -> kbdint special case to after the defaults have been
+      loaded, which makes ChallengeResponse default to yes again. This was
+      broken by the Match changes and not fixed properly subsequently
+      (closes: #428968).
+    - Silence spurious error messages from hang-on-exit fix
+      (http://bugzilla.mindrot.org/show_bug.cgi?id=1306, closes: #429531).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 20 Jun 2007 11:52:44 +0100
+
+openssh (1:4.6p1-1) unstable; urgency=low
+
+  * New upstream release (closes: #395507, #397961, #420035). Important
+    changes not previously backported to 4.3p2:
+    - 4.4/4.4p1 (http://www.openssh.org/txt/release-4.4):
+      + On portable OpenSSH, fix a GSSAPI authentication abort that could be
+        used to determine the validity of usernames on some platforms.
+      + Implemented conditional configuration in sshd_config(5) using the
+        "Match" directive. This allows some configuration options to be
+        selectively overridden if specific criteria (based on user, group,
+        hostname and/or address) are met. So far a useful subset of
+        post-authentication options are supported and more are expected to
+        be added in future releases.
+      + Add support for Diffie-Hellman group exchange key agreement with a
+        final hash of SHA256.
+      + Added a "ForceCommand" directive to sshd_config(5). Similar to the
+        command="..." option accepted in ~/.ssh/authorized_keys, this forces
+        the execution of the specified command regardless of what the user
+        requested. This is very useful in conjunction with the new "Match"
+        option.
+      + Add a "PermitOpen" directive to sshd_config(5). This mirrors the
+        permitopen="..." authorized_keys option, allowing fine-grained
+        control over the port-forwardings that a user is allowed to
+        establish.
+      + Add optional logging of transactions to sftp-server(8).
+      + ssh(1) will now record port numbers for hosts stored in
+        ~/.ssh/known_hosts when a non-standard port has been requested
+        (closes: #50612).
+      + Add an "ExitOnForwardFailure" option to cause ssh(1) to exit (with a
+        non-zero exit code) when requested port forwardings could not be
+        established.
+      + Extend sshd_config(5) "SubSystem" declarations to allow the
+        specification of command-line arguments.
+      + Replacement of all integer overflow susceptible invocations of
+        malloc(3) and realloc(3) with overflow-checking equivalents.
+      + Many manpage fixes and improvements.
+      + Add optional support for OpenSSL hardware accelerators (engines),
+        enabled using the --with-ssl-engine configure option.
+      + Tokens in configuration files may be double-quoted in order to
+        contain spaces (closes: #319639).
+      + Move a debug() call out of a SIGCHLD handler, fixing a hang when the
+        session exits very quickly (closes: #307890).
+      + Fix some incorrect buffer allocation calculations (closes: #410599).
+      + ssh-add doesn't ask for a passphrase if key file permissions are too
+        liberal (closes: #103677).
+      + Likewise, ssh doesn't ask either (closes: #99675).
+    - 4.6/4.6p1 (http://www.openssh.org/txt/release-4.6):
+      + sshd now allows the enabling and disabling of authentication methods
+        on a per user, group, host and network basis via the Match directive
+        in sshd_config.
+      + Fixed an inconsistent check for a terminal when displaying scp
+        progress meter (closes: #257524).
+      + Fix "hang on exit" when background processes are running at the time
+        of exit on a ttyful/login session (closes: #88337).
+  * Update to current GSSAPI patch from
+    http://www.sxw.org.uk/computing/patches/openssh-4.6p1-gsskex-20070312.patch;
+    install ChangeLog.gssapi.
+  * Build the .deb --with-ssl-engine (closes: #408027, LP: #119295).
+  * Use LSB functions in init scripts, and add an LSB-style header (partly
+    from Ubuntu and partly thanks to Christian Perrier; closes: #389038).
+  * Move init script start links to S16, move rc1 stop link to K84, and
+    remove rc0 and rc6 stop links altogether (the last part from Ubuntu;
+    closes: #122188).
+  * Emit a slightly more informative message from the init script if
+    /dev/null has somehow become not a character device (closes: #369964).
+  * Belatedly build-depend on zlib1g-dev (>= 1:1.2.3-1) (closes: #333447).
+  * Merge from Ubuntu:
+    - Build position-independent executables (only for debs, not for udebs)
+      to take advantage of address space layout randomisation.
+    - If building on Ubuntu, add /sbin, /usr/sbin, and /usr/local/sbin to
+      the default path.
+  * Use ${binary:Version} rather than ${Source-Version} in openssh-server ->
+    openssh-client dependency.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 13 Jun 2007 00:28:26 +0100
+
+openssh (1:4.3p2-11) unstable; urgency=low
+
+  * It's been four and a half years now since I took over as "temporary"
+    maintainer, so the Maintainer field is getting a bit inaccurate. Set
+    Maintainer to debian-ssh@lists.debian.org and leave Matthew and myself
+    as Uploaders.
+  * Use dpkg-query to fetch conffile md5sums rather than parsing
+    /var/lib/dpkg/status directly.
+  * openssh-client Suggests: libpam-ssh (closes: #427840).
+  * Use 'start-stop-daemon --oknodo' so that openssh-server's init script
+    exits successfully if sshd is already running (closes: #426858).
+
+  * Apply results of debconf templates and package descriptions review by
+    debian-l10n-english (closes: #420107, #420742).
+  * debconf template translations:
+    - Update Dutch (thanks, Machteld de Kok; closes: #419260).
+    - Update Norwegian Bokmål (thanks, Bjørn Steensrud; closes: #420630).
+    - Update Galician (thanks, Jacobo Tarrio; closes: #420635).
+    - Update Spanish (thanks, Javier Fernández-Sanguino Peña;
+      closes: #420651).
+    - Update Swedish (thanks, Daniel Nylander; closes: #420663).
+    - Add Bulgarian (thanks, Damyan Ivanov; closes: #420703).
+    - Add Tamil (thanks, Tirumurti Vasudevan; closes: #420739).
+    - Update German (thanks, Helge Kreutzmann; closes: #420743).
+    - Update Japanese (thanks, Kenshi Muto; closes: #420946).
+    - Add Basque (thanks, Piarres Beobide; closes: #421238).
+    - Update Italian (thanks, Luca Monducci; closes: #421348).
+    - Update Czech (thanks, Miroslav Kure; closes: #421484).
+    - Update Romanian (thanks, Igor Stirbu; closes: #421760).
+    - Update Russian (thanks, Yuriy Talakan' and Sergey Alyoshin;
+      closes: #420862).
+    - Update Dutch (thanks, Bart Cornelis; closes: #422767).
+    - Update Portuguese (thanks, Ricardo Silva; closes: #423112).
+    - Update French (thanks, Christian Perrier).
+    - Add Korean (thanks, Sunjae Park; closes: #424008).
+    - Update Vietnamese (thanks, Clytie Siddall; closes: #426991).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 10 Jun 2007 08:59:42 +0100
+
+openssh (1:4.3p2-10) unstable; urgency=low
+
+  * Multiply openssh-client-udeb's Installer-Menu-Item by 100.
+  * Increase MAX_SESSIONS to 64.
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 10 Apr 2007 19:17:20 +0100
+
+openssh (1:4.3p2-9) unstable; urgency=high
+
+  [ Russ Allbery ]
+  * Fix GSSAPIKeyExchange configuration file handling logic in ssh-krb5
+    (closes: #404863).
+  * Fix uncommenting of GSSAPI options by ssh-krb5 (closes: #407766).
+
+  [ Colin Watson ]
+  * debconf template translations:
+    - Add Norwegian Bokmål (thanks, Bjørn Steensrud; closes: #412330).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  5 Mar 2007 16:13:50 +0000
+
+openssh (1:4.3p2-8) unstable; urgency=medium
+
+  [ Vincent Untz ]
+  * Give the ssh-askpass-gnome window a default icon; remove unnecessary
+    icon extension from .desktop file (closes:
+    https://launchpad.net/bugs/27152).
+
+  [ Colin Watson ]
+  * Drop versioning on ssh/ssh-krb5 Replaces, as otherwise it isn't
+    sufficient to replace conffiles (closes: #402804).
+  * Make GSSAPICleanupCreds a compatibility alias for
+    GSSAPICleanupCredentials. Mark GSSUseSessionCCache and
+    GSSAPIUseSessionCredCache as known-but-unsupported options, and migrate
+    away from them on upgrade.
+  * It turns out that the people who told me that removing a conffile in the
+    preinst was sufficient to have dpkg replace it without prompting when
+    moving a conffile between packages were very much mistaken. As far as I
+    can tell, the only way to do this reliably is to write out the desired
+    new text of the conffile in the preinst. This is gross, and requires
+    shipping the text of all conffiles in the preinst too, but there's
+    nothing for it. Fortunately this nonsense is only required for smooth
+    upgrades from sarge.
+  * debconf template translations:
+    - Add Romanian (thanks, Stan Ioan-Eugen; closes: #403528).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 23 Dec 2006 18:38:33 +0000
+
+openssh (1:4.3p2-7) unstable; urgency=medium
+
+  [ Colin Watson ]
+  * Ignore errors from usermod when changing sshd's shell, since it will
+    fail if the sshd user is not local (closes: #398436).
+  * Remove version control tags from /etc/ssh/moduli and /etc/ssh/ssh_config
+    to avoid unnecessary conffile resolution steps for administrators
+    (thanks, Jari Aalto; closes: #335259).
+  * Fix quoting error in configure.ac and regenerate configure (thanks, Ben
+    Pfaff; closes: #391248).
+  * When installing openssh-client or openssh-server from scratch, remove
+    any unchanged conffiles from the pre-split ssh package to work around a
+    bug in sarge's dpkg (thanks, Justin Pryzby and others; closes: #335276).
+
+  [ Russ Allbery ]
+  * Create transitional ssh-krb5 package which enables GSSAPI configuration
+    in sshd_config (closes: #390986).
+  * Default client to attempting GSSAPI authentication.
+  * Remove obsolete GSSAPINoMICAuthentication from sshd_config if it's
+    found.
+  * Add ssh -K option, the converse of -k, to enable GSSAPI credential
+    delegation (closes: #401483).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  6 Dec 2006 23:00:49 +0000
+
+openssh (1:4.3p2-6) unstable; urgency=low
+
+  * Acknowledge NMU (thanks, Manoj; closes: #394795).
+  * Backport from 4.5p1:
+    - Fix a bug in the sshd privilege separation monitor that weakened its
+      verification of successful authentication. This bug is not known to be
+      exploitable in the absence of additional vulnerabilities.
+  * openssh-server Suggests: molly-guard (closes: #395473).
+  * debconf template translations:
+    - Update German (thanks, Helge Kreutzmann; closes: #395947).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 15 Nov 2006 00:07:32 +0000
+
+openssh (1:4.3p2-5.1) unstable; urgency=low
+
+  * NMU to update SELinux patch, bringing it in line with current selinux
+    releases.  The patch for this NMU is simply the Bug#394795 patch, 
+    and no other changes.                       (closes: #394795)
+
+ -- Manoj Srivastava <srivasta@debian.org>  Mon,  23 Oct 2006 14:11:24 -0500
+
+openssh (1:4.3p2-5) unstable; urgency=low
+
+  * Remove ssh/insecure_telnetd check altogether (closes: #391081).
+  * debconf template translations:
+    - Update Danish (thanks, Claus Hindsgaul; closes: #390612).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu,  5 Oct 2006 09:04:19 +0100
+
+openssh (1:4.3p2-4) unstable; urgency=high
+
+  * Backport from 4.4p1 (since I don't have an updated version of the GSSAPI
+    patch yet):
+    - CVE-2006-4924: Fix a pre-authentication denial of service found by
+      Tavis Ormandy, that would cause sshd(8) to spin until the login grace
+      time expired (closes: #389995).
+    - CVE-2006-5051: Fix an unsafe signal hander reported by Mark Dowd. The
+      signal handler was vulnerable to a race condition that could be
+      exploited to perform a pre-authentication denial of service. On
+      portable OpenSSH, this vulnerability could theoretically lead to
+      pre-authentication remote code execution if GSSAPI authentication is
+      enabled, but the likelihood of successful exploitation appears remote.
+
+  * Read /etc/default/locale as well as /etc/environment (thanks, Raphaël
+    Hertzog; closes: #369395).
+  * Remove no-longer-used ssh/insecure_rshd debconf template.
+  * Make ssh/insecure_telnetd Type: error (closes: #388946).
+
+  * debconf template translations:
+    - Update Portuguese (thanks, Rui Branco; closes: #381942).
+    - Update Spanish (thanks, Javier Fernández-Sanguino Peña;
+      closes: #382966).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 29 Sep 2006 16:28:24 +0100
+
+openssh (1:4.3p2-3) unstable; urgency=low
+
+  * Document KeepAlive->TCPKeepAlive renaming in sshd_config(5) (closes:
+    https://launchpad.net/bugs/50702).
+  * Change sshd user's shell to /usr/sbin/nologin (closes: #366541).
+    Introduces dependency on passwd for usermod.
+  * debconf template translations:
+    - Update French (thanks, Denis Barbier; closes: #368503).
+    - Update Dutch (thanks, Bart Cornelis; closes: #375100).
+    - Update Japanese (thanks, Kenshi Muto; closes: #379950).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 27 Jul 2006 00:12:36 +0100
+
+openssh (1:4.3p2-2) unstable; urgency=low
+
+  * Include commented-out pam_access example in /etc/pam.d/ssh.
+  * On '/etc/init.d/ssh restart', create /var/run/sshd before checking the
+    server configuration, as otherwise 'sshd -t' will complain about the
+    lack of /var/run/sshd (closes: https://launchpad.net/bugs/45234).
+  * debconf template translations:
+    - Update Russian (thanks, Yuriy Talakan'; closes: #367143).
+    - Update Czech (thanks, Miroslav Kure; closes: #367161).
+    - Update Italian (thanks, Luca Monducci; closes: #367186).
+    - Update Galician (thanks, Jacobo Tarrio; closes: #367318).
+    - Update Swedish (thanks, Daniel Nylander; closes: #367971).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 19 May 2006 09:14:27 +0100
+
+openssh (1:4.3p2-1) unstable; urgency=low
+
+  * New upstream release (closes: #361032).
+    - CVE-2006-0225: scp (as does rcp, on which it is based) invoked a
+      subshell to perform local to local, and remote to remote copy
+      operations. This subshell exposed filenames to shell expansion twice;
+      allowing a local attacker to create filenames containing shell
+      metacharacters that, if matched by a wildcard, could lead to execution
+      of attacker-specified commands with the privilege of the user running
+      scp (closes: #349645).
+    - Add support for tunneling arbitrary network packets over a connection
+      between an OpenSSH client and server via tun(4) virtual network
+      interfaces. This allows the use of OpenSSH (4.3+) to create a true VPN
+      between the client and server providing real network connectivity at
+      layer 2 or 3. This feature is experimental.
+    - Reduce default key length for new DSA keys generated by ssh-keygen
+      back to 1024 bits. DSA is not specified for longer lengths and does
+      not fully benefit from simply making keys longer. As per FIPS 186-2
+      Change Notice 1, ssh-keygen will refuse to generate a new DSA key
+      smaller or larger than 1024 bits.
+    - Fixed X forwarding failing to start when the X11 client is executed in
+      background at the time of session exit.
+    - Change ssh-keygen to generate a protocol 2 RSA key when invoked
+      without arguments (closes: #114894).
+    - Fix timing variance for valid vs. invalid accounts when attempting
+      Kerberos authentication.
+    - Ensure that ssh always returns code 255 on internal error
+      (closes: #259865).
+    - Cleanup wtmp files on SIGTERM when not using privsep.
+    - Set SO_REUSEADDR on X11 listeners to avoid problems caused by
+      lingering sockets from previous session (X11 applications can
+      sometimes not connect to 127.0.0.1:60xx) (closes:
+      https://launchpad.net/bugs/25528).
+    - Ensure that fds 0, 1 and 2 are always attached in all programs, by
+      duping /dev/null to them if necessary.
+    - Xauth list invocation had bogus "." argument.
+    - Remove internal assumptions on key exchange hash algorithm and output
+      length, preparing OpenSSH for KEX methods with alternate hashes.
+    - Ignore junk sent by a server before it sends the "SSH-" banner.
+    - Many manual page improvements.
+    - Lots of cleanups, including fixes to memory leaks on error paths and
+      possible crashes.
+  * Update to current GSSAPI patch from
+    http://www.sxw.org.uk/computing/patches/openssh-4.3p2-gsskex-20060223.patch
+    (closes: #352042).
+  * debian/rules: Resynchronise CFLAGS with that generated by configure.
+  * Restore pam_nologin to /etc/pam.d/ssh; sshd no longer checks this itself
+    when PAM is enabled, but relies on PAM to do it.
+  * Rename KeepAlive to TCPKeepAlive in default sshd_config
+    (closes: #349896).
+  * Rephrase ssh/new_config and ssh/encrypted_host_key_but_no_keygen debconf
+    templates to make boolean short descriptions end with a question mark
+    and to avoid use of the first person.
+  * Ship README.tun.
+  * Policy version 3.7.2: no changes required.
+  * debconf template translations:
+    - Update Italian (thanks, Luca Monducci; closes: #360348).
+    - Add Galician (thanks, Jacobo Tarrio; closes: #361220).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 12 May 2006 12:48:24 +0100
+
+openssh (1:4.2p1-8) unstable; urgency=low
+
+  [ Frans Pop ]
+  * Use udeb support introduced in debhelper 4.2.0 (available in sarge)
+    rather than constructing udebs by steam.
+  * Require debhelper 5.0.22, which generates correct shared library
+    dependencies for udebs (closes: #360068). This build-dependency can be
+    ignored if building on sarge.
+
+  [ Colin Watson ]
+  * Switch to debhelper compatibility level 4, since we now require
+    debhelper 4 even on sarge anyway for udeb support.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 31 Mar 2006 09:44:55 +0100
+
+openssh (1:4.2p1-7) unstable; urgency=low
+
+  * I accidentally applied the default $PATH change in 1:4.2p1-6 to the udeb
+    rather than the deb. Fixed.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  1 Mar 2006 16:19:00 +0000
+
+openssh (1:4.2p1-6) unstable; urgency=low
+
+  * Sync default values of $PATH from shadow 1:4.0.12-6, adding /usr/bin/X11
+    to the normal and superuser paths and /usr/games to the normal path.
+  * When the client receives a signal, don't fatal() with "Killed by signal
+    %d." (which produces unhelpful noise on stderr and causes confusion for
+    users of some applications that wrap ssh); instead, generate a debug
+    message and exit with the traditional status (closes: #313371).
+  * debconf template translations:
+    - Add Swedish (thanks, Daniel Nylander; closes: #333133).
+    - Update Spanish (thanks, Javier Fernández-Sanguino Peña;
+      closes: #341371).
+    - Correct erroneously-changed Last-Translator headers in Greek and
+      Spanish translations.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 20 Feb 2006 16:50:55 +0000
+
+openssh (1:4.2p1-5) unstable; urgency=low
+
+  * Add a CVE name to the 1:4.0p1-1 changelog entry.
+  * Build-depend on libselinux1-dev on armeb.
+  * Only send GSSAPI proposal if GSSAPIAuthentication is enabled.
+  * Build-depend on libssl-dev (>= 0.9.8-1) to cope with surprise OpenSSL
+    transition, since otherwise who knows what the buildds will do. If
+    you're building openssh yourself, you can safely ignore this and use an
+    older libssl-dev.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri,  7 Oct 2005 12:23:42 +0100
+
+openssh (1:4.2p1-4) unstable; urgency=low
+
+  * Initialise token to GSS_C_EMPTY_BUFFER in ssh_gssapi_check_mechanism
+    (closes: #328606).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 16 Sep 2005 12:50:16 +0100
+
+openssh (1:4.2p1-3) unstable; urgency=low
+
+  * Add prototype for ssh_gssapi_server_mechanisms (closes: #328372).
+  * Interoperate with ssh-krb5 << 3.8.1p1-1 servers, which used a slightly
+    different version of the gssapi authentication method (thanks, Aaron M.
+    Ucko; closes: #328388).
+  * Explicitly tell po2debconf to use the 'popular' output encoding, so that
+    the woody-compatibility hack works even with po-debconf 0.9.0.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 15 Sep 2005 09:28:21 +0100
+
+openssh (1:4.2p1-2) unstable; urgency=low
+
+  * Annotate 1:4.2p1-1 changelog with CVE references.
+  * Add remaining pieces of Kerberos support (closes: #152657, #275472):
+    - Add GSSAPI key exchange support from
+      http://www.sxw.org.uk/computing/patches/openssh.html (thanks, Stephen
+      Frost).
+    - Build-depend on libkrb5-dev and configure --with-kerberos5=/usr.
+    - openssh-client and openssh-server replace ssh-krb5.
+    - Update commented-out Kerberos/GSSAPI options in default sshd_config.
+    - Fix HAVE_GSSAPI_KRB5_H/HAVE_GSSAPI_GSSAPI_KRB5_H typos in
+      gss-serv-krb5.c.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 14 Sep 2005 18:28:49 +0100
+
+openssh (1:4.2p1-1) unstable; urgency=low
+
+  * New upstream release.
+    - SECURITY (CAN-2005-2797): Fix a bug introduced in OpenSSH 4.0 that
+      caused GatewayPorts to be incorrectly activated for dynamic ("-D")
+      port forwardings when no listen address was explicitly specified
+      (closes: #326065).
+    - SECURITY (CAN-2005-2798): Fix improper delegation of GSSAPI
+      credentials. This code is only built in openssh-krb5, not openssh, but
+      I mention the CVE reference here anyway for completeness.
+    - Add a new compression method ("Compression delayed") that delays zlib
+      compression until after authentication, eliminating the risk of zlib
+      vulnerabilities being exploited by unauthenticated users. Note that
+      users of OpenSSH versions earlier than 3.5 will need to disable
+      compression on the client or set "Compression yes" (losing this
+      security benefit) on the server.
+    - Increase the default size of new RSA/DSA keys generated by ssh-keygen
+      from 1024 to 2048 bits (closes: #181162).
+    - Many bugfixes and improvements to connection multiplexing.
+    - Don't pretend to accept $HOME (closes: #208648).
+  * debian/rules: Resynchronise CFLAGS with that generated by configure.
+  * openssh-client and openssh-server conflict with pre-split ssh to avoid
+    problems when ssh is left un-upgraded (closes: #324695).
+  * Set X11Forwarding to yes in the default sshd_config (new installs only).
+    At least when X11UseLocalhost is turned on, which is the default, the
+    security risks of using X11 forwarding are risks to the client, not to
+    the server (closes: #320104).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 14 Sep 2005 15:16:14 +0100
+
+openssh (1:4.1p1-7) unstable; urgency=low
+
+  * Do the IDEA host key check on a temporary file to avoid altering
+    /etc/ssh/ssh_host_key itself (closes: #312312).
+  * Work around the ssh-askpass alternative somehow ending up in manual mode
+    pointing to the obsolete /usr/lib/ssh/gnome-ssh-askpass.
+  * Add GNU/kFreeBSD support (thanks, Aurelien Jarno; closes: #318113).
+  * Fix XSIish uses of 'test' in openssh-server.preinst.
+  * Policy version 3.6.2: no changes required.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri,  2 Sep 2005 16:18:11 +0100
+
+openssh (1:4.1p1-6) unstable; urgency=low
+
+  * Fix one-character typo that meant the binaries in openssh-client and
+    openssh-server got recompiled with the wrong options during
+    'debian/rules install' (closes: #317088, #317238, #317241).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu,  7 Jul 2005 10:56:16 +0100
+
+openssh (1:4.1p1-5) unstable; urgency=low
+
+  * Build-depend on libselinux1-dev on ppc64 too (closes: #314625).
+  * Drop priority of ssh to extra to match the override file.
+  * Make /usr/share/doc/openssh-server and /usr/share/doc/ssh symlinks to
+    /usr/share/doc/openssh-client (closes: #314745).
+  * Ship README.dns (closes: #284874).
+  * Disable btmp logging, since Debian's /var/log/btmp has inappropriate
+    permissions (closes: #314956).
+  * Allow ~/.ssh/config to be group-writable, provided that the group in
+    question contains only the file's owner (closes: #314347).
+  * debconf template translations:
+    - Update Brazilian Portuguese (thanks, André Luís Lopes;
+      closes: #315477).
+    - Add Vietnamese (thanks, Clytie Siddall; closes: #316636).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun,  3 Jul 2005 17:08:08 +0100
+
+openssh (1:4.1p1-4) unstable; urgency=low
+
+  * openssh-client and openssh-server conflict with ssh-krb5, as ssh-krb5
+    only conflicts with ssh (closes: #312475).
+  * SELinux support (thanks, Manoj Srivastava; closes: #308555):
+    - Added SELinux capability, and turned it on be default. Added
+      restorecon calls in preinst and postinst (should not matter if the
+      machine is not SELinux aware). By and large, the changes made should
+      have no effect unless the rules file calls --with-selinux; and even
+      then there should be no performance hit for machines not actively
+      running SELinux.
+    - Modified the preinst and postinst to call restorecon to set the
+      security context for the generated public key files.
+    - Added a comment to /etc/pam.d/ssh to indicate that an SELinux system
+      may want to also include pam_selinux.so.
+  * Re-enable ssh-askpass-gnome on the Hurd, now that its build-dependencies
+    are available.
+  * Restore /usr/lib/sftp-server temporarily, as a symlink to
+    /usr/lib/openssh/sftp-server (closes: #312891).
+  * Switch to debhelper compatibility level 3, since 2 is deprecated.
+  * debconf template translations:
+    - Update German (thanks, Jens Seidel; closes: #313949).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 17 Jun 2005 14:20:20 +0100
+
+openssh (1:4.1p1-3) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  6 Jun 2005 22:28:33 +0100
+
+openssh (1:4.1p1-2) experimental; urgency=low
+
+  * Drop debconf support for allowing SSH protocol 1, which is discouraged
+    and has not been the default since openssh 1:3.0.1p1-1. Users who need
+    this should edit sshd_config instead (closes: #147212).
+  * Since ssh-keysign isn't used by default (you need to set
+    EnableSSHKeysign to "yes" in /etc/ssh/ssh_config), having a debconf
+    question to ask whether it should be setuid is overkill, and the
+    question text had got out of date anyway. Remove this question, ship
+    ssh-keysign setuid in openssh-client.deb, and set a statoverride if the
+    debconf question was previously set to false.
+  * Add lintian overrides for the above (setuid-binary,
+    no-debconf-templates).
+  * Fix picky lintian errors about slogin symlinks.
+  * Fix DEB_HOST_ARCH_OS/DEB_HOST_GNU_SYSTEM compatibility handling.
+  * Apply Linux 2.2 workaround (see #239999) only on Linux.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu,  2 Jun 2005 00:55:58 +0100
+
+openssh (1:4.1p1-1) experimental; urgency=low
+
+  * New upstream release.
+    - Normalise socket addresses returned by get_remote_hostname(), fixing
+      4-in-6 mapping issues with AllowUsers et al (closes: #192234).
+  * Take upstream's hint and disable the unsupported USE_POSIX_THREADS
+    (closes: #295757, #308868, and possibly others; may open other bugs).
+    Use PAM password authentication to avoid #278394. In future I may
+    provide two sets of binaries built with and without this option, since
+    it seems I can't win.
+  * Disable ChallengeResponseAuthentication in new installations, returning
+    to PasswordAuthentication by default, since it now supports PAM and
+    apparently works better with a non-threaded sshd (closes: #247521).
+  * openssh-server Suggests: rssh (closes: #233012).
+  * Change libexecdir to /usr/lib/openssh, and fix up various alternatives
+    and configuration files to match (closes: #87900, #151321).
+  * Fix up very old sshd_config files that refer to /usr/libexec/sftp-server
+    (closes: #141979).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 31 May 2005 01:33:33 +0100
+
+openssh (1:4.0p1-1) experimental; urgency=low
+
+  * New upstream release.
+    - Port-forwarding specifications now take optional bind addresses, and
+      the server allows client-specified bind addresses for remote port
+      forwardings when configured with "GatewayPorts clientspecified"
+      (closes: #87253, #192206).
+    - ssh and ssh-keyscan now support hashing of known_hosts files for
+      improved privacy (CAN-2005-2666). ssh-keygen has new options for
+      managing known_hosts files, which understand hashing.
+    - sftp supports command history and editing support using libedit
+      (closes: #287013).
+    - Have scp and sftp wait for the spawned ssh to exit before they exit
+      themselves, allowing ssh to restore terminal modes (closes: #257130).
+    - Improved the handling of bad data in authorized_keys files,
+      eliminating fatal errors on corrupt or very large keys; e.g. linefeeds
+      in keys only produce errors in auth.log now (closes: #220726).
+    - Add "command mode" to ssh connection multiplexing (closes: #303452).
+    - Mention $HOME/.hushlogin in sshd(8) FILES section (closes: #163933).
+  * Make gnome-ssh-askpass stay above other windows (thanks, Liyang HU;
+    closes: #296487).
+  * Remove obsolete and unnecessary ssh/forward_warning debconf note.
+  * Hurd build fixes (although sshd still doesn't work):
+    - Restore X forwarding fix from #102991, lost somewhere along the way.
+    - Link with -lcrypt.
+    - Link with -lpthread rather than -pthread.
+    - Don't build ssh-askpass-gnome on the Hurd, until GNOME is available to
+      satisfy build-dependencies.
+  * Drop workaround for #242462 on amd64; it's been fixed properly upstream.
+  * Enable HashKnownHosts by default. This only affects new entries; use
+    'ssh-keygen -H' to convert an entire known_hosts file to hashed format.
+  * Note in ssh_config(5) that the SetupTimeOut option is Debian-specific
+    (closes: #307069).
+  * debconf template translations:
+    - Update Czech (thanks, Miroslav Kure; closes: #298744).
+    - Update Finnish (thanks, Matti Pöllä; closes: #303787).
+    - Synchronise Spanish with sarge branch (thanks, Javier
+      Fernández-Sanguino Peña; closes: #298536).
+    - Add Ukrainian (thanks, Eugeniy Meshcheryakov; closes: #301852).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 26 May 2005 11:23:18 +0100
+
+openssh (1:3.9p1-3) experimental; urgency=low
+
+  * Explain how to run sshd from inittab in README.Debian (closes: #147360).
+  * Add debian/watch file.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 18 Feb 2005 00:20:16 +0000
+
+openssh (1:3.9p1-2) experimental; urgency=low
+
+  * Remove pam_nologin from /etc/pam.d/ssh, as sshd's built-in support
+    appears to be sufficient and more useful (closes: #162996).
+  * Depend on debconf | debconf-2.0.
+  * Drop LoginGraceTime back to the upstream default of two minutes on new
+    installs (closes: #289573).
+  * debconf template translations from Ubuntu bug #1232:
+    - Update Greek (thanks, Logiotatidis George).
+    - Update Spanish (thanks, Santiago Erquicia).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 15 Jan 2005 12:37:54 +0000
+
+openssh (1:3.9p1-1) experimental; urgency=low
+
+  * New upstream release.
+    - PAM password authentication implemented again (closes: #238699,
+      #242119).
+    - Implemented the ability to pass selected environment variables between
+      the client and the server.
+    - Fix ssh-keyscan breakage when remote server doesn't speak SSH protocol
+      (closes: #228828).
+    - Fix res_query detection (closes: #242462).
+    - 'ssh -c' documentation improved (closes: #265627).
+  * Pass LANG and LC_* environment variables from the client by default, and
+    accept them to the server by default in new installs, although not on
+    upgrade (closes: #264024).
+  * Build ssh in binary-indep, not binary-arch (thanks, LaMont Jones).
+  * Expand on openssh-client package description (closes: #273831).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue,  4 Jan 2005 14:18:31 +0000
+
+openssh (1:3.8.1p1-14) experimental; urgency=low
+
+  * We use DH_COMPAT=2, so build-depend on debhelper (>= 2).
+  * Fix timing information leak allowing discovery of invalid usernames in
+    PAM keyboard-interactive authentication (backported from a patch by
+    Darren Tucker; closes: #281595).
+  * Make sure that there's a delay in PAM keyboard-interactive
+    authentication when PermitRootLogin is not set to yes and the correct
+    root password is entered (closes: #248747).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 28 Nov 2004 18:09:37 +0000
+
+openssh (1:3.8.1p1-13) experimental; urgency=low
+
+  * Enable threading for PAM, on Sam Hartman's advice (closes: #278394).
+  * debconf template translations:
+    - Update Dutch (thanks, cobaco; closes: #278715).
+  * Correct README.Debian's ForwardX11Trusted description (closes: #280190).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 12 Nov 2004 12:03:13 +0000
+
+openssh (1:3.8.1p1-12) experimental; urgency=low
+
+  * Preserve /etc/ssh/sshd_config ownership/permissions (closes: #276754).
+  * Shorten the version string from the form "OpenSSH_3.8.1p1 Debian
+    1:3.8.1p1-8.sarge.1" to "OpenSSH_3.8.1p1 Debian-8.sarge.1", as some SSH
+    implementations apparently have problems with the long version string.
+    This is of course a bug in those implementations, but since the extent
+    of the problem is unknown it's best to play safe (closes: #275731).
+  * debconf template translations:
+    - Add Finnish (thanks, Matti Pöllä; closes: #265339).
+    - Update Danish (thanks, Morten Brix Pedersen; closes: #275895).
+    - Update French (thanks, Denis Barbier; closes: #276703).
+    - Update Japanese (thanks, Kenshi Muto; closes: #277438).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 24 Oct 2004 19:21:17 +0100
+
+openssh (1:3.8.1p1-11) experimental; urgency=high
+
+  * Move sshd_config(5) to openssh-server, where it belongs.
+  * If PasswordAuthentication is disabled, then offer to disable
+    ChallengeResponseAuthentication too. The current PAM code will attempt
+    password-style authentication if ChallengeResponseAuthentication is
+    enabled (closes: #250369).
+  * This will ask a question of anyone who installed fresh with 1:3.8p1-2 or
+    later and then upgraded. Sorry about that ... for this reason, the
+    default answer is to leave ChallengeResponseAuthentication enabled.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  6 Oct 2004 14:28:20 +0100
+
+openssh (1:3.8.1p1-10) experimental; urgency=low
+
+  * Don't install the ssh-askpass-gnome .desktop file by default; I've had
+    too many GNOME people tell me it's the wrong thing to be doing. I've
+    left it in /usr/share/doc/ssh-askpass-gnome/examples/ for now.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 25 Aug 2004 18:18:14 +0100
+
+openssh (1:3.8.1p1-9) experimental; urgency=low
+
+  * Split the ssh binary package into openssh-client and openssh-server
+    (closes: #39741). openssh-server depends on openssh-client for some
+    common functionality; it didn't seem worth creating yet another package
+    for this. openssh-client is priority standard, openssh-server optional.
+  * New transitional ssh package, priority optional, depending on
+    openssh-client and openssh-server. May be removed once nothing depends
+    on it.
+  * When upgrading from ssh to openssh-{client,server}, it's very difficult
+    for the maintainer scripts to find out what version we're upgrading from
+    without dodgy dpkg hackery. I've therefore taken the opportunity to move
+    a couple of debconf notes into NEWS files, namely ssh/ssh2_keys_merged
+    and ssh/user_environment_tell.
+  * Add a heuristic to try to make sure the sshd_config upgrade to >= 3.7
+    happens even though we don't know what version we're upgrading from.
+  * Remove /etc/ssh/sshd_not_to_be_run on purge of openssh-server. For now
+    (until sarge+2) it's still honoured to avoid breaking existing
+    configurations, but the right approach is now to remove the
+    openssh-server package if you don't want to run the server. Add a NEWS
+    item to that effect.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  2 Aug 2004 20:48:54 +0100
+
+openssh (1:3.8.1p1-8.sarge.4) unstable; urgency=high
+
+  * Fix timing information leak allowing discovery of invalid usernames in
+    PAM keyboard-interactive authentication (backported from a patch by
+    Darren Tucker; closes: #281595).
+  * Make sure that there's a delay in PAM keyboard-interactive
+    authentication when PermitRootLogin is not set to yes and the correct
+    root password is entered (closes: #248747).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 28 Nov 2004 12:37:16 +0000
+
+openssh (1:3.8.1p1-8.sarge.3) unstable; urgency=low
+
+  * Enable threading for PAM, on Sam Hartman's advice (closes: #278394).
+  * debconf template translations:
+    - Update Dutch (thanks, cobaco; closes: #278715).
+  * Correct README.Debian's ForwardX11Trusted description (closes: #280190).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 12 Nov 2004 10:31:12 +0000
+
+openssh (1:3.8.1p1-8.sarge.2) unstable; urgency=low
+
+  * Preserve /etc/ssh/sshd_config ownership/permissions (closes: #276754).
+  * Shorten the version string from the form "OpenSSH_3.8.1p1 Debian
+    1:3.8.1p1-8.sarge.1" to "OpenSSH_3.8.1p1 Debian-8.sarge.1", as some SSH
+    implementations apparently have problems with the long version string.
+    This is of course a bug in those implementations, but since the extent
+    of the problem is unknown it's best to play safe (closes: #275731).
+  * debconf template translations:
+    - Add Finnish (thanks, Matti Pöllä; closes: #265339).
+    - Update Danish (thanks, Morten Brix Pedersen; closes: #275895).
+    - Update French (thanks, Denis Barbier; closes: #276703).
+    - Update Japanese (thanks, Kenshi Muto; closes: #277438).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 24 Oct 2004 17:57:14 +0100
+
+openssh (1:3.8.1p1-8.sarge.1) unstable; urgency=high
+
+  * If PasswordAuthentication is disabled, then offer to disable
+    ChallengeResponseAuthentication too. The current PAM code will attempt
+    password-style authentication if ChallengeResponseAuthentication is
+    enabled (closes: #250369).
+  * This will ask a question of anyone who installed fresh with 1:3.8p1-2 or
+    later and then upgraded. Sorry about that ... for this reason, the
+    default answer is to leave ChallengeResponseAuthentication enabled.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  6 Oct 2004 14:21:55 +0100
+
+openssh (1:3.8.1p1-8) unstable; urgency=high
+
+  * Matthew Vernon:
+    - Add a GPL exception to the licensing terms of the Debian patch
+      (closes: #211644).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 29 Jul 2004 13:28:47 +0100
+
+openssh (1:3.8.1p1-7) unstable; urgency=low
+
+  * Re-enable shadow password support in openssh-server-udeb, at Bastian
+    Blank's request (closes: #260800).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 22 Jul 2004 10:56:06 +0100
+
+openssh (1:3.8.1p1-6) unstable; urgency=low
+
+  * Implement hack in
+    http://lists.debian.org/debian-boot/2004/07/msg01207.html to get
+    openssh-client-udeb to show up as a retrievable debian-installer
+    component.
+  * Generate host keys in postinst only if the relevant HostKey directives
+    are found in sshd_config (closes: #87946).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 21 Jul 2004 15:14:46 +0100
+
+openssh (1:3.8.1p1-5) unstable; urgency=medium
+
+  * Update German debconf template translation (thanks, Helge Kreutzmann;
+    closes: #252226).
+  * Remove Suggests: dnsutils, as it was only needed for
+    make-ssh-known-hosts (#93265), which has been replaced by ssh-keyscan.
+  * Disable shadow password support in openssh-server-udeb.
+  * Fix non-portable shell constructs in maintainer scripts, Makefile, and
+    ssh-copy-id (thanks, David Weinehall; closes: #258517).
+  * Apply patch from Darren Tucker to make the PAM authentication SIGCHLD
+    handler kill the PAM thread if its waitpid() call returns 0, as well as
+    the previous check for -1 (closes: #252676).
+  * Add scp and sftp to openssh-client-udeb. It might not be very 'u' any
+    more; oh well.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 10 Jul 2004 13:57:27 +0100
+
+openssh (1:3.8.1p1-4) unstable; urgency=medium
+
+  * Kill off PAM thread if privsep slave dies (closes: #248125).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 28 May 2004 17:58:45 -0300
+
+openssh (1:3.8.1p1-3) unstable; urgency=low
+
+  * Add ssh-keygen to openssh-server-udeb.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 20 May 2004 16:31:52 +0100
+
+openssh (1:3.8.1p1-2) unstable; urgency=low
+
+  * Add Catalan debconf template translation (thanks, Aleix Badia i Bosch;
+    closes: #248748).
+  * openssh-client-udeb and openssh-server-udeb depend on libnss-files-udeb
+    (not yet uploaded).
+  * Restore ssh-askpass-gnome binary, lost by mistake.
+  * Don't link against libnsl in udeb builds.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 20 May 2004 11:15:58 +0100
+
+openssh (1:3.8.1p1-1) unstable; urgency=low
+
+  * New upstream release.
+    - Use a longer buffer for tty names in utmp (closes: #247538).
+  * Make sure there's a newline at the end of sshd_config before adding
+    'UsePAM yes' (closes: #244829).
+  * Generate a new .orig.tar.gz without RFC.nroff, and remove
+    /usr/share/doc/ssh/RFC.gz (closes: #211640). It isn't DFSG-free and only
+    documents the obsolete SSH1 protocol, not to mention that it was never a
+    real RFC but only an Internet-Draft. It's available from
+    http://www.free.lp.se/bamse/draft-ylonen-ssh-protocol-00.txt if you want
+    it for some reason.
+  * Add openssh-client-udeb and openssh-server-udeb binary packages for use
+    in debian-installer. They still need libnss_files to be supplied in udeb
+    form by glibc.
+  * Work around lack of res_query weak alias in libresolv on amd64 (see
+    #242462, awaiting real fix upstream).
+  * Fix grammar in sshd(8) (closes: #238753).
+  * Add .desktop file and icon for ssh-askpass-gnome (closes: #232333).
+  * Update Polish debconf template translation (thanks, Emil Nowak;
+    closes: #242808).
+  * Add Turkish debconf template translation (thanks, Recai Oktaş;
+    closes: #246068).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 11 May 2004 23:38:10 +0100
+
+openssh (1:3.8p1-3) unstable; urgency=low
+
+  * Remove deprecated ReverseMappingCheck option from newly generated
+    sshd_config files (closes: #239987).
+  * Build everything apart from contrib in a subdirectory, to allow for
+    multiple builds.
+  * Some older kernels are missing setresuid() and setresgid(), so don't try
+    to use them. setreuid() and setregid() will do well enough for our
+    purposes (closes: #239999).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  5 Apr 2004 21:23:43 +0100
+
+openssh (1:3.8p1-2) unstable; urgency=medium
+
+  * Disable PasswordAuthentication for new installations (closes: #236810).
+  * Turn off the new ForwardX11Trusted by default, returning to the
+    semantics of 3.7 and earlier, since it seems immature and causes far too
+    many problems with existing setups. See README.Debian for details
+    (closes: #237021).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 10 Mar 2004 10:33:07 +0000
+
+openssh (1:3.8p1-1) unstable; urgency=low
+
+  * New upstream release (closes: #232281):
+    - New PAM implementation based on that in FreeBSD. This runs PAM session
+      modules before dropping privileges (closes: #132681, #150968).
+    - Since PAM session modules are run as root, we can turn pam_limits back
+      on by default, and it no longer spits out "Operation not permitted" to
+      syslog (closes: #171673).
+    - Password expiry works again (closes: #153235).
+    - 'ssh -q' suppresses login banner (closes: #134589).
+    - sshd doesn't lie to PAM about invalid usernames (closes: #157078).
+    - ssh-add prints key comment on each prompt (closes: #181869).
+    - Punctuation formatting fixed in man pages (closes: #191131).
+    - EnableSSHKeysign documented in ssh_config(5) (closes: #224457).
+  * Add 'UsePAM yes' to /etc/ssh/sshd_config on upgrade from versions older
+    than this, to maintain the standard Debian sshd configuration.
+  * Comment out PAMAuthenticationViaKbdInt and RhostsAuthentication in
+    sshd_config on upgrade. Neither option is supported any more.
+  * Privilege separation and PAM are now properly supported together, so
+    remove both debconf questions related to them and simply set it
+    unconditionally in newly generated sshd_config files (closes: #228838).
+  * ServerAliveInterval implemented upstream, so ProtocolKeepAlives is now a
+    compatibility alias. The semantics differ slightly, though; see
+    ssh_config(5) for details.
+  * Implement SSH1 support for ServerAliveInterval using SSH_MSG_IGNORE. As
+    documented in ssh_config(5), it's not as good as the SSH2 version.
+  * Remove -fno-builtin-log, -DHAVE_MMAP_ANON_SHARED, and
+    -D__FILE_OFFSET_BITS=64 compiler options, which are no longer necessary.
+  * Update config.guess and config.sub from autotools-dev 20040105.1.
+  * Darren Tucker:
+    - Reset signal status when starting pam auth thread, prevent hanging
+      during PAM keyboard-interactive authentications.
+    - Fix a non-security-critical segfault in PAM authentication.
+  * Add debconf template translations:
+    - Greek (thanks, Konstantinos Margaritis; closes: #232843).
+    - Italian (thanks, Renato Gini; closes: #234777).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat,  6 Mar 2004 18:43:44 +0000
+
+openssh (1:3.6.1p2-12) unstable; urgency=low
+
+  * Update Spanish debconf template translation (thanks, Javier
+    Fernández-Sanguino Peña; closes: #228242).
+  * Add debconf template translations:
+    - Czech (thanks, Miroslav Kure; closes: #230110).
+    - Simplified Chinese (thanks, Hiei Xu; closes: #230726).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 11 Feb 2004 09:37:57 +0000
+
+openssh (1:3.6.1p2-11) unstable; urgency=low
+
+  * Comment out pam_limits in default configuration, for now at least
+    (closes: #198254).
+  * Use invoke-rc.d (if it exists) to run the init script.
+  * Backport format string bug fix in sshconnect.c (closes: #225238).
+  * ssh-copy-id exits if ssh fails (closes: #215252).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun,  4 Jan 2004 18:59:21 +0000
+
+openssh (1:3.6.1p2-10) unstable; urgency=low
+
+  * Use --retry in init script when restarting rather than sleeping, to make
+    sure the old process is dead (thanks, Herbert Xu; closes: #212117).
+    Depend on dpkg (>= 1.9.0) for start-stop-daemon's --retry option.
+  * Update debconf template translations:
+    - Brazilian Portuguese (thanks, Andre Luis Lopes; closes: #219844).
+    - Danish (thanks, Morten Brix Pedersen; closes: #217964).
+    - Japanese (thanks, Kenshi Muto; closes: #212497).
+    - Russian (thanks, Ilgiz Kalmetev).
+    - Spanish (thanks, Carlos Valdivia Yagüe; closes: #211832).
+  * Add Dutch debconf template translation (thanks, cobaco;
+    closes: #215372).
+  * Update config.guess and config.sub from autotools-dev 20031007.1
+    (closes: #217696).
+  * Implement New World Order for PAM configuration, including
+    /etc/pam.d/common-* from /etc/pam.d/ssh (closes: #212959).
+    - To backport this release to woody, you need to set DEB_BUILD_SSH_WOODY
+      in your environment. See README.Debian.
+  * Add more commentary to /etc/pam.d/ssh.
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 16 Nov 2003 01:14:16 +0000
+
+openssh (1:3.6.1p2-9) unstable; urgency=high
+
+  * Merge even more buffer allocation fixes from upstream (CAN-2003-0682;
+    closes: #211434).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 19 Sep 2003 10:25:25 +0100
+
+openssh (1:3.6.1p2-8) unstable; urgency=high
+
+  * Merge more buffer allocation fixes from new upstream version 3.7.1p1
+    (closes: #211324).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 17 Sep 2003 03:07:19 +0100
+
+openssh (1:3.6.1p2-7) unstable; urgency=high
+
+  * Update debconf template translations:
+    - French (thanks, Christian Perrier; closes: #208801).
+    - Japanese (thanks, Kenshi Muto; closes: #210380).
+  * Some small improvements to the English templates courtesy of Christian
+    Perrier. I've manually unfuzzied a few translations where it was
+    obvious, on Christian's advice, but the others will have to be updated.
+  * Document how to generate an RSA1 host key (closes: #141703).
+  * Incorporate NMU fix for early buffer expansion vulnerability,
+    CAN-2003-0693 (closes: #211205). Thanks to Michael Stone.
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 16 Sep 2003 14:32:28 +0100
+
+openssh (1:3.6.1p2-6.0) unstable; urgency=high
+
+  * SECURITY: fix for CAN-2003-0693, buffer allocation error
+
+ -- Michael Stone <mstone@debian.org>  Tue, 16 Sep 2003 08:27:07 -0400
+
+openssh (1:3.6.1p2-6) unstable; urgency=medium
+
+  * Use a more CVS-friendly means of setting SSH_VERSION.
+  * Update Brazilian Portuguese debconf template translation (thanks, Andre
+    Luis Lopes; closes: #208036).
+  * Don't run 'sshd -t' in init script if the server isn't to be run
+    (closes: #197576).
+  * Fix login delay, spurious auth.log entry, and PermitRootLogin
+    information leakage due to PAM issues with upstream's recent security
+    update (thanks, Darren Tucker; closes: #99168, #192207, #193546).
+  * Policy version 3.6.1: recode this changelog to UTF-8.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  3 Sep 2003 19:14:02 +0100
+
+openssh (1:3.6.1p2-5) unstable; urgency=low
+
+  * Disable cmsg_type check for file descriptor passing when running on
+    Linux 2.0 (closes: #150976). Remove comments about non-functional
+    privilege separation on 2.0 from ssh/privsep_ask and ssh/privsep_tell
+    debconf questions and from README.Debian, since it should all now work.
+  * Fix "defails" typo in generated sshd_config (closes: #206484).
+  * Backport upstream patch to strip trailing whitespace (including
+    newlines) from configuration directives (closes: #192079).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed, 27 Aug 2003 02:19:57 +0100
+
+openssh (1:3.6.1p2-4) unstable; urgency=low
+
+  * getent can get just one key; no need to use grep (thanks, James Troup).
+  * Move /usr/local/bin to the front of the default path, following
+    /etc/login.defs (closes: #201150).
+  * Remove specifics of problematic countries from package description
+    (closes: #197040).
+  * Update Spanish debconf template translation (thanks, Carlos Valdivia
+    Yagüe; closes: #198456).
+  * Backport upstream patch to pass monitor signals through to child
+    (closes: #164797).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 27 Jul 2003 17:31:15 +0100
+
+openssh (1:3.6.1p2-3) unstable; urgency=low
+
+  * Update French debconf template translation (thanks, Christian Perrier;
+    closes: #194323).
+  * Version the adduser dependency for --no-create-home (closes: #195756).
+  * Add a version of moduli(5), namely revision 1.7 of
+    http://www.openbsd.org/cgi-bin/cvsweb/src/share/man/man5/moduli.5 with
+    '/etc/moduli' changed to '/etc/ssh/moduli' throughout (closes: #196061).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  9 Jun 2003 02:51:35 +0100
+
+openssh (1:3.6.1p2-2) unstable; urgency=low
+
+  * Force /etc/default/ssh to be non-executable, since dpkg apparently
+    doesn't deal with permissions changes on conffiles (closes: #192966).
+  * Use debconf 0.5's seen flag rather than the deprecated isdefault.
+  * Add GPL location to copyright file.
+  * Remove debian/postinst.old.
+  * Switch to po-debconf, with some careful manual use of po2debconf to
+    ensure that the source package continues to build smoothly on woody
+    (closes: #183986).
+  * Update debconf template translations:
+    - Brazilian Portugese (thanks, Andre Luis Lopes; see #183986).
+    - Japanese (thanks, Tomohiro KUBOTA; closes: #192429).
+  * Compile with -fno-builtin-log for now, otherwise gcc-3.3 complains
+    "log.h:59: warning: conflicting types for built-in function `log'". The
+    OpenSSH log() function has been renamed in upstream CVS.
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 19 May 2003 01:52:38 +0100
+
+openssh (1:3.6.1p2-1) unstable; urgency=medium
+
+  * New upstream release, including fix for PAM user-discovery security hole
+    (closes: #191681).
+  * Fix ChallengeResponseAuthentication default in generated sshd_config
+    (closes: #106037).
+  * Put newlines after full stops in man page documentation for
+    ProtocolKeepAlives and SetupTimeOut.
+  * Policy version 3.5.9: support DEB_BUILD_OPTIONS=noopt, build
+    gnome-ssh-askpass with -g and -Wall flags.
+  * Really ask ssh/new_config debconf question before trying to fetch its
+    value (closes: #188721).
+  * On purge, remove only the files we know about in /etc/ssh rather than
+    the whole thing, and remove the directory if that leaves it empty
+    (closes: #176679).
+  * ssh has depended on debconf for some time now with no complaints, so:
+    - Simplify the postinst by relying on debconf being present. (The absent
+      case was buggy anyway.)
+    - Get rid of "if you have not installed debconf" text in README.Debian,
+      and generally update the "/usr/bin/ssh not SUID" entry.
+  * More README.Debian work:
+    - Reorganize into "UPGRADE ISSUES" and "OTHER ISSUES", in an effort to
+      make it easier for people to find the former. The upgrade issues
+      should probably be sorted by version somehow.
+    - Document X11UseLocalhost under "X11 Forwarding" (closes: #150913).
+  * Fix setting of IP flags for interactive sessions (upstream bug #541).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  5 May 2003 17:47:40 +0100
+
+openssh (1:3.6.1p1-1) unstable; urgency=low
+
+  * New upstream release (thanks, Laurence J. Lane).
+  * debian/control: ssh-askpass-gnome is now Section: gnome, following the
+    override file.
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  2 Apr 2003 00:51:02 +0100
+
+openssh (1:3.6p1-1) unstable; urgency=low
+
+  * New upstream release.
+    - Workaround applied upstream for a bug in the interaction of glibc's
+      getaddrinfo() with the Linux 2.2 kernel (closes: #155814).
+    - As such, it should now be safe to remove --with-ipv4-default, so
+      starting sshd with -6 is no longer necessary (closes: #79861 and lots
+      of other merged bugs).
+    - ssh-copy-id prints usage when run without arguments (closes: #71376).
+    - scp exits 1 if ssh fails (closes: #138400).
+    - sshd writes to utmp's ut_addr_v6 field in IPv6 mode (closes: #167867).
+    - 'ssh-add -c' causes ssh-agent to ask the user each time a key is used
+      (closes: #109795).
+  * Install /etc/default/ssh non-executable (closes: #185537).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 31 Mar 2003 23:00:59 +0100
+
+openssh (1:3.5p1-5) unstable; urgency=low
+
+  * Add /etc/default/ssh (closes: #161049).
+  * Run the init script under 'set -e' (closes: #175010).
+  * Change the default superuser path to include /sbin, /usr/sbin, and
+    /usr/local/sbin (closes: #128235, #151267). Using login.defs would be
+    nice, but that belongs to another package. Without a defined API to
+    retrieve its settings, parsing it is off-limits.
+  * Build ssh-askpass-gnome with GNOME 2. The source package should still
+    support building on stable with GNOME 1, using the alternate
+    libgnome-dev build-dependency (thanks, Colin Walters; closes: #167582).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun,  9 Mar 2003 20:12:10 +0000
+
+openssh (1:3.5p1-4) unstable; urgency=low
+
+  * Point rlogin and rcp alternatives at slogin and scp respectively rather
+    than ssh (closes: #121103, #151666). Fix alternative removal to match;
+    previously it was completely wrong anyway.
+  * Find out whether /etc/ssh/sshd_not_to_be_run exists and set the debconf
+    question's default using that information, rather than using debconf as
+    a registry. Other solutions may be better in the long run, but this is
+    at least correct (thanks, Matthew Woodcraft; closes: #84725).
+  * Stop using pam_lastlog, as it doesn't currently work well as a session
+    module when privilege separation is enabled; it can usually read
+    /var/log/lastlog but can't write to it. Instead, just use sshd's
+    built-in support, already enabled by default (closes: #151297, #169938).
+  * Use 'ssh-keygen -q' rather than redirecting output to /dev/null.
+  * Add a "this may take some time" warning when creating host keys on
+    installation (part of #110094).
+  * When restarting via the init script, check for sshd_not_to_be_run after
+    stopping sshd (idea from Tomas Pospisek; closes: #149850).
+  * Append /usr/sbin:/sbin to the init script's $PATH, just in case of
+    strangeness (closes: #115138).
+  * Fix a dpkg-statoverride call to redirect stdout to /dev/null, not
+    stderr.
+  * Correct copyright file typo: "orignal" -> "original" (closes: #176490).
+  * Rebuild with libssl0.9.7 (closes: #176983).
+  * We're up to policy version 3.5.6. DEB_BUILD_OPTIONS stuff still needs to
+    be looked at.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 18 Jan 2003 01:37:23 +0000
+
+openssh (1:3.5p1-3) unstable; urgency=low
+
+  * Happy new year!
+  * Use getent rather than id to find out whether the sshd user exists
+    (closes: #150974).
+  * Remove some duplication from the postinst's ssh-keysign setuid code.
+  * Replace db_text with db_input throughout debian/config. (db_text has
+    been a compatibility wrapper since debconf 0.1.5.)
+  * Warn about PermitUserEnvironment on upgrade (closes: #167895).
+  * Use 'make install-nokeys', and disable unused debhelper commands,
+    thereby forward-porting the last pieces of Zack Weinberg's patch
+    (closes: #68341).
+  * Move the man page for gnome-ssh-askpass from the ssh package to
+    ssh-askpass-gnome (closes: #174449).
+  * Build with -DLOGIN_NO_ENDOPT, since Debian's /bin/login doesn't accept
+    '--' to terminate the list of options (closes: #171554).
+  * Add Jonathan Amery's ssh-argv0 script (closes: #111341).
+  * Update Danish debconf template (thanks, Morten Brix Pedersen;
+    closes: #174757).
+  * Document setgid ssh-agent's effect on certain environment variables in
+    README.Debian (closes: #167974).
+  * Document interoperability problems between scp and ssh.com's server in
+    README.Debian, and suggest some workarounds (closes: #174662).
+
+ -- Colin Watson <cjwatson@debian.org>  Wed,  1 Jan 2003 14:18:30 +0000
+
+openssh (1:3.5p1-2) unstable; urgency=low
+
+  * Mention in the ssh package description that it provides both ssh and
+    sshd (closes: #99680).
+  * Create a system group for ssh-agent, not a user group (closes: #167669).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon,  4 Nov 2002 13:43:53 +0000
+
+openssh (1:3.5p1-1) unstable; urgency=low
+
+  * New upstream release.
+    - Fixes typo in ssh-add usage (closes: #152239).
+    - Fixes 'PermitRootLogin forced-commands-only' (closes: #166184).
+    - ~/.ssh/environment and environment= options in ~/.ssh/authorized_keys
+      are deprecated for security reasons and will eventually go away. For
+      now they can be re-enabled by setting 'PermitUserEnvironment yes' in
+      sshd_config.
+    - ssh-agent is installed setgid to prevent ptrace() attacks. The group
+      actually doesn't matter, as it drops privileges immediately, but to
+      avoid confusion the postinst creates a new 'ssh' group for it.
+  * Obsolete patches:
+    - Solar Designer's privsep+compression patch for Linux 2.2 (see
+      1:3.3p1-0.0woody1).
+    - Hostbased auth ssh-keysign backport (see 1:3.4p1-4).
+
+  * Remove duplicated phrase in ssh_config(5) (closes: #152404).
+  * Source the debconf confmodule at the top of the postrm rather than at
+    the bottom, to avoid making future non-idempotency problems worse (see
+    #151035).
+  * Debconf templates:
+    - Add Polish (thanks, Grzegorz Kusnierz).
+    - Update French (thanks, Denis Barbier; closes: #132509).
+    - Update Spanish (thanks, Carlos Valdivia Yagüe; closes: #164716).
+  * Write a man page for gnome-ssh-askpass, and link it to ssh-askpass.1 if
+    this is the selected ssh-askpass alternative (closes: #67775).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 26 Oct 2002 19:41:51 +0100
+
+openssh (1:3.4p1-4) unstable; urgency=low
+
+  * Allow ssh-krb5 in ssh-askpass-gnome's dependencies (closes: #129532).
+  * Restore Russia to list of countries where encryption is problematic (see
+    #148951 and http://www.average.org/freecrypto/).
+  * Drop ssh-askpass-gnome's priority to optional, per the override file.
+  * Drop the PAM special case for hurd-i386 (closes: #99157).
+  * s/dile/idle/ in ssh_config(5) (closes: #118331).
+  * Note in README.Debian that you need xauth from xbase-clients on the
+    server for X11 forwarding (closes: #140269).
+  * Use correct path to upstream README in copyright file (closes: #146037).
+  * Document the units for ProtocolKeepAlives (closes: #159479).
+  * Backport upstream patch to fix hostbased auth (closes: #117114).
+  * Add -g to CFLAGS.
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 13 Oct 2002 18:58:53 +0100
+
+openssh (1:3.4p1-3) unstable; urgency=low
+
+  * Add myself to Uploaders: and begin acting as temporary maintainer, at
+    Matthew's request. (Normal service will resume in some months' time.)
+  * Add sharutils to Build-Depends (closes: #138465).
+  * Stop creating the /usr/doc/ssh symlink.
+
+  * Fix some debconf template typos (closes: #160358).
+  * Split debconf templates into one file per language.
+  * Add debconf template translations:
+    - Brazilian Portuguese (thanks, Andre Luis Lopes; closes: #106173).
+    - Danish (thanks, Claus Hindsgaul; closes: #126607).
+    - Japanese (thanks, Tomohiro KUBOTA; closes: #137427).
+    - Russian (thanks, Ilgiz Kalmetev; closes: #136610).
+    - Spanish (thanks, Carlos Valdivia Yagüe; closes: #129041).
+  * Update debconf template translations:
+    - French (thanks, Igor Genibel; closes: #151361).
+    - German (thanks, Axel Noetzold; closes: #147069).
+  * Some of these translations are fuzzy. Please send updates.
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 13 Oct 2002 14:09:57 +0100
+
+openssh (1:3.4p1-2) unstable; urgency=high
+
+  * Get a security-fixed version into unstable
+  * Also tidy README.Debian up a little
+
+ -- Matthew Vernon <matthew@debian.org>  Fri, 28 Jun 2002 17:20:59 +0100
+
+openssh (1:3.4p1-1) testing; urgency=high
+
+  * Extend my tendrils back into this package (Closes: #150915, #151098)
+  * thanks to the security team for their work
+  * no thanks to ISS/Theo de Raadt for their handling of these bugs
+  * save old sshd_configs to sshd_config.dpkg-old when auto-generating a
+    new one
+  * tell/ask the user about PriviledgeSeparation
+  * /etc/init.d/ssh run will now create the chroot empty dir if necessary 
+  * Remove our previous statoverride on /usr/bin/ssh (only for people 
+    upgrading from a version where we'd put one in ourselves!)
+  * Stop slandering Russia, since someone asked so nicely (Closes: #148951)
+  * Reduce the sleep time in /etc/init.d/ssh during a restart
+
+ -- Matthew Vernon <matthew@debian.org>  Fri, 28 Jun 2002 15:52:10 +0100
+
+openssh (1:3.4p1-0.0woody1) testing-security; urgency=high
+
+  * NMU by the security team.
+  * New upstream version
+
+ -- Michael Stone <mstone@debian.org>  Wed, 26 Jun 2002 15:40:38 -0400
+
+openssh (1:3.3p1-0.0woody4) testing-security; urgency=high
+
+  * NMU by the security team.
+  * fix error when /etc/ssh/sshd_config exists on new install
+  * check that user doesn't exist before running adduser
+  * use openssl internal random unconditionally
+
+ -- Michael Stone <mstone@debian.org>  Tue, 25 Jun 2002 19:44:39 -0400
+
+openssh (1:3.3p1-0.0woody3) testing-security; urgency=high
+
+  * NMU by the security team.
+  * use correct home directory when sshd user is created
+
+ -- Michael Stone <mstone@debian.org>  Tue, 25 Jun 2002 08:59:50 -0400
+
+openssh (1:3.3p1-0.0woody2) testing-security; urgency=high
+
+  * NMU by the security team.
+  * Fix rsa1 key creation (Closes: #150949)
+  * don't fail if sshd user removal fails
+  * depends: on adduser (Closes: #150907)
+
+ -- Michael Stone <mstone@debian.org>  Tue, 25 Jun 2002 08:59:50 -0400
+
+openssh (1:3.3p1-0.0woody1) testing-security; urgency=high
+
+  * NMU by the security team.
+  * New upstream version.
+    - Enable privilege separation by default.
+  * Include patch from Solar Designer for privilege separation and
+    compression on 2.2.x kernels.
+  * Remove --disable-suid-ssh from configure.
+  * Support setuid ssh-keysign binary instead of setuid ssh client.
+  * Check sshd configuration before restarting.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Mon, 24 Jun 2002 13:43:44 -0400
+
+openssh (1:3.0.2p1-9) unstable; urgency=high
+
+  * Thanks to those who NMUd
+  * The only change in this version is to debian/control - I've removed
+    the bit that says you can't export it from the US - it would look 
+    pretty daft to say this about a package in main! Also, it's now OK
+    to use crypto in France, so I've edited that comment slightly
+  * Correct a path in README.Debian too (Closes: #138634)
+
+ -- Matthew Vernon <matthew@debian.org>  Sun,  4 Apr 2002 09:52:59 +0100
+
+openssh (1:3.0.2p1-8.3) unstable; urgency=medium
+
+  * NMU
+  * Really set urgency to medium this time (oops)
+  * Fix priority to standard per override while I'm at it
+
+ -- Aaron M. Ucko <ucko@debian.org>  Sun, 24 Mar 2002 09:00:08 -0500
+
+openssh (1:3.0.2p1-8.2) unstable; urgency=low
+
+  * NMU with maintainer's permission
+  * Prepare for upcoming ssh-nonfree transitional packages per
+    <http://lists.debian.org/debian-ssh/2002/debian-ssh-200203/msg00008.html>
+  * Urgency medium because it would really be good to get this into woody
+    before it releases
+  * Fix sections to match override file
+  * Reissued due to clash with non-US -> main move
+
+ -- Aaron M. Ucko <ucko@debian.org>  Sat, 23 Mar 2002 21:21:52 -0500
+
+openssh (1:3.0.2p1-8.1) unstable; urgency=low
+
+  * NMU
+  * Move from non-US to mani
+
+ -- LaMont Jones <lamont@debian.org>  Thu, 21 Mar 2002 09:33:50 -0700
+
+openssh (1:3.0.2p1-8) unstable; urgency=critical
+
+  * Security fix - patch from upstream (Closes: #137209, #137210)
+  * Undo the changes in the unreleased -7, since they appear to break 
+    things here. Accordingly, the code change is minimal, and I'm 
+    happy to get it into testing ASAP
+
+ -- Matthew Vernon <matthew@debian.org>  Thu,  7 Mar 2002 14:25:23 +0000
+
+openssh (1:3.0.2p1-7) unstable; urgency=high
+
+  * Build to support IPv6 and IPv4 by default again
+
+ -- Matthew Vernon <matthew@debian.org>  Sat,  2 Mar 2002 00:25:05 +0000
+
+openssh (1:3.0.2p1-6) unstable; urgency=high
+
+  * Correct error in the clean target (Closes: #130868)
+
+ -- Matthew Vernon <matthew@debian.org>  Sat, 26 Jan 2002 00:32:00 +0000
+
+openssh (1:3.0.2p1-5) unstable; urgency=medium
+
+  * Include the Debian version in our identification, to make it easier to
+    audit networks for patched versions in future
+
+ -- Matthew Vernon <matthew@debian.org>  Mon, 21 Jan 2002 17:16:10 +0000
+
+openssh (1:3.0.2p1-4) unstable; urgency=medium
+
+  * If we're asked to not run sshd, stop any running sshd's first 
+    (Closes: #129327)
+
+ -- Matthew Vernon <matthew@debian.org>  Wed, 16 Jan 2002 21:24:16 +0000
+
+openssh (1:3.0.2p1-3) unstable; urgency=high
+
+  * Fix /etc/pam.d/ssh to not set $MAIL (Closes: #128913)
+  * Remove extra debconf suggestion (Closes: #128094)
+  * Mmm. speedy bug-fixing :-)
+
+ -- Matthew Vernon <matthew@debian.org>  Sat, 12 Jan 2002 17:23:58 +0000
+
+openssh (1:3.0.2p1-2) unstable; urgency=high
+
+  * Fix postinst to not automatically overwrite sshd_config (!) 
+    (Closes: #127842, #127867)
+  * Add section in README.Debian about the PermitRootLogin setting
+
+ -- Matthew Vernon <matthew@debian.org>  Sat,  5 Jan 2003 05:26:30 +0000
+
+openssh (1:3.0.2p1-1) unstable; urgency=high
+
+  * Incorporate fix from Colin's NMU
+  * New upstream version (fixes the bug Wichert fixed) (Closes: #124035)
+  * Capitalise IETF (Closes: #125379)
+  * Refer to the correct sftp-server location (Closes: #126854, #126224)
+  * Do what we're asked re SetUID ssh (Closes: #124065, #124154, #123247)
+  * Ask people upgrading from potato if they want a new conffile 
+    (Closes: #125642)
+  * Fix a typo in postinst (Closes: #122192, #122410, #123440)
+  * Frob the default config a little (Closes: #122284, #125827, #125696,
+    #123854)
+  * Make /etc/init.d/ssh be more clear about ssh not running (Closes:
+    #123552)
+  * Fix typo in templates file (Closes: #123411)
+
+ -- Matthew Vernon <matthew@debian.org>  Fri,  4 Jan 2002 16:01:52 +0000
+
+openssh (1:3.0.1p1-1.2) unstable; urgency=high
+
+  * Non-maintainer upload
+  * Prevent local users from passing environment variables to the login
+    process when UseLogin is enabled
+
+ -- Wichert Akkerman <wakkerma@debian.org>  Mon,  3 Dec 2001 19:34:45 +0100
+
+openssh (1:3.0.1p1-1.1) unstable; urgency=low
+
+  * Non-maintainer upload, at Matthew's request.
+  * Remove sa_restorer assignment to fix compilation on alpha, hppa, and
+    ia64 (closes: #122086).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun,  2 Dec 2001 18:54:16 +0000
+
+openssh (1:3.0.1p1-1) unstable; urgency=high
+
+  * New upstream version (Closes: #113646, #113513, #114707, #118564)
+  * Building with a libc that works (!) (Closes: #115228)
+  * Patches forward-ported are -1/-2 options for scp, the improvement to
+    'waiting for forwarded connections to terminate...'
+  * Fix /etc/init.d/ssh to stop sshd properly (Closes: #115228)
+  * /etc/ssh/sshd_config is no longer a conffile but generated in the postinst
+  * Remove suidregister leftover from postrm
+  * Mention key we are making in the postinst
+  * Default to not enable SSH protocol 1 support, since protocol 2 is
+    much safer anyway.
+  * New version of the vpn-fixes patch, from Ian Jackson
+  * New handling of -q, and added new -qq option; thanks to Jon Amery
+  * Experimental smartcard support not enabled, since I have no way of
+    testing it.
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 28 Nov 2001 17:43:01 +0000
+
+openssh (1:2.9p2-6) unstable; urgency=low
+
+  * check for correct file in /etc/init.d/ssh (Closes: #110876)
+  * correct location of version 2 keys in ssh.1 (Closes: #110439)
+  * call update-alternatives --quiet (Closes: #103314)
+  * hack ssh-copy-id to chmod go-w (Closes: #95551)
+  * TEMPORARY fix to provide largefile support using a -D in the cflags
+    line. long-term, upstream will patch the autoconf stuff
+    (Closes: #106809, #111849)
+  * remove /etc/rc references in ssh-keygen.1 (Closes: #68350)
+  * scp.1 patch from Adam McKenna to document -r properly (Closes: #76054)
+  * Check for files containing a newline character (Closes: #111692)
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 13 Sep 2001 16:47:36 +0100
+
+openssh (1:2.9p2-5) unstable; urgency=high
+
+  * Thanks to all the bug-fixers who helped!
+  * remove sa_restorer assignment (Closes: #102837)
+  * patch from Peter Benie to DTRT wrt X forwarding if the server refuses
+    us access (Closes: #48297)
+  * patch from upstream CVS to fix port forwarding (Closes: #107132)
+  * patch from Jonathan Amery to document ssh-keygen behaviour 
+    (Closes:#106643, #107512)
+  * patch to postinst from Jonathan Amery (Closes: #106411)
+  * patch to manpage from Jonathan Amery (Closes: #107364)
+  * patch from Matthew Vernon to make -q emit fatal errors as that is the
+    documented behaviour (Closes: #64347)
+  * patch from Ian Jackson to cause us to destroy a file when we scp it
+    onto itself, rather than dumping bits of our memory into it, which was
+    a security hole (see #51955)
+  * patch from Jonathan Amery to document lack of Kerberos support 
+    (Closes: #103726)
+  * patch from Matthew Vernon to make the 'waiting for connections to
+    terminate' message more helpful (Closes: #50308)
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 23 Aug 2001 02:14:09 +0100
+
+openssh (1:2.9p2-4) unstable; urgency=high
+
+  * Today's build of ssh is strawberry flavoured
+  * Patch from mhp to reduce length of time sshd is stopped for (Closes: #106176)
+  * Tidy up debconf template (Closes: #106152)
+  * If called non-setuid, then setgid()'s failure should not be fatal (see
+    #105854)
+
+ -- Matthew Vernon <matthew@debian.org>  Sun, 22 Jul 2001 14:19:43 +0100
+
+openssh (1:2.9p2-3) unstable; urgency=low
+
+  * Patch from yours truly to add -1 and -2 options to scp (Closes: #106061)
+  * Improve the IdentityFile section in the man page (Closes: #106038)
+
+ -- Matthew Vernon <matthew@debian.org>  Sat, 21 Jul 2001 14:47:27 +0100
+
+openssh (1:2.9p2-2) unstable; urgency=low
+
+  * Document the protocol version 2 and IPV6 changes (Closes: #105845, #105868)
+  * Make PrintLastLog 'no' by default (Closes: #105893)
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 19 Jul 2001 18:36:41 +0100
+
+openssh (1:2.9p2-1) unstable; urgency=low
+
+  * new (several..) upstream version (Closes: #96726, #81856, #96335)
+  * Hopefully, this will close some other bugs too
+
+ -- Matthew Vernon <matthew@debian.org>  Tue, 17 Jul 2001 19:41:58 +0100
+
+openssh (1:2.5.2p2-3) unstable; urgency=low
+
+  * Taking Over this package
+  * Patches from Robert Bihlmeyer for the Hurd (Closes: #102991)
+  * Put PermitRootLogin back to yes (Closes: #67334, #67371, #78274)
+  * Don't fiddle with conf-files any more (Closes: #69501)
+
+ -- Matthew Vernon <matthew@debian.org>  Tue, 03 Jul 2001 02:58:13 +0100
+
+openssh (1:2.5.2p2-2.2) unstable; urgency=low
+
+  * NMU
+  * Include Hurd compatibility patches from Robert Bihlmeyer (Closes: #76033)
+  * Patch from Richard Kettlewell for protocolkeepalives (Closes: #99273)
+  * Patch from Matthew Vernon for BannerTimeOut, batchmode, and
+    documentation for protocolkeepalives. Makes ssh more generally useful
+    for scripting uses (Closes: #82877, #99275)
+  * Set a umask, so ourpidfile isn't world-writable (closes: #100012,
+    #98286, #97391)
+
+ -- Matthew Vernon <matthew@debian.org>  Thu, 28 Jun 2001 23:15:42 +0100
+
+openssh (1:2.5.2p2-2.1) unstable; urgency=low
+ 
+  * NMU
+  * Remove duplicate Build-Depends for libssl096-dev and change it to 
+    depend on libssl-dev instaed.  Also adding in virtual | real package
+    style build-deps.  (Closes: #93793, #75228)
+  * Removing add-log entry (Closes: #79266)
+  * This was a pam bug from a while back (Closes: #86908, #88457, #86843)
+  * pam build-dep already exists (Closes: #93683)
+  * libgnome-dev build-dep already exists (Closes: #93694)
+  * No longer in non-free (Closes: #85401)
+  * Adding in fr debconf translations (Closes: #83783)
+  * Already suggests xbase-clients (Closes: #79741)
+  * No need to suggest libpam-pwdb anymore (Closes: #81658)
+  * Providing rsh-client (Closes: #79437)
+  * hurd patch was already applied (Closes: #76033)
+  * default set to no (Closes: #73682)
+  * Adding in a suggests for dnsutils (Closes: #93265)
+  * postinst bugs fixed (Closes: #88057, #88066, #88196, #88405, #88612)
+    (Closes: #88774, #88196, #89556, #90123, #90228, #90833, #87814, #85465)
+  * Adding in debconf dependency
+ 
+ -- Ivan E. Moore II <rkrusty@debian.org>  Mon, 16 Apr 2001 14:11:04 +0100
+
+openssh (1:2.5.2p2-2) unstable; urgency=high
+
+  * disable the OpenSSL version check in entropy.c
+    (closes: #93581, #93588, #93590, #93614, #93619, #93635, #93648)
+
+ -- Philip Hands <phil@uk.alcove.com>  Wed, 11 Apr 2001 20:30:04 +0100
+
+openssh (1:2.5.2p2-1) unstable; urgency=low
+
+  * New upstream release
+  * removed make-ssh-known-hosts, since ssh-keyscan does that job (closes: #86069, #87748)
+  * fix double space indent in german templates (closes: #89493)
+  * make postinst check for ssh_host_rsa_key
+  * get rid of the last of the misguided debian/rules NMU debris  :-/
+
+ -- Philip Hands <phil@hands.com>  Sat, 24 Mar 2001 20:59:33 +0000
+
+openssh (1:2.5.1p2-2) unstable; urgency=low
+
+  * rebuild with new debhelper (closes: #89558, #89536, #90225)
+  * fix broken dpkg-statoverride test in postinst
+    (closes: #89612, #90474, #90460, #89605)
+  * NMU bug fixed but not closed in last upload  (closes: #88206)
+  
+ -- Philip Hands <phil@hands.com>  Fri, 23 Mar 2001 16:11:33 +0000
+
+openssh (1:2.5.1p2-1) unstable; urgency=high
+
+  * New upstream release
+  * fix typo in postinst (closes: #88110)
+  * revert to setting PAM service name in debian/rules, backing out last
+    NMU, which also (closes: #88101)
+  * restore the pam lastlog/motd lines, lost during the NMUs, and sshd_config
+  * restore printlastlog option patch
+  * revert to using debhelper, which had been partially disabled in NMUs
+
+ -- Philip Hands <phil@hands.com>  Tue, 13 Mar 2001 01:41:34 +0000
+
+openssh (1:2.5.1p1-1.8) unstable; urgency=high
+
+  * And now the old pam-bug s/sshd/ssh in ssh.c is also fixed
+
+ -- Christian Kurz <shorty@debian.org>  Thu,  1 Mar 2001 19:48:01 +0100
+
+openssh (1:2.5.1p1-1.7) unstable; urgency=high
+
+  * And now we mark the correct binary as setuid, when a user requested
+    to install it setuid.
+
+ -- Christian Kurz <shorty@debian.org>  Thu,  1 Mar 2001 07:19:56 +0100
+
+openssh (1:2.5.1p1-1.6) unstable; urgency=high
+
+  * Fixes postinst to handle overrides that are already there. Damn, I 
+    should have noticed the bug earlier.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 28 Feb 2001 22:35:00 +0100
+
+openssh (1:2.5.1p1-1.5) unstable; urgency=high
+
+  * Rebuild ssh with pam-support.
+
+ -- Christian Kurz <shorty@debian.org>  Mon, 26 Feb 2001 21:55:51 +0100
+
+openssh (1:2.5.1p1-1.4) unstable; urgency=low
+
+  * Added Build-Depends on libssl096-dev.
+  * Fixed sshd_config file to disallow root logins again.
+
+ -- Christian Kurz <shorty@debian.org>  Sun, 25 Feb 2001 20:03:55 +0100
+
+openssh (1:2.5.1p1-1.3) unstable; urgency=low
+
+  * Fixed missing manpages for sftp.1 and ssh-keyscan.1
+  * Made package policy 3.5.2 compliant.
+
+ -- Christian Kurz <shorty@debian.org>  Sun, 25 Feb 2001 15:46:26 +0100
+
+openssh (1:2.5.1p1-1.2) unstable; urgency=low
+
+  * Added Conflict with sftp, since we now provide our own sftp-client.
+  * Added a fix for our broken dpkg-statoverride call in the 
+    2.3.0p1-13.
+  * Fixed some config pathes in the comments of sshd_config.
+  * Removed ssh-key-exchange-vulnerability-patch since it's not needed
+    anymore because upstream included the fix.
+
+ -- Christian Kurz <shorty@debian.org>  Sun, 25 Feb 2001 13:46:58 +0100
+
+openssh (1:2.5.1p1-1.1) unstable; urgency=high
+
+  * Another NMU to get the new upstream version 2.5.1p1 into
+    unstable. (Closes: #87123)
+  * Corrected postinst to mark ssh as setuid. (Closes: #86391, #85766)
+  * Key Exchange patch is already included by upstream. (Closes: #86015)
+  * Upgrading should be possible now. (Closes: #85525, #85523)
+  * Added --disable-suid-ssh as compile option, so ssh won't get installed
+    suid per default.
+  * Fixed postinst to run dpkg-statoverride only, when dpkg-statoverride
+    is available and the mode of the binary should be 4755. And also added
+    suggestion for a newer dpkg.
+    (Closes: #85734, #85741, #86876)
+  * sftp and ssh-keyscan will also be included from now on. (Closes: #79994)
+  * scp now understands spaces in filenames (Closes: #53783, #58958,
+    #66723)
+  * ssh-keygen now supports showing DSA fingerprints. (Closes: #68623)
+  * ssh doesn' t show motd anymore when switch -t is used. (Closes #69035)
+  * ssh supports the usage of other dsa keys via the ssh command line
+    options. (Closes: #81250)
+  * Documentation in sshd_config fixed. (Closes: #81088)
+  * primes file included by upstream and included now. (Closes: #82101)
+  * scp now allows dots in the username. (Closes: #82477)
+  * Spelling error in ssh-copy-id.1 corrected by upstream. (Closes: #78124)
+
+ -- Christian Kurz <shorty@debian.org>  Sun, 25 Feb 2001 10:06:08 +0100
+
+openssh (1:2.3.0p1-1.13) unstable; urgency=low
+
+  * Config should now also be fixed with this hopefully last NMU.
+
+ -- Christian Kurz <shorty@debian.org>  Sat, 10 Feb 2001 22:56:36 +0100
+
+openssh (1:2.3.0p1-1.12) unstable; urgency=high
+
+  * Added suggest for xbase-clients to control-file. (Closes #85227)
+  * Applied patch from Markus Friedl to fix a vulnerability in 
+    the rsa keyexchange.
+  * Fixed position of horizontal line. (Closes: #83613)
+  * Fixed hopefully the grep problem in the config-file. (Closes: #78802)
+  * Converted package from suidregister to dpkg-statoverride.
+
+ -- Christian Kurz <shorty@debian.org>  Fri,  9 Feb 2001 19:43:55 +0100
+
+openssh (1:2.3.0p1-1.11) unstable; urgency=medium
+
+  * Fixed some typos in the german translation of the debconf
+    template.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 24 Jan 2001 18:22:38 +0100
+
+openssh (1:2.3.0p1-1.10) unstable; urgency=medium
+
+  * Fixed double printing of motd. (Closes: #82618)
+
+ -- Christian Kurz <shorty@debian.org>  Tue, 23 Jan 2001 21:03:43 +0100
+
+openssh (1:2.3.0p1-1.9) unstable; urgency=high
+
+  * And the next NMU which includes the patch from Andrew Bartlett
+    and Markus Friedl to fix the root privileges handling of openssh.
+    (Closes: #82657)
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 17 Jan 2001 22:20:54 +0100
+
+openssh (1:2.3.0p1-1.8) unstable; urgency=high
+
+  * Applied fix from Ryan Murray to allow building on other architectures
+    since the hurd patch was wrong. (Closes: #82471)
+
+ -- Christian Kurz <shorty@debian.org>  Tue, 16 Jan 2001 22:45:51 +0100
+
+openssh (1:2.3.0p1-1.7) unstable; urgency=medium
+
+  * Fixed another typo on sshd_config
+
+ -- Christian Kurz <shorty@debian.org>  Sun, 14 Jan 2001 19:01:31 +0100
+
+openssh (1:2.3.0p1-1.6) unstable; urgency=high
+
+  * Added Build-Dependency on groff (Closes: #81886)
+  * Added Build-Depencency on debhelper (Closes: #82072)
+  * Fixed entry for known_hosts in sshd_config (Closes: #82096)
+
+ -- Christian Kurz <shorty@debian.org>  Thu, 11 Jan 2001 23:08:16 +0100
+
+openssh (1:2.3.0p1-1.5) unstable; urgency=high
+
+  * Fixed now also the problem with sshd used as default ipv4 and
+    didn't use IPv6. This should be now fixed.
+
+ -- Christian Kurz <shorty@debian.org>  Thu, 11 Jan 2001 21:25:55 +0100
+
+openssh (1:2.3.0p1-1.4) unstable; urgency=high
+
+  * Fixed buggy entry in postinst.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 10 Jan 2001 23:12:16 +0100
+
+openssh (1:2.3.0p1-1.3) unstable; urgency=high
+
+  * After finishing the rewrite of the rules-file I had to notice that
+    the manpage installation was broken. This should now work again.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 10 Jan 2001 22:11:59 +0100
+
+openssh (1:2.3.0p1-1.2) unstable; urgency=high
+
+  * Fixed the screwed up build-dependency.
+  * Removed --with-ipv4-default to support ipv6.
+  * Changed makefile to use /etc/pam.d/ssh instead of /etc/pam.d/sshd.
+  * Fixed location to sftp-server in config.
+  * Since debian still relies on /etc/pam.d/ssh instead of moving to
+    /etc/pam.d/sshd, I had to hack ssh.h to get ssh to use this name.
+  * Fixed path to host key in sshd_config.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 10 Jan 2001 08:23:47 +0100
+
+openssh (1:2.3.0p1-1.1) unstable; urgency=medium
+
+  * NMU with permission of Phil Hands.
+  * New upstream release
+  * Update Build-Depends to point to new libssl096.
+  * This upstream release doesn't leak any information depending
+    on the setting of PermitRootLogin (Closes: #59933)
+  * New upstream release contains fix against forcing a client to 
+    do X/agent forwarding (Closes: #76788)
+  * Changed template to contain correct path to the documentation 
+    (Closes: #67245)
+  * Added --with-4in6 switch as compile option into debian/rules.	
+  * Added --with-ipv4-default as compile option into debian/rules. 
+    (Closes: #75037)
+  * Changed default path to also contain /usr/local/bin and 
+    /usr/X11R6/bin (Closes: #62472,#54567,#62810)
+  * Changed path to sftp-server in sshd_config to match the
+    our package (Closes: #68347)
+  * Replaced OpenBSDh with OpenBSD in the init-script.	
+  * Changed location to original source in copyright.head
+  * Changed behaviour of init-script when invoked with the option
+    restart (Closes: #68706,#72560)
+  * Added a note about -L option of scp to README.Debian	
+  * ssh won't print now the motd if invoked with -t option
+    (Closes: #59933)
+  * RFC.nroff.gz get's now converted into RFC.gz. (Closes: #63867)	
+  * Added a note about tcp-wrapper support to README.Debian 
+    (Closes: #72807,#22190)
+  * Removed two unneeded options from building process.	
+  * Added sshd.pam into debian dir and install it.
+  * Commented out unnecessary call to dh_installinfo.
+  * Added a line to sshd.pam so that limits will be paid attention
+    to (Closes: #66904)
+  * Restart Option has a Timeout of 10 seconds (Closes: 51264)
+  * scp won't override files anymore (Closes: 51955)
+  * Removed pam_lastlog module, so that the lastlog is now printed
+    only once (Closes: #71742, #68335, #69592, #71495, #77781)
+  * If password is expired, openssh now forces the user to change it.
+    (Closes: #51747)
+  * scp should now have no more problems with shell-init-files that
+    produces ouput (Closes: #56280,#59873)
+  * ssh now prints the motd correctly (Closes: #66926)	
+  * ssh upgrade should disable ssh daemon only if users has choosen
+    to do so (Closes: #67478)
+  * ssh can now be installed suid (Closes: #70879)	
+  * Modified debian/rules to support hurd.
+
+ -- Christian Kurz <shorty@debian.org>  Wed, 27 Dec 2000 20:06:57 +0100
+
+openssh (1:2.2.0p1-1.1) unstable; urgency=medium
+
+  * Non-Maintainer Upload
+  * Check for new returns in the new libc
+    (closes: #72803, #74393, #72797, #71307, #71702)
+  * Link against libssl095a (closes: #66304)
+  * Correct check for PermitRootLogin (closes: #69448)
+
+ -- Ryan Murray <rmurray@debian.org>  Wed, 18 Oct 2000 00:48:18 -0700
+
+openssh (1:2.2.0p1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Philip Hands <phil@hands.com>  Mon, 11 Sep 2000 14:49:43 +0100
+
+openssh (1:2.1.1p4-3) unstable; urgency=low
+
+  * add rsh alternatives
+  * add -S option to scp (using Tommi Virtanen's patch) (closes: #63097)
+  * do the IPV4_DEFAULT thing properly this time
+
+ -- Philip Hands <phil@hands.com>  Fri, 11 Aug 2000 18:14:37 +0100
+
+openssh (1:2.1.1p4-2) unstable; urgency=low
+
+  * reinstate manpage .out patch from 1:1.2.3
+  * fix typo in postinst
+  * only compile ssh with IPV4_DEFAULT
+  * apply James Troup's patch to add a -o option to scp and updated manpage
+
+ -- Philip Hands <phil@hands.com>  Sun, 30 Jul 2000 00:12:49 +0100
+
+openssh (1:2.1.1p4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Philip Hands <phil@hands.com>  Sat, 29 Jul 2000 14:46:16 +0100
+
+openssh (1:1.2.3-10) unstable; urgency=low
+
+  * add version to libpam-modules dependency, because old versions of
+    pam_motd make it impossible to log in.
+
+ -- Philip Hands <phil@hands.com>  Sat, 29 Jul 2000 13:28:22 +0100
+
+openssh (1:1.2.3-9) frozen unstable; urgency=low
+
+  * force location of /usr/bin/X11/xauth
+    (closes: #64424, #66437, #66859)  *RC*
+  * typos in config (closes: #66779, #66780)
+  * sshd_not_to_be_run could be assumed to be true, in error, if the config
+    script died in an unusual way --- I've reversed this (closes: #66335)  
+  * Apply Zack Weinberg <zack@wolery.cumb.org>'s patch to ssh-askpass-ptk
+    (closes: #65981)
+  * change default for PermitRootLogin to "no" (closes: #66406)
+
+ -- Philip Hands <phil@hands.com>  Tue, 11 Jul 2000 20:51:18 +0100
+
+openssh (1:1.2.3-8) frozen unstable; urgency=low
+
+  * get rid of Provides: rsh-server (this will mean that rstartd
+    will need to change it's depends to deal with #63948, which I'm
+    reopening)  (closes: #66257)
+    Given that this is also a trivial change, and is a reversal of a
+    change that was mistakenly made after the freeze, I think this should
+    also go into frozen.
+
+ -- Philip Hands <phil@hands.com>  Wed, 28 Jun 2000 03:26:30 +0100
+
+openssh (1:1.2.3-7) frozen unstable; urgency=low
+
+  * check if debconf is installed before calling db_stop in postinst.
+    This is required to allow ssh to be installed when debconf is not
+    wanted, which probably makes it an RC upload (hopefully the last of
+    too many).
+
+ -- Philip Hands <phil@hands.com>  Wed, 28 Jun 2000 03:19:47 +0100
+
+openssh (1:1.2.3-6) frozen unstable; urgency=low
+
+  * fixed depressing little bug involving a line wrap looking like
+    a blank line in the templates file   *RC*
+    (closes: #66090, #66078, #66083, #66182)
+
+ -- Philip Hands <phil@hands.com>  Mon, 26 Jun 2000 00:45:05 +0100
+
+openssh (1:1.2.3-5) frozen unstable; urgency=low
+
+  * add code to prevent UseLogin exploit, although I think our PAM
+    conditional code breaks UseLogin in a way that protects us from this
+    exploit anyway. ;-)  (closes: #65495)  *RC*
+  * Apply Zack Weinberg <zack@wolery.cumb.org>'s patch to fix keyboard
+    grab vulnerability in ssh-askpass-gnome (closes: #64795) *RC*
+  * stop redirection of sshd's file descriptors (introduced in 1:1.2.3-3)
+    and use db_stop in the postinst to solve that problem instead
+    (closes: #65104)
+  * add Provides: rsh-server to ssh (closes: #63948)
+  * provide config option not to run sshd
+
+ -- Philip Hands <phil@hands.com>  Mon, 12 Jun 2000 23:05:11 +0100
+
+openssh (1:1.2.3-4) frozen unstable; urgency=low
+
+  * fixes #63436 which is *RC*
+  * add 10 second pause in init.d restart (closes: #63844)
+  * get rid of noenv in PAM mail line (closes: #63856)
+  * fix host key path in make-ssh-known-hosts (closes: #63713)
+  * change wording of SUID template (closes: #62788, #63436)
+
+ -- Philip Hands <phil@hands.com>  Sat, 27 May 2000 11:18:06 +0100
+
+openssh (1:1.2.3-3) frozen unstable; urgency=low
+
+  * redirect sshd's file descriptors to /dev/null in init to
+    prevent debconf from locking up during installation 
+    ** grave bug just submited by me **
+
+ -- Philip Hands <phil@hands.com>  Thu, 20 Apr 2000 17:10:59 +0100
+
+openssh (1:1.2.3-2) frozen  unstable; urgency=low
+
+  * allow user to select SUID status of /usr/bin/ssh (closes: 62462) ** RC **
+  * suggest debconf
+  * conflict with debconf{,-tiny} (<<0.2.17) so I can clean up the preinst
+
+ -- Philip Hands <phil@hands.com>  Wed, 19 Apr 2000 17:49:15 +0100
+
+openssh (1:1.2.3-1) frozen unstable; urgency=low
+
+  * New upstream release
+  * patch sshd to create extra xauth key required for localhost
+    (closes: #49944)  *** RC ***
+  * FallbacktoRsh now defaults to ``no'' to match impression
+    given in sshd_config
+  * stop setting suid bit on ssh (closes: #58711, #58558)
+    This breaks Rhosts authentication (which nobody uses) and allows
+    the LD_PRELOAD trick to get socks working, so seems like a net benefit.
+
+ -- Philip Hands <phil@hands.com>  Thu, 13 Apr 2000 20:01:54 +0100
+
+openssh (1:1.2.2-1.4) frozen unstable; urgency=low
+
+  * Recompile for frozen, contains fix for RC bug.
+
+ -- Tommi Virtanen <tv@debian.org>  Tue, 29 Feb 2000 22:14:58 +0200
+
+openssh (1:1.2.2-1.3) unstable; urgency=low
+
+  * Integrated man page addition for PrintLastLog.
+    This bug was filed on "openssh", and I ended up
+    creating my own patch for this (closes: #59054)
+  * Improved error message when ssh_exchange_identification
+    gets EOF (closes: #58904)
+  * Fixed typo (your -> you're) in debian/preinst.
+  * Added else-clauses to config to make this upgradepath possible:
+    oldssh -> openssh preinst fails due to upgrade_to_openssh=false
+    -> ssh-nonfree -> openssh. Without these, debconf remembered
+    the old answer, config didn't force asking it, and preinst always
+    aborted (closes: #56596, #57782)
+  * Moved setting upgrade_to_openssh isdefault flag to the place
+    where preinst would abort. This means no double question to most
+    users, people who currently suffer from "can't upgrade" may need
+    to run apt-get install ssh twice. Did not do the same for 
+    use_old_init_script, as the situation is a bit different, and
+    less common (closes: #54010, #56224)
+  * Check for existance of ssh-keygen before attempting to use it in
+    preinst, added warning for non-existant ssh-keygen in config. This
+    happens when the old ssh is removed (say, due to ssh-nonfree getting
+    installed).
+
+ -- Tommi Virtanen <tv@debian.org>  Sun, 27 Feb 2000 21:36:43 +0200
+
+openssh (1:1.2.2-1.2) frozen unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Added configuration option PrintLastLog, default off due to PAM
+    (closes: #54007, #55042)
+  * ssh-askpass-{gnome,ptk} now provide ssh-askpass, making ssh's
+    Suggests: line more accurate. Also closing related bugs fixed
+    earlier, when default ssh-askpass moved to /usr/bin.
+    (closes: #52403, #54741, #50607, #52298, #50967, #51661)
+  * Patched to call vhangup, with autoconf detection and all
+    (closes: #55379)
+  * Added --with-ipv4-default workaround to a glibc bug causing
+    slow DNS lookups, as per UPGRADING. Use -6 to really use
+    IPv6 addresses. (closes: #57891, #58744, #58713, #57970)
+  * Added noenv to PAM pam_mail line. Thanks to Ben Collins.
+    (closes: #58429)
+  * Added the UPGRADING file to the package.
+  * Added frozen to the changelog line and recompiled before
+    package was installed into the archive.
+
+ -- Tommi Virtanen <tv@debian.org>  Fri, 25 Feb 2000 22:08:57 +0200
+
+openssh (1:1.2.2-1.1) frozen unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Integrated scp pipe buffer patch from Ben Collins
+    <benc@debian.org>, should now work even if reading
+    a pipe gives less than fstat st_blksize bytes. 
+    Should now work on Alpha and Sparc Linux (closes: #53697, #52071)
+  * Made ssh depend on libssl09 (>= 0.9.4-3) (closes: #51393)
+  * Integrated patch from Ben Collins <benc@debian.org>
+    to do full shadow account locking and expiration
+    checking (closes: #58165, #51747)
+
+ -- Tommi Virtanen <tv@debian.org>  Tue, 22 Feb 2000 20:46:12 +0200
+
+openssh (1:1.2.2-1) frozen unstable; urgency=medium
+
+  * New upstream release (closes: #56870, #56346)
+  * built against new libesd (closes: #56805)
+  * add  Colin Watson <cjw44@cam.ac.uk> =NULL patch
+    (closes: #49902, #54894)
+  * use socketpairs as suggested by Andrew Tridgell to eliminate rsync
+    (and other) lockups
+  * patch SSHD_PAM_SERVICE back into auth-pam.c, again :-/
+    (closes: #49902, #55872, #56959)
+  * uncoment the * line in ssh_config (closes: #56444)
+  
+  * #54894 & #49902 are release critical, so this should go in frozen
+
+ -- Philip Hands <phil@hands.com>  Wed,  9 Feb 2000 04:52:04 +0000
+
+openssh (1:1.2.1pre24-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Philip Hands <phil@hands.com>  Fri, 31 Dec 1999 02:47:24 +0000
+
+openssh (1:1.2.1pre23-1) unstable; urgency=low
+
+  * New upstream release
+  * excape ? in /etc/init.d/ssh (closes: #53269)
+
+ -- Philip Hands <phil@hands.com>  Wed, 29 Dec 1999 16:50:46 +0000
+
+openssh (1:1.2pre17-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Philip Hands <phil@hands.com>  Thu,  9 Dec 1999 16:50:40 +0000
+
+openssh (1:1.2pre16-1) unstable; urgency=low
+
+  * New upstream release
+  * upstream release (1.2pre14) (closes: #50299)
+  * make ssh depend on libwrap0 (>= 7.6-1.1) (closes: #50973, #50776)
+  * dispose of grep -q broken pipe message in config script (closes: #50855)
+  * add make-ssh-known-hosts (closes: #50660)
+  * add -i option to ssh-copy-id (closes: #50657)
+  * add check for *LK* in password, indicating a locked account
+
+ -- Philip Hands <phil@hands.com>  Wed,  8 Dec 1999 22:59:38 +0000
+
+openssh (1:1.2pre13-1) unstable; urgency=low
+
+  * New upstream release
+  * make sshd.c use SSHD_PAM_SERVICE and define it as "ssh" in debian/rules
+  * remove duplicate line in /etc/pam.d/ssh (closes: #50310)
+  * mention ssh -A option in ssh.1 & ssh_config
+  * enable forwarding to localhost in default ssh_config (closes: #50373)
+  * tweak preinst to deal with debconf being `unpacked'
+  * use --with-tcp-wrappers (closes: #49545)
+
+ -- Philip Hands <phil@hands.com>  Sat, 20 Nov 1999 14:20:04 +0000
+
+openssh (1:1.2pre11-2) unstable; urgency=low
+
+  * oops, just realised that I forgot to strip out the unpleasant
+    fiddling mentioned below (which turned not to be a fix anyway)
+
+ -- Philip Hands <phil@hands.com>  Mon, 15 Nov 1999 01:35:23 +0000
+
+openssh (1:1.2pre11-1) unstable; urgency=low
+
+  * New upstream release (closes: #49722)
+  * add 2>/dev/null to dispose of spurious message casused by grep -q
+    (closes: #49876, #49604)
+  * fix typo in debian/control (closes: #49841)
+  * Do some unpleasant fiddling with upgraded keys in the preinst, which
+    should make the keylength problem go away.   (closes: #49676)
+  * make pam_start in sshd use ``ssh'' as the service name (closes: #49956)
+  * If /etc/ssh/NOSERVER exist, stop sshd from starting (closes: #47107)
+  * apply Ben Collins <bcollins@debian.org>'s shadow patch
+  * disable lastlogin and motd printing if using pam (closes: #49957)
+  * add ssh-copy-id script and manpage
+
+ -- Philip Hands <phil@hands.com>  Fri, 12 Nov 1999 01:03:38 +0000
+
+openssh (1:1.2pre9-1) unstable; urgency=low
+
+  * New upstream release
+  * apply Chip Salzenberg <chip@valinux.com>'s SO_REUSEADDR patch
+    to channels.c, to make forwarded ports instantly reusable
+  * replace Pre-Depend: debconf with some check code in preinst
+  * make the ssh-add ssh-askpass failure message more helpful
+  * fix the ssh-agent getopts bug (closes: #49426)
+  * fixed typo on Suggests: line (closes: #49704, #49571)
+  * tidy up ssh package description (closes: #49642)
+  * make ssh suid (closes: #49635)
+  * in preinst upgrade code, ensure ssh_host_keys is mode 600 (closes: #49606)
+  * disable agent forwarding by default, for the similar reasons as
+    X forwarding (closes: #49586)
+
+ -- Philip Hands <phil@hands.com>  Tue,  9 Nov 1999 09:57:47 +0000
+
+openssh (1:1.2pre7-4) unstable; urgency=low
+
+  * predepend on debconf (>= 0.2.17) should now allow preinst questions
+
+ -- Philip Hands <phil@hands.com>  Sat,  6 Nov 1999 10:31:06 +0000
+
+openssh (1:1.2pre7-3) unstable; urgency=low
+
+  * add ssh-askpass package using Tommi Virtanen's perl-tk script
+  * add ssh-preconfig package cludge
+  * add usage hints to ssh-agent.1
+
+ -- Philip Hands <phil@hands.com>  Fri,  5 Nov 1999 00:38:33 +0000
+
+openssh (1:1.2pre7-2) unstable; urgency=low
+
+  * use pam patch from Ben Collins <bcollins@debian.org>
+  * add slogin symlink to Makefile.in
+  * change /usr/bin/login to LOGIN_PROGRAM define of /bin/login 
+  * sort out debconf usage
+  * patch from Tommi Virtanen <tv@debian.org>'s makes ssh-add use ssh-askpass
+
+ -- Philip Hands <phil@hands.com>  Thu,  4 Nov 1999 11:08:54 +0000
+
+openssh (1:1.2pre7-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Philip Hands <phil@hands.com>  Tue,  2 Nov 1999 21:02:37 +0000
+
+openssh (1:1.2.0.pre6db1-2) unstable; urgency=low
+
+  * change the binary package name to ssh (the non-free branch of ssh has
+    been renamed to ssh-nonfree)
+  * make pam file comply with Debian standards
+  * use an epoch to make sure openssh supercedes ssh-nonfree
+
+ -- Philip Hands <phil@hands.com>  Sat, 30 Oct 1999 16:26:05 +0100
+
+openssh (1.2pre6db1-1) unstable; urgency=low
+
+  * New upstream source
+  * sshd accepts logins now!
+
+ -- Dan Brosemer <odin@linuxfreak.com>  Fri, 29 Oct 1999 11:13:38 -0500
+
+openssh (1.2.0.19991028-1) unstable; urgency=low
+
+  * New upstream source
+  * Added test for -lnsl to configure script
+
+ -- Dan Brosemer <odin@linuxfreak.com>  Thu, 28 Oct 1999 18:52:09 -0500
+
+openssh (1.2.0.19991027-3) unstable; urgency=low
+
+  * Initial release
+
+ -- Dan Brosemer <odin@linuxfreak.com>  Wed, 27 Oct 1999 19:39:46 -0500

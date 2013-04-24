@@ -1,0 +1,646 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第十二章 : GNU make的特点</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_12"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第十二章</span><span style="font-size: 18.0pt"> </span>
+<span style="font-size: 18.0pt; font-family: 楷体_GB2312">：</span><span lang="EN-US" style="font-size: 18.0pt"> 
+GNU make</span><span style="font-size: 18.0pt; font-family: 楷体_GB2312">的特点</span></a></h1>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+截至本章为止，所有关于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">使用的讨论全部结束。相信大家也能够独立、熟练的书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，并能够使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">来管理自己的工程。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本章是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">特点的总结。主要是和其它版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">得比较。这些特征都是以</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">4.2 
+BSD </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+中的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的为基准。当需要书写可移植到不同的类</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">UNIX</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">系统上的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，应避免使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">自身的一些特征。</span></p>
+<h2><a name="_gnu_make_12.1"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">2.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">源自</span><b><span lang="EN-US" style="font-size: 14.0pt">System 
+v</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">的特点</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+下面所罗列的这些是来自</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一些特点：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VPATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”及它的含义（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black" lang="EN-US">
+<a href="make-04.html#_gnu_make_4.5">4.5 <span lang="EN-US" style="font-family: 楷体_GB2312">
+目录搜索</span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">支持，但没有得到验证。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">4.3 
+BSD </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">支持（据说是对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">这一功能的仿照）。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可包含其它</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a href="make-03.html#_gnu_make_3.3">3.3 <span lang="EN-US" style="font-family: 楷体_GB2312">
+包含其它</span>makefile<span lang="EN-US" style="font-family: 楷体_GB2312">文件</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。使用指示符“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可同时包含多个文件是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的扩展。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可使用系统环境变量。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span><span style="font-size: 12.0pt; line-height: 150%; color: black">
+<a href="make-06.html#_gnu_make_6.9"><font face="Arial">6.9</font><font face="楷体_GB2312"> 
+系统环境变量</font></a><a href="_gnu_make_6.9"><span lang="en-us"><font face="Arial" color="#000000"><span style="text-decoration: none">
+</span></font></span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。用于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">递归调用时传递命令行选项。参考</span><span lang="en-us"><font size="3"><span style="font-family: Arial">
+</span></font></span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<a href="make-05.html#_gnu_make_5.6">5.6 make<span lang="EN-US" style="font-family: 楷体_GB2312">的递归调用</span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">静态库（文档文件）是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$%</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可代表静态库成员名。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> </span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<a href="make-10.html#_gnu_make_10.5.3">10.5.3 <span lang="EN-US" style="font-family: 楷体_GB2312">
+自动化变量</span></a> </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对自动变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$@</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$*</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$&lt;</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$%</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$?</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”进行了扩展，支持“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(@F)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(@D)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等形式的自动环变量。并以此对自动变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$^</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”进行了扩展。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> </span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<a href="make-10.html#_gnu_make_10.5.3">10.5.3 <span lang="EN-US" style="font-family: 楷体_GB2312">
+自动化变量</span></a></span><span lang="EN-US" style="font-family: 楷体_GB2312; font-size:12.0pt; line-height:150%; color:black"> </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量引用。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.1">
+6.1<span lang="EN-US" style="font-family: 楷体_GB2312">变量的引用</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持使用命令行选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-b</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-m</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来兼容其它版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，这些选项有实际含义。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”执行的递归调用。可支持“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”向子</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">进程的传递。参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-05.html#_gnu_make_5.6">
+5.6 make<span lang="EN-US" style="font-family: 楷体_GB2312">的递归调用</span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持后缀“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-11.html#_gnu_make_11.4">
+11.4 <span lang="EN-US" style="font-family: 楷体_GB2312">静态库的后缀规则</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。不过这个特点在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的新版本中已经被模式规则所取代。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+保持</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">规则命令行的书写格式，只是去掉了初始空字符。执行命令的回显保持</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的书写格式不变。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<h2><a name="_gnu_make_12.2"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">2.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+源自其他版本的特点</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+下面的特点来自于其它版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，但每一个特征来自由哪个版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">不太清楚：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+模式规则使用模式字符“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">%</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。目前在多个不同版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中都有使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">%</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。但具体是那个版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">提出它不甚清楚。关于模式规则参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.5">
+10.5<span lang="EN-US" style="font-family: 楷体_GB2312"> 模式规则</span></a> </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+规则链以及隐含的中间过程文件。这个特点首次是在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Stu 
+Feldman </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本中实现，并用于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">AT&amp;T</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">第八版的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">研究中。后来</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">AT&amp;T</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">贝尔实验室的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Andrew 
+Hume </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在它的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mk</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">程序中应用（这里称为“传递闭合”）。但不清楚这个特征是对它们的继承还是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">自己的重新实现。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.4">
+10.4<span lang="EN-US" style="font-family: 楷体_GB2312"> 隐含规则链</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+包含规则所有依赖文件列表的自动化变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$^</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。可以确定这不是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">创造的，但具体是哪个版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">创造也不清楚。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.5.3">
+10.5.3<span lang="EN-US" style="font-family: 楷体_GB2312"> 自动化变量</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+命令行的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">what 
+if</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项）据说是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Andrew 
+Hume </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mk</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中首次提出的的。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-09.html#_gnu_make_9.7">
+9.7 make<span lang="EN-US" style="font-family: 楷体_GB2312">的命令行选项</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+并发执行的观点，在其它多种版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中都有支持。但</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">BSD
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+没有实现此功能。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-05.html#_gnu_make_5.3">
+5.3 <span lang="EN-US" style="font-family: 楷体_GB2312">并发执行命令</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量的模式替换引用来自</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.3">
+6.3 <span lang="EN-US" style="font-family: 楷体_GB2312">变量的高级用法</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，这个功能是在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">实现之前由函数“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">patsubst</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”提供。同一功能的两种实现，在两个版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，难以确定是哪一个最早提出这个概念。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+命令行之前使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”字符，它有特殊的含义（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-09.html#_gnu_make_9.3">
+9.3 <span lang="EN-US" style="font-family: 楷体_GB2312">替代命令的执行</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。这种做法是由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">IEEE 
+Standard 1003.2-1992 (POSIX.2)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">定义的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量值追加“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的语法来自于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4 </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.6">
+6.6 <span lang="EN-US" style="font-family: 楷体_GB2312">追加变量值</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+静态库成员列表作为目标的语法“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARCHIVE(MEM1 
+MEM2...)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”源自</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4 make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-11.html#_gnu_make_11.1">
+11.1 <span lang="EN-US" style="font-family: 楷体_GB2312">库成员作为目标</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”包括多个其它的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件，当所包含的文件不存在时不出错。这个特征源自</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4 </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。（但</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SunOS 
+4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">不能使用单指示符同时包含多个文件）</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的这个特征和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">SGI 
+make </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+的指示符“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">sinclude</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”相同。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">也支持“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">sinclude</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<h2><a name="_gnu_make_12.3"><b><span lang="EN-US" style="font-size: 14.0pt">12.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span lang="EN-US" style="font-size: 14.0pt">GNU make</span><span style="font-size: 14.0pt; font-family: 楷体_GB2312">自身的特点</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+以下特点是由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">本身的：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+命令行选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-v</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--version</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”打印</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的版本和版权信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--help</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”列出</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">支持的所有命令行选项。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+直接展开式变量。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.3">
+6.2 <span lang="EN-US" style="font-family: 楷体_GB2312">两种变量定义</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”支持</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">递归调用时命令行选项的传递。参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">&nbsp;
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-05.html#_gnu_make_5.6">
+5.6 make<span lang="EN-US" style="font-family: 楷体_GB2312">的递归调用</span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+命令选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--directory</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”改变</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行的工作目录。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-09.html#_gnu_make_9.7">
+9.7 make<span lang="EN-US" style="font-family: 楷体_GB2312">的命令行选项</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持多行变量的定义。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.8">
+6.8 <span lang="EN-US" style="font-family: 楷体_GB2312">定义多行变量</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用特殊目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.PHONY</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”声明伪目标。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">AT&amp;T
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+贝尔实验室</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Andrew 
+Hume </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用不同的语法在它的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">mk</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">程序中也实现了该功能。两者几乎在同时支持。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-04.html#_gnu_make_4.6">
+4.6 Makefile<span lang="EN-US" style="font-family: 楷体_GB2312">伪目标</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持过个文本处理函数。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-08.html#_gnu_make_8.2">
+8.2 <span lang="EN-US" style="font-family: 楷体_GB2312">文本处理函数</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--old-file</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项指定一个文件是未修改文件（告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">不需要考虑这个文件的时间戳）。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-09.html#_gnu_make_9.4">
+9.4 <span lang="EN-US" style="font-family: 楷体_GB2312">防止特定文件重建</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+条件执行。众多其它版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">也支持；它似乎是对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">语言预处理程序和宏语言的自然扩展，不能算是一个全新的概念。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-07.html">
+<span style="font-size: 12.0pt; line-height: 150%; color: black">
+<font face="楷体_GB2312">第七章</font></span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+Makefi<span lang="EN-US" style="font-family: 楷体_GB2312">le的条件判断</span></span></a><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一章</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定包含</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的搜寻路径。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-03.html#_gnu_make_3.3">
+3.3 <span lang="EN-US" style="font-family: 楷体_GB2312">包含其它</span>makefile<span lang="EN-US" style="font-family: 楷体_GB2312">文件</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+环境变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFILES</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定需要默认读取的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-03.html#_gnu_make_3.4">
+3.4 <span lang="EN-US" style="font-family: 楷体_GB2312">变量</span> MAKEFILES</a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+去除文件名中的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">./</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，因此“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">./file</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">file</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等价。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持在规则依赖中使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-lNAME</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来指定连接库。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-04.html#_gnu_make_4.5">
+4.5 <span lang="EN-US" style="font-family: 楷体_GB2312">目录搜索</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+允许后缀规则中后缀名可以是任何字符串（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.7">
+10.7<span lang="EN-US" style="font-family: 楷体_GB2312"> 后缀规则</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。其它版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中后缀必须以“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”开始，并且后缀中不能包含斜杠“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">/</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+内嵌变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKELEVEL</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，这个变量被用来跟踪</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">递归调用过程调用深度。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-05.html#_gnu_make_5.6">
+5.6 make<span lang="EN-US" style="font-family: 楷体_GB2312">的递归执行</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+内嵌变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKECMDGOALS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，这个变量代表了</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行的终极目标。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><a style="color: blue; text-decoration: underline; text-underline: single" href="make-08.html#_gnu_make_8.2">8.2
+<span lang="EN-US" style="font-family: 楷体_GB2312">指<span lang="EN-US">定终极目标</span></span></a>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定静态模式规则。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-04.html#_gnu_make_4.12">
+4.12 <span lang="EN-US" style="font-family: 楷体_GB2312">静态模式</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持选择性搜索关键字“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">vpath</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-04.html#_gnu_make_4.5">
+4.5 <span lang="EN-US" style="font-family: 楷体_GB2312">目录搜索</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持计算的变量引用。参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-06.html#_gnu_make_6.3">
+6.3 <span lang="EN-US" style="font-family: 楷体_GB2312">变量的高级用法</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+支持自动重建</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-03.html#_gnu_make_3.7">
+3.7 makefile<span lang="EN-US" style="font-family: 楷体_GB2312">文件的重建</span></a>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+多个新的内嵌隐含规则。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+内嵌变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKE_VERSION</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”代表当前的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本。</span></p>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center">
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-13.html">下一章</a>
+	<a href="make-11.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+
+</body>
+
+</html>

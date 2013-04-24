@@ -1,0 +1,57 @@
+使用openssl快速加密文件
+ 
+Linux下，如果嫌使用gpg加密、解密数据复杂的话，我们可以使用openssl来快速加密、解密数据。
+ 
+我常用的加密方法如下：
+[root@pps ~]# openssl enc -des -e -a -in InputFile -out OutputFile.des
+enter des-cbc encryption password:<输入密码>
+Verifying - enter des-cbc encryption password:<确认密码>
+ 
+参数解释：
+    enc 使用加密技术编码
+   -des 使用DES加密算法
+   -e   加密
+   -a   使用BASE64编码
+   -in  需要加密的文件名字
+   -out 加密后输出文件名字
+ 
+下面是我对mbox文件加密前后的大小对比，可见使用 -a 参数加密后的大小比原文件大35%
+-rw------- 1 root root 129K 04-26 08:57 mbox
+-rw-r--r-- 1 root root 174K 04-26 08:58 mbox.des
+ 
+我们可以尝试不用 -a 参数加密，所得的加密文件不再是BASE64编码后的ASCII类型，而是二进制文件。下面的 mbox.no-a.des 就是没有使用 -a 参数的结果，大小和原文件差不多。其实，个人认为，使用 -a 参数，只是为了方便 email 传输：）
+-rw------- 1 root root 129K 04-26 08:57 mbox
+-rw-r--r-- 1 root root 174K 04-26 08:58 mbox.des
+-rw-r--r-- 1 root root 129K 04-26 09:03 mbox.no-a.des
+  
+解密如下：
+[root@pps ~]# openssl enc -des -d -a -in InputFile.des -out OutputFile
+enter des-cbc decryption password:<输入密码>
+ 
+参数解释：
+    -d  解密
+ 
+【注意】这里所指定的解密算法要和加密算法要一致，否则不能正确解密。
+ 
+Openssl 0.9.8b 版本支持以下加密算法
+ 
+-aes-128-cbc               -aes-128-cfb               -aes-128-cfb1
+-aes-128-cfb8              -aes-128-ecb               -aes-128-ofb
+-aes-192-cbc               -aes-192-cfb               -aes-192-cfb1
+-aes-192-cfb8              -aes-192-ecb               -aes-192-ofb
+-aes-256-cbc               -aes-256-cfb               -aes-256-cfb1
+-aes-256-cfb8              -aes-256-ecb               -aes-256-ofb
+-aes128                    -aes192                    -aes256
+-bf                        -bf-cbc                    -bf-cfb
+-bf-ecb                    -bf-ofb                    -blowfish
+-cast                      -cast-cbc                  -cast5-cbc
+-cast5-cfb                 -cast5-ecb                 -cast5-ofb
+-des                       -des-cbc                   -des-cfb
+-des-cfb1                  -des-cfb8                  -des-ecb
+-des-ede                   -des-ede-cbc               -des-ede-cfb
+-des-ede-ofb               -des-ede3                  -des-ede3-cbc
+-des-ede3-cfb              -des-ede3-ofb              -des-ofb
+-des3                      -desx                      -desx-cbc
+-rc2                       -rc2-40-cbc                -rc2-64-cbc
+-rc2-cbc                   -rc2-cfb                   -rc2-ecb
+-rc2-ofb                   -rc4                       -rc4-40

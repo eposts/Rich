@@ -1,0 +1,219 @@
+Description: Disable the Linux kernel's OOM-killer for the sshd parent
+Author: Vaclav Ovsik <vaclav.ovsik@i.cz>
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1470
+Bug-Debian: http://bugs.debian.org/480020
+Last-Update: 2010-02-27
+
+Index: b/config.h.in
+===================================================================
+--- a/config.h.in
++++ b/config.h.in
+@@ -1238,6 +1238,9 @@
+ /* Define if X11 doesn't support AF_UNIX sockets on that system */
+ #undef NO_X11_UNIX_SOCKETS
+ 
++/* Adjust Linux out-of-memory killer */
++#undef OOM_ADJUST
++
+ /* Define if EVP_DigestUpdate returns void */
+ #undef OPENSSL_EVP_DIGESTUPDATE_VOID
+ 
+Index: b/configure
+===================================================================
+--- a/configure
++++ b/configure
+@@ -8369,6 +8369,11 @@
+ _ACEOF
+ 
+ 	fi
++
++cat >>confdefs.h <<\_ACEOF
++#define OOM_ADJUST 1
++_ACEOF
++
+ 	;;
+ mips-sony-bsd|mips-sony-newsos4)
+ 
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -630,6 +630,7 @@
+ 		AC_DEFINE(SSH_TUN_PREPEND_AF, 1,
+ 		    [Prepend the address family to IP tunnel traffic])
+ 	fi
++	AC_DEFINE(OOM_ADJUST, 1, [Adjust Linux out-of-memory killer])
+ 	;;
+ mips-sony-bsd|mips-sony-newsos4)
+ 	AC_DEFINE(NEED_SETPGRP, 1, [Need setpgrp to acquire controlling tty])
+Index: b/openbsd-compat/port-linux.c
+===================================================================
+--- a/openbsd-compat/port-linux.c
++++ b/openbsd-compat/port-linux.c
+@@ -18,7 +18,7 @@
+  */
+ 
+ /*
+- * Linux-specific portability code - just SELinux support at present
++ * Linux-specific portability code
+  */
+ 
+ #include "includes.h"
+@@ -27,6 +27,15 @@
+ #include <stdarg.h>
+ #include <string.h>
+ 
++#ifdef OOM_ADJUST
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
++#endif
++
++#include "log.h"
++
+ #ifdef WITH_SELINUX
+ #include "key.h"
+ #include "hostfile.h"
+@@ -34,7 +43,6 @@
+ #ifdef HAVE_GETSEUSERBYNAME
+ #include "xmalloc.h"
+ #endif
+-#include "log.h"
+ #include "port-linux.h"
+ 
+ #include <selinux/selinux.h>
+@@ -186,3 +194,47 @@
+ 	debug3("%s: done", __func__);
+ }
+ #endif /* WITH_SELINUX */
++
++#ifdef OOM_ADJUST
++/* Get the out-of-memory adjustment file for the current process */
++static int
++oom_adj_open(int oflag)
++{
++	int fd = open("/proc/self/oom_adj", oflag);
++	if (fd < 0)
++		logit("error opening /proc/self/oom_adj: %s", strerror(errno));
++	return fd;
++}
++
++/* Get the current OOM adjustment */
++int
++oom_adj_get(char *buf, size_t maxlen)
++{
++	ssize_t n;
++	int fd = oom_adj_open(O_RDONLY);
++	if (fd < 0)
++		return -1;
++	n = read(fd, buf, maxlen);
++	if (n < 0)
++		logit("error reading /proc/self/oom_adj: %s", strerror(errno));
++	else
++		buf[n] = '\0';
++	close(fd);
++	return n < 0 ? -1 : 0;
++}
++
++/* Set the current OOM adjustment */
++int
++oom_adj_set(const char *buf)
++{
++	ssize_t n;
++	int fd = oom_adj_open(O_WRONLY);
++	if (fd < 0)
++		return -1;
++	n = write(fd, buf, strlen(buf));
++	if (n < 0)
++		logit("error writing /proc/self/oom_adj: %s", strerror(errno));
++	close(fd);
++	return n < 0 ? -1 : 0;
++}
++#endif
+Index: b/openbsd-compat/port-linux.h
+===================================================================
+--- a/openbsd-compat/port-linux.h
++++ b/openbsd-compat/port-linux.h
+@@ -25,4 +25,9 @@
+ void ssh_selinux_setup_exec_context(char *);
+ #endif
+ 
++#ifdef OOM_ADJUST
++int oom_adj_get(char *buf, size_t maxlen);
++int oom_adj_set(const char *buf);
++#endif
++
+ #endif /* ! _PORT_LINUX_H */
+Index: b/sshd.c
+===================================================================
+--- a/sshd.c
++++ b/sshd.c
+@@ -254,6 +254,11 @@
+ /* Unprivileged user */
+ struct passwd *privsep_pw = NULL;
+ 
++#ifdef OOM_ADJUST
++/* Linux out-of-memory killer adjustment */
++static char oom_adj_save[8];
++#endif
++
+ /* Prototypes for various functions defined later in this file. */
+ void destroy_sensitive_data(void);
+ void demote_sensitive_data(void);
+@@ -908,6 +913,31 @@
+ 	debug3("%s: done", __func__);
+ }
+ 
++#ifdef OOM_ADJUST
++/*
++ * If requested in the environment, tell the Linux kernel's out-of-memory
++ * killer to avoid sshd. The old state will be restored when forking child
++ * processes.
++ */
++static void
++oom_adjust_startup(void)
++{
++	const char *oom_adj = getenv("SSHD_OOM_ADJUST");
++
++	if (!oom_adj || !*oom_adj)
++		return;
++	oom_adj_get(oom_adj_save, sizeof(oom_adj_save));
++	oom_adj_set(oom_adj);
++}
++
++static void
++oom_restore(void)
++{
++	if (oom_adj_save[0])
++		oom_adj_set(oom_adj_save);
++}
++#endif
++
+ /* Accept a connection from inetd */
+ static void
+ server_accept_inetd(int *sock_in, int *sock_out)
+@@ -1670,6 +1700,11 @@
+ 	/* ignore SIGPIPE */
+ 	signal(SIGPIPE, SIG_IGN);
+ 
++#ifdef OOM_ADJUST
++	/* Adjust out-of-memory killer */
++	oom_adjust_startup();
++#endif
++
+ 	/* Get a connection, either from inetd or a listening TCP socket */
+ 	if (inetd_flag) {
+ 		server_accept_inetd(&sock_in, &sock_out);
+@@ -1708,6 +1743,10 @@
+ 	/* This is the child processing a new connection. */
+ 	setproctitle("%s", "[accepted]");
+ 
++#ifdef OOM_ADJUST
++	oom_restore();
++#endif
++
+ 	/*
+ 	 * Create a new session and process group since the 4.4BSD
+ 	 * setlogin() affects the entire process group.  We don't

@@ -1,0 +1,70 @@
+ stardict 真人发音 ［转］
+
+
+1.安装词典：
+一句话，到官网上把词典下载下来，解压到.stardict/dic目录下。
+最满意这点，免费的个人学习用的词典，而且很多：
+* 牛津现代英汉双解词典
+* 朗道英语字典
+* 金山词霸所有词典文件（这个要考虑版权哦）
+* 现代汉语词典
+* 汉语成语词典
+* 维基百科离线版
+* 计算机词汇
+* 纯真IP数据库
+* 康熙字典
+* 本草纲目
+* 五笔98/86
+……
+
+2.发音终极配置
+2.1 安装合成发音引擎：
+sudo apt-get install stardict-plugin-espeak stardict-plugin-festival
+2.2 安装配置真人发音
+2.2.1 准备真人语音库
+下载真人语音库
+解压到：
+~/.stardict/OtdRealPeopleTTS
+
+2.2.2 安装mpg321，用于播放mp3文件
+sudo apt-get install mpg321
+这个mpg321是基于python的，所以如果你没装python，把python也装上。
+
+2.2.3 设置发音库和发音脚本路径
+然后占击星际译王的最右下角的图标，进入“首选项”设置界面，进词典 --> 音效。
+“真人语音库搜索路径”中填上：
+/usr/share/stardict/OtdRealPeopleTTS
+把“使用TTS程序”选上，在下面的命令行里写上：
+/usr/share/stardict/speakall %s &
+
+2.3 建立发音脚本
+======= Start of file ============
+#!/bin/sh
+
+stardict_path="$HOME/.stardict"
+
+for i in $@
+do
+
+lowerword=`echo $i | tr A-Z a-z`
+firstchar=`expr substr $lowerword 1 1`
+
+case $firstchar in
+ 
+[0-9]) firstchar=0;;
+esac
+
+mp3_file="$stardict_path/OtdRealPeopleTTS/$firstchar/$lowerword.mp3"
+
+if [ -e $mp3_file ]; then
+mpg321 $mp3_file
+else
+espeak $i --stdout | aplay
+fi
+
+done
+
+exit 0
+======== End of File ===========
+
+至此，就配置好了。

@@ -1,0 +1,197 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-17 21:28+0900\n"
+"Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "接続中の SSH セッションが切れるかもしれませんがよいですか?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"現在インストールされたバージョンの /etc/init.d/ssh は、おそらく実行中の sshd "
+"インスタンスをすべて殺します。このアップグレードを SSH セッション経由で行って"
+"いる場合、あなたは切断され、アップグレード処理は不完全なままになるでしょう。"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"この状況を修正するには、ファイルの stop セクションの start-stop-daemon の行に"
+"「--pidfile /var/run/sshd.pid」と手動で追加します。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "新しいホストキーが必要です"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"/etc/ssh/ssh_host_key にある現在のホストキーは IDEA で暗号化されていあす。"
+"OpenSSH はこのホストキーファイルを扱えず、古い (フリーではない) SSH の ssh-"
+"keygen ユーティリティはもう利用できません。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "新しいホストキーを手動で生成する必要があります。"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "チャレンジ-レスポンス認証を無効にしますか?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"現在の OpenSSH サーバの設定ではパスワード認証が無効になっているようです。"
+"OpenSSH の最近のバージョンでパスワードを使ってユーザがログインするのを防ぐ "
+"(多分公開鍵認証だけを代わりに使う) ためには、チャレンジ-レスポンス認証を無効"
+"にするか、PAM 設定で Unix パスワードファイル認証を絶対に許可しないようにする"
+"必要があります。"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"チャレンジ-レスポンス認証を無効にする場合、ユーザはパスワードを使ってログイン"
+"できなくなります。有効 (デフォルト) のままにしておくと、/etc/pam.d/ssh にあ"
+"る PAM 設定を調節しない限り、'PasswordAuthentication no' オプションは効果を持"
+"たなくなります。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "脆弱なホストキーは再生成されます"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"このシステムの OpenSSH サーバのホストキーのいくつかが、壊れた乱数生成器を持"
+"つ OpenSSL バージョンで生成されていました。結果として、これらのホストキーは既"
+"知の組み合わせから成り、ブルートフォース攻撃を受けやすいものになっているた"
+"め、再生成する必要があります。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"次回のログイン時にホストキーの変更が示されることで、このシステムのユーザは、"
+"この変更の通知を受け取ることになります。更新後に新しいホストキーの指紋を表示"
+"するには、'ssh-keygen -l -f HOST_KEY_FILE' を使います。"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "影響を受けるホストキーは次のとおりです:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"ユーザキーもこの問題の影響を受けている恐れがあります。この部分的なテストとし"
+"て、'ssh-vulnkey' コマンドを利用できます。詳細については /usr/share/doc/"
+"openssh-server/README.compromised-keys.gz を参照してください。"
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "OpenSSH の新しい設定ファイルを作りますか?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "OpenSSH のこのバージョンは、Debian 'Potato' で提供していたバージョン (い"
+#~ "ま、そのバージョンからのバージョンアップを試みているところ) から、設定ファ"
+#~ "イルが大幅に変化しています。このパッケージは、新しいバージョンのサーバで使"
+#~ "うことができる新しい設定ファイル (/etc/ssh/sshd.config) を今生成することが"
+#~ "できますが、古いバージョンの設定ファイルに加えていたカスタマイズはいずれも"
+#~ "含まれません。"
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "この新しい設定ファイルは、「PermitRootLogin」を「yes」に設定します (つま"
+#~ "り、root のパスワードを知っている人なら誰でも直接ログインできます)。このよ"
+#~ "うな設計を選んでいる理由の詳細については、README.Debian を読んでください。"
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr "新しい設定ファイルを今生成することを強くお勧めします。"

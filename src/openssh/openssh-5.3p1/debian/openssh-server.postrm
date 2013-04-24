@@ -1,0 +1,65 @@
+#!/bin/sh -e
+
+#DEBHELPER#
+
+abort_mv_conffile () {
+	CONFFILE="$1"
+
+	if [ ! -e "$CONFFILE" ]; then
+		if [ -e "$CONFFILE.dpkg-old" ]; then
+			mv -f "$CONFFILE.dpkg-old" "$CONFFILE"
+		elif [ -e "$CONFFILE.moving" ]; then
+			mv -f "$CONFFILE.moving" "$CONFFILE"
+		fi
+	fi
+}
+
+finish_mv_conffile () {
+	CONFFILE="$1"
+
+	if [ -e "$CONFFILE.dpkg-old" ]; then
+		rm -f "$CONFFILE.dpkg-old"
+	fi
+}
+
+abort_transfer_conffile () {
+	CONFFILE="$1"
+	if [ -e "$CONFFILE.moved-by-preinst" ]; then
+		echo >&2 "Aborting ownership transfer of conffile $CONFFILE ..."
+		mv -f "$CONFFILE.moved-by-preinst" "$CONFFILE"
+		return 0
+	fi
+}
+
+case $1 in
+	abort-install|abort-upgrade)
+		if dpkg --compare-versions "$2" lt 1:4.7p1-4; then
+			abort_mv_conffile /etc/pam.d/ssh
+		fi
+		abort_transfer_conffile /etc/default/ssh
+		abort_transfer_conffile /etc/init.d/ssh
+		abort_transfer_conffile /etc/pam.d/ssh
+		;;
+	purge)
+		# Remove all non-conffiles that ssh might create, so that we
+		# can smoothly remove /etc/ssh if and only if the user
+		# hasn't dropped some other files in there. Conffiles have
+		# already been removed at this point.
+		rm -f /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key.pub
+		rm -f /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key.pub
+		rm -f /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_dsa_key.pub
+		rm -f /etc/ssh/sshd_config
+		rm -f /etc/ssh/sshd_not_to_be_run
+		rmdir --ignore-fail-on-non-empty /etc/ssh
+
+		update-rc.d ssh remove >/dev/null
+
+		if which deluser >/dev/null 2>&1; then
+			deluser --quiet sshd > /dev/null || true
+		fi
+
+		finish_mv_conffile /etc/pam.d/ssh
+		;;
+esac
+
+exit 0

@@ -1,0 +1,66 @@
+# GSSAPI
+gssapi.patch
+gssapi-autoconf.patch
+gssapi-compat.patch
+gssapi-dump.patch
+old-gssapi.patch
+
+# Autotools
+config-guess-sub.patch
+
+# SELinux
+selinux-role.patch
+selinux-autoconf.patch
+selinux-fix-chroot-directory.patch
+
+# Key blacklisting
+ssh-vulnkey.patch
+
+# Keepalive handling
+ssh1-keepalive.patch
+keepalive-extensions.patch
+
+# Linux OOM handling
+oom-adjust.patch
+oom-adjust-always-reset.patch
+
+# Message adjustments
+syslog-level-silent.patch
+quieter-signals.patch
+helpful-wait-terminate.patch
+banner-noslash.patch
+keyfile-debug.patch
+
+# Miscellaneous bug fixes
+gnome-ssh-askpass2-link.patch
+user-group-modes.patch
+hurd-epfnosupport.patch
+scp-quoting.patch
+shell-path.patch
+ssh-copy-id-status-check.patch
+ssh-copy-id-trailing-colons.patch
+no-constraint-fallback.patch
+sshd-ignore-sighup.patch
+
+# Versioning
+package-versioning.patch
+debian-banner.patch
+
+# File system layout
+authorized-keys-man-symlink.patch
+lintian-symlink-pickiness.patch
+
+# Documentation
+openbsd-docs.patch
+ssh-argv0.patch
+doc-connection-sharing.patch
+doc-hash-tab-completion.patch
+
+# Debian-specific configuration
+no-openssl-version-check.patch
+gnome-ssh-askpass2-icon.patch
+debian-config.patch
+
+# Ubuntu additions
+consolekit.patch
+doc-upstart.patch

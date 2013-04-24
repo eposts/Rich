@@ -1,0 +1,46 @@
+Description: Fix seusers detection at configure time
+ configure didn't add -lselinux to LIBS before it checked for the existence
+ of getseuserbyname and get_default_context_with_level.  This resulted in
+ seusers configuration not being handled correctly.  Most policies use the
+ seusers feature, and without it login security contexts will not be
+ correct.
+Author: Caleb Case <calebcase@gmail.com>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1713
+Bug-Debian: http://bugs.debian.org/465614
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/188136
+Reviewed-by: Colin Watson <cjwatson@debian.org>
+Last-Update: 2010-02-27
+
+Index: b/configure
+===================================================================
+--- a/configure
++++ b/configure
+@@ -28011,6 +28011,8 @@
+ $as_echo "$ac_cv_lib_selinux_setexeccon" >&6; }
+ if test $ac_cv_lib_selinux_setexeccon = yes; then
+    LIBSELINUX="-lselinux"
++			  LIBS="$LIBS -lselinux"
++
+ else
+   { { $as_echo "$as_me:$LINENO: error: SELinux support requires libselinux library" >&5
+ $as_echo "$as_me: error: SELinux support requires libselinux library" >&2;}
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -3422,9 +3422,12 @@
+ 		AC_DEFINE(WITH_SELINUX,1,[Define if you want SELinux support.])
+ 		SELINUX_MSG="yes"
+ 		AC_CHECK_HEADER([selinux/selinux.h], ,
+-		    AC_MSG_ERROR(SELinux support requires selinux.h header))
+-		AC_CHECK_LIB(selinux, setexeccon, [ LIBSELINUX="-lselinux" ],
+-		    AC_MSG_ERROR(SELinux support requires libselinux library))
++			AC_MSG_ERROR(SELinux support requires selinux.h header))
++		AC_CHECK_LIB(selinux, setexeccon,
++			[ LIBSELINUX="-lselinux"
++			  LIBS="$LIBS -lselinux"
++			],
++			AC_MSG_ERROR(SELinux support requires libselinux library))
+ 		SSHDLIBS="$SSHDLIBS $LIBSELINUX"
+ 		AC_CHECK_FUNCS(getseuserbyname get_default_context_with_level)
+ 		LIBS="$save_LIBS"

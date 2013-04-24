@@ -1,0 +1,18 @@
+1. install leptonica
+2. install tesseract
+./autogen.sh
+./configure
+make
+make install
+
+3. apt-get install libsvga1-dev
+4. svn checkout http://netpbm.svn.sourceforge.net/svnroot/netpbm/advanced netpbm
+./configure
+make
+make package
+./installnetpbm
+
+
+/usr/local/netpbm/bin/pam****
+
+/usr/local/share/tessdata

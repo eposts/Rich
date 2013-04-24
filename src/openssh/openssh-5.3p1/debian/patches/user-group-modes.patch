@@ -1,0 +1,84 @@
+Description: Allow harmless group-writability
+ Allow ~/.ssh/config to be group-writable, provided that the group in
+ question contains only the file's owner.  Rejected upstream for IMO
+ incorrect reasons (e.g. a misunderstanding about the contents of
+ gr->gr_mem).  Given that per-user groups and umask 002 are the default
+ setup in Debian (for good reasons - this makes operating in setgid
+ directories with other groups much easier), we need to permit this.
+Author: Colin Watson <cjwatson@debian.org>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1060
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=314347
+Last-Update: 2010-02-27
+
+Index: b/readconf.c
+===================================================================
+--- a/readconf.c
++++ b/readconf.c
+@@ -28,6 +28,8 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <pwd.h>
++#include <grp.h>
+ 
+ #include "xmalloc.h"
+ #include "ssh.h"
+@@ -998,11 +1000,30 @@
+ 
+ 	if (checkperm) {
+ 		struct stat sb;
++		int bad_modes = 0;
+ 
+ 		if (fstat(fileno(f), &sb) == -1)
+ 			fatal("fstat %s: %s", filename, strerror(errno));
+-		if (((sb.st_uid != 0 && sb.st_uid != getuid()) ||
+-		    (sb.st_mode & 022) != 0))
++		if (sb.st_uid != 0 && sb.st_uid != getuid())
++			bad_modes = 1;
++		if ((sb.st_mode & 020) != 0) {
++			/* If the file is group-writable, the group in
++			 * question must have at most one member, namely the
++			 * file's owner.
++			 */
++			struct passwd *pw = getpwuid(sb.st_uid);
++			struct group *gr = getgrgid(sb.st_gid);
++			if (!pw || !gr)
++				bad_modes = 1;
++			else if (gr->gr_mem[0]) {
++				if (strcmp(pw->pw_name, gr->gr_mem[0]) ||
++				    gr->gr_mem[1])
++					bad_modes = 1;
++			}
++		}
++		if ((sb.st_mode & 002) != 0)
++			bad_modes = 1;
++		if (bad_modes)
+ 			fatal("Bad owner or permissions on %s", filename);
+ 	}
+ 
+Index: b/ssh.1
+===================================================================
+--- a/ssh.1
++++ b/ssh.1
+@@ -1299,6 +1299,8 @@
+ .Xr ssh_config 5 .
+ Because of the potential for abuse, this file must have strict permissions:
+ read/write for the user, and not accessible by others.
++It may be group-writable provided that the group in question contains only
++the user.
+ .Pp
+ .It ~/.ssh/environment
+ Contains additional definitions for environment variables; see
+Index: b/ssh_config.5
+===================================================================
+--- a/ssh_config.5
++++ b/ssh_config.5
+@@ -1194,6 +1194,8 @@
+ This file is used by the SSH client.
+ Because of the potential for abuse, this file must have strict permissions:
+ read/write for the user, and not accessible by others.
++It may be group-writable provided that the group in question contains only
++the user.
+ .It Pa /etc/ssh/ssh_config
+ Systemwide configuration file.
+ This file provides defaults for those

@@ -1,0 +1,404 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第七章 : Makefile的条件执行</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+h3
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-36.0pt;
+	page-break-after:avoid;
+	tab-stops:list 36.0pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_07"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第七章：</span><span lang="EN-US" style="font-size: 18.0pt">Makefile</span><span style="font-size: 18.0pt; font-family: 楷体_GB2312">的条件执行</span></a></h1>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+条件语句可以根据一个变量的值来控制</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行或者忽略</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的特定部分。条件语句可以是两个不同变量、或者变量和常量值的比较。要注意的是：条件语句只能用于控制</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">实际执行的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件部分，它不能控制规则的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令执行过程。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中使用条件控制可以做到处理的灵活性和高效性。</span></p>
+<h2><a name="_gnu_make_7.1"><span style="font-size: 14pt" lang="en-us"><b>7</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">一个例子</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+首先我们来看一个使用条件判断的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">例子；对变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CC</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”进行判断，其值如果是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”那么在程序连接时使用库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">libgnu.so</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">libgnu.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，否则不链接任何库。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的条件判断部分如下：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">……</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">libs_for_gcc = 
+-lgnu</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">normal_libs =</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">……</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo: $(objects)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifeq ($(CC),gcc)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -o foo 
+$(objects) $(libs_for_gcc)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -o foo 
+$(objects) $(normal_libs)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">……</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例子中，条件语句中使用到了三个关键字：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">else</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">endif</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。其中：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”表示条件语句的开始，并指定了一个比较条件（相等）。之后是用圆括号括包围的、使用逗号“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">,</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”分割的两个参数，和关键字“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”用空格分开。参数中的变量引用在进行变量值比较时被展开。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”之后就是当条件满足</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">需要执行的，条件不满足时忽略。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">else</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”之后就是当条件不满足时的执行部分。不是所有的条件语句都需要此部分。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">endif</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”表示一个条件语句的结束，任何一个条件表达式都必须以“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">endif</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”结束。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通过上边的例子我们可以了解到。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，条件表达式工作于文本级别（条件判断处理为文本级别的处理过程），条件的解析是由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">来完成的。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">是在读取并解析</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时根据条件表达式忽略条件表达式中的某一个文本行，解析完成后保留的只有表达式满足条件所需要执行的文本行。上例，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">处理条件的过程：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+当变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CC</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，整个条件表达式等效于：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo: $(objects)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -o foo 
+$(objects) $(libs_for_gcc)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+当变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CC</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”值不等于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">gcc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时等效于：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo: $(objects)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -o foo 
+$(objects) $(normal_libs)</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+上面的例子，一种更简洁实现方式：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">libs_for_gcc = 
+-lgnu</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">normal_libs =</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifeq ($(CC),gcc)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">libs=$(libs_for_gcc)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">libs=$(normal_libs)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo: $(objects)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) -o foo 
+$(objects) $(libs)</span></i></b></p>
+<h2><a name="_gnu_make_7.2"><span style="font-size: 14pt" lang="en-us"><b>7</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+条件判断的基本语法</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一个简单的不包含“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">else</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”分支的条件判断语句的语法格式为：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">
+CONDITIONAL-DIRECTIVE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">TEXT-IF-TRUE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+表达式中“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以是若干任何文本行，当条件为真时它就将被</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">作为需要执行的一部分。当条件为假时，不作为需要执行的一部分。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+包含“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">else</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的复杂一点的语法格式为：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">
+CONDITIONAL-DIRECTIVE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">TEXT-IF-TRUE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">TEXT-IF-FALSE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+表示了如果条件为真，则将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一部分，否则将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-FALSE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为执行的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的一部分。和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”一样，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-FALSE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以是若干任何文本行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+条件判断语句中“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CONDITIONAL-DIRECTIVE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”对于上边的两种格式都是同样的。可以是以下四种用于测试不同条件的关键字。</span></p>
+<h3><a name="_gnu_make_7.2.1"><span lang="en-us">7</span><span lang="EN-US">.2.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-family: 黑体">关键字“</span><span lang="EN-US">ifeq</span><span style="font-family: 黑体">”</span></a></h3>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此关键字用来判断参数是否相等，格式如下：</span></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifeq 
+(ARG1, ARG2)'</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifeq 
+'ARG1' 'ARG2''</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifeq 
+&quot;ARG1&quot; &quot;ARG2&quot;'</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifeq 
+&quot;ARG1&quot; 'ARG2''</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifeq 
+'ARG1' &quot;ARG2&quot;'</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+替换展开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARG1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARG1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”后，对它们的值进行比较。如果相同则（条件为真）将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行的一部分，否则将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-FALSE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行的一部分（上边的第二种格式）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常我们会使用它来判断一个变量的值是否为空（不是任何字符）。参数值可能是通过引用变量或者函数得到的，因而在展开过程中可能造成参数值中包含空字符（空格等）。一般在这种情况时我们使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">strip</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”函数来对它变量的值进行处理，去掉其中的空字符。格式为：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifeq ($(strip 
+$(foo)),)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">TEXT-IF-EMPTY</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这样，即就是在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(foo)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中存在若干前导和结尾空格，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-EMPTY</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”也会被作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">需要执行的一部分。</span></p>
+<h3><a name="_gnu_make_7.2.2"><span lang="en-us">7</span><span lang="EN-US">.2.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-family: 黑体">关键字“</span><span lang="EN-US">ifneq</span></a><span style="font-family: 黑体">”</span></h3>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+此关键字是用来判断参数是否不相等，格式为：</span></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifneq 
+(ARG1, ARG2)'</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifneq 
+'ARG1' 'ARG2''</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifneq 
+&quot;ARG1&quot; &quot;ARG2&quot;'</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifneq 
+&quot;ARG1&quot; 'ARG2''</span></b></p>
+<p class="MsoNormal" style="text-indent: 20.6pt"><b>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: blue">`ifneq 
+'ARG1' &quot;ARG2&quot;'</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+关键字“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifneq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”实现的条件判断语句和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”相反。首先替换并展开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARG1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARG1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，对它们的值进行比较。如果不相同（条件为真）则将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行的一部分，否则将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-FALSE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行的一部分。</span></p>
+<h3><a name="_gnu_make_7.2.3"><span lang="en-us">7</span><span lang="EN-US">.2.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-family: 黑体">关键字“</span><span lang="EN-US">ifdef</span><span style="font-family: 黑体">”</span></a></h3>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+关键字“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”用来判断一个变量是否已经定义。格式为：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+`ifdef VARIABLE-NAME'</span></b><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VAEIABLE_NAME</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值非空（在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中没有定义的变量的值为空），那么表达式为真，将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-TRUE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行的一部分。否则，表达式为假，如果存在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">TEXT-IF-FALSE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，就将它作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">要执行一部分。当一个变量没有被定义时，它的值为空。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VARIABLE-NAME</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以是变量或者函数的引用。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”需要说明的是：</span><b><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">只是测试一个变量是否有值，不会对变量进行替换展开来判断变量的值是否为空。对于变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VARIABLE-NAME</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，除了“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VARIABLE-NAME=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这种情况以外，使用其它方式对它的定义都会使“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”返回真。就是说，即使我们通过其它方式（比如，定义它的值引用了其它的变量）给它赋了一个空值，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”也会返回真。我们来看一个例子</span></b><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">例</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">bar =</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo = $(bar)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifdef foo</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">frobozz = yes</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">frobozz = no</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">2</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo =</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifdef foo</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">frobozz = yes</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">frobozz = no</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的结果是：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">frobozz 
+= yes</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”；而例</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">2</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的结果是：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">frobozz 
+= no</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。其原因就是在例</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的定义是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo 
+= $(bar)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。虽然变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值为空，但是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”判断的结果是真。因此当我们需要判断一个变量的值是否为空的情况时，需要使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifeq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifneq</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）而不是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。可参考前两个小节的内容。</span></p>
+<h3><a name="_gnu_make_7.2.4"><span lang="en-us">7</span><span lang="EN-US">.2.4<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-family: 黑体">关键字“</span><span lang="EN-US">ifndef</span></a><span style="font-family: 黑体">”</span></h3>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+关键字“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifndef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”实现的功能和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”相反。格式为：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+`ifdef VARIABLE-NAME'</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个就不详细讨论了，它的功能就是实现了和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ifdef</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”相反的条件判断。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在“</span><b><i><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial">CONDITIONAL-DIRECTIVE</span></i></b><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这一行上，可以以若干个空格开始，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">处理时会被忽略这些空格。但不能以</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">[Tab]</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">字符做为开始（不然就被认为是命令）。条件判断语句中，在除关键字（包括“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">endif</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）之前、条件表达式参数中之外的其他任何地方都可以使用多个空格或</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">[Tab]</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">字符，它不会影响条件判断语句的功能。同样行尾也可以使用注释（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">#</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”开始直到一行的结束）。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">else</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">endif</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”也是条件判断语句的一部分。在书写时它们都是没有任何参数的，可以以多个空格开始（同样不能以</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">[Tab]</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">字符开始）多个空格或</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">[Tab]</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">字符结束。行尾同样可以有注释内容。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">读取</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件时计算表达式的值，并根据表达式的值决定判断语句中那一部分被作为此</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">所要执行的内容（选择符合条件的语句）。因此在条件表达式中不能使用自动化变量，自动化变量在规则命令执行时才有效。更不能将一个完整的条件判断语句分写在两个不同的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中，在一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件使用指示符“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”包含另外一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。</span></p>
+<h2><a name="_gnu_make_7.3"><span style="font-size: 14pt" lang="en-us"><b>7</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+标记测试的条件语句</span></a></h2>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	我们可以使用条件判断语句、变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和函数“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">findstring</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，实现对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令行选项的测试。看一个例子：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">archive.a: ...</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifneq (,$(findstring 
+t,$(MAKEFLAGS)))</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">+touch 
+archive.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">+ranlib -t 
+archive.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">else</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ranlib 
+archive.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个条件语句判断</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行参数中是否包含“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（用来更新目标文件的时间戳）。根据命令行参数情况完成对“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">archive.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”执行不同的操作。命令行前的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的意思是告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，即使</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">使用了“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”之后的命令都需要被执行。</span></p>
+	<hr size="1" width="100%" align="center"></span>
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-08.html">下一章</a>
+	<a href="make-06.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+
+</body>
+
+</html>

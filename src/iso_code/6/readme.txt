@@ -1,0 +1,2 @@
+运行这个程序需要tc提供的几个头文件。建议修改options菜单中的include目录项到tc的include的目录下(具体方法可以参见本书第一章的讲解)；或者把源程序拷贝到tc目录下运行。
+而本章例子中，因为pport.c内嵌汇编代码，读者要在命令行下输入tcc -B d:\tc\source\pport.c，来编译pport.c；之后需要编译server.c和clint.c就可以得到两个执行文件。

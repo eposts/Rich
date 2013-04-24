@@ -1,0 +1,3 @@
+version=2
+ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-(.*)\.tar\.gz \
+  debian uupdate

@@ -1,0 +1,49 @@
+#! /bin/sh -e
+
+ETC_SSH_MODULI=@ETC_SSH_MODULI@
+
+ETC_SSH_SSH_CONFIG=@ETC_SSH_SSH_CONFIG@
+
+action="$1"
+version="$2"
+
+prepare_transfer_conffile () {
+	CONFFILE="$1"
+	TEXT="$2"
+	MODE="$3"
+	[ "$CONFFILES" ] || return 0
+	[ -e "$CONFFILE" ] || return 0
+
+	md5sum="$(md5sum "$CONFFILE" |sed -e 's/ .*//')"
+	old_md5sum="$(echo "$CONFFILES" | awk '$1 == "'"$CONFFILE"'" { print $2 }')"
+	if [ "$md5sum" = "$old_md5sum" ]; then
+		echo >&2 "Transferring ownership of conffile $CONFFILE ..."
+		# We have to write out the desired new text of the conffile,
+		# which is tricky in the preinst, hence the nasty way we
+		# have to hardcode the text here. Fortunately, this is only
+		# necessary with sarge's dpkg and older.
+		if echo "$TEXT" | head -n1 | grep -q '^@.*@$'; then
+			echo >&2 'Unsubstituted conffile text! Please report this bug.'
+			exit 1
+		fi
+		printf '%s' "$TEXT" >"$CONFFILE.dpkg-new"
+		chmod "$MODE" "$CONFFILE.dpkg-new"
+		mv -f "$CONFFILE" "$CONFFILE.moved-by-preinst"
+		mv -f "$CONFFILE.dpkg-new" "$CONFFILE"
+		return 0
+	fi
+}
+
+case $action in
+	install|upgrade)
+		if dpkg --compare-versions "$version" lt 0; then
+			CONFFILES="$(dpkg-query -W -f '${Conffiles}\n' ssh 2>/dev/null | sed 's/^ *//')"
+			prepare_transfer_conffile /etc/ssh/moduli "$ETC_SSH_MODULI" 0644
+			prepare_transfer_conffile /etc/ssh/ssh_config "$ETC_SSH_SSH_CONFIG" 0644
+		fi
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

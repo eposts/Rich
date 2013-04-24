@@ -1,0 +1,387 @@
+# translation of openssh to Ukrainian
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans#
+#    Developers do not need to manually edit POT or PO files.
+# Eugeniy Meshcheryakov <eugen@univ.kiev.ua>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh-uk\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2005-03-28 22:28+0300\n"
+"Last-Translator: Eugeniy Meshcheryakov <eugen@univ.kiev.ua>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid "Do you want to continue (and risk killing active ssh sessions)?"
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr ""
+"Чи бажаєте ви продовжувати (та ризикувати втратити активні сеанси ssh)?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "The version of /etc/init.d/ssh that you have installed, is likely to kill "
+#| "all running sshd instances.  If you are doing this upgrade via an ssh "
+#| "session, that would be a Bad Thing(tm)."
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Версія /etc/init.d/ssh, яку ви встановили, імовірно зупинить всі запущені "
+"процеси sshd. Якщо ви оновлюєтеся через ssh, це буде Погана річ (tm)."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+#, fuzzy
+#| msgid ""
+#| "You can fix this by adding \"--pidfile /var/run/sshd.pid\" to the start-"
+#| "stop-daemon line in the stop section of the file."
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Ви можете виправити це, додавши \"--pidfile /var/run/sshd.pid\" до рядка з "
+"викликом start-stop-daemon в частині зупинки цього файла."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Старий ключ в /etc/ssh/ssh_host_key зашифрований за допомогою IDEA. OpenSSH "
+"не може обробляти такий файл ключа вузла, також неможливо знайти програму "
+"ssh-keygen зі старої (невільної) версії SSH."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+#, fuzzy
+#| msgid "You will need to generate a new host key."
+msgid "You need to manually generate a new host key."
+msgstr "Вам потрібно створити новий ключ вузла."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Заборонити автентифікацію запит-відповідь?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+#, fuzzy
+#| msgid ""
+#| "Password authentication appears to be disabled in your current OpenSSH "
+#| "server configuration. In order to prevent users from logging in using "
+#| "passwords (perhaps using only public key authentication instead) with "
+#| "recent versions of OpenSSH, you must disable challenge-response "
+#| "authentication, or else ensure that your PAM configuration does not allow "
+#| "Unix password file authentication."
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Схоже, що автентифікація з використанням паролів заборонена у поточній "
+"конфігурації сервера OpenSSH. Щоб перешкодити користувачам реєструватися з "
+"використанням паролів (можливо, для автентифікації тільки за допомогою "
+"відкритих ключів) з останніми версіями OpenSSH, необхідно заборонити "
+"автентифікацію виклик-відгук або впевнитися, що налаштування PAM не "
+"дозволяють автентифікацію за допомогою файла паролів Unix."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Якщо ви забороните автентифікацію виклик-відгук, то ваші користувачі не "
+"зможуть реєструватися використовуючи паролі. Якщо ви залишите її дозволеною "
+"(відповідь за замовчанням), то опція 'PasswordAuthentication no' не буде "
+"мати корисного ефекту доки ви не пристосуєте також налаштування PAM в /etc/"
+"pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Створити новий файл налаштувань"
+
+#, fuzzy
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "В цій версії OpenSSH значно змінений файл налаштувань, в порівнянні з "
+#~ "версією, що входила в Debian 'Potato', і яку ви, схоже, оновлюєте. Зараз "
+#~ "можна створити новий файл налаштувань (/etc/ssh/sshd.config), що буде "
+#~ "працювати з новою версією сервера, але не буде містити будь-які зміни, "
+#~ "які ви внесли у стару версію."
+
+#, fuzzy
+#~| msgid ""
+#~| "Please note that this new configuration file will set the value of "
+#~| "'PermitRootLogin' to yes (meaning that anyone knowing the root password "
+#~| "can ssh directly in as root). It is the opinion of the maintainer that "
+#~| "this is the correct default (see README.Debian for more details), but "
+#~| "you can always edit sshd_config and set it to no if you wish."
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Зауважте, що в новій версії файла налаштувань змінна 'PermitRootLogin' "
+#~ "буде мати значення yes (що означає, що будь-яка людина, котра знає пароль "
+#~ "користувача root, зможе увійти в систему через ssh). На думку "
+#~ "супроводжуючого пакунку - це вірне значення за замовчанням (дивіться "
+#~ "також README.Debian), але ви завжди можете змінити значення цього "
+#~ "параметра у файлі sshd_config."
+
+#, fuzzy
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr "Рекомендується дозволити створити новий файл налаштувань."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "Попередження: ви повинні створити новий ключ вузла"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr "Попередження: telnetd встановлений - це погана ідея"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Рекомендується або видалити пакунок telnetd (якщо вам не потрібно "
+#~ "надавати доступ через telnet), або встановити telnetd-ssl, щоб мати "
+#~ "можливість не передавати незашифровані логін/пароль та іншу інформацію "
+#~ "через мережу."
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr "Попередження: rsh-server встановлений - це погана ідея"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "Встановлений rsh-server знижує рівень безпеки, який ви, можливо, хотіли "
+#~ "отримати встановивши ssh. Рекомендується видалити цей пакунок."
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr "Чи бажаєте ви, щоб ssh-keysign мав встановлений біт SUID?"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr "Ви маєте можливість встановити біт SUID для програми ssh-keysign."
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "Якщо ви встановите біт SUID для ssh-keysign, ви зможете використовувати "
+#~ "вузлову автентифікацію протоколу SSH версії 2."
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "Якщо сумніваєтесь, то рекомендується дозволити встановити біт SUID. Якщо "
+#~ "це викликатиме проблеми, ви зможете все змінити запустивши dpkg-"
+#~ "reconfigure ssh"
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "Дозволити тільки SSH-протокол версії 2"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "Ця версія OpenSSH підтримує версію 2 протоколу SSH, яка є більш "
+#~ "безпечною. Рекомендується заборонити версію 1, однак це може уповільнити "
+#~ "роботу на слабких системах та зробити неможливим з'єднання з "
+#~ "використанням старих клієнтів (включно з клієнтом ssh з \"potato\")."
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "Також зверніть увагу, що ключі для версії 1 відрізняються від ключів для "
+#~ "версії 2, тому ви не зможете використовувати їх, якщо дозволите з'єднання "
+#~ "тільки по протоколу версії 2."
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "Якщо ви пізніше передумаєте щодо цього параметра, файл README.Debian "
+#~ "містить інструкції щодо внесення змін до файла sshd_config."
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "ssh2-ключі злиті у файлах налаштувань"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "У версії 3 OpenSSH більше не використовує окремі файли для ключів ssh1 та "
+#~ "ssh2. Це означає, що файли authorized_keys2 та known_hosts2 більше "
+#~ "непотрібні. Вони будуть читатися з метою забезпечення зворотної "
+#~ "сумісності."
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr ""
+#~ "ЗАУВАЖЕННЯ: Форвардинг X11 та Authorization заборонені за замовчанням."
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "З міркувань безпеки в Debian-версії ssh параметри ForwardX11 та "
+#~ "ForwardAgent за замовчанням мають значення \"off\"."
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "Ви можете дозволити їх для серверів, яким довіряєте, або у одному з "
+#~ "файлів налаштувань, або за допомогою параметра командного рядка -X."
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr "Подробиці можна прочитати у файлі /usr/share/doc/ssh/README.Debian"
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "Чи бажаєте ви запустити сервер sshd?"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "Цей пакунок містить як клієнт ssh, так і сервер sshd."
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr ""
+#~ "Звичайно sshd (Secure Shell Server) запускається щоб зробити можливим "
+#~ "віддалену реєстрацію в системі за допомогою ssh."
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "Якщо вас цікавить використання тільки клієнта ssh на цій машині і ви не "
+#~ "бажаєте реєструватися на ній використовуючи ssh, тоді ви можете "
+#~ "заборонити sshd."
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr "Опції оточення для ключів не повинні використовуватися"
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "В цій версії OpenSSH, з метою уникнення деяких атак (наприклад "
+#~ "LD_PRELOAD), за замовчанням заборонені опції оточення для відкритих "
+#~ "ключів. Якщо ви використовуєте цю опцію у файлі authorized_keys, майте на "
+#~ "увазі, що ключі з такими опціями не будуть працювати, доки опція не буде "
+#~ "видалена."
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "Щоб дозволити цю опцію, встановіть \"PermitUserEnvironment yes\" в /etc/"
+#~ "ssh/sshd_config після завершення оновлення; зверніть увагу на "
+#~ "попередження на сторінці підручника sshd_config(5)."

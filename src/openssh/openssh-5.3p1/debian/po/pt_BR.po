@@ -1,0 +1,203 @@
+# openssh Brazilian Portuguese translation
+# Copyright (C) 2007, André Luís Lopes
+# This file is distributed under the same license as the openssh package.
+# André Luís Lopes <andrelop@debian.org>, 2007.
+# Eder L. Marques (frolic) <frolic@debian-ce.org>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh 1:4.7p1-9\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-27 10:10-0300\n"
+"Last-Translator: Eder L. Marques (frolic) <frolic@debian-ce.org>\n"
+"Language-Team: Brazilian Portuguese <debian-l10n-portuguese@lists.debian."
+"org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"pt_BR utf-8\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Você deseja arriscar matar (\"kill\") as sessões SSH ativas?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"A versão instalada atualmente de /etc/init.d/ssh está prestes a derrubar "
+"todas as instâncias sshd em execução. Se você estiver fazendo esta "
+"atualização através de uma sessão SSH, você provavelmente será desconectado "
+"e deixará este processo de atualização incompleto."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Você pode corrigir isto adicionando \"--pidfile /var/run/sshd.pid\" na linha "
+"start-stop-daemon na seção stop deste arquivo."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Nova chave de máquina obrigatória"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"A chave de máquina atual, em /etc/ssh/ssh_host_key, é criptografada "
+"utilizando o algoritmo IDEA. O OpenSSH não pode gerenciar esse arquivo de "
+"chave de máquina, e o utilitário ssh-keygen da antiga (e não livre) "
+"instalação SSH não parece estar disponível."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Você precisa gerar manualmente uma chave de máquina."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Desabilitar autenticação desafio-resposta (\"challenge-response\")?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"A autenticação através de senha parece estar desabilitada em sua "
+"configuração atual do servidor OpenSSH. Para que seja possível evitar que "
+"usuários se autentiquem utilizando senhas (talvez utilizando somente "
+"autenticação através de chaves públicas) em versões recentes do OpenSSH você "
+"deve desabilitar a autenticação desafio-resposta (\"challenge-response\") ou "
+"então se certificar que sua configuração PAM não permita autenticação "
+"através do arquivos de senhas Unix (\"password\")."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Caso você desabilite a autenticação desafio-resposta (\"challenge-response"
+"\"), os usuários não poderão se autenticar utilizando suas senhas. Se você "
+"deixá-la habilitada (a resposta padrão), então a opção "
+"'PasswordAuthentication no' não terá efeito útil a menos que você também "
+"ajuste sua configuração PAM em /etc/pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Chaves de host vulneráveis serão regeradas"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Algumas das chaves de host do servidor OpenSSH neste sistema foram geradas "
+"com uma versão do OpenSSL que tem um gerador de números aleatórios quebrado. "
+"Como resultado, estas chaves de host são originárias de um conjunto bem "
+"conhecido, ficando sujeitas a ataques de força bruta, e devem ser regeradas."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Usuários deste sistema deverão ser informados desta mudança, pois eles serão "
+"alertados sobre a mudança de chave de host na próxima vez que logarem. Use "
+"'ssh-keygen -l -f ARQUIVO_COM_A_CHAVE_DE_HOST' após a atualização para "
+"exibir as impressões digitais (\"fingerprints\") das novas chaves de host."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "As chaves de host afetadas são:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Chaves de usuários também podem ser afetadas por este problema. O comando "
+"'ssh-vulnkey' pode ser usado como um teste parcial para isso. Veja /usr/"
+"share/doc/openssh-server/README.compromised-keys.gz para mais detalhes."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Gerar um novo arquivo de configuração para o OpenSSH?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Esta versão do OpenSSH possui um arquivo de configuração "
+#~ "consideravelmente diferente da versão fornecida com o Debian 'Potato', a "
+#~ "versão do Debian a partir da qual você parece estar atualizando. Este "
+#~ "pacote pode agora gerar um novo arquivo de configuração (/etc/ssh/"
+#~ "sshd_config), o qual irá funcionar com a nova versão do servidor sshd mas "
+#~ "não irá conter nenhuma personalização que você possa ter feito na versão "
+#~ "anterior."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Por favor, note que este novo arquivo de configuração irá definir o valor "
+#~ "da opção 'PermitRootLogin' para 'yes' (o que significa que qualquer "
+#~ "pessoa que conheça a senha do root poderá conectar via ssh diretamente "
+#~ "como root). Por favor, leia os arquivos README.Debian para maiores "
+#~ "detalhes sobre essa escolha de projeto."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "É fortemente recomendado que você escolha gerar um novo arquivo de "
+#~ "configuração agora."

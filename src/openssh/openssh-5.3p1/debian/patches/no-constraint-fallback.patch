@@ -1,0 +1,52 @@
+Description: ssh-add: Don't discard constraints when agent refuses request
+ This was a useful migration measure back in 2002 when constraints were new,
+ but just adds risk now.
+Origin: upstream, http://bazaar.launchpad.net/~vcs-imports/openssh/main/revision/5777
+Author: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1612
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/209447
+Last-Update: 2010-02-28
+
+Index: b/authfd.c
+===================================================================
+--- a/authfd.c
++++ b/authfd.c
+@@ -545,12 +545,6 @@
+ 	return decode_reply(type);
+ }
+ 
+-int
+-ssh_add_identity(AuthenticationConnection *auth, Key *key, const char *comment)
+-{
+-	return ssh_add_identity_constrained(auth, key, comment, 0, 0);
+-}
+-
+ /*
+  * Removes an identity from the authentication server.  This call is not
+  * meant to be used by normal applications.
+Index: b/authfd.h
+===================================================================
+--- a/authfd.h
++++ b/authfd.h
+@@ -75,7 +75,6 @@
+ int	 ssh_get_num_identities(AuthenticationConnection *, int);
+ Key	*ssh_get_first_identity(AuthenticationConnection *, char **, int);
+ Key	*ssh_get_next_identity(AuthenticationConnection *, char **, int);
+-int	 ssh_add_identity(AuthenticationConnection *, Key *, const char *);
+ int	 ssh_add_identity_constrained(AuthenticationConnection *, Key *,
+     const char *, u_int, u_int);
+ int	 ssh_remove_identity(AuthenticationConnection *, Key *);
+Index: b/ssh-add.c
+===================================================================
+--- a/ssh-add.c
++++ b/ssh-add.c
+@@ -203,9 +203,6 @@
+ 		if (confirm != 0)
+ 			fprintf(stderr,
+ 			    "The user has to confirm each use of the key\n");
+-	} else if (ssh_add_identity(ac, private, comment)) {
+-		fprintf(stderr, "Identity added: %s (%s)\n", filename, comment);
+-		ret = 0;
+ 	} else {
+ 		fprintf(stderr, "Could not add identity: %s\n", filename);
+ 	}

@@ -1,0 +1,10 @@
+etc/init
+etc/init.d
+etc/default
+etc/network/if-up.d
+etc/ufw/applications.d
+usr/lib/openssh
+usr/sbin
+usr/share/lintian/overrides
+usr/share/man/man5
+usr/share/man/man8

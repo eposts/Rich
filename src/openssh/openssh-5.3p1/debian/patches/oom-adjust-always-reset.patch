@@ -1,0 +1,22 @@
+Description: Make OOM adjustment play nicely with Upstart
+ Upstart sets sshd's OOM adjustment to -17 on startup, so resetting it to
+ the input value won't work.  Just always reset it to 0 instead.
+Author: Colin Watson <cjwatson@ubuntu.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/293000
+Last-Update: 2010-03-06
+
+Index: b/sshd.c
+===================================================================
+--- a/sshd.c
++++ b/sshd.c
+@@ -933,8 +933,8 @@
+ static void
+ oom_restore(void)
+ {
+-	if (oom_adj_save[0])
+-		oom_adj_set(oom_adj_save);
++	/* always reset to 0, in case our adjustment was set on sshd startup */
++	oom_adj_set("0");
+ }
+ #endif
+ 

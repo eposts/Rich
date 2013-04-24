@@ -1,0 +1,22 @@
+Description: Use x11.pc when compiling/linking gnome-ssh-askpass2
+ This fixes linking with binutils-gold.
+Author: Colin Watson <cjwatson@debian.org>
+Bug-Debian: http://bugs.debian.org/555951
+Last-Update: 2010-02-27
+
+Index: b/contrib/Makefile
+===================================================================
+--- a/contrib/Makefile
++++ b/contrib/Makefile
+@@ -7,9 +7,9 @@
+ 		`gnome-config --libs gnome gnomeui`
+ 
+ gnome-ssh-askpass2: gnome-ssh-askpass2.c
+-	$(CC) `pkg-config --cflags gtk+-2.0` \
++	$(CC) `pkg-config --cflags gtk+-2.0 x11` \
+ 		gnome-ssh-askpass2.c -o gnome-ssh-askpass2 \
+-		`pkg-config --libs gtk+-2.0`
++		`pkg-config --libs gtk+-2.0 x11`
+ 
+ clean:
+ 	rm -f *.o gnome-ssh-askpass1 gnome-ssh-askpass2 gnome-ssh-askpass

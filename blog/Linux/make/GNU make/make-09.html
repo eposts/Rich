@@ -1,0 +1,906 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第九章 : 执行make</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+p.MsoBodyTextFirstIndent
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	line-height:150%;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:Arial;
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_09"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第九章：执行</span><span lang="EN-US" style="font-size: 18.0pt">make </span></a></h1>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center">
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一般描述整个工程编译规则的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">可以通过不止一种方式来执行。最简单直接的方法就是使用不带任何参数的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令来重新编译所有过时的文件。通常我们的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">就书写为这种方式。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在某些情况下：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可能需要使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">更新一部分过时文件而不是全部</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+需要使用另外的编译器或者重新定义编译选项</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+只需要察看那些文件被修改，而不需要重新编译</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+为了达到这些特殊的目的，需要使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行参数来实现。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行参数能实现的功能不仅限于这些，通过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行参数可以实现很多特殊功能。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+另外，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的退出状态有三种：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+0 </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+—</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+状态为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，表示执行成功。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2 </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+—</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行过程出现错误，同时会提示错误信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1 </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+—</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时使用了“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数，而且当前工程中存在过时的目标文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本章的内容主要讲述如何使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令参数选项来实现一些特殊的目的。在本章最后会对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行参数选项进行比较详细的讨论。</span></p>
+</span>
+<h2><a name="_gnu_make_9.1"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">指定</span><b><span lang="EN-US" style="font-size: 14.0pt">makefile</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">文件</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本文以前的部分对如何指定</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件已经有过介绍。当需要将一个普通命名的文件作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件时，需要使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-f</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--file</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项来指定。例如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+–f altmake</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，它的意思是告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">altmake</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件来解析执行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+当在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令行选项中出现多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-f</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数时，所有通过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-f</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数指定的文件都被作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">解析执行的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+默认情况，在没有使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-f</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--file</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）指定文件时。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">会在工作目录（当前目录）依次搜索命名为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNUmakefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的文件，最终解析执行的是这三个文件中首先搜索到的哪一个。</span></p>
+<h2><a name="_gnu_make_9.2"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">指定终极目标</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“终极目标”的基本概念我们在前面已经提到过。所谓终极目标就是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">最终所要重建的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">某个规则的目标（也可以称之为“最终规则”）。为了完成对终极目标的重建，可能会触发它的依赖或者依赖的依赖文件被重建的过程。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+默认情况下，终极目标就是出现在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，除以点号“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”开始的第一个规则中的第一个目标（如果第一个规则存在多个目标）。因此</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">书写时需要保证：第一个目标的编译规则就描述了整个工程或者程序的编译过程和规则。如果</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的第一个规则有多个目标，那么默认的终极目标是多个目标中的第一个。我们在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">所在的目录下执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，将完成对默认终极目标的重建。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+另外，也可以通过命令行将一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的目标指定为此次</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">过程的终极目标，替代默认的终极目标。使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中目标名作为参数来执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（格式为</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+TARGET_NAME</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”），可以把这个目标指定为终极目标。使用这种方式，我们也可以同时指定多个终极目标。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+任何出现在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">规则中的目标都可以被指定为终极目标（不包含以“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”开始的和包含“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的赋值语句，一般它们也不会作为一个目标出现），甚至可以指定一个在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中不存在的目标作为终极目标，前提是存在一个对应的隐含规则能够实现对这个目标的重建。例如：目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">src</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”下存在一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的源文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，我们的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中不存在对目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的描述规则，或者当前目录下就没有默认的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件，为了编译“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”生成可执行的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。只需要将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的参数执行：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”就可以实现编译“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的目的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在执行时设置一个特殊变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKECMDGOALS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，此变量记录了命令行参数指定的终极目标列表，没有通过参数指定终极目标时此变量为空。注意：此变量仅用在特殊的场合（比如判断），在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makeifle</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中不要对它进行重新定义！例如：</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">sources = foo.c 
+bar.c&nbsp;&nbsp;&nbsp;&nbsp; </span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ifneq ($(MAKECMDGOALS),clean)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">include $(sources:.c=.d)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">endif</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+例子中使用了变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKECMDGOALS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来判断命令行参数是否指定终极目标为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，如果不是才包含所有源文件对应的依赖关系描述文件。上例的功能是避免“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">试图重建所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.d</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的过程。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这种方式主要用在以下几个方面：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对程序的一部分进行编译，或者仅对某几个程序进行编译而不是完整编译这个工程（也可以在命令行参数中明确给出原本的默认的终极目标，例如：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+all</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，没有人会说它是错误的。但是大家都会认为多此一举）。例如以下一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的片段，其中各个文件都有自己的描述规则：</span></p>
+<p class="MsoNormal" style="margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.PHONY: all</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">all: size nm ld 
+ar as</span></i></b></p>
+<p class="MsoNormal" style="margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+仅需要重建“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">size</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”文件时，执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+size</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”就可以了。其它的程序就不会被重建。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定编译或者创建那些正常编译过程不能生成的文件（例如重建一个调试输出文件、或者编译一个调试版本的程序等），这些文件在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中存在重建规则，但是它们没有出现在默认终极目标目标的依赖中。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定执行一个由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">伪目标</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">定义的若干条命令或者一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">空目标文件</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。如绝大多数</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中都会包含一个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”伪目标，这个伪目标定义了删除</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">过程生成的所有文件的命令，需要删除这些文件时执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”就可以了。本节以下列出了一些典型的伪目标和空目标的名字。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+部分标准的伪目标和空目标命名：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+all</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的顶层目标，一般此目标作为默认的终极目标。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+clean</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个伪目标定义了一组命令，这些命令的功能是删除所有由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">创建的文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+mostlyclean</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”伪目标功能相似。区别在于它所定义的删除命令不会全部删除由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">生成的文件。比如说不需要删除某些库文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+distclean</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+realclean</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+clobber</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+同样类似于伪目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">clean</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，但它们所定义的删除命令所删除的文件更多。可以包含非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">创建的文件。例如：编译之前系统的配置文件、链接文件等。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+install</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+将</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">成功创建的可执行文件拷贝到</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+环境变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">PATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的某个目录。典型的，应用可执行文件被拷贝到目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">/usr/local/bin</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，库文件拷贝到目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">/usr/local/lib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录下。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+print</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+打印出所有被更改的源文件列表。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+tar</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+创建一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">tar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件（归档文件包）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+shar</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+创建一个源代码的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文档（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+dist</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+为源文件创建发布的压缩包，可以使各种压缩方式的发布包。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+TAGS</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 24.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+创建当前目录下所有源文件的符号信息（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">tags</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）文件，这个文件可被</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">vim</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">使用。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+check</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: blue">
+&sup2;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+test</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">最后生成的文件进行检查。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这些功能和目标的对照关系并不是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">规定的。你可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中定义任何命名的伪目标。但是以上这些都被作约定，所有开源的工程中这些特殊的目标的命名都是按照这种约定来的。既然绝大多数程序员都遵循这种约定，自然我们也应该按照这种约定来做。否则在别人看来这样</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">只能算一个样例，不能作为正式版本。</span></p>
+<h2><a name="_gnu_make_9.3"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+替代命令的执行</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的目的就是为了告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">一个目标是否过期，以及如果重建一个过期的目标。但是在某些时候，我们并不希望真正更新那些已经过期的目标文件（比如：只是检查更新目标的命令是否正确，或者察看那些目标需要更新）。要实现这样的目的，可以使用一些特定的参数来限定</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行的动作。通过指定参数，替代</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">默认动作的执行。因此我们把这种方式称为：替代命令的执行。这些参数包括：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-n</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--just-print</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--dry-run</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--recon</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行空操作（不执行规则的命令），只打印出需要重建目标使用的命令（只打印过期的目标的重建命令），而不对目标进行重建。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-t</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--touch</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+类似于</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">下的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">touch</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令的功能。更新所有目标文件的时间戳（对于过时的目标文件不进行内容更新，只更新时间戳）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-q</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--question</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+不执行任何命令并且不打印任何输出信息，只检查所指定的目标是否已经是最新的。如果是则返回</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，否则返回</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--question</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）的目的只是让</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">返回给定（没有指定则时终极目标）的目标是否是最新的。可以根据它的返回值来判断是否须要真正的执行更新目标的动作。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-W FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--what-if= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--assume-new= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--new-file= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个参数需要指定一个文件名。通常是一个存在源文件。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将当前系统时间作为这个文件的时间戳（假设这个文件被修改过，但不真正的更改文件本身的时间戳）。因此这个文件的时间戳被认为最新的，在执行时依赖于这个文件的目标将会被重建。通过这种方式并结合“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数，我们可以查看那些目标依赖于这个文件（修改这个文件以后执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">那些目标会被更新）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数一同使用，可以在修改一个文件后来检查修改会造成那些目标需要被更新，但并不执行更新的命令，只是打印命令。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数配合使用时，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将忽略其它规则的命令。只对依赖于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定文件的目标执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">touch</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令，在没有使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-s</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，可以看到那些文件执行了“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">touch</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。需要说明的是，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在对文件执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">touch</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时不是调用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的命令，而是由</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">直接操作。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数配合使用时。由于将当前时间作为指定文件的时间戳（目标文件相对于系统当前时间是过时的），所以</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的返回状态在没有错误发生时为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，存在错误时为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">2</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 18.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+注意：以上三个参数同时使用时可能会出现错误。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+总结：</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+参数“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”、“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不影响之前带“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”号和包含“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$(MAKE)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的命令行的执行。就是说如果在规则的命令行中命令之前使用了“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">+</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者此命令行是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">递归地</span>make<span lang="EN-US" style="font-family: 楷体_GB2312">调用</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，无论是否使用了这三个参数之一，这些命令都得到执行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数有两个特点：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可以和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数配合使用来查看修改所带来的影响（导致那些目标会被重建）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在不指定“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-n</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-q</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数、只使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-W</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定一个文件时，可以模拟这个文件被修改的状态。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">就会重建依赖于此文件的所有目标。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+另外“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-p</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-v</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数可以允许我们输出</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefille</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">被执行的过程信息，相信这一点在很多场合，特别是调试</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时非常有用（本章的最后一节有详细讨论，</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<h2><a name="_gnu_make_9.4"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.4<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+防止特定文件重建</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+有时当修改了工程中的某一个文件后，并不希望重建那些依赖于这个文件的目标。比如说我们在给一个头文件中加入了一个宏定义、或者一个增加的函数声明，这些修改不会对已经编译完成的程序产生任何影响。但在执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，因为头文件的改变会导致所有包含它的源文件被重新编译，当然了终极目标肯定也会被重建（除非你的模块时独立的，或者你的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的规则链的定义本身就存在缺陷）。这种情况时，为了避免重新编译整个工程，我们可以按照下边的过程来处理：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+第一种：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令对所有需要更新的目标进行重建。保证修改某个文件之前所有的目标已经是最新的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+编辑需要修改的那个源文件（<b>修改的头文件的内容不能对之前的编译的程序有影响，比如：更改了头文件中的宏定义。这样会造成已经存在的程序和实现不相符！这里所说的修改指：不改变已经存在的任何东西，除非你有特殊的要求</b>）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令来改变已存在的所有的目标文件的时间戳，将其最后修改时间修改到当前时间。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+第一种方式的现实基于这样的前提：需要对未更改头文件之前的编译程序进行保存（有点像备份）。通常这种需求还是比较少见的。更多的情况是：修改这个头文件之前已经修改了很多源文件或者其它的头文件，并且也没有执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（缺少了上边的第一步）。这种方式，有点像有计划的修改。没有普遍性，修改通常是不可预知的。因此这种方式在实际应用中几乎没有参考的意义。对于不可预知的修改所带来的问题，我们需要另外一种方式。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+第二种方式在很大程度上可以满足我们的需求：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+第二种：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行编译，使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+–o HEADERFILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">HEADERFILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”为需要忽略更改的头文件，防止那些依赖于这个头文件的目标被重建。忽略多个头文件的修改可使用多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-o 
+HEADERFILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。这样，头文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">HEADERFILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的修改就不会触发依赖它的目标被重建（通过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，这个头文件的时间戳比它的依赖晚）。<b>需要注意的是：“</b></span><b><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数的这种使用方式仅限于头文件（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.h</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件），不能使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来指定源文件。</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 39.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+-t</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令。</span></p>
+<h2><a name="_gnu_make_9.5"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.5<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">替换变量定义</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，一个含有“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的命令行参数“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">V=X</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的含义是定义变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">V</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">X</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，并将这个比变量作为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的参数。这种方式定义的变量会替代</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的同名变量定义（如果存在，并且在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中没有使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">指示符“</span>override<span lang="EN-US" style="font-family: 楷体_GB2312">”</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">对这个变量进行说明），这个过程被称之命令行参数定义覆盖普通变量定义。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常用这种方式来传递一个公共变量给</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。例如：在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，使用变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来指定编译参数，在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">规则的命令一般都是这么写的：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">cc -c $(CFLAGS) 
+foo.c</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这样就可以通过改变“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的值来控制编译选项。我们可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中为它指定值。例如：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">CFLAGS=-g</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+当直接执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，编译命令是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">cc 
+–c –g foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。如果需要改变“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的定义，可以在命令行中指定这个变量的值，像这样“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+CFLAGS=’-g –O2’</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，此时所执行的编译命令将是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">cc 
+–c –g –O2 foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（在参数中如果包含空格或者</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的特殊字符，则需要将参数放在引号中）。对变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”定义追加的功能就是使用这种方式来实现的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">CFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可以通过这种方式来实现，它是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的隐含变量之一。对于普通变量的定义，也可以通过这种方式来对它进行重新定义（覆盖</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的定义）、或者实现变量值的追加功能。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通过命令行定义变量时，也存在两种风格的变量定义：递归展式定义和直接展开式定义。上例中使用递归展开式的定义（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”），也可以是直接展开式的（使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">:=</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）。除非在命令行定义的变量值中包含了对其他变量或者函数的引用，否则这两种方式在此是等价的。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+为了防止命令行参数的变量定义覆盖</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的同名变量定义，可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中使用指示符“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">override</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”声明这个变量。这一点前边的章节已经有详细的讨论！</span></p>
+<h2><a name="_gnu_make_9.6"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.6<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">使用</span><b><span lang="EN-US" style="font-size: 14.0pt">make</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">进行编译测试</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+正常情况</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，如果出现命令执行的错误，会立即放弃继续执行并返回一个非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的状态。就是说错误发生点之后的命令将不会被执行。一个错误的发生就表明了终极目标将不能被重建，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">一旦检查到错误就会立刻终止执行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+假如我们在修改了一些源文件之后重新编译工程，当然了，我们所希望的是在某一个文件编译出错以后能够继续进行后续文件的编译。直到最后出现链接错误时才退出。这样的目的是为了了解所修改的文件中那些文件没有修改正确。在下一次编译之前能够对出现错误的所有文件进行改正。而不是编译一次改正一个文件，或者改正一个文件再编译一次。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我了实现我们这个目的，需要使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--keep-going</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令行选项。这个参数的功能是告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">当出现错误时继续执行，直到最后出现致命错误（无法重建终极目标）才返回非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">并退出。例如：当编译一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">目标文件时出现错误，如果使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”执行，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将不会在检测到这个错误时退出（虽然已经知道终极目标是不可能会重建成功的）；只是给出一个错误消息，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">将继续重建其它需要重建的目标文件；直到最后出现致命错误才退出。在没有使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">—keep-going</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在检测到错误时会立刻退出。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+总之：在通常情况下，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的目的是重建终极目标。当它在执行过程中一旦发现无法重建终极目标，就立刻以非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">状态退出。当使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”或者“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">--keep-going</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数时，执行的目的是为了测试重建过程，需要发现存在的所有问题，以便在下一次</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">之前进行修正。这也是调试</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">或者查找源文件错误的一种非常有效的手段。</span></p>
+<h2><a name="_gnu_make_9.7"><span style="font-size: 14pt" lang="en-us"><b>9</b></span><b><span lang="EN-US" style="font-size: 14.0pt">.7<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>make</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">的命令行选项</span></a></h2>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	本节罗列了</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make
+	</span>
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	所支持的命令行参数（这些参数可以通过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">手册查看）：</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-b</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-m</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+忽略，提供其它版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">兼容性。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-B</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--always-make</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+强制重建所有规则的目标，不根据规则的依赖描述决定是否重建目标文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-C DIR</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--directory=DIR</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在读取</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">之前，进入目录“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">DIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，就是切换工作目录到“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">DIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”之后执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。存在多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项时，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的最终工作目录是第一个目录的相对路径。如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+–C / -C etc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”等价于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+–C /etc</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。一般此选项被用在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"><span lang="EN-US" style="font-family: 楷体_GB2312">递归地</span>make<span lang="EN-US" style="font-family: 楷体_GB2312">调用</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-d</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">在执行过程中打印出所有的调试信息。包括：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">认为那些文件需要重建；那些文件需要比较它们的最后修改时间、比较的结果；重建目标所要执行的命令；使用的隐含规则等。使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-d</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项我们可以看到</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">构造依赖关系链、重建目标过程的所有信息，它等效于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">—debug=a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">
+—</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">debug[=OPTIONS]</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行时输出调试信息。可以使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">OPTIONS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”控制调试信息级别。默认是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">OPTIONS=b</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">OPTIONS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的可能值为以下这些，首字母有效（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">all
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+aw</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">等效）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">all</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+输出所有类型的调试信息，等效于“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-d</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+b</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">basic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+输出基本调试信息。包括：那些目标过期、是否重建成功过期目标文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+v</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">verbose</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">basic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”级别之上的输出信息。包括：解析的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件名，不需要重建文件等。此选项目默认打开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">basic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”级别的调试信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+i</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">implicit</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+输出所有使用到的隐含规则描述。此选项目默认打开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">basic</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”级别的调试信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+j</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">jobs</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+输出所有执行命令的子进程，包括命令执行的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">PID</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">等。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 66.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+m</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">）</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 60.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+也就是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，输出</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">读取</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，更新</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-e</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--environment-overrides</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+使用系统环境变量的定义覆盖</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的同名变量定义。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-f=FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--file= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--makefile= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">FILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-h</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--help</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+打印帮助信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-i</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--ignore-errors</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行过程中忽略规则命令执行的错误。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-I DIR</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--include-dir=DIR</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定被包含</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的搜索目录。在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中出现“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">include</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”另外一个文件时，将在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">DIR</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目录下搜索。多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-I</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定目录时，搜索目录按照指定顺序进行。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-j &nbsp;[JOBS]</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--jobs[=JOBS]</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定可同时执行的命令数目。在没有指定“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-j</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数的情况下，执行的命令数目将是系统允许的最大可能数目。存在多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-j</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数时，尽最后一个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-j</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的数目（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">JOBS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）有效。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-k</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--keep-going</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+执行命令错误时不终止</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的执行，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">尽最大可能的执行所有的命令，直到出现致命错误才终止。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-l LOAD</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--load-average[=LOAD]</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: blue">
+—</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">max-load[=LOAD]</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">当存在其它任务在执行时，如果系统负荷超过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">LOAD</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（浮点数表示的），不再启动新任务。没有指定“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">LOAD</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-I</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项将取消之前“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-I</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的限制。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-n</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--just-print</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--dry-run</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--recon</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+只打印出所要执行的命令，但不执行命令。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-o FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--old-file= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--assume-old= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+指定文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">FILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不需要重建，即使相对于它的依赖已经过期；同时也不重建依赖于此文件任何文件（目标文件）。注意：此参数不会通过变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”传递给子</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">进程。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-p</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--print-data-base</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+命令执行之前，打印出</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">读取的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的所有数据（包括规则和变量的值），同时打印出</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的版本信息。如果只需要打印这些数据信息（不执行命令）可以使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+-qp</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令。查看</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">执行前的预设规则和变量，可使用命令“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+–p -f /dev/null</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-q</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--question</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+称为“询问模式”；不运行任何命令，并且无输出。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">只是返回一个查询状态。返回状态为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">表示没有目标需要重建，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">1</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">表示存在需要重建的目标，</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">2</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">表示有错误发生。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-r</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--no-builtin-rules</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+取消所有内嵌的隐含规则，不过你可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中使用模式规则来定义规则。同时选项“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-r</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”会取消所有支持后追规则的隐含后缀列表，同样我们也可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.SUFFIXES</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”定义我们自己的后缀规则。“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-r</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项不会取消</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">内嵌的隐含变量。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-R</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--no-builtin-variabes</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+取消</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">内嵌的隐含变量，不过我们可以在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中明确定义某些变量。注意，“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-R</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项同时打开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-r</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。因为没有了隐含变量，隐含规则将失去意义（隐含规则是以内嵌的隐含变量为基础的）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-s</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--silent</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--quiet</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+取消命令执行过程的打印。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-S</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--no-keep-going</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--stop</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+取消“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。在递归的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">过程中子</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">通过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”变量继承了上层的命令行选项。我们可以在子</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-S</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项取消上层传递的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项，或者取消系统环境变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MAKEFLAGS</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-t</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+—touch</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">touch</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">命令实现功能相同，更新所有目标文件的时间戳到当前系统时间。防止</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">对所有过时目标文件的重建。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-v</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--version</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+查看</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本信息。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-w</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--print-directory</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">进入一个目录读取</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">之前打印工作目录。这个选项可以帮助我们调试</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，跟踪定位错误。使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项时默认打开这个选项。参考本节前半部分“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项的描述。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--no-print-directory</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+取消“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-w</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项。可以是用在递归的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">调用过程中，取消“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-C</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数的默认打开“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-w</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”功能。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+-W FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--what-if= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--new-file= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--assume-file= FILE</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+设定文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">FILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的时间戳为当前时间，但不改变文件实际的最后修改时间。此选项主要是为实现了对所有依赖于文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">FILE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的目标的强制重建。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.1pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<b>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: blue">
+--warn-undefined-variables</span></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在发现</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中存在对没有定义的变量进行引用时给出告警信息。此功能可以帮助我们调试一个存在多级套嵌变量引用的复杂</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。但是：我们建议在书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时尽量避免超过三级以上的变量套嵌引用。</span></p>
+	<hr size="1" width="100%" align="center">
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-10.html">下一章</a>
+	<a href="make-08.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+
+</body>
+
+</html>

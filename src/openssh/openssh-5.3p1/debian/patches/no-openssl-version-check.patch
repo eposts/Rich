@@ -1,0 +1,31 @@
+Description: Disable OpenSSL version check
+ It may be that this patch should be replaced by more accurate dependencies,
+ and it certainly doesn't seem suitable for upstream.  This is a very old
+ change, though, and needs review of current practices in Debian's OpenSSL
+ package.
+Author: Philip Hands <phil@hands.com>
+Bug-Debian: http://bugs.debian.org/93581
+Forwarded: not-needed
+Last-Update: 2010-02-28
+
+Index: b/entropy.c
+===================================================================
+--- a/entropy.c
++++ b/entropy.c
+@@ -151,6 +151,8 @@
+ void
+ init_rng(void)
+ {
++#if defined (DISABLED_BY_DEBIAN)
++  /* drow: Is this check still too strict for Debian?  */
+ 	/*
+ 	 * OpenSSL version numbers: MNNFFPPS: major minor fix patch status
+ 	 * We match major, minor, fix and status (not patch)
+@@ -158,6 +160,7 @@
+ 	if ((SSLeay() ^ OPENSSL_VERSION_NUMBER) & ~0xff0L)
+ 		fatal("OpenSSL version mismatch. Built against %lx, you "
+ 		    "have %lx", OPENSSL_VERSION_NUMBER, SSLeay());
++#endif
+ 
+ #ifndef OPENSSL_PRNG_ONLY
+ 	original_uid = getuid();

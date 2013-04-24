@@ -1,0 +1,68 @@
+# These templates have been reviewed by the debian-l10n-english
+# team
+#
+# If modifications/additions/rewording are needed, please ask
+# for an advice to debian-l10n-english@lists.debian.org
+#
+# Even minor modifications require translation updates and such
+# changes should be coordinated with translators and reviewers.
+#
+Template: ssh/use_old_init_script
+Type: boolean
+Default: false
+_Description: Do you want to risk killing active SSH sessions?
+ The currently installed version of /etc/init.d/ssh is likely to kill
+ all running sshd instances. If you are doing this upgrade via an SSH
+ session, you're likely to be disconnected and leave the upgrade
+ procedure unfinished.
+ .
+ This can be fixed by manually adding "--pidfile /var/run/sshd.pid" to
+ the start-stop-daemon line in the stop section of the file.
+
+Template: ssh/encrypted_host_key_but_no_keygen
+Type: note
+_Description: New host key mandatory
+ The current host key, in /etc/ssh/ssh_host_key, is encrypted with the
+ IDEA algorithm. OpenSSH can not handle this host key file, and the
+ ssh-keygen utility from the old (non-free) SSH installation does not
+ appear to be available.
+ .
+ You need to manually generate a new host key.
+
+Template: ssh/disable_cr_auth
+Type: boolean
+Default: false
+_Description: Disable challenge-response authentication?
+ Password authentication appears to be disabled in the current OpenSSH
+ server configuration. In order to prevent users from logging in using
+ passwords (perhaps using only public key authentication instead) with
+ recent versions of OpenSSH, you must disable challenge-response
+ authentication, or else ensure that your PAM configuration does not allow
+ Unix password file authentication.
+ .
+ If you disable challenge-response authentication, then users will not be
+ able to log in using passwords. If you leave it enabled (the default
+ answer), then the 'PasswordAuthentication no' option will have no useful
+ effect unless you also adjust your PAM configuration in /etc/pam.d/ssh.
+
+Template: ssh/vulnerable_host_keys
+Type: note
+#flag:translate!:5
+_Description: Vulnerable host keys will be regenerated
+ Some of the OpenSSH server host keys on this system were generated with a
+ version of OpenSSL that had a broken random number generator. As a result,
+ these host keys are from a well-known set, are subject to brute-force
+ attacks, and must be regenerated.
+ .
+ Users of this system should be informed of this change, as they will be
+ prompted about the host key change the next time they log in. Use
+ 'ssh-keygen -l -f HOST_KEY_FILE' after the upgrade to print the
+ fingerprints of the new host keys.
+ .
+ The affected host keys are:
+ .
+ ${HOST_KEYS}
+ .
+ User keys may also be affected by this problem. The 'ssh-vulnkey' command
+ may be used as a partial test for this. See
+ /usr/share/doc/openssh-server/README.compromised-keys.gz for more details.

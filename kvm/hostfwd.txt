@@ -1,0 +1,43 @@
+ qemu-kvm支持主机端口转发hostfwd比redir更强大
+
+ ‘hostfwd=[tcp|udp]:[hostaddr]:hostport-[guestaddr]:guestport’
+
+ 将进入到主机端口的TCP或者UDP连接 转发到客户机的 某个地址和端口
+
+ 如果没有指定guestaddr, 那么默认转到 x.x.x.15
+
+ 通过指定 hostaddr, 可以绑定到主机某个特点的接口上
+
+ 例如
+ -net user,hostfwd=tcp:192.168.1.100:6001-:6000
+ 将主机 192.168.1.1.100的6001 端口, 转发到客户机的 6000端口 (注意不要忘记 ? 号)
+
+ 它还支持 类似 redir的那样的语法规则
+
+ -net user,hostfwd=tcp:5555::23
+
+ 将主机的 5555转发到客户机的 23 端口
+
+ 注意: 不要将新的 hostfwd 与 -tftp -bootp -smb -redir选项同时使用, 混用会导致未定义的结果
+ 但 只单独使用旧选项, 目前依然是有效的. 但不建议 用户在新应用中使用, 未来的版本可能删除这些选项
+
+ 注意: 使用 -net user 必须同 -net nic配合
+ -net nic -net user
+
+ 示范
+
+ kvm -cpu core2duo -smp 2 -m 512 -nographic -hda /dev/sdb
+ -net nic -net user,hostfwd=tcp::9527-:22,hostfwd=tcp:62.168.59.183:80-:80,hostfwd=tcp::6881-:6881,
+ hostfwd=tcp::6882-:6882,hostfwd=tcp::20519-:20519,hostfwd=tcp::17428-:17428,hostfwd=tcp::4080-:4080,hostfwd=udp::20523-:20523
+ -vnc :1
+
+ sudo kvm -cpu core2duo -smp 2 -m 512 -nographic -daemonize -hda /dev/sdb
+ -net nic -net user,
+ hostfwd=tcp::9527-:22,
+ hostfwd=tcp:62.168.59.183:80-:80,
+ hostfwd=tcp::6881-:6881,
+ hostfwd=tcp::6882-:6882,
+ hostfwd=tcp::20519-:20519,
+ hostfwd=tcp::17428-:17428,
+ hostfwd=tcp::4080-:4080,
+ hostfwd=udp::20523-:20523

@@ -1,0 +1,209 @@
+# translation of ru.po to Russian
+# translation of openssh to Russian
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans#
+#    Developers do not need to manually edit POT or PO files.
+#
+# Yuriy Talakan' <yt@drsk.ru>, 2007.
+# Yuri Kozlov <kozlov.y@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh 1:4.7p1-9\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-18 08:55+0400\n"
+"Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
+"Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Вы хотите пойти на риск потерять активные SSH соединения?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Установленная в настоящее время версия /etc/init.d/ssh, вероятно, уничтожит "
+"все запущенные экземпляры sshd. Если вы выполняете это обновление через SSH "
+"соединение, то скорее всего вы будете отключены и процедура обновления "
+"останется не завершенной."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Это может быть исправлено вручную добавлением \"--pidfile /var/run/sshd.pid"
+"\" в строку start-stop-daemon в разделе stop этого файла."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Необходим новый ключ хоста"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Текущий ключ хоста, /etc/ssh/ssh_host_key, зашифрован алгоритмом IDEA. "
+"OpenSSH не может работать с таким файлом ключа хоста, а утилита создания ssh-"
+"ключа (ssh-keygen) из прежней (не свободной) установки SSH, кажется, "
+"недоступна."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Вам нужно вручную создать новый ключ хоста."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Отключить аутентификацию запрос-ответ?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Кажется, что парольная аутентификация отключена в текущей настройке сервера "
+"OpenSSH. Чтобы запретить пользователям вход с использованием паролей "
+"(возможно, использовав вместо этого только аутентификацию по публичному "
+"ключу) в новых версиях OpenSSH, вы должны отключить аутентификацию запрос-"
+"ответ, либо убедиться, что ваша настройка PAM не разрешает аутентификацию по "
+"файлу паролей Unix."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Если вы запретите аутентификацию запрос-ответ, пользователи не смогут войти "
+"с использованием паролей. Если вы оставите её разрешенной (ответ по "
+"умолчанию), то параметр 'PasswordAuthentication no' не будет иметь силы до "
+"тех пор, пока вы также не откорректируете настройки PAM в /etc/pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Уязвимые ключи хоста будут созданы заново"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Некоторые ключи хоста сервера OpenSSH в этой системе были созданы с помощью "
+"версии OpenSSL, в которой был испорченный генератор случайных чисел. В "
+"результате, такие ключи хоста входили во всем известный список, что "
+"позволяло применять атаку последовательного подбора ключей. Ключи должны "
+"быть созданы заново."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Пользователи этой системы будут проинформированы об этом изменении, так как "
+"им будет выведено сообщение о смене ключа хоста при следующем подключении. "
+"Используйте команду 'ssh-keygen -l -f HOST_KEY_FILE' после обновления для "
+"распечатки отпечатков новых ключей хоста."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Ключи хоста, которые будут заменены:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Пользовательские ключи также имеют данную проблему. Для частичной проверки "
+"можно воспользоваться командой 'ssh-vulnkey'. В файле /usr/share/doc/openssh-"
+"server/README.compromised-keys.gz дано более подробное описание."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Создать новый файл настроек для OpenSSH?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Файл настроек этой версии OpenSSH значительно отличается от файла версии, "
+#~ "которая поставлялась с Debian 'Potato', и которую вы, кажется, "
+#~ "обновляете. Этот пакет может сейчас создать новый файл настроек (/etc/ssh/"
+#~ "sshd.config), который будет работать с сервером новой версии, но не будет "
+#~ "содержать настроек, которые вы сделали в старой версии."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Обратите внимание, что этот новый файл настроек установит значение "
+#~ "параметра 'PermitRootLogin' в 'yes' (это означает, что каждый знающий "
+#~ "пароль суперпользователя может войти в систему по ssh как "
+#~ "суперпользователь). Пожалуйста, прочтите файл README.Debian для "
+#~ "разъяснения деталей этого выбора."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Настоятельно рекомендуется выбрать сейчас создание нового файла настроек."

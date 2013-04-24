@@ -1,0 +1,275 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第十一章 : 更新静态库</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+h2
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	page-break-after:avoid;
+	tab-stops:list 28.8pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+h3
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-36.0pt;
+	page-break-after:avoid;
+	tab-stops:list 36.0pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_11"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第十一章：使用</span><span lang="EN-US" style="font-size: 18.0pt">make</span><span style="font-size: 18.0pt; font-family: 楷体_GB2312">更新静态库文件</span></a></h1>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+静态库文件也称为“文档文件”，它是一些</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件的集合。在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）中使用工具“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”对它进行维护管理。它所包含的成员（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">member</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）是若干</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件。</span></p>
+<h2><a name="_gnu_make_11.1"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">1.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+库成员作为目标</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一个静态库通常由多个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件组成。这些成员（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件）可独立的被作为一个规则的目标，库成员作为目标时需要按照如下的格式来书写：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ARCHIVE(MEMBER)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+注意，这种书写方式只能出现在规则的目标和依赖，不能出现在规则的命令行中！因为，绝大多数命令不能支持这种语法，命令不能直接对库的成员进行操作。这种表达式在规则的目标或者依赖中，它表示库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ARCHIVE</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">MEMBER</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。含有这种表达式的规则的命令行只能是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令或者其它可以对库成员进行操作的命令。例如：下边这个规则用于创建库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foolib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，并将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">hack.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”成员加入到库：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foolib(hack.o) 
+: hack.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ar cr foolib 
+hack.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+实际上，这个规则实现了对库的所有成员进行了更新，其过程使用了隐含规则（创建需要的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件）。另外需要注意工具“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的用法（可参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">手册）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果在规则中需要同时指定库的多个成员，可以将多个成员罗列在括号内，例如：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foolib(hack.o 
+kludge.o)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+它就等价于：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foolib(hack.o) 
+foolib(kludge.o)</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在描述库的多个成员时也可以使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">通配符。例如：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foolib(*.o)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，它代表库文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foolib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">成员。</span></p>
+<h2><a name="_gnu_make_11.2"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">1.2<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">静态库的更新</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+上一节已经讲述了规则中形如“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A(M)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”目标的含义，它代表静态库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">M</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">为这样的一个目标搜索隐含规则时，可重建“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">(M)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的隐含规则，同样也被认为是可重建“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A(M)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这个目标的隐含规则。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这就出现了一个特殊的模式规则，它的目标模式是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">(%)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。这个特殊的规则被用来更新目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A(M)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，规则将文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">M</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”拷贝到库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中，如果之前在静态库文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不存，则首先创建这个库文件。例如：目标为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a(bar.o)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的规则，执行时将完成：首先使用隐含规则生成其成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，之后将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”加入到库“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”中。那么“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”就作为库文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的一个成员（当然如果“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”不存在，就会被创建。这个特殊规则的命令行一般都是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个特殊的规则可以和其它隐含规则一起构成一个隐含规则链。因此我们可以直接在命令行中执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+‘</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a(bar.o)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">’”（注意“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a(bar.o)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为命令行选项，需要使用引号，否则</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">会将“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">(</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”作为特殊字符处理），只要当前目录下存在“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”这个文件，就会执行如下命令：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">cc -c bar.c -o 
+bar.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ar r foo.a 
+bar.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">rm -f bar.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们可以看到文件“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”是被作为中间过程文件来处理的。需要说明的是，包含上述命令的规则，在规则的命令行中使用自动化变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$%</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来代表库成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">bar.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在一个静态库（文档文件）中，其所有的成员名是不包含目录描述的。就是说对于静态库，当使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">nm</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令查看其成员时，能够获得的信息只是静态库所包含的成员名字（一系列</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件，文件名中并没有包含目录）。但我们在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，采用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">A(M)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”格式的目标，书写建立（重建或者更新）静态库的规则时，可以指定为库它的成员指定路径。就是说在描述它的成员时，可以使用包含路径的文件名。例如一个规则的目标可以这样书写“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.a(dir/file.o)</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，在这个规则被执行时可能会执行如下的命令：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ar r foo.a dir/file.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和上边的例子类似，它将指定目录下的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件加入到库中，此文件（“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">dir/file.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”）被作为静态库的一个成员。对于类似这样的目标，重建它的隐含规则的命令行中可能就需要使用自动化变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">%D</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">%F</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<h3><a name="_gnu_make_11.2.1"><span lang="en-us">1</span><span lang="EN-US">1.2.1<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-family: 楷体_GB2312">更新静态库的符号索引表</span></a></h3>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+本小节的内容相对简单。前边提到过，静态库文件需要使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来创建和维护。当给静态库增建一个成员时（加入一个</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件到静态库中），“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”可直接将需要增加的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件简单的追加到静态库的末尾。之后当我们使用这个库进行连接生成可执行文件时，链接程序“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ld</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”却提示错误，这可能是：主程序使用了之前加入到库中的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中定义的一个函数或者全局变量，但连接程序无法找到这个函数或者变量。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个问题的原因是：之前我们将编译完成的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件直接加入到了库的末尾，却并没有更新库的有效符号表。连接程序进行连接时，在静态库的符号索引表中无法定位刚才加入的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中定义的函数或者变量。这就需要在完成库成员追加以后让加入的所有</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">文件中定义的函数（变量）有效，完成这个工作需要使用另外一个工具“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ranlib</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”来对静态库的符号索引表进行更新。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们所使用到的静态库（文档文件）中，存在这样一个特殊的成员，它的名字是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">__.SYMDEF</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。它包含了静态库中所有成员所定义的有效符号（函数名、变量名）。因此，当为库增加了一个成员时，相应的就需要更新成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">__.SYMDEF</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，否则所增加的成员中定义的所有的符号将无法被连接程序定位。完成更新的命令是：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ranlib 
+ARCHIVEFILE</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+通常在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中我们可以这样来实现：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">libfoo.a: 
+libfoo.a(x.o) libfoo.a(y.o) ...</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">ranlib libfoo.a</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+它所实现的是在更新静态库成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">x.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">y.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”之后，对静态库的成员“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">__.SYMDEF</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”进行更新（更新库的符号索引表）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+如果我们使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具来维护、管理静态库，我们就不需要考虑这一步。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">本身已经提供了在更新库的同时更新符号索引表的功能（这是默认行为，也可以通过命令行选项控制</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的具体行为。可参考</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+GNU ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">工具的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">man</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">手册）。</span></p>
+<h2><a name="_gnu_make_11.3"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">1.3<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>make</span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">静态库的注意事项</span></a></h2>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">静态库（文档文件）时，特别需要注意：</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make<span lang="EN-US" style="font-family: 楷体_GB2312">的并行执行</span></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（执行</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-j</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”选项）给更新静态库带来的影响。因为在同一时刻，当同时使用多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令来操作相同的静态库时，将会静损坏态库，甚至导致此静态库不可用。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+可能在后期的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本中，会提供一种在并行执行时防止同时多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令对同一静态库的操作的机制。但是就目前的版本来说，这个问题是存在的。因此要求我们在书写</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时，加入控制策略来避免</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">并发执行时多个“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">ar</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”命令同时操作同一个静态库文件。或者放弃使用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的并发执行功能。</span></p>
+<h2><a name="_gnu_make_11.4"><span style="font-size: 14pt" lang="en-us"><b>1</b></span><b><span lang="EN-US" style="font-size: 14.0pt">1.4<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span style="font-size: 14.0pt; font-family: 楷体_GB2312">
+静态库的后缀规则</span></a></h2>
+
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+	静态库的后缀规则属于后缀规则的特殊应用，后缀规则在目前版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+	make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中已经被模式规则替代。但目前版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">同样支持旧风格的后缀规则，主要是为了兼容老版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。对于静态库的重建也可以使用后缀规则。目标后缀需要是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Linux</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）中、静态库的后缀为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。例如这样一个后缀规则：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 29.95pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.c.a:</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) $(CFLAGS) 
+$(CPPFLAGS) -c $&lt; -o $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(AR) r $@ $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(RM) $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+它相当于模式规则：</span></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-indent: 13.8pt; margin-left: 29.95pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span><b><i><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">(%.o): 
+%.c</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(CC) $(CFLAGS) 
+$(CPPFLAGS) -c $&lt; -o $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(AR) r $@ $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 13.85pt; margin-left: 58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">$(RM) $*.o</span></i></b></p>
+<p class="MsoNormal" style="text-indent: 20.5pt">
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+对于老风格的后缀规则，它的目标是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，当转换为模式规则时。后缀规则中的“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”被作为模式规则的目标文件后缀（目标文件就是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">N.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）；“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”被作为了模式规则依赖文件的后缀（依赖文件就是</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">N.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+存在这样一种情况：可能一个不是静态库的文件使用了后缀</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。那么</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">也会按照正常的方式静态库的后缀规则转换成为一个模式规则。因此对于一个双后缀规则的目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.<i>x</i>.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”，经过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">转换后会产生两个模式规则：“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">(%.o): 
+%.<i>x</i></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">%.a: 
+%.<i>x</i></span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。具体的转换过程可参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US"><span lang="EN-US" style="font-family: 楷体_GB2312">后缀规则</span>
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+	<hr size="1" width="100%" align="center"></span>
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-12.html">下一章</a>
+	<a href="make-10.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+.Dd September 7, 2001 
+.Dt SSH-ARGV0 1
+.Os Debian Project
+.Sh NAME
+.Nm ssh-argv0
+.Nd replaces the old ssh command-name as hostname handling
+.Sh SYNOPSIS
+.Ar hostname | user@hostname
+.Op Fl l Ar login_name
+.Op Ar command
+.Pp
+.Ar hostname | user@hostname
+.Op Fl afgknqstvxACNTX1246
+.Op Fl b Ar bind_address
+.Op Fl c Ar cipher_spec
+.Op Fl e Ar escape_char
+.Op Fl i Ar identity_file
+.Op Fl l Ar login_name
+.Op Fl m Ar mac_spec
+.Op Fl o Ar option
+.Op Fl p Ar port
+.Op Fl F Ar configfile
+.Oo Fl L Xo
+.Sm off
+.Ar port :
+.Ar host :
+.Ar hostport
+.Sm on
+.Xc
+.Oc
+.Oo Fl R Xo
+.Sm off
+.Ar port :
+.Ar host :
+.Ar hostport
+.Sm on
+.Xc
+.Oc
+.Op Fl D Ar port
+.Op Ar command
+.Sh DESCRIPTION
+.Nm
+replaces the old ssh command-name as hostname handling.
+If you link to this script with a hostname then executing the link is
+equivalent to having executed ssh with that hostname as an argument.
+All other arguments are passed to ssh and will be processed normally.
+.Sh OPTIONS
+See
+.Xr ssh 1 .
+.Sh FILES
+See
+.Xr ssh 1 .
+.Sh AUTHORS
+OpenSSH is a derivative of the original and free
+ssh 1.2.12 release by Tatu Ylonen.
+Aaron Campbell, Bob Beck, Markus Friedl, Niels Provos,
+Theo de Raadt and Dug Song
+removed many bugs, re-added newer features and
+created OpenSSH.
+Markus Friedl contributed the support for SSH
+protocol versions 1.5 and 2.0.
+Jonathan Amery wrote this ssh-argv0 script and the associated documentation.
+.Sh SEE ALSO
+.Xr ssh 1

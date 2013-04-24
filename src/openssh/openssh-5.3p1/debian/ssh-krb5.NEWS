@@ -1,0 +1,18 @@
+ssh-krb5 (1:4.3p2-7) unstable; urgency=low
+
+  The normal openssh-server and openssh-client packages in Debian now
+  include full GSSAPI support, including key exchange.  This package is
+  now only a transitional package that depends on openssh-server and
+  openssh-client and configures openssh-server for GSSAPI authentication
+  if it wasn't already.
+
+  You can now simply install openssh-server and openssh-client directly
+  and remove this package.  Just make sure that /etc/ssh/sshd_config
+  contains:
+
+    GSSAPIAuthentication yes
+    GSSAPIKeyExchange yes
+
+  if you want to support GSSAPI authentication to your ssh server.
+
+ -- Russ Allbery <rra@debian.org>  Tue, 03 Oct 2006 22:27:27 -0700

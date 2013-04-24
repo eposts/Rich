@@ -1,0 +1,23 @@
+Description: Fix X forwarding on the Hurd
+ socket() may return EPFNOSUPPORT, which != EAFNOSUPPORT on the Hurd.
+Author: Robert Bihlmeyer <robbe@orcus.priv.at>
+Bug-Debian: http://bugs.debian.org/102991
+Last-Update: 2010-02-27
+
+Index: b/channels.c
+===================================================================
+--- a/channels.c
++++ b/channels.c
+@@ -3098,7 +3098,11 @@
+ 			sock = socket(ai->ai_family, ai->ai_socktype,
+ 			    ai->ai_protocol);
+ 			if (sock < 0) {
+-				if ((errno != EINVAL) && (errno != EAFNOSUPPORT)) {
++				if ((errno != EINVAL) && (errno != EAFNOSUPPORT)
++#ifdef EPFNOSUPPORT
++				    && (errno != EPFNOSUPPORT)
++#endif 
++				    ) {
+ 					error("socket: %.100s", strerror(errno));
+ 					freeaddrinfo(aitop);
+ 					return -1;

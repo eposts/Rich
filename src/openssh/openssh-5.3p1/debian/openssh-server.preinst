@@ -1,0 +1,139 @@
+#!/bin/sh -e
+
+ETC_DEFAULT_SSH=@ETC_DEFAULT_SSH@
+
+ETC_INIT_D_SSH=@ETC_INIT_D_SSH@
+
+ETC_PAM_D_SSH=@ETC_PAM_D_SSH@
+
+action=$1
+version=$2
+
+prepare_transfer_conffile () {
+	CONFFILE="$1"
+	TEXT="$2"
+	MODE="$3"
+	[ "$CONFFILES" ] || return 0
+	[ -e "$CONFFILE" ] || return 0
+
+	md5sum="$(md5sum "$CONFFILE" |sed -e 's/ .*//')"
+	old_md5sum="$(echo "$CONFFILES" | awk '$1 == "'"$CONFFILE"'" { print $2 }')"
+	if [ "$md5sum" = "$old_md5sum" ]; then
+		echo >&2 "Transferring ownership of conffile $CONFFILE ..."
+		# We have to write out the desired new text of the conffile,
+		# which is tricky in the preinst, hence the nasty way we
+		# have to hardcode the text here. Fortunately, this is only
+		# necessary with sarge's dpkg and older.
+		if echo "$TEXT" | head -n1 | grep -q '^@.*@$'; then
+			echo >&2 'Unsubstituted conffile text! Please report this bug.'
+			exit 1
+		fi
+		printf '%s' "$TEXT" >"$CONFFILE.dpkg-new"
+		chmod "$MODE" "$CONFFILE.dpkg-new"
+		mv -f "$CONFFILE" "$CONFFILE.moved-by-preinst"
+		mv -f "$CONFFILE.dpkg-new" "$CONFFILE"
+		return 0
+	fi
+}
+
+prepare_mv_conffile () {
+	CONFFILE="$1"
+	[ -e "$CONFFILE" ] || return 0
+
+	md5sum="$(md5sum "$CONFFILE" | sed -e 's/ .*//')"
+	old_md5sum="$(dpkg-query -W -f '${Conffiles}\n' openssh-server 2>/dev/null | sed 's/^ *//' | awk '$1 == "'"$CONFFILE"'" { print $2 }')"
+	if [ "$md5sum" = "$old_md5sum" ]; then
+		mv -f "$CONFFILE" "$CONFFILE.dpkg-old"
+	else
+		mv -f "$CONFFILE" "$CONFFILE.moving"
+	fi
+}
+
+if [ -d /etc/ssh-nonfree ] && [ ! -d /etc/ssh ]; then
+  version=1.2.27
+fi
+
+if [ "$action" = upgrade ] || [ "$action" = install ]
+then
+  # check if debconf is missing
+  if ! test -f /usr/share/debconf/confmodule
+  then
+    cat <<EOF
+
+WARNING: ssh's pre-configuration script relies on debconf to tell you
+about some problems that might prevent you from logging in if you are
+upgrading from the old, Non-free version of ssh.
+
+If this is a new installation, you don't need to worry about this.
+Just go ahead and install ssh (make sure to read .../ssh/README.Debian).
+
+If you are upgrading, but you have alternative ways of logging into
+the machine (i.e. you're sitting in front of it, or you have telnetd
+running), then you also don't need to worry too much, because you can
+fix it up afterwards if there's a problem.
+
+If you're upgrading from an older (non-free) version of ssh, and ssh
+is the only way you have to access this machine, then you should
+probably abort the installation of ssh, install debconf, and then
+retry the installation of ssh.
+
+EOF
+    echo -n "Do you want to install SSH anyway [yN]: "
+    read input
+    expr "$input" : '[Yy]' >/dev/null || exit 1
+
+    # work around for missing debconf
+    db_get() { : ; }
+    RET=true
+    if [ -d /etc/ssh-nonfree ] && [ ! -d /etc/ssh ]; then
+      cp -a /etc/ssh-nonfree /etc/ssh
+    fi
+  else
+    # Source debconf library.
+    . /usr/share/debconf/confmodule
+    db_version 2.0
+  fi
+
+  db_get ssh/use_old_init_script
+  if [ "$RET" = "false" ]; then
+    echo "ssh config: Aborting because ssh/use_old_init_script = false" >&2
+    exit 1
+  fi
+
+  # deal with upgrading from pre-OpenSSH versions
+  key=/etc/ssh/ssh_host_key
+  export key
+  if [ -n "$version" ] && [ -x /usr/bin/ssh-keygen ] && [ -f $key ] &&
+     dpkg --compare-versions "$version" lt 1.2.28
+  then
+    # make sure that keys get updated to get rid of IDEA
+    #
+    # N.B. this only works because we've still got the old
+    # nonfree ssh-keygen at this point
+    #
+    # First, check if we need to bother
+    printf '\0\0' | 3<&0 sh -c \
+        'dd if=$key bs=1 skip=32 count=2 2>/dev/null | cmp -s - /dev/fd/3' || {
+      # this means that bytes 32&33 of the key were not both zero, in which
+      # case the key is encrypted, which we need to fix
+      chmod 600 $key
+      ssh-keygen -u -f $key >/dev/null
+      if which restorecon >/dev/null 2>&1; then
+        restorecon "$key.pub"
+      fi
+    }
+  fi
+
+  if dpkg --compare-versions "$version" lt 0; then
+    CONFFILES="$(dpkg-query -W -f '${Conffiles}\n' ssh 2>/dev/null | sed 's/^ *//')"
+    prepare_transfer_conffile /etc/default/ssh "$ETC_DEFAULT_SSH" 0644
+    prepare_transfer_conffile /etc/init.d/ssh "$ETC_INIT_D_SSH" 0755
+    prepare_transfer_conffile /etc/pam.d/ssh "$ETC_PAM_D_SSH" 0644
+  fi
+
+  if dpkg --compare-versions "$version" lt 1:4.7p1-4; then
+    prepare_mv_conffile /etc/pam.d/ssh
+  fi
+fi
+
+#DEBHELPER#

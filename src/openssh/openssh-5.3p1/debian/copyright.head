@@ -1,0 +1,52 @@
+This package was debianized by Philip Hands <phil@hands.com> on 31 Oct 1999
+(with help from  Dan Brosemer <odin@linuxfreak.com>)
+
+It was downloaded from here:
+  ftp://ftp.fu-berlin.de/unix/security/openssh/openssh-2.3.0p1.tar.gz
+
+worldwide mirrors are listed here:
+  http://www.openssh.com/ftp.html
+
+The Debian specific parts of the package are mostly taken from the
+original ssh package, which has since been renamed as ssh-nonfree.
+
+The Debian patch is distributed under the terms of the GPL, which you
+can find in /usr/share/common-licenses/GPL.
+
+In addition, as a special exception, Matthew Vernon gives permission
+to link the code of the Debian patch with any version of the OpenSSH
+code which is distributed under a license identical to that listed in
+the included Copyright file, and distribute linked combinations
+including the two.  You must obey the GNU General Public License in
+all respects for all of the code used other than OpenSSH.  If you
+modify this file, you may extend this exception to your version of the
+file, but you are not obligated to do so.  If you do not wish to do
+so, delete this exception statement from your version.
+
+The upstream source for this package is a combination of the ssh
+branch that is being maintained by the OpenBSD team (starting from
+the last version of SSH that was distributed under a free license),
+and porting work by Damien Miller <damien@ibs.com.au> to get it
+working on Linux.  Other people also contributed to this, and are
+credited in /usr/share/doc/ssh/README.
+
+This package contains Kerberos version 5 patches from
+http://www.sxw.org.uk/computing/patches/openssh.html; this is Copyright
+(c) 2001-2009 Simon Wilkinson and provided under the standard 2-term BSD
+licence used elsewhere in OpenSSH.
+
+Copyright:
+
+Code in helper.[ch] is Copyright Internet Business Solutions and is
+released under a X11-style license (see source file for details).
+
+(A)RC4 code in rc4.[ch] is Copyright Damien Miller. It too is under a
+X11-style license (see source file for details).
+
+make-ssh-known-hosts is Copyright Tero Kivinen <Tero.Kivinen@hut.fi>,
+and is distributed under the GPL (see source file for details).
+
+The copyright for the original SSH version follows.  It has been
+modified with [comments] to reflect the changes that the OpenBSD folks
+have made:
+

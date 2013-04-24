@@ -1,0 +1,11 @@
+map --mem /boot/xxx.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+boot
+
+
+map  --mem  (hd0,0)/myiso.iso  (hd32)
+map  --hook
+chainloader  (hd32)
+boot

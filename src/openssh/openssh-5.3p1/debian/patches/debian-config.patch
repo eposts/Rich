@@ -1,0 +1,146 @@
+Description: Various Debian-specific configuration changes
+ ssh: Enable ForwardX11Trusted, returning to earlier semantics which cause
+ fewer problems with existing setups (http://bugs.debian.org/237021).
+ .
+ ssh: Set 'SendEnv LANG LC_*' by default (http://bugs.debian.org/264024).
+ .
+ ssh: Enable HashKnownHosts by default to try to limit the spread of ssh
+ worms.
+ .
+ ssh: Enable GSSAPIAuthentication and disable GSSAPIDelegateCredentials by
+ default.
+ .
+ sshd: Refer to /usr/share/doc/openssh-server/README.Debian.gz alongside
+ PermitRootLogin default.
+ .
+ Document all of this, along with several sshd defaults set in
+ debian/openssh-server.postinst.
+Author: Colin Watson <cjwatson@debian.org>
+Author: Russ Allbery <rra@debian.org>
+Forwarded: not-needed
+Last-Update: 2010-02-28
+
+Index: b/readconf.c
+===================================================================
+--- a/readconf.c
++++ b/readconf.c
+@@ -1150,7 +1150,7 @@
+ 	if (options->forward_x11 == -1)
+ 		options->forward_x11 = 0;
+ 	if (options->forward_x11_trusted == -1)
+-		options->forward_x11_trusted = 0;
++		options->forward_x11_trusted = 1;
+ 	if (options->exit_on_forward_failure == -1)
+ 		options->exit_on_forward_failure = 0;
+ 	if (options->xauth_location == NULL)
+Index: b/ssh_config
+===================================================================
+--- a/ssh_config
++++ b/ssh_config
+@@ -17,9 +17,10 @@
+ # list of available options, their meanings and defaults, please see the
+ # ssh_config(5) man page.
+ 
+-# Host *
++Host *
+ #   ForwardAgent no
+ #   ForwardX11 no
++#   ForwardX11Trusted yes
+ #   RhostsRSAAuthentication no
+ #   RSAAuthentication yes
+ #   PasswordAuthentication yes
+@@ -46,3 +47,7 @@
+ #   TunnelDevice any:any
+ #   PermitLocalCommand no
+ #   VisualHostKey no
++    SendEnv LANG LC_*
++    HashKnownHosts yes
++    GSSAPIAuthentication yes
++    GSSAPIDelegateCredentials no
+Index: b/ssh_config.5
+===================================================================
+--- a/ssh_config.5
++++ b/ssh_config.5
+@@ -72,6 +72,22 @@
+ host-specific declarations should be given near the beginning of the
+ file, and general defaults at the end.
+ .Pp
++Note that the Debian
++.Ic openssh-client
++package sets several options as standard in
++.Pa /etc/ssh/ssh_config
++which are not the default in
++.Xr ssh 1 :
++.Pp
++.Bl -bullet -offset indent -compact
++.It
++.Cm SendEnv No LANG LC_*
++.It
++.Cm HashKnownHosts No yes
++.It
++.Cm GSSAPIAuthentication No yes
++.El
++.Pp
+ The configuration file has the following format:
+ .Pp
+ Empty lines and lines starting with
+@@ -452,7 +468,8 @@
+ Remote clients will be refused access after this time.
+ .Pp
+ The default is
+-.Dq no .
++.Dq yes
++(Debian-specific).
+ .Pp
+ See the X11 SECURITY extension specification for full details on
+ the restrictions imposed on untrusted clients.
+Index: b/sshd_config
+===================================================================
+--- a/sshd_config
++++ b/sshd_config
+@@ -38,6 +38,7 @@
+ # Authentication:
+ 
+ #LoginGraceTime 2m
++# See /usr/share/doc/openssh-server/README.Debian.gz.
+ #PermitRootLogin yes
+ #StrictModes yes
+ #MaxAuthTries 6
+Index: b/sshd_config.5
+===================================================================
+--- a/sshd_config.5
++++ b/sshd_config.5
+@@ -58,6 +58,33 @@
+ .Pq \&"
+ in order to represent arguments containing spaces.
+ .Pp
++Note that the Debian
++.Ic openssh-server
++package sets several options as standard in
++.Pa /etc/ssh/sshd_config
++which are not the default in
++.Xr sshd 8 .
++The exact list depends on whether the package was installed fresh or
++upgraded from various possible previous versions, but includes at least the
++following:
++.Pp
++.Bl -bullet -offset indent -compact
++.It
++.Cm Protocol No 2
++.It
++.Cm ChallengeResponseAuthentication No no
++.It
++.Cm X11Forwarding No yes
++.It
++.Cm PrintMotd No no
++.It
++.Cm AcceptEnv No LANG LC_*
++.It
++.Cm Subsystem No sftp /usr/lib/openssh/sftp-server
++.It
++.Cm UsePAM No yes
++.El
++.Pp
+ The possible
+ keywords and their meanings are as follows (note that
+ keywords are case-insensitive and arguments are case-sensitive):

@@ -1,0 +1,234 @@
+OpenSSH for Debian
+------------------
+
+UPGRADE ISSUES
+==============
+
+Privilege Separation
+--------------------
+
+As of 3.3, openssh has employed privilege separation to reduce the
+quantity of code that runs as root, thereby reducing the impact of
+some security holes in sshd. This now also works properly with PAM.
+
+Privilege separation is turned on by default, so, if you decide you
+want it turned off, you need to add "UsePrivilegeSeparation no" to
+/etc/ssh/sshd_config.
+
+PermitRootLogin set to yes
+--------------------------
+
+This is now the default setting (in line with upstream), and people
+who asked for an automatically-generated configuration file when
+upgrading from potato (or on a new install) will have this setting in
+their /etc/ssh/sshd_config file.
+
+Should you wish to change this setting, edit /etc/ssh/sshd_config, and
+change:
+PermitRootLogin yes
+to:
+PermitRootLogin no
+
+Having PermitRootLogin set to yes means that an attacker that knows
+the root password can ssh in directly (without having to go via a user
+account). If you set it to no, then they must compromise a normal user
+account. In the vast majority of cases, this does not give added
+security; remember that any account you su to root from is equivalent
+to root - compromising this account gives an attacker access to root
+easily. If you only ever log in as root from the physical console,
+then you probably want to set this value to no.
+
+As an aside, PermitRootLogin can also be set to "without-password" or
+"forced-commands-only" - see sshd(8) for more details.
+
+DO NOT FILE BUG REPORTS SAYING YOU THINK THIS DEFAULT IS INCORRECT!
+
+The argument above is somewhat condensed; I have had this discussion
+at great length with many people. If you think the default is
+incorrect, and feel strongly enough to want to argue about it, then
+send email to debian-ssh@lists.debian.org. I will close bug reports
+claiming the default is incorrect.
+
+SSH now uses protocol 2 by default
+----------------------------------
+
+This means all your keyfiles you used for protocol version 1 need to
+be re-generated. The server keys are done automatically, but for RSA
+authentication, please read the ssh-keygen manpage.
+
+If you have an automatically generated configuration file, and decide
+at a later stage that you do want to support protocol version 1 (not
+recommended, but note that the ssh client shipped with Debian potato
+only supported protocol version 1), then you need to do the following:
+
+Change /etc/ssh/sshd_config such that:
+Protocol 2
+becomes:
+Protocol 2,1
+Also add the line:
+HostKey /etc/ssh/ssh_host_key
+
+If you do not already have an RSA1 host key in /etc/ssh/ssh_host_key,
+you will need to generate one. To do so, run this command as root:
+
+  ssh-keygen -f /etc/ssh/ssh_host_key -N '' -t rsa1
+
+As of openssh-server 1:4.1p1-2, the option to support protocol version 1
+is no longer available via debconf. You must edit the configuration file
+instead.
+
+X11 Forwarding
+--------------
+
+ssh's default for ForwardX11 has been changed to ``no'' because it has
+been pointed out that logging into remote systems administered by
+untrusted people is likely to open you up to X11 attacks, so you
+should have to actively decide that you trust the remote machine's
+root, before enabling X11.  I strongly recommend that you do this on a
+machine-by-machine basis, rather than just enabling it in the default
+host settings.
+
+In order for X11 forwarding to work, you need to install xauth on the
+server. In Debian this is in the xbase-clients package.
+
+As of OpenSSH 3.1, the remote $DISPLAY uses localhost by default to reduce
+the security risks of X11 forwarding. Look up X11UseLocalhost in
+sshd_config(8) if this is a problem.
+
+OpenSSH 3.8 invented ForwardX11Trusted, which when set to no causes the
+ssh client to create an untrusted X cookie so that attacks on the
+forwarded X11 connection can't become attacks on X clients on the remote
+machine. However, this has some problems in implementation - notably a
+very short timeout of the untrusted cookie - breaks large numbers of
+existing setups, and generally seems immature. The Debian package
+therefore sets the default for this option to "yes" (in ssh itself,
+rather than in ssh_config).
+
+Fallback to RSH
+---------------
+
+The default for this setting has been changed from Yes to No, for
+security reasons, and to stop the delay attempting to rsh to machines
+that don't offer the service.  Simply switch it back on in either
+/etc/ssh/ssh_config or ~/.ssh/config for those machines that you need
+it for.
+
+Setgid ssh-agent and environment variables
+------------------------------------------
+
+As of version 1:3.5p1-1, ssh-agent is installed setgid to prevent ptrace()
+attacks retrieving private key material. This has the side-effect of causing
+glibc to remove certain environment variables which might have security
+implications for set-id programs, including LD_PRELOAD, LD_LIBRARY_PATH, and
+TMPDIR.
+
+If you need to set any of these environment variables, you will need to do
+so in the program exec()ed by ssh-agent. This may involve creating a small
+wrapper script.
+
+Symlink Hostname invocation
+---------------------------
+
+This version of ssh no longer includes support for invoking ssh with the
+hostname as the name of the file run.  People wanting this support should
+use the ssh-argv0 script.
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+OTHER ISSUES
+============
+
+/usr/bin/ssh not SUID
+---------------------
+
+Due to Debian bug #164325, RhostsRSAAuthentication can only be used if ssh
+is SUID.  Until this is fixed, if that is a problem, use:
+
+   dpkg-statoverride
+
+or if that's also missing, use this:
+
+   chown root.root /usr/bin/ssh
+   chmod 04755 /usr/bin/ssh
+
+Authorization Forwarding
+------------------------
+
+Similarly, root on a remote server could make use of your ssh-agent
+(while you're logged into their machine) to obtain access to machines
+which trust your keys.  This feature is therefore disabled by default.
+You should only re-enable it for those hosts (in your ~/.ssh/config or
+/etc/ssh/ssh_config) where you are confident that the remote machine
+is not a threat.
+
+Problems logging in with RSA authentication
+-------------------------------------------
+
+If you have trouble logging in with RSA authentication then the
+problem is probably caused by the fact that you have your home
+directory writable by group, as well as user (this is the default on
+Debian systems).
+
+Depending upon other settings on your system (i.e. other users being
+in your group) this could open a security hole, so you will need to
+make your home directory writable only by yourself.  Run this command,
+as yourself:
+
+  chmod g-w ~/
+
+to remove group write permissions.  If you use ssh-copy-id to install your
+keys, it does this for you.
+
+-L option of ssh nonfree
+------------------------
+
+non-free ssh supported the usage of the option -L to use a non privileged
+port for scp. This option will not be supported by scp from openssh.
+
+Please use instead scp -o "UsePrivilegedPort=no" as documented in the
+manpage to scp itself.
+
+Problem logging in because of TCP-Wrappers
+------------------------------------------
+
+ssh is compiled with support for tcp-wrappers. So if you can no longer
+log into your system, please check that /etc/hosts.allow and /etc/hosts.deny
+are configured so that ssh is not blocked.
+
+Kerberos support
+----------------
+
+ssh is now compiled with Kerberos support. Unfortunately, privilege
+separation is incompatible with Kerberos support for SSH protocol 1 and
+parts of the support for protocol 2; you may need to run kinit after logging
+in.
+
+Interoperability between scp and the ssh.com SSH server
+-------------------------------------------------------
+
+In version 2 and greater of the commercial SSH server produced by SSH
+Communications Security, scp was changed to use SFTP (SSH2's file transfer
+protocol) instead of the traditional rcp-over-ssh, thereby breaking
+compatibility. The OpenSSH developers regard this as a bug in the ssh.com
+server, and do not currently intend to change OpenSSH's scp to match.
+
+Workarounds for this problem are to install scp1 on the server (scp2 will
+fall back to it), to use sftp, or to use some other transfer mechanism such
+as rsync-over-ssh or tar-over-ssh.
+
+Running sshd from inittab
+-------------------------
+
+Some people find it useful to run the sshd server from inittab, to make sure
+that it always stays running. To do this, stop sshd ('/etc/init.d/ssh
+stop'), add the following line to /etc/inittab, and run 'telinit q':
+
+  ss:2345:respawn:/usr/sbin/sshd -D
+
+If you do this, note that you will need to stop sshd being started in the
+normal way ('rm -f /etc/rc[2345].d/S16ssh') and that you will need to
+restart this sshd manually on upgrades.
+
+-- 
+Matthew Vernon <matthew@debian.org>
+Colin Watson <cjwatson@debian.org>

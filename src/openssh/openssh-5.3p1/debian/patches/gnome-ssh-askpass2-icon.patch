@@ -1,0 +1,18 @@
+Description: Give the ssh-askpass-gnome window a default icon
+Author: Vincent Untz <vuntz@ubuntu.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/27152
+Last-Update: 2010-02-28
+
+Index: b/contrib/gnome-ssh-askpass2.c
+===================================================================
+--- a/contrib/gnome-ssh-askpass2.c
++++ b/contrib/gnome-ssh-askpass2.c
+@@ -207,6 +207,8 @@
+ 
+ 	gtk_init(&argc, &argv);
+ 
++	gtk_window_set_default_icon_from_file ("/usr/share/pixmaps/ssh-askpass-gnome.png", NULL);
++
+ 	if (argc > 1) {
+ 		message = g_strjoinv(" ", argv + 1);
+ 	} else {

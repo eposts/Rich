@@ -1,0 +1,124 @@
+Description: Various keepalive extensions
+ Add compatibility aliases for ProtocolKeepAlives and SetupTimeOut,
+ supported in previous versions of Debian's OpenSSH package but since
+ superseded by ServerAliveInterval.  (We're probably stuck with this bit for
+ compatibility.)
+ .
+ In batch mode, default ServerAliveInterval to five minutes.
+ .
+ Adjust documentation to match and to give some more advice on use of
+ keepalives.
+Author: Richard Kettlewell <rjk@greenend.org.uk>
+Author: Ian Jackson <ian@chiark.greenend.org.uk>
+Author: Matthew Vernon <matthew@debian.org>
+Author: Colin Watson <cjwatson@debian.org>
+Last-Update: 2010-02-27
+
+Index: b/readconf.c
+===================================================================
+--- a/readconf.c
++++ b/readconf.c
+@@ -133,6 +133,7 @@
+ 	oSendEnv, oControlPath, oControlMaster, oHashKnownHosts,
+ 	oTunnel, oTunnelDevice, oLocalCommand, oPermitLocalCommand,
+ 	oVisualHostKey, oUseRoaming, oZeroKnowledgePasswordAuthentication,
++	oProtocolKeepAlives, oSetupTimeOut,
+ 	oDeprecated, oUnsupported
+ } OpCodes;
+ 
+@@ -246,6 +247,8 @@
+ #else
+ 	{ "zeroknowledgepasswordauthentication", oUnsupported },
+ #endif
++	{ "protocolkeepalives", oProtocolKeepAlives },
++	{ "setuptimeout", oSetupTimeOut },
+ 
+ 	{ NULL, oBadOption }
+ };
+@@ -845,6 +848,8 @@
+ 		goto parse_flag;
+ 
+ 	case oServerAliveInterval:
++	case oProtocolKeepAlives: /* Debian-specific compatibility alias */
++	case oSetupTimeOut:	  /* Debian-specific compatibility alias */
+ 		intptr = &options->server_alive_interval;
+ 		goto parse_time;
+ 
+@@ -1233,8 +1238,13 @@
+ 		options->rekey_limit = 0;
+ 	if (options->verify_host_key_dns == -1)
+ 		options->verify_host_key_dns = 0;
+-	if (options->server_alive_interval == -1)
+-		options->server_alive_interval = 0;
++	if (options->server_alive_interval == -1) {
++		/* in batch mode, default is 5mins */
++		if (options->batch_mode == 1)
++			options->server_alive_interval = 300;
++		else
++			options->server_alive_interval = 0;
++	}
+ 	if (options->server_alive_count_max == -1)
+ 		options->server_alive_count_max = 3;
+ 	if (options->control_master == -1)
+Index: b/ssh_config.5
+===================================================================
+--- a/ssh_config.5
++++ b/ssh_config.5
+@@ -128,8 +128,12 @@
+ If set to
+ .Dq yes ,
+ passphrase/password querying will be disabled.
++In addition, the 
++.Cm ServerAliveInterval 
++option will be set to 300 seconds by default.
+ This option is useful in scripts and other batch jobs where no user
+-is present to supply the password.
++is present to supply the password,
++and where it is desirable to detect a broken network swiftly.
+ The argument must be
+ .Dq yes
+ or
+@@ -946,8 +950,15 @@
+ will send a message through the encrypted
+ channel to request a response from the server.
+ The default
+-is 0, indicating that these messages will not be sent to the server.
++is 0, indicating that these messages will not be sent to the server,
++or 300 if the
++.Cm BatchMode
++option is set.
+ This option applies to protocol version 2 only.
++.Cm ProtocolKeepAlives
++and
++.Cm SetupTimeOut
++are Debian-specific compatibility aliases for this option.
+ .It Cm SmartcardDevice
+ Specifies which smartcard device to use.
+ The argument to this keyword is the device
+@@ -993,6 +1004,12 @@
+ other side.
+ If they are sent, death of the connection or crash of one
+ of the machines will be properly noticed.
++This option only uses TCP keepalives (as opposed to using ssh level
++keepalives), so takes a long time to notice when the connection dies.
++As such, you probably want
++the
++.Cm ServerAliveInterval
++option as well.
+ However, this means that
+ connections will die if the route is down temporarily, and some people
+ find it annoying.
+Index: b/sshd_config.5
+===================================================================
+--- a/sshd_config.5
++++ b/sshd_config.5
+@@ -919,6 +919,9 @@
+ .Pp
+ To disable TCP keepalive messages, the value should be set to
+ .Dq no .
++.Pp
++This option was formerly called
++.Cm KeepAlive .
+ .It Cm UseDNS
+ Specifies whether
+ .Xr sshd 8

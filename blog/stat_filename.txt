@@ -1,0 +1,6 @@
+Fize: 7176            Blocks: 16         IO Block: 4096   regular file
+Device: fd02h/64770d    Inode: 14680417    Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: ( 1001/ Richard)   Gid: ( 1001/ Richard)
+Access: 2013-03-05 10:08:50.112970367 +0800
+Modify: 2013-03-05 10:08:48.068970299 +0800
+Change: 2013-03-05 10:08:48.068970299 +0800

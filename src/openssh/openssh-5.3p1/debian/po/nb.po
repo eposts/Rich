@@ -1,0 +1,196 @@
+# translation of nb.po to Norwegian Bokmål
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Bjørn Steensrud <bjornst@powertech.no>, 2007.
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: nb\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-17 11:04+0200\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Vil du risikere å avbryte aktive SSH-økter?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Den versjonen av /etc/init.d/ssh som nå er installert vil antakelig stoppe "
+"alle sshd-instanser som kjører. Hvis denne oppgraderingen gjøres over en SSH-"
+"økt, så risikerer du å bli frakoblet og oppgraderingen blir ikke fullført."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Dette kan rettes på ved å legge til manuelt «--pidfile /var/run/sshd.pid» til "
+"start-stop-daemon linja i stopp-delen av fila."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Ny vertsnøkkel obligatorisk"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Den gjeldende vertsnøkkelen, i /etc/ssh/ssh_host_key, er kryptert med IDEA-"
+"algoritmen. OpenSSH kan ikke håndtere denne vertsnøkkelfila, og det ser ikke "
+"ut til at verktøyet ssh-keygen fra den gamle (ikke-frie) SSH-installasjonen "
+"er tilgjengelig."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "En ny vertsnøkkel må lages manuelt."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Skal autentisering med utfordring/svar slås av?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Det ser ut til at passord-autentisering er slått av i det gjeldende "
+"tjeneroppsettet for OpenSSH. For å hindre brukere i å logge inn med passord "
+"med nyere versjoner av OpenSSH (kanskje med autentisering med kryptonøkler i "
+"stedet), så må autentisering med utfordring-svar slås av, eller det må "
+"sjekkes at PAM-oppsettet er satt til ikke å tillate autentisering mot Unix "
+"passord-fila."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Hvis autentisering med utfordring-svar er slått av, så kan brukere ikke "
+"logge inn med passord. Hvis det står på (som er standard), så har det ingen "
+"virkning å sette «PasswordAuthentication no» med mindre PAM-oppsettet i /etc/"
+"pam.d/ssh også justeres."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Sårbare vertsnøkler vil bli laget på nytt"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Noen av OpenSSHs vertsnøkler på dette systemet ble opprettet med versjon av "
+"OpenSSH som hadde en feil på slumptallsgeneratoren. Derfor tilhører disse "
+"nøklene et velkjent sett nøkler, kan knekkes med «rå kraft»-metoden og må "
+"lages på nytt."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"De som bruker dette systemet bør få opplysning om denne endringen, siden de "
+"vkil få spørsmål om vertsnøkkelendringen neste gang de logger inn. Etter "
+"oppgraderingen kan fingeravtrykkene for de nye vertsnøklene skrives ut med "
+"kommandoen «keygen -l -f VERTSNØKKELFIL»."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "De vertsnøklene dette gjelder er:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Det kan være at brukernøkler også har dette problemet. En delvis test på "
+"dette kan gjøres med kommandoen «ssh-vulnkey». Mer detaljer finnes i /usr/"
+"share/doc/openssh-server/README.compromised-keys.gz."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Skal ny oppsettsfil for OpenSSH lages?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Det ser ut til at du oppgraderer fra Debian «Potato», og denne versjonen "
+#~ "av OpenSSH har ganske store endringer i oppsettsfila. Denne pakka kan nå "
+#~ "lage en ny oppsettsfil (/etc/ssh/sshd.config) som fungerer med den nye "
+#~ "tjenerversjonen, men ikke inneholder noen tilpasninger som kan være gjort "
+#~ "lokalt i den gamle versjonen."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Merk at denne nye oppsettsfila setter verdien av «PermitRootLogin» til "
+#~ "«yes» (slik at alle som kjenner root-passordet kan logge inn direkte med "
+#~ "ssh som root). Les README.Debian-fila for å finne ut mer om dette "
+#~ "oppsettsvalget."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Det anbefales sterkt at denne pakka får lov til å lage en ny oppsettsfil "
+#~ "nå."

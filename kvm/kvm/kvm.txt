@@ -1,0 +1,19 @@
+apt-get install kvm
+安装:
+1, 建立硬盘
+qemu-img create -f qcow2 winxp.img 50G
+
+2, 安装系统
+kvm -m 512 -cdrom /mnt/D/WinXP/winxp.iso -boot d -drive file=winxp.img,cache=writeback,if=virtio,boot=on -fda /home/Richard/aaa/virtio-WinXP-x86.vfd
+
+3, 更新驱动
+kvm -m 512 -cdrom /home/Richard/Desktop/virtio-win-0.1-49.iso -drive file=winxp.img,cache=writeback,if=virtio,boot=on -net nic,model=virtio
+
+使用:
+kvm -m 512 -drive file=winxp.img,cache=writeback,if=virtio,boot=on -net nic,model=virtio -net user -smp 2 -snapshot -redir tcp:3389::3389 ####-nographic -vnc :0
+
+或者
+
+kvm -m 512 -drive file=pathX/winxp.img,cache=writeback,if=virtio,boot=on -net nic,model=virtio
+
+kvm -m 512 -drive file=pathX/winxp.img,cache=writeback,if=virtio,boot=on -net nic,model=virtio,name=k1,macaddr=00:11:22:33:66:55 -net tap,vlan=0,name=k1,ifname=tap0,script=no,downscript=no

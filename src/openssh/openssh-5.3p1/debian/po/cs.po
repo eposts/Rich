@@ -1,0 +1,357 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-17 14:49+0200\n"
+"Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "Chcete riskovat ukončení aktivních SSH spojení?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"Stávající verze /etc/init.d/ssh pravděpodobně pozabíjí všechny běžící "
+"instance sshd. Pokud tuto aktualizaci provádíte přes SSH, budete nejspíše "
+"odpojeni a aktualizace skončí na půli cesty."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Můžete to spravit ručním přidáním „--pidfile /var/run/sshd.pid“ na řádek "
+"start-stop-daemon v sekci stop."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Nutný nový serverový klíč"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"Aktuální serverový klíč v /etc/ssh/ssh_host_key je šifrovaný algoritmem "
+"IDEA. OpenSSH neumí tento soubor zpracovat a zdá se, že utilita ssh-keygen "
+"ze staré (nesvobodné) instalace SSH není k dispozici."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Musíte ručně vygenerovat nový serverový klíč"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "Zakázat autentizaci challenge-response?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Zdá se, že autentizace pomocí hesel je ve vaší stávající konfiguraci OpenSSH "
+"serveru zakázána. Abyste zabránili uživatelům v přihlášení pouze pomocí "
+"hesla, musíte v posledních verzích OpenSSH zakázat autentizaci challenge-"
+"response, nebo jinak zajistit, aby PAM nepovolilo autentizaci vůči unixovému "
+"souboru hesel."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Zakážete-li autentizaci challenge-response, uživatelé se nebudou moci "
+"přihlásit pomocí hesel. Necháte-li ji povolenu (přednastavená odpověď), pak "
+"nebude mít volba „PasswordAuthentication no“ žádný efekt, pokud ovšem "
+"neupravíte nastavení PAM v /etc/pam.d/ssh."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Zranitelné serverové klíče budou přegenerovány"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Některé serverové klíče OpenSSH na tomto systému byly vytvořeny verzí "
+"OpenSSL, která měla narušený generátor náhodných čísel. Ve výsledku jsou "
+"tyto dobře známé klíče předmětem útoků hrubou silou a musí být přegenerovány."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Uživatelé tohoto systému by měli být informováni o změně, protože budou při "
+"příštím přihlášení varováni o změně serverového klíče. Po aktualizaci můžete "
+"zjistit nové otisky serverových klíčů příkazem „ssh-keygen -l -f "
+"SOUBOR_SE_SERVEROVÝM_KLÍČEM“."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Postižené serverové klíče:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Tímto problémem mohou být postiženy také uživatelské klíče. Pro částečnou "
+"kontrolu můžete použít příkaz „ssh-vulnkey“. Více informací naleznete v "
+"souboru /usr/share/doc/openssh-server/README.compromised-keys.gz."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "Vytvořit nový konfigurační soubor OpenSSH?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Tato verze OpenSSH má oproti verzi dodávané s Debianem 2.2, kterou nyní "
+#~ "pravděpodobně aktualizujete, značně odlišný konfigurační soubor. Balík "
+#~ "nyní může vytvořit nový konfigurační soubor (/etc/ssh/sshd.config), který "
+#~ "bude fungovat s novou verzí serveru, ale nebude obsahovat žádné úpravy, "
+#~ "které jste provedli ve staré verzi."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "V novém konfiguračním souboru bude parametr PermitRootLogin nastaven na "
+#~ "hodnotu „yes“. To znamená, že se kdokoliv se znalostí rootova hesla může "
+#~ "přihlásit rovnou jako root. Více o tomto rozhodnutí se dozvíte v souboru "
+#~ "README.Debian."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Je vřele doporučeno nechat si nyní vytvořit nový konfigurační soubor."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "Varování: musíte vytvořit nový serverový klíč"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr "Varování: je nainstalován telnetd --- to není dobrý nápad"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Doporučujeme buď odstranit balík telnetd (pokud telnet přístup "
+#~ "nepotřebujete), nebo nainstalovat telnetd-ssl, kde je alespoň nějaká "
+#~ "šance, že spojení nebudou po síti zasílat nezašifrovaná jména/hesla/"
+#~ "informace."
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr "Varování: je nainstalován rsh-server --- to není dobrý nápad"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "nainstalováním rsh-server si bouráte bezpečnost, kterou jste "
+#~ "pravděpodobně chtěli dosáhnout instalací ssh. Doporučujeme tento balík "
+#~ "odstranit."
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr "Chcete ssh-keysign nainstalovat jako SUID root?"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr ""
+#~ "Můžete si vybrat, zda chcete nainstalovat ssh-keysign s nastaveným SUID "
+#~ "bitem."
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "Pokud nastavíte ssh-keysign SUID, můžete používat „host-based“ "
+#~ "autentizaci protokolu verze 2."
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "Pokud jste na pochybách, doporučujeme SUID bit povolit. Pokud zaznamenáte "
+#~ "problémy, můžete nastavení změnit spuštěním:   dpkg-reconfigure ssh"
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "Povolit pouze SSH protokol verze 2"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "Tato verze OpenSSH podporuje ssh protokol ve verzi 2, který je mnohem "
+#~ "bezpečnější. Je dobré ssh verze 1 zakázat, nicméně na slabších počítačích "
+#~ "se projeví zpomalení a také tím znemožníte přihlášení starších klientů "
+#~ "(například těch z Debianu 2.2)."
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "Také si všimněte, že klíče protokolu verze 1 jsou odlišné a pokud "
+#~ "povolíte pouze protokol verze 2, nebudete je moci použít. "
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "Pokud se později rozhodnete jinak, v README.Debian se nachází přesný "
+#~ "návod, jak upravit soubor sshd_config."
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "Klíče ssh2 v konfiguračních souborech byly spojeny"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "OpenSSH verze 3 již nepoužívá oddělené soubory pro klíče verze ssh1 a "
+#~ "ssh2. To znamená, že soubory authorized_keys2 a known_hosts2 již nejsou "
+#~ "potřeba, ovšem z důvodů zachování zpětné kompatibility jsou stále "
+#~ "načítány."
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr "POZNÁMKA: Autorizace a přesměrování X11 je standardně vypnuto."
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "Z bezpečnostních důvodů má verze ssh v Debianu standardně nastavené "
+#~ "ForwardX11 a ForwardAgent na hodnotu „off“."
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "Pro servery, kterým důvěřujete, můžete tyto parametry povolit v jednom z "
+#~ "konfiguračních souborů, nebo z příkazové řádky parametrem -X."
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr "Více naleznete v /usr/share/doc/ssh/README.Debian"
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "Chcete spustit sshd server?"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "Tento balík obsahuje jak klienta ssh, tak server sshd."
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr ""
+#~ "Obvykle se sshd (Secure Shell Server) spouští, aby se vzdálení uživatelé "
+#~ "mohli přihlašovat přes ssh."
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "Pokud na tomto počítači chcete využívat pouze ssh klienta pro odchozí "
+#~ "spojení, můžete zde sshd zakázat."
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr "Volby prostředí spojené s klíči jsou zakázány"
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "Pro zamezení určitých typů útoků (např. LD_PRELOAD), tato verze OpenSSH "
+#~ "standardně zabraňuje používat volbu prostředí u veřejných klíčů. Pokud "
+#~ "tuto volbu používáte v souboru authorized_keys, tak postižené klíče "
+#~ "nebudou fungovat, dokud jim tuto volbu nesmažete."
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "Pro znovupovolení této volby si po aktualizaci přečtěte varování v "
+#~ "manuálové stránce sshd_config(5) a v souboru /etc/ssh/sshd_config zadejte "
+#~ "„PermitUserEnvironment yes“."

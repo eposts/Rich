@@ -1,0 +1,367 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
+
+include /usr/share/hardening-includes/hardening.make
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+ifeq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+OPTFLAGS := -O2
+else
+OPTFLAGS := -O0
+endif
+
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+  RUN_TESTS := yes
+else
+  RUN_TESTS :=
+endif
+
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+  confflags += --build=$(DEB_HOST_GNU_TYPE)
+  CC := gcc
+else
+  confflags += --build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE)
+  CC := $(DEB_HOST_GNU_TYPE)-gcc
+  RUN_TESTS :=
+endif
+
+DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS 2>/dev/null)
+DEB_HOST_ARCH_CPU := $(shell dpkg-architecture -qDEB_HOST_ARCH_CPU 2>/dev/null)
+
+# Take account of old dpkg-architecture output.
+ifeq ($(DEB_HOST_ARCH_OS),)
+  DEB_HOST_ARCH_OS := $(subst -gnu,,$(shell dpkg-architecture -qDEB_HOST_GNU_SYSTEM))
+  ifeq ($(DEB_HOST_ARCH_OS),gnu)
+    DEB_HOST_ARCH_OS := hurd
+  endif
+endif
+ifeq ($(DEB_HOST_ARCH_CPU),)
+  DEB_HOST_ARCH_CPU := $(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
+  ifeq ($(DEB_HOST_ARCH_CPU),x86_64)
+    DEB_HOST_ARCH_CPU := amd64
+  endif
+endif
+
+ifneq (,$(findstring :$(DEB_HOST_ARCH_OS):,:linux:knetbsd:))
+  ifneq (,$(findstring :$(DEB_HOST_ARCH_CPU):,:mips:mipsel:))
+    # Apparently this is not implied by -fPIE, at least on the mipsen.
+    PIC_CFLAGS := -fPIC
+    PIC_LDFLAGS := -fPIC
+  endif
+endif
+
+# Change the version string to include the Debian version
+SSH_EXTRAVERSION := Debian-$(shell dpkg-parsechangelog | sed -n -e '/^Version:/s/Version: //p' | sed -e 's/[^-]*-//')
+
+DISTRIBUTOR := $(shell lsb_release -is 2>/dev/null || echo Debian)
+ifeq ($(DISTRIBUTOR),Ubuntu)
+DEFAULT_PATH := /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games
+else
+DEFAULT_PATH := /usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+endif
+SUPERUSER_PATH := /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
+
+# Common path configuration.
+confflags += --prefix=/usr --sysconfdir=/etc/ssh --libexecdir=/usr/lib/openssh --mandir=/usr/share/man
+
+# Common build options.
+confflags += --disable-strip
+confflags += --with-mantype=doc
+confflags += --with-4in6
+confflags += --with-privsep-path=/var/run/sshd
+confflags += --without-rand-helper
+
+# The Hurd needs libcrypt for res_query et al.
+ifeq ($(DEB_HOST_ARCH_OS),hurd)
+confflags += --with-libs=-lcrypt
+endif
+
+# Everything above here is common to the deb and udeb builds.
+confflags_udeb := $(confflags)
+
+# Options specific to the deb build.
+confflags += --with-tcp-wrappers
+confflags += --with-pam
+confflags += --with-libedit
+confflags += --with-kerberos5=/usr
+confflags += --with-ssl-engine
+ifeq ($(DEB_HOST_ARCH_OS),linux)
+confflags += --with-selinux
+endif
+confflags += --with-consolekit
+
+# The deb build wants xauth; the udeb build doesn't.
+confflags += --with-xauth=/usr/bin/X11/xauth
+confflags_udeb += --without-xauth
+
+# Default paths. The udeb build has /usr/bin/X11 and /usr/games removed.
+confflags += --with-default-path=$(DEFAULT_PATH) --with-superuser-path=$(SUPERUSER_PATH)
+confflags_udeb += --with-default-path=/usr/local/bin:/usr/bin:/bin --with-superuser-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Compiler flags.
+cflags := $(OPTFLAGS) $(PIC_CFLAGS) $(HARDENING_CFLAGS)
+cflags += -DLOGIN_PROGRAM=\"/bin/login\" -DLOGIN_NO_ENDOPT
+cflags += -DSSH_EXTRAVERSION=\"$(SSH_EXTRAVERSION)\"
+cflags_udeb := -Os
+cflags_udeb += -DSSH_EXTRAVERSION=\"$(SSH_EXTRAVERSION)\"
+confflags += --with-cflags='$(cflags)'
+confflags_udeb += --with-cflags='$(cflags_udeb)'
+
+# Linker flags.
+confflags += --with-ldflags='$(strip -Wl,--as-needed $(PIC_LDFLAGS) $(HARDENING_LDFLAGS))'
+confflags_udeb += --with-ldflags='-Wl,--as-needed'
+
+build: build-deb build-udeb
+
+build-deb: build-deb-stamp
+build-deb-stamp:
+	dh_testdir
+	mkdir -p build-deb
+	cd build-deb && ../configure $(confflags)
+
+	# Debian's /var/log/btmp has inappropriate permissions.
+	perl -pi -e 's,.*#define USE_BTMP .*,/* #undef USE_BTMP */,' build-deb/config.h
+
+	$(MAKE) -C build-deb -j 2 ASKPASS_PROGRAM='/usr/bin/ssh-askpass'
+	$(MAKE) -C contrib gnome-ssh-askpass2 CC='$(CC) $(OPTFLAGS) -g -Wall -Wl,--as-needed'
+ifeq ($(RUN_TESTS),yes)
+	$(MAKE) -C debian/tests
+endif
+
+	touch build-deb-stamp
+
+build-udeb: build-udeb-stamp
+build-udeb-stamp:
+	dh_testdir
+	mkdir -p build-udeb
+	cd build-udeb && ../configure $(confflags_udeb)
+	# Debian's /var/log/btmp has inappropriate permissions.
+	perl -pi -e 's,.*#define USE_BTMP .*,/* #undef USE_BTMP */,' build-udeb/config.h
+	# Avoid libnsl linkage. Ugh.
+	perl -pi -e 's/ +-lnsl//' build-udeb/config.status
+	cd build-udeb && ./config.status
+	$(MAKE) -C build-udeb -j 2 ASKPASS_PROGRAM='/usr/bin/ssh-askpass' ssh scp sftp sshd ssh-keygen
+	touch build-udeb-stamp
+
+clean:
+	dh_testdir
+	rm -rf build-deb build-udeb
+ifeq ($(RUN_TESTS),yes)
+	$(MAKE) -C debian/tests clean
+endif
+	$(MAKE) -C contrib clean
+	(cat debian/copyright.head; iconv -f ISO-8859-1 -t UTF-8 LICENCE) \
+		> debian/copyright
+	dh_clean
+
+install: DH_OPTIONS=-a
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	$(MAKE) -C build-deb DESTDIR=`pwd`/debian/openssh-client install-nokeys
+
+	rm -f debian/openssh-client/etc/ssh/sshd_config
+	#Temporary hack: remove /usr/share/Ssh.bin, since we have no smartcard support anyway.
+	rm -f debian/openssh-client/usr/share/Ssh.bin
+
+	# Split off the server.
+	mv debian/openssh-client/usr/sbin/sshd debian/openssh-server/usr/sbin/
+	mv debian/openssh-client/usr/lib/openssh/sftp-server debian/openssh-server/usr/lib/openssh/
+	mv debian/openssh-client/usr/share/man/man5/authorized_keys.5 debian/openssh-server/usr/share/man/man5/
+	mv debian/openssh-client/usr/share/man/man5/sshd_config.5 debian/openssh-server/usr/share/man/man5/
+	mv debian/openssh-client/usr/share/man/man8/sshd.8 debian/openssh-server/usr/share/man/man8/
+	mv debian/openssh-client/usr/share/man/man8/sftp-server.8 debian/openssh-server/usr/share/man/man8/
+	rmdir debian/openssh-client/usr/sbin debian/openssh-client/var/run/sshd
+
+	install -m 755 contrib/ssh-copy-id debian/openssh-client/usr/bin/ssh-copy-id
+	install -m 644 -c contrib/ssh-copy-id.1 debian/openssh-client/usr/share/man/man1/ssh-copy-id.1
+
+	install -s -o root -g root -m 755 contrib/gnome-ssh-askpass2 debian/ssh-askpass-gnome/usr/lib/openssh/gnome-ssh-askpass
+	install -m 644 debian/gnome-ssh-askpass.1 debian/ssh-askpass-gnome/usr/share/man/man1/gnome-ssh-askpass.1
+	uudecode -o debian/ssh-askpass-gnome/usr/share/pixmaps/ssh-askpass-gnome.png debian/ssh-askpass-gnome.png.uue
+
+	install -m 755 debian/ssh-argv0 debian/openssh-client/usr/bin/ssh-argv0
+	install -m 644 debian/ssh-argv0.1 debian/openssh-client/usr/share/man/man1/ssh-argv0.1
+
+	install -o root -g root -m 644 debian/openssh-server.upstart debian/openssh-server/etc/init/ssh.conf
+	install -o root -g root debian/openssh-server.init debian/openssh-server/etc/init.d/ssh
+	install -o root -g root -m 644 debian/openssh-server.default debian/openssh-server/etc/default/ssh
+	install -o root -g root debian/openssh-server.if-up debian/openssh-server/etc/network/if-up.d/openssh-server
+	install -o root -g root -m 644 debian/openssh-server.ufw.profile debian/openssh-server/etc/ufw/applications.d/openssh-server
+
+	install -m 755 build-udeb/ssh debian/openssh-client-udeb/usr/bin/ssh
+	install -m 755 build-udeb/scp debian/openssh-client-udeb/usr/bin/scp
+	install -m 755 build-udeb/sftp debian/openssh-client-udeb/usr/bin/sftp
+	install -m 755 build-udeb/sshd debian/openssh-server-udeb/usr/sbin/sshd
+	install -m 755 build-udeb/ssh-keygen debian/openssh-server-udeb/usr/bin/ssh-keygen
+
+	# Remove version control tags to avoid unnecessary conffile
+	# resolution steps for administrators.
+	sed -i '/\$$OpenBSD:/d' \
+		debian/openssh-client/etc/ssh/moduli \
+		debian/openssh-client/etc/ssh/ssh_config
+
+# Build architecture-independent files here.
+binary-indep: binary-ssh binary-ssh-krb5
+
+# Build architecture-dependent files here.
+binary-arch: binary-openssh-client binary-openssh-server
+binary-arch: binary-ssh-askpass-gnome
+binary-arch: binary-openssh-client-udeb binary-openssh-server-udeb
+
+binary-openssh-client: DH_OPTIONS=-popenssh-client
+binary-openssh-client: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_installdocs
+	dh_installchangelogs
+	dh_apport
+	dh_lintian
+	dh_strip
+	dh_compress
+	dh_fixperms
+	chmod u+s debian/openssh-client/usr/lib/openssh/ssh-keysign
+	dh_installdeb
+	test ! -e debian/ssh/etc/ssh/ssh_prng_cmds \
+	  || echo "/etc/ssh/ssh_prng_cmds" >> debian/openssh-client/DEBIAN/conffiles
+	perl -i debian/substitute-conffile.pl \
+		ETC_SSH_MODULI debian/openssh-client/etc/ssh/moduli \
+		ETC_SSH_SSH_CONFIG debian/openssh-client/etc/ssh/ssh_config \
+		debian/openssh-client/DEBIAN/preinst
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-openssh-server: DH_OPTIONS=-popenssh-server
+binary-openssh-server: build install
+	dh_testdir
+	dh_testroot
+	dh_installdebconf
+	dh_installdocs
+	mv debian/openssh-server/usr/share/doc/openssh-server debian/openssh-server/usr/share/doc/openssh-client
+	rm -f debian/openssh-server/usr/share/doc/openssh-client/copyright
+	dh_apport
+	dh_installpam --name sshd
+	dh_lintian
+	dh_link
+	dh_installexamples
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	perl -i debian/substitute-conffile.pl \
+		ETC_DEFAULT_SSH debian/openssh-server/etc/default/ssh \
+		ETC_INIT_D_SSH debian/openssh-server/etc/init.d/ssh \
+		ETC_PAM_D_SSH debian/openssh-server/etc/pam.d/ssh \
+		debian/openssh-server/DEBIAN/preinst
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-ssh: DH_OPTIONS=-pssh
+binary-ssh: build install
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	dh_installdocs
+	mv debian/ssh/usr/share/doc/ssh debian/ssh/usr/share/doc/openssh-client
+	rm -f debian/ssh/usr/share/doc/openssh-client/copyright
+	dh_lintian
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-ssh-krb5: DH_OPTIONS=-pssh-krb5
+binary-ssh-krb5: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installchangelogs
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-ssh-askpass-gnome: DH_OPTIONS=-pssh-askpass-gnome
+binary-ssh-askpass-gnome: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installexamples
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-openssh-client-udeb: DH_OPTIONS=-popenssh-client-udeb
+binary-openssh-client-udeb: build install
+	dh_testdir
+	dh_testroot
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-openssh-server-udeb: DH_OPTIONS=-popenssh-server-udeb
+binary-openssh-server-udeb: build install
+	dh_testdir
+	dh_testroot
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+debian/faq.html:
+	wget -O - http://www.openssh.org/faq.html | \
+		sed 's,\(href="\)\(txt/\|[^":]*\.html\),\1http://www.openssh.org/\2,g' \
+		> debian/faq.html
+
+# You only need to run this immediately after checking out the package from
+# revision control.
+quilt-setup:
+	[ ! -d .pc ]
+	set -e; for patch in $$(quilt series | tac); do \
+		patch -p1 -R <"debian/patches/$$patch"; \
+	done
+	quilt push -a
+
+.PHONY: build clean binary-indep binary-arch binary install
+.PHONY: build-deb build-udeb
+.PHONY: binary-openssh-client binary-openssh-server binary-ssh
+.PHONY: binary-ssh-krb5 binary-ssh-askpass-gnome
+.PHONY: binary-openssh-client-udeb binary-openssh-server-udeb

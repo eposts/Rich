@@ -1,0 +1,17 @@
+ndisasm           反汇编
+readelf
+strace
+nm                查看库包含的文件
+gzexec            压缩执行文件
+axel              命令行多线程可断点续传下载工具
+gprof             打印出程序运行中各个函数消耗的时间,可以帮助程序员找出众多函数中最耗时的函数,产生程序运行过程中的调用关系,
+                  包括调用次数,可以帮助程序员分析程序的运行流程
+
+danted            //apt-get install dante-server    #socks4, 5 proxy server
+alsamixer         调节音量
+scrot		      截屏
+sniffjoke         Anti-sniffing Framework, a sniffer evasion tool (Anti-IDS/IPS)
+dmidecode | grep "Product Name"      查看机器型号  
+tsocks            Shell wrapper to use of the tsocks library to transparently allow an application to use a SOCKS proxy: tsocks firefox
+proxychains
+warden            FreeBSD. The jail management program.

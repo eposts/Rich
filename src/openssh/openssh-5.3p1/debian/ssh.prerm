@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+case $1 in
+	upgrade)
+		if [ -L /usr/share/doc/ssh ] && \
+		   dpkg --compare-versions "$2" lt-nl 1:4.1p1-5; then
+			rm -f /usr/share/doc/ssh
+		fi
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,561 @@
+Description: Add support for registering ConsoleKit sessions on login
+Author: Colin Watson <cjwatson@ubuntu.com>
+Bug: https://bugzilla.mindrot.org/show_bug.cgi?id=1450
+Last-Updated: 2010-02-28
+
+Index: b/Makefile.in
+===================================================================
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -91,7 +91,8 @@
+ 	auth2-gss.o gss-serv.o gss-serv-krb5.o kexgsss.o\
+ 	loginrec.o auth-pam.o auth-shadow.o auth-sia.o md5crypt.o \
+ 	audit.o audit-bsm.o platform.o sftp-server.o sftp-common.o \
+-	roaming_common.o
++	roaming_common.o \
++	consolekit.o
+ 
+ MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-rand-helper.8.out ssh-keysign.8.out ssh-vulnkey.1.out sshd_config.5.out ssh_config.5.out
+ MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-rand-helper.8 ssh-keysign.8 ssh-vulnkey.1 sshd_config.5 ssh_config.5
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -3540,6 +3540,30 @@
+ 	]
+ )
+ 
++# Check whether user wants ConsoleKit support
++CONSOLEKIT_MSG="no"
++LIBCK_CONNECTOR=""
++AC_ARG_WITH(consolekit,
++	[  --with-consolekit       Enable ConsoleKit support],
++	[ if test "x$withval" != "xno" ; then
++		AC_PATH_TOOL([PKG_CONFIG], [pkg-config], [no])
++		if test "$PKG_CONFIG" != "no"; then
++			AC_MSG_CHECKING([for ck-connector])
++			if $PKG_CONFIG --exists ck-connector; then
++				CKCON_CFLAGS=`$PKG_CONFIG --cflags ck-connector`
++				CKCON_LIBS=`$PKG_CONFIG --libs ck-connector`
++				CPPFLAGS="$CPPFLAGS $CKCON_CFLAGS"
++				SSHDLIBS="$SSHDLIBS $CKCON_LIBS"
++				AC_MSG_RESULT([yes])
++				AC_DEFINE(USE_CONSOLEKIT, 1, [Define if you want ConsoleKit support.])
++				CONSOLEKIT_MSG="yes"
++			else
++				AC_MSG_RESULT([no])
++			fi
++		fi
++	fi ]
++)
++
+ # Looking for programs, paths and files
+ 
+ PRIVSEP_PATH=/var/empty
+@@ -4260,6 +4284,7 @@
+ echo "              MD5 password support: $MD5_MSG"
+ echo "                   libedit support: $LIBEDIT_MSG"
+ echo "  Solaris process contract support: $SPC_MSG"
++echo "                ConsoleKit support: $CONSOLEKIT_MSG"
+ echo "       IP address in \$DISPLAY hack: $DISPLAY_HACK_MSG"
+ echo "           Translate v4 in v6 hack: $IPV4_IN6_HACK_MSG"
+ echo "                  BSD Auth support: $BSD_AUTH_MSG"
+Index: b/consolekit.c
+===================================================================
+--- /dev/null
++++ b/consolekit.c
+@@ -0,0 +1,239 @@
++/*
++ * Copyright (c) 2008 Colin Watson.  All rights reserved.
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++/*
++ * Loosely based on pam-ck-connector, which is:
++ *
++ * Copyright (c) 2007 David Zeuthen <davidz@redhat.com>
++ *
++ * Permission is hereby granted, free of charge, to any person
++ * obtaining a copy of this software and associated documentation
++ * files (the "Software"), to deal in the Software without
++ * restriction, including without limitation the rights to use,
++ * copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following
++ * conditions:
++ *
++ * The above copyright notice and this permission notice shall be
++ * included in all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#include "includes.h"
++
++#ifdef USE_CONSOLEKIT
++
++#include <ck-connector.h>
++
++#include "xmalloc.h"
++#include "channels.h"
++#include "key.h"
++#include "hostfile.h"
++#include "auth.h"
++#include "log.h"
++#include "servconf.h"
++#include "canohost.h"
++#include "session.h"
++#include "consolekit.h"
++
++extern ServerOptions options;
++extern u_int utmp_len;
++
++void
++set_active(const char *cookie)
++{
++	DBusError err;
++	DBusConnection *connection;
++	DBusMessage *message = NULL, *reply = NULL;
++	char *sid;
++	DBusMessageIter iter, subiter;
++	const char *interface, *property;
++	dbus_bool_t active;
++
++	dbus_error_init(&err);
++	connection = dbus_bus_get_private(DBUS_BUS_SYSTEM, &err);
++	if (!connection) {
++		if (dbus_error_is_set(&err)) {
++			error("unable to open DBus connection: %s",
++			    err.message);
++			dbus_error_free(&err);
++		}
++		goto out;
++	}
++	dbus_connection_set_exit_on_disconnect(connection, FALSE);
++
++	message = dbus_message_new_method_call("org.freedesktop.ConsoleKit",
++	    "/org/freedesktop/ConsoleKit/Manager",
++	    "org.freedesktop.ConsoleKit.Manager",
++	    "GetSessionForCookie");
++	if (!message)
++		goto out;
++	if (!dbus_message_append_args(message, DBUS_TYPE_STRING, &cookie,
++	    DBUS_TYPE_INVALID)) {
++		if (dbus_error_is_set(&err)) {
++			error("unable to get current session: %s",
++			    err.message);
++			dbus_error_free(&err);
++		}
++		goto out;
++	}
++
++	dbus_error_init(&err);
++	reply = dbus_connection_send_with_reply_and_block(connection, message,
++	    -1, &err);
++	if (!reply) {
++		if (dbus_error_is_set(&err)) {
++			error("unable to get current session: %s",
++			    err.message);
++			dbus_error_free(&err);
++		}
++		goto out;
++	}
++
++	dbus_error_init(&err);
++	if (!dbus_message_get_args(reply, &err,
++	    DBUS_TYPE_OBJECT_PATH, &sid,
++	    DBUS_TYPE_INVALID)) {
++		if (dbus_error_is_set(&err)) {
++			error("unable to get current session: %s",
++			    err.message);
++			dbus_error_free(&err);
++		}
++		goto out;
++	}
++	dbus_message_unref(reply);
++	dbus_message_unref(message);
++	message = reply = NULL;
++
++	message = dbus_message_new_method_call("org.freedesktop.ConsoleKit",
++	    sid, "org.freedesktop.DBus.Properties", "Set");
++	if (!message)
++		goto out;
++	interface = "org.freedesktop.ConsoleKit.Session";
++	property = "active";
++	if (!dbus_message_append_args(message,
++	    DBUS_TYPE_STRING, &interface, DBUS_TYPE_STRING, &property,
++	    DBUS_TYPE_INVALID))
++		goto out;
++	dbus_message_iter_init_append(message, &iter);
++	if (!dbus_message_iter_open_container(&iter, DBUS_TYPE_VARIANT,
++	    DBUS_TYPE_BOOLEAN_AS_STRING, &subiter))
++		goto out;
++	active = TRUE;
++	if (!dbus_message_iter_append_basic(&subiter, DBUS_TYPE_BOOLEAN,
++	    &active))
++		goto out;
++	if (!dbus_message_iter_close_container(&iter, &subiter))
++		goto out;
++
++	dbus_error_init(&err);
++	reply = dbus_connection_send_with_reply_and_block(connection, message,
++	    -1, &err);
++	if (!reply) {
++		if (dbus_error_is_set(&err)) {
++			error("unable to make current session active: %s",
++			    err.message);
++			dbus_error_free(&err);
++		}
++		goto out;
++	}
++
++out:
++	if (reply)
++		dbus_message_unref(reply);
++	if (message)
++		dbus_message_unref(message);
++}
++
++/*
++ * We pass display separately rather than using s->display because the
++ * latter is not available in the monitor when using privsep.
++ */
++
++char *
++consolekit_register(Session *s, const char *display)
++{
++	DBusError err;
++	const char *tty = s->tty;
++	const char *remote_host_name;
++	dbus_bool_t is_local = FALSE;
++	const char *cookie = NULL;
++
++	if (s->ckc) {
++		debug("already registered with ConsoleKit");
++		return xstrdup(ck_connector_get_cookie(s->ckc));
++	}
++
++	s->ckc = ck_connector_new();
++	if (!s->ckc) {
++		error("ck_connector_new failed");
++		return NULL;
++	}
++
++	if (!tty)
++		tty = "";
++	if (!display)
++		display = "";
++	remote_host_name = get_remote_name_or_ip(utmp_len, options.use_dns);
++	if (!remote_host_name)
++		remote_host_name = "";
++
++	dbus_error_init(&err);
++	if (!ck_connector_open_session_with_parameters(s->ckc, &err,
++	    "unix-user", &s->pw->pw_uid,
++	    "display-device", &tty,
++	    "x11-display", &display,
++	    "remote-host-name", &remote_host_name,
++	    "is-local", &is_local,
++	    NULL)) {
++		if (dbus_error_is_set(&err)) {
++			debug("%s", err.message);
++			dbus_error_free(&err);
++		} else {
++			debug("insufficient privileges or D-Bus / ConsoleKit "
++			    "not available");
++		}
++		return NULL;
++	}
++
++	debug("registered uid=%d on tty='%s' with ConsoleKit",
++	    s->pw->pw_uid, s->tty);
++
++	cookie = ck_connector_get_cookie(s->ckc);
++	set_active(cookie);
++	return xstrdup(cookie);
++}
++
++void
++consolekit_unregister(Session *s)
++{
++	if (s->ckc) {
++		debug("unregistering ConsoleKit session %s",
++		    ck_connector_get_cookie(s->ckc));
++		ck_connector_unref(s->ckc);
++		s->ckc = NULL;
++	}
++}
++
++#endif /* USE_CONSOLEKIT */
+Index: b/consolekit.h
+===================================================================
+--- /dev/null
++++ b/consolekit.h
+@@ -0,0 +1,24 @@
++/*
++ * Copyright (c) 2008 Colin Watson.  All rights reserved.
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#ifdef USE_CONSOLEKIT
++
++struct Session;
++
++char *	 consolekit_register(struct Session *, const char *);
++void	 consolekit_unregister(struct Session *);
++
++#endif /* USE_CONSOLEKIT */
+Index: b/monitor.c
+===================================================================
+--- a/monitor.c
++++ b/monitor.c
+@@ -89,6 +89,9 @@
+ #include "ssh2.h"
+ #include "jpake.h"
+ #include "roaming.h"
++#ifdef USE_CONSOLEKIT
++#include "consolekit.h"
++#endif
+ 
+ #ifdef GSSAPI
+ static Gssctxt *gsscontext = NULL;
+@@ -182,6 +185,10 @@
+ int mm_answer_audit_command(int, Buffer *);
+ #endif
+ 
++#ifdef USE_CONSOLEKIT
++int mm_answer_consolekit_register(int, Buffer *);
++#endif
++
+ static Authctxt *authctxt;
+ static BIGNUM *ssh1_challenge = NULL;	/* used for ssh1 rsa auth */
+ 
+@@ -273,6 +280,9 @@
+     {MONITOR_REQ_AUDIT_EVENT, MON_PERMIT, mm_answer_audit_event},
+     {MONITOR_REQ_AUDIT_COMMAND, MON_PERMIT, mm_answer_audit_command},
+ #endif
++#ifdef USE_CONSOLEKIT
++    {MONITOR_REQ_CONSOLEKIT_REGISTER, 0, mm_answer_consolekit_register},
++#endif
+     {0, 0, NULL}
+ };
+ 
+@@ -315,6 +325,9 @@
+     {MONITOR_REQ_AUDIT_EVENT, MON_PERMIT, mm_answer_audit_event},
+     {MONITOR_REQ_AUDIT_COMMAND, MON_PERMIT|MON_ONCE, mm_answer_audit_command},
+ #endif
++#ifdef USE_CONSOLEKIT
++    {MONITOR_REQ_CONSOLEKIT_REGISTER, 0, mm_answer_consolekit_register},
++#endif
+     {0, 0, NULL}
+ };
+ 
+@@ -470,6 +483,9 @@
+ 		monitor_permit(mon_dispatch, MONITOR_REQ_PTY, 1);
+ 		monitor_permit(mon_dispatch, MONITOR_REQ_PTYCLEANUP, 1);
+ 	}
++#ifdef USE_CONSOLEKIT
++	monitor_permit(mon_dispatch, MONITOR_REQ_CONSOLEKIT_REGISTER, 1);
++#endif
+ 
+ 	for (;;)
+ 		monitor_read(pmonitor, mon_dispatch, NULL);
+@@ -2101,6 +2117,34 @@
+ 	buffer_put_int(m, major);
+ 	buffer_put_string(m, hash.value, hash.length);
+ 
++#ifdef USE_CONSOLEKIT
++int
++mm_answer_consolekit_register(int sock, Buffer *m)
++{
++	Session *s;
++	char *tty, *display;
++	char *cookie = NULL;
++
++	debug3("%s entering", __func__);
++
++	tty = buffer_get_string(m, NULL);
++	display = buffer_get_string(m, NULL);
++	s = session_by_tty(tty);
++	if (s != NULL)
++		cookie = consolekit_register(s, display);
++	buffer_clear(m);
++	buffer_put_cstring(m, cookie != NULL ? cookie : "");
++	mm_request_send(sock, MONITOR_ANS_CONSOLEKIT_REGISTER, m);
++
++	if (cookie != NULL)
++		xfree(cookie);
++	xfree(display);
++	xfree(tty);
++
++	return (0);
++}
++#endif /* USE_CONSOLEKIT */
++
+ 	mm_request_send(socket, MONITOR_ANS_GSSSIGN, m);
+ 
+ 	gss_release_buffer(&minor, &hash);
+Index: b/monitor.h
+===================================================================
+--- a/monitor.h
++++ b/monitor.h
+@@ -62,6 +62,7 @@
+ 	MONITOR_REQ_PAM_RESPOND, MONITOR_ANS_PAM_RESPOND,
+ 	MONITOR_REQ_PAM_FREE_CTX, MONITOR_ANS_PAM_FREE_CTX,
+ 	MONITOR_REQ_AUDIT_EVENT, MONITOR_REQ_AUDIT_COMMAND,
++	MONITOR_REQ_CONSOLEKIT_REGISTER, MONITOR_ANS_CONSOLEKIT_REGISTER,
+ 	MONITOR_REQ_TERM,
+ 	MONITOR_REQ_JPAKE_STEP1, MONITOR_ANS_JPAKE_STEP1,
+ 	MONITOR_REQ_JPAKE_GET_PWDATA, MONITOR_ANS_JPAKE_GET_PWDATA,
+Index: b/monitor_wrap.c
+===================================================================
+--- a/monitor_wrap.c
++++ b/monitor_wrap.c
+@@ -1288,6 +1288,37 @@
+ mm_ssh_gssapi_sign(Gssctxt *ctx, gss_buffer_desc *data, gss_buffer_desc *hash)
+ {
+ 	Buffer m;
++
++#ifdef USE_CONSOLEKIT
++char *
++mm_consolekit_register(Session *s, const char *display)
++{
++	Buffer m;
++	char *cookie;
++
++	debug3("%s entering", __func__);
++
++	if (s->ttyfd == -1)
++		return NULL;
++	buffer_init(&m);
++	buffer_put_cstring(&m, s->tty);
++	buffer_put_cstring(&m, display != NULL ? display : "");
++	mm_request_send(pmonitor->m_recvfd, MONITOR_REQ_CONSOLEKIT_REGISTER, &m);
++	buffer_clear(&m);
++
++	mm_request_receive_expect(pmonitor->m_recvfd,
++	    MONITOR_ANS_CONSOLEKIT_REGISTER, &m);
++	cookie = buffer_get_string(&m, NULL);
++	buffer_free(&m);
++
++	/* treat empty cookie as missing cookie */
++	if (strlen(cookie) == 0) {
++		xfree(cookie);
++		cookie = NULL;
++	}
++	return (cookie);
++}
++#endif /* USE_CONSOLEKIT */
+ 	OM_uint32 major;
+ 	u_int len;
+ 
+Index: b/monitor_wrap.h
+===================================================================
+--- a/monitor_wrap.h
++++ b/monitor_wrap.h
+@@ -130,4 +130,8 @@
+ void mm_zfree(struct mm_master *, void *);
+ void mm_init_compression(struct mm_master *);
+ 
++#ifdef USE_CONSOLEKIT
++char *mm_consolekit_register(struct Session *, const char *);
++#endif /* USE_CONSOLEKIT */
++
+ #endif /* _MM_WRAP_H_ */
+Index: b/session.c
+===================================================================
+--- a/session.c
++++ b/session.c
+@@ -90,6 +90,7 @@
+ #include "kex.h"
+ #include "monitor_wrap.h"
+ #include "sftp.h"
++#include "consolekit.h"
+ 
+ #if defined(KRB5) && defined(USE_AFS)
+ #include <kafs.h>
+@@ -1117,6 +1118,9 @@
+ #if !defined (HAVE_LOGIN_CAP) && !defined (HAVE_CYGWIN)
+ 	char *path = NULL;
+ #endif
++#ifdef USE_CONSOLEKIT
++	const char *ckcookie = NULL;
++#endif /* USE_CONSOLEKIT */
+ 
+ 	/* Initialize the environment. */
+ 	envsize = 100;
+@@ -1261,6 +1265,11 @@
+ 		child_set_env(&env, &envsize, "KRB5CCNAME",
+ 		    s->authctxt->krb5_ccname);
+ #endif
++#ifdef USE_CONSOLEKIT
++	ckcookie = PRIVSEP(consolekit_register(s, s->display));
++	if (ckcookie)
++		child_set_env(&env, &envsize, "XDG_SESSION_COOKIE", ckcookie);
++#endif /* USE_CONSOLEKIT */
+ #ifdef USE_PAM
+ 	/*
+ 	 * Pull in any environment variables that may have
+@@ -2317,6 +2326,10 @@
+ 
+ 	debug("session_pty_cleanup: session %d release %s", s->self, s->tty);
+ 
++#ifdef USE_CONSOLEKIT
++	consolekit_unregister(s);
++#endif /* USE_CONSOLEKIT */
++
+ 	/* Record that the user has logged out. */
+ 	if (s->pid != 0)
+ 		record_logout(s->pid, s->tty, s->pw->pw_name);
+Index: b/session.h
+===================================================================
+--- a/session.h
++++ b/session.h
+@@ -26,6 +26,8 @@
+ #ifndef SESSION_H
+ #define SESSION_H
+ 
++struct _CkConnector;
++
+ #define TTYSZ 64
+ typedef struct Session Session;
+ struct Session {
+@@ -60,6 +62,10 @@
+ 		char	*name;
+ 		char	*val;
+ 	} *env;
++
++#ifdef USE_CONSOLEKIT
++	struct _CkConnector *ckc;
++#endif /* USE_CONSOLEKIT */
+ };
+ 
+ void	 do_authenticated(Authctxt *);

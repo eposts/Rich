@@ -1,0 +1,667 @@
+[26 May 2004 15:21] [ name withheld ]
+
+Description:
+Help !
+
+I've 2 servers running Solaris 8 and, on each, a MySQL server v 4.0.20 compiled with the sources that you provide.
+
+The command "SHOW VARIABLES;" make this error message :
+
+---------------------------------------------------
+mysql> SHOW VARIABLES;
+ERROR 2006: MySQL server has gone away
+No connection. Trying to reconnect...
+Connection id:    4
+Current database: mysql
+
+ERROR 2013: Lost connection to MySQL server during query
+---------------------------------------------------
+
+As the MySQL-Front client always di this command on connection, I can't use it no more...
+
+Thanks for any help.
+
+How to repeat:
+Download the sources of v4.0.20 on Mysql.com.
+Compiling them on Solaris 8.
+Connect to mySQL and then do the command "SHOW VARIABLES;".
+
+[29 May 2004 6:40] Matthew Lord
+
+trying to verify...
+
+[29 May 2004 21:14] Matthew Lord
+
+Hardware being used:
+Sun Sunfire v100 (UltraSPARC-IIe, 550 MHz, 512 MB)
+Operating System:
+Sun Solaris 8 (sparc)
+
+I was unable to reproduce the problem building w/o any configure options, using gcc.
+
+I will try to reproduce the problem using the Sun Forte 5.0 compiler.
+
+I need to know the specifics of the build host where the problem was experienced and exactly what 
+process was used to build the binaries.  In the meantime I would suggest using the pre-built binaries 
+provided by MySQL and see if you continue to have the problem.
+
+[29 May 2004 21:30] Matthew Lord
+
+Could not build mysqld with the forte 5 compiler.  Unless I hear back from the person who posted the 
+bug this will remain marked as could not repeat.
+
+[31 May 2004 16:36] [ name withheld ]
+
+I'll give you as soon as possible the specifics of the build and will try to use the binaries provided by mySQL...
+I'll have to check all of this at my office, I'll hope to add a comment on wednesday or thursday (6/2 or 6/3).
+
+[2 Jun 2004 13:34] [ name withheld ]
+
+Hi,
+
+Firstly, I can't use the binaries provided by MySQL cause I can't change the directory /usr/local by adding a mysql directory.
+
+Secondly, for the compilation, here is my hardware specif :
+SunOS 5.8 Generic_108528-16 sun4u sparc SUNW,Ultra-5_10
+I'm not using the Sun Forte 5.0 compiler but gcc 2.95.2.
+
+A part of my config.log :
+| #define PACKAGE_NAME ""
+| #define PACKAGE_TARNAME ""
+| #define PACKAGE_VERSION ""
+| #define PACKAGE_STRING ""
+| #define PACKAGE_BUGREPORT ""
+| #define PACKAGE "mysql"
+| #define VERSION "4.0.20"
+| #define PROTOCOL_VERSION 10
+| #define DOT_FRM_VERSION 6
+| #define SYSTEM_TYPE "sun-solaris2.8"
+| #define MACHINE_TYPE "sparc"
+
+Hope it'll help you.
+
+[2 Jun 2004 21:47] Matthew Lord
+
+Hi,
+
+You do not have to touch /usr/local to use our binaries, that is only the suggested location.  You can 
+untar the binary distribution wherever you like and in your /etc/my.cnf file in the [mysqld] group you
+would specify the datadir option to specify where your data is and the basedir option to point to where 
+you did untar it so that you can start mysqld_safe (for example) from any location.
+
+[2 Jun 2004 21:58] Matthew Lord
+
+I should have also mentioned that you can put your configuration information in ~/.my.cnf as well if 
+you don't have permissions to the /etc directory either.
+
+[3 Jun 2004 18:44] [ name withheld ]
+
+A solution,
+
+I've tried to use the binaries for Solaris 8/Sparc and it works !!
+No more problem with "SHOW VARIABLES", it's OK.
+
+Very strange that it works better with binaries than with sources but it's OK now.
+
+[28 Sep 2004 1:04] Darryl Miles
+
+Reproduced with linux, from debian_linux_3.0r2_sparc tool chain / distro.  Compiled my version of 4.0.20 from source.
+
+$ uname -a
+Linux ultra5 2.4.25 #1 Sun Mar 7 03:48:28 GMT 2004 sparc64 unknown
+
+mysql> status;
+--------------
+/opt/mysql/bin/mysql  Ver 12.22 Distrib 4.0.20, for unknown-linux (sparc64)
+
+Connection id:          1
+Current database:       mysql
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Server version:         4.0.20
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Client characterset:    latin1
+Server characterset:    latin1
+UNIX socket:            /opt/mysql/mysql.sock
+Uptime:                 10 min 9 sec
+
+Threads: 1  Questions: 17  Slow queries: 0  Opens: 12  Flush tables: 1  Open tables: 6  Queries per second avg: 0.028
+--------------
+
+mysql>
+mysql>
+mysql> show variables;
+ERROR 2013: Lost connection to MySQL server during query
+mysql>
+
+$ ./configure --prefix=/opt/mysql --with-mysqld-user=mysql --with-innodb --with-berkeley-db --with-vio --with-openssl=../openssl-0.9.7d --enable-thread-safe-client
+
+ultra5:/home/dlm# gdb /opt/mysql/libexec/mysqld 32686
+GNU gdb 2002-04-01-cvs
+Copyright 2002 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "sparc-linux"...(no debugging symbols found)...
+Attaching to program: /opt/mysql/libexec/mysqld, process 32686
+Reading symbols from /lib/librt.so.1...(no debugging symbols found)...done.
+Loaded symbols for /lib/librt.so.1
+Reading symbols from /lib/libdl.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib/libdl.so.2
+Reading symbols from /lib/libpthread.so.0...(no debugging symbols found)...
+done.
+[New Thread 1024 (LWP 32686)]
+[New Thread 2049 (LWP 32688)]
+[New Thread 1026 (LWP 32689)]
+[New Thread 2051 (LWP 32690)]
+[New Thread 3076 (LWP 32691)]
+[New Thread 4101 (LWP 32692)]
+[New Thread 5126 (LWP 32693)]
+[New Thread 6151 (LWP 32694)]
+[New Thread 7176 (LWP 32695)]
+[New Thread 8201 (LWP 32696)]
+[New Thread 9226 (LWP 32697)]
+Loaded symbols for /lib/libpthread.so.0
+Reading symbols from /lib/libcrypt.so.1...(no debugging symbols found)...done.
+Loaded symbols for /lib/libcrypt.so.1
+Reading symbols from /lib/libnsl.so.1...(no debugging symbols found)...done.
+Loaded symbols for /lib/libnsl.so.1
+Reading symbols from /usr/lib/libstdc++-libc6.2-2.so.3...
+(no debugging symbols found)...done.
+Loaded symbols for /usr/lib/libstdc++-libc6.2-2.so.3
+Reading symbols from /lib/libm.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib/libm.so.6
+Reading symbols from /lib/libc.so.6...(no debugging symbols found)...done.
+Loaded symbols for /lib/libc.so.6
+Reading symbols from /lib/ld-linux.so.2...(no debugging symbols found)...done.
+Loaded symbols for /lib/ld-linux.so.2
+Reading symbols from /lib/libnss_compat.so.2...(no debugging symbols found)...
+done.
+Loaded symbols for /lib/libnss_compat.so.2
+0x702a8b6c in select () from /lib/libc.so.6
+(gdb) c
+Continuing.
+[New Thread 10251 (LWP 32718)]
+
+Program received signal SIGBUS, Bus error.
+[Switching to Thread 10251 (LWP 32718)]
+0x00134a88 in mysqld_show ()
+(gdb)
+(gdb) list mysqld_show
+No symbol table is loaded.  Use the "file" command.
+(gdb) bt
+#0  0x00134a88 in mysqld_show ()
+#1  0x000c3104 in mysql_execute_command ()
+#2  0x000c4768 in mysql_parse ()
+#3  0x000c0b90 in dispatch_command ()
+#4  0x000c5cd0 in do_command ()
+#5  0x000c00d8 in handle_one_connection ()
+#6  0x70065918 in pthread_start_thread () from /lib/libpthread.so.0
+#7  0x7006594c in pthread_allocate_stack () from /lib/libpthread.so.0
+#8  0x702aefa8 in clone () from /lib/libc.so.6
+(gdb)
+
+$ nm /opt/mysql/libexec/mysqld  | grep "00134" | c++filt
+00134f50 W I_List<thread_info>::is_empty(void)
+00134d04 T mysqld_dump_create_info(THD *, st_table *, int)
+001347b4 T mysqld_show(THD *, char const *, show_var_st *, enum_var_type, pthread_mutex_t *)
+00134e0c W List<char>::push_back(char *)
+
+Just trying to build mysqld with debugging in to see if the problem still persists.
+
+[28 Sep 2004 14:03] Darryl Miles
+
+Debugging version...
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5 to server version: 4.0.20-debug
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> show variables;
+
+# gdb /opt/mysql/libexec/mysqld 21881
+GNU gdb 2002-04-01-cvs
+Copyright 2002 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "sparc-linux"...
+Attaching to program: /opt/mysql/libexec/mysqld, process 21881
+Reading symbols from /lib/librt.so.1...done.
+Loaded symbols for /lib/librt.so.1
+Reading symbols from /lib/libdl.so.2...done.
+Loaded symbols for /lib/libdl.so.2
+Reading symbols from /lib/libpthread.so.0...done.
+[New Thread 1024 (LWP 21881)]
+[New Thread 2049 (LWP 21883)]
+[New Thread 1026 (LWP 21884)]
+[New Thread 2051 (LWP 21885)]
+[New Thread 3076 (LWP 21886)]
+[New Thread 4101 (LWP 21887)]
+[New Thread 5126 (LWP 21888)]
+[New Thread 6151 (LWP 21889)]
+[New Thread 7176 (LWP 21890)]
+[New Thread 8201 (LWP 21891)]
+[New Thread 9226 (LWP 21892)]
+[New Thread 14347 (LWP 21953)]
+Loaded symbols for /lib/libpthread.so.0
+Reading symbols from /lib/libcrypt.so.1...done.
+Loaded symbols for /lib/libcrypt.so.1
+Reading symbols from /lib/libnsl.so.1...done.
+Loaded symbols for /lib/libnsl.so.1
+Reading symbols from /usr/lib/libstdc++-libc6.2-2.so.3...done.
+Loaded symbols for /usr/lib/libstdc++-libc6.2-2.so.3
+Reading symbols from /lib/libm.so.6...done.
+Loaded symbols for /lib/libm.so.6
+Reading symbols from /lib/libc.so.6...done.
+Loaded symbols for /lib/libc.so.6
+Reading symbols from /lib/ld-linux.so.2...done.
+Loaded symbols for /lib/ld-linux.so.2
+Reading symbols from /lib/libnss_compat.so.2...done.
+Loaded symbols for /lib/libnss_compat.so.2
+0x702a8b6c in select () from /lib/libc.so.6
+(gdb) c
+Continuing.
+
+Program received signal SIGBUS, Bus error.
+[Switching to Thread 14347 (LWP 21953)]
+0x0013a854 in mysqld_show (thd=0x9c9160, wild=0x0, variables=0x4592c0,
+    value_type=OPT_SESSION, mutex=0x458024) at sql_show.cc:1241
+    1241            net_store_data(&packet2,(ulong) *(bool*) value ? "ON" : "OFF");
+    (gdb) list
+    1236            break;
+    1237          case SHOW_HA_ROWS:
+    1238            net_store_data(&packet2,(longlong) *(ha_rows*) value);
+    1239            break;
+    1240          case SHOW_BOOL:
+    1241            net_store_data(&packet2,(ulong) *(bool*) value ? "ON" : "OFF");
+    1242            break;
+    1243          case SHOW_MY_BOOL:
+    1244            net_store_data(&packet2,(ulong) *(my_bool*) value ? "ON" : "OFF");
+    1245            break;
+    (gdb) p value
+    $1 = 0x44b6b6 ""
+    (gdb) p *value
+    $2 = 0 '\0'
+    (gdb) p show_type
+    $3 = SHOW_BOOL
+    (gdb) p *variables
+    $4 = {name = 0x3a1628 "lower_case_file_system", value = 0x44b6b6 "",
+      type = SHOW_BOOL}
+      (gdb) p packet2
+      $5 = {
+        Ptr = 0x72d81598 "\026lower_case_file_systemFFe/mysql/english/tendoi8_ru latin2 swe7 usa7 cp1251 danish hebrew win1251 estonia hungarian koi8_ukr win1251ukr greek win1250 croat cp1257 latin5", str_length = 23, Alloced_length = 8192,
+          alloced = false}
+          (gdb) bt
+          #0  0x0013a854 in mysqld_show (thd=0x9c9160, wild=0x0, variables=0x4592c0,
+              value_type=OPT_SESSION, mutex=0x458024) at sql_show.cc:1241
+              #1  0x000c3b18 in mysql_execute_command () at sql_parse.cc:2179
+              #2  0x000c5460 in mysql_parse (thd=0x9c9160, inBuf=0x9c9290 "", length=14)
+                  at sql_parse.cc:2998
+                  #3  0x000c1544 in dispatch_command (command=COM_QUERY, thd=0x9c9160,
+                      packet=0x9c9c99 "", packet_length=14) at sql_parse.cc:1082
+                      #4  0x000c1098 in do_command (thd=0x9c9160) at sql_parse.cc:953
+                      #5  0x000c088c in handle_one_connection (arg=0x9c916c) at sql_parse.cc:737
+                      #6  0x70065918 in pthread_start_thread () from /lib/libpthread.so.0
+                      #7  0x702aefa8 in clone () from /lib/libc.so.6
+
+                      The value of the variable named "value", is an address pointer that is 16bit aligned, but not 32 or 64 bit aligned.
+
+                      Maybe all this casting in mysqld_show()  is not good for any CPU that can not access unaligned types ?  I'd guess the fact its 64bit isn't relevant to the problem.
+
+                      Maybe the memory allocation of variables->value member needs to take into consideration alignment rules for CPUs that have them (generally not x86) if they are to be accessed in the way mysqld_show() does.  Or the net_store_data() needs to be a better API, its usage just looks plain weird / wrong, but then I dont know jack about it.
+
+                      Regards,
+
+                      [30 Sep 2004 0:51] Darryl Miles
+
+                      sql/set_var.cc
+                          1.52.2.1 04/05/19 16:37:59 monty@mysql.com +1 -3
+                              Fixed bug when showing lower_case_file_system
+
+                              This ChangeLog entry in 4.0.21 fixes my problem.
+
+                              [1 Oct 2004 11:08] Matthew Lord
+
+                              This was fixed in 4.0.21.
+
+                              [26 May 2004 15:21] [ name withheld ]
+
+                              Description:
+                              Help !
+
+                              I've 2 servers running Solaris 8 and, on each, a MySQL server v 4.0.20 compiled with the sources that you provide.
+
+                              The command "SHOW VARIABLES;" make this error message :
+
+                              ---------------------------------------------------
+                              mysql> SHOW VARIABLES;
+                              ERROR 2006: MySQL server has gone away
+                              No connection. Trying to reconnect...
+                              Connection id:    4
+                              Current database: mysql
+
+                              ERROR 2013: Lost connection to MySQL server during query
+                              ---------------------------------------------------
+
+                              As the MySQL-Front client always di this command on connection, I can't use it no more...
+
+                              Thanks for any help.
+
+                              How to repeat:
+                              Download the sources of v4.0.20 on Mysql.com.
+                              Compiling them on Solaris 8.
+                              Connect to mySQL and then do the command "SHOW VARIABLES;".
+
+                              [29 May 2004 6:40] Matthew Lord
+
+                              trying to verify...
+
+                              [29 May 2004 21:14] Matthew Lord
+
+                              Hardware being used:
+                              Sun Sunfire v100 (UltraSPARC-IIe, 550 MHz, 512 MB)
+                              Operating System:
+                              Sun Solaris 8 (sparc)
+
+                              I was unable to reproduce the problem building w/o any configure options, using gcc.
+
+                              I will try to reproduce the problem using the Sun Forte 5.0 compiler.
+
+                              I need to know the specifics of the build host where the problem was experienced and exactly what 
+                              process was used to build the binaries.  In the meantime I would suggest using the pre-built binaries 
+                              provided by MySQL and see if you continue to have the problem.
+
+                              [29 May 2004 21:30] Matthew Lord
+
+                              Could not build mysqld with the forte 5 compiler.  Unless I hear back from the person who posted the 
+                              bug this will remain marked as could not repeat.
+
+                              [31 May 2004 16:36] [ name withheld ]
+
+                              I'll give you as soon as possible the specifics of the build and will try to use the binaries provided by mySQL...
+                              I'll have to check all of this at my office, I'll hope to add a comment on wednesday or thursday (6/2 or 6/3).
+
+                              [2 Jun 2004 13:34] [ name withheld ]
+
+                              Hi,
+
+                              Firstly, I can't use the binaries provided by MySQL cause I can't change the directory /usr/local by adding a mysql directory.
+
+                              Secondly, for the compilation, here is my hardware specif :
+                              SunOS 5.8 Generic_108528-16 sun4u sparc SUNW,Ultra-5_10
+                              I'm not using the Sun Forte 5.0 compiler but gcc 2.95.2.
+
+                              A part of my config.log :
+                              | #define PACKAGE_NAME ""
+                              | #define PACKAGE_TARNAME ""
+                              | #define PACKAGE_VERSION ""
+                              | #define PACKAGE_STRING ""
+                              | #define PACKAGE_BUGREPORT ""
+                              | #define PACKAGE "mysql"
+                              | #define VERSION "4.0.20"
+                              | #define PROTOCOL_VERSION 10
+                              | #define DOT_FRM_VERSION 6
+                              | #define SYSTEM_TYPE "sun-solaris2.8"
+                              | #define MACHINE_TYPE "sparc"
+
+                              Hope it'll help you.
+
+                              [2 Jun 2004 21:47] Matthew Lord
+
+                              Hi,
+
+                              You do not have to touch /usr/local to use our binaries, that is only the suggested location.  You can 
+                              untar the binary distribution wherever you like and in your /etc/my.cnf file in the [mysqld] group you
+                              would specify the datadir option to specify where your data is and the basedir option to point to where 
+                              you did untar it so that you can start mysqld_safe (for example) from any location.
+
+                              [2 Jun 2004 21:58] Matthew Lord
+
+                              I should have also mentioned that you can put your configuration information in ~/.my.cnf as well if 
+                              you don't have permissions to the /etc directory either.
+
+                              [3 Jun 2004 18:44] [ name withheld ]
+
+                              A solution,
+
+                              I've tried to use the binaries for Solaris 8/Sparc and it works !!
+                              No more problem with "SHOW VARIABLES", it's OK.
+
+                              Very strange that it works better with binaries than with sources but it's OK now.
+
+                              [28 Sep 2004 1:04] Darryl Miles
+
+                              Reproduced with linux, from debian_linux_3.0r2_sparc tool chain / distro.  Compiled my version of 4.0.20 from source.
+
+                              $ uname -a
+                              Linux ultra5 2.4.25 #1 Sun Mar 7 03:48:28 GMT 2004 sparc64 unknown
+
+                              mysql> status;
+                              --------------
+                              /opt/mysql/bin/mysql  Ver 12.22 Distrib 4.0.20, for unknown-linux (sparc64)
+
+                              Connection id:          1
+                              Current database:       mysql
+                              Current user:           root@localhost
+                              SSL:                    Not in use
+                              Current pager:          stdout
+                              Using outfile:          ''
+                              Server version:         4.0.20
+                              Protocol version:       10
+                              Connection:             Localhost via UNIX socket
+                              Client characterset:    latin1
+                              Server characterset:    latin1
+                              UNIX socket:            /opt/mysql/mysql.sock
+                              Uptime:                 10 min 9 sec
+
+                              Threads: 1  Questions: 17  Slow queries: 0  Opens: 12  Flush tables: 1  Open tables: 6  Queries per second avg: 0.028
+                              --------------
+
+                              mysql>
+                              mysql>
+                              mysql> show variables;
+                              ERROR 2013: Lost connection to MySQL server during query
+                              mysql>
+
+                              $ ./configure --prefix=/opt/mysql --with-mysqld-user=mysql --with-innodb --with-berkeley-db --with-vio --with-openssl=../openssl-0.9.7d --enable-thread-safe-client
+
+                              ultra5:/home/dlm# gdb /opt/mysql/libexec/mysqld 32686
+                              GNU gdb 2002-04-01-cvs
+                              Copyright 2002 Free Software Foundation, Inc.
+                              GDB is free software, covered by the GNU General Public License, and you are
+                              welcome to change it and/or distribute copies of it under certain conditions.
+                              Type "show copying" to see the conditions.
+                              There is absolutely no warranty for GDB.  Type "show warranty" for details.
+                              This GDB was configured as "sparc-linux"...(no debugging symbols found)...
+                              Attaching to program: /opt/mysql/libexec/mysqld, process 32686
+                              Reading symbols from /lib/librt.so.1...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/librt.so.1
+                              Reading symbols from /lib/libdl.so.2...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/libdl.so.2
+                              Reading symbols from /lib/libpthread.so.0...(no debugging symbols found)...
+                              done.
+                              [New Thread 1024 (LWP 32686)]
+                              [New Thread 2049 (LWP 32688)]
+                              [New Thread 1026 (LWP 32689)]
+                              [New Thread 2051 (LWP 32690)]
+                              [New Thread 3076 (LWP 32691)]
+                              [New Thread 4101 (LWP 32692)]
+                              [New Thread 5126 (LWP 32693)]
+                              [New Thread 6151 (LWP 32694)]
+                              [New Thread 7176 (LWP 32695)]
+                              [New Thread 8201 (LWP 32696)]
+                              [New Thread 9226 (LWP 32697)]
+                              Loaded symbols for /lib/libpthread.so.0
+                              Reading symbols from /lib/libcrypt.so.1...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/libcrypt.so.1
+                              Reading symbols from /lib/libnsl.so.1...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/libnsl.so.1
+                              Reading symbols from /usr/lib/libstdc++-libc6.2-2.so.3...
+                              (no debugging symbols found)...done.
+                              Loaded symbols for /usr/lib/libstdc++-libc6.2-2.so.3
+                              Reading symbols from /lib/libm.so.6...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/libm.so.6
+                              Reading symbols from /lib/libc.so.6...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/libc.so.6
+                              Reading symbols from /lib/ld-linux.so.2...(no debugging symbols found)...done.
+                              Loaded symbols for /lib/ld-linux.so.2
+                              Reading symbols from /lib/libnss_compat.so.2...(no debugging symbols found)...
+                              done.
+                              Loaded symbols for /lib/libnss_compat.so.2
+                              0x702a8b6c in select () from /lib/libc.so.6
+                              (gdb) c
+                              Continuing.
+                              [New Thread 10251 (LWP 32718)]
+
+                              Program received signal SIGBUS, Bus error.
+                              [Switching to Thread 10251 (LWP 32718)]
+                              0x00134a88 in mysqld_show ()
+                              (gdb)
+                              (gdb) list mysqld_show
+                              No symbol table is loaded.  Use the "file" command.
+                              (gdb) bt
+                              #0  0x00134a88 in mysqld_show ()
+                              #1  0x000c3104 in mysql_execute_command ()
+                              #2  0x000c4768 in mysql_parse ()
+                              #3  0x000c0b90 in dispatch_command ()
+                              #4  0x000c5cd0 in do_command ()
+                              #5  0x000c00d8 in handle_one_connection ()
+                              #6  0x70065918 in pthread_start_thread () from /lib/libpthread.so.0
+                              #7  0x7006594c in pthread_allocate_stack () from /lib/libpthread.so.0
+                              #8  0x702aefa8 in clone () from /lib/libc.so.6
+                              (gdb)
+
+                              $ nm /opt/mysql/libexec/mysqld  | grep "00134" | c++filt
+                              00134f50 W I_List<thread_info>::is_empty(void)
+                              00134d04 T mysqld_dump_create_info(THD *, st_table *, int)
+                              001347b4 T mysqld_show(THD *, char const *, show_var_st *, enum_var_type, pthread_mutex_t *)
+                              00134e0c W List<char>::push_back(char *)
+
+                              Just trying to build mysqld with debugging in to see if the problem still persists.
+
+                              [28 Sep 2004 14:03] Darryl Miles
+
+                              Debugging version...
+
+                              Welcome to the MySQL monitor.  Commands end with ; or \g.
+                              Your MySQL connection id is 5 to server version: 4.0.20-debug
+
+                              Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+                              mysql> show variables;
+
+                              # gdb /opt/mysql/libexec/mysqld 21881
+                              GNU gdb 2002-04-01-cvs
+                              Copyright 2002 Free Software Foundation, Inc.
+                              GDB is free software, covered by the GNU General Public License, and you are
+                              welcome to change it and/or distribute copies of it under certain conditions.
+                              Type "show copying" to see the conditions.
+                              There is absolutely no warranty for GDB.  Type "show warranty" for details.
+                              This GDB was configured as "sparc-linux"...
+                              Attaching to program: /opt/mysql/libexec/mysqld, process 21881
+                              Reading symbols from /lib/librt.so.1...done.
+                              Loaded symbols for /lib/librt.so.1
+                              Reading symbols from /lib/libdl.so.2...done.
+                              Loaded symbols for /lib/libdl.so.2
+                              Reading symbols from /lib/libpthread.so.0...done.
+                              [New Thread 1024 (LWP 21881)]
+                              [New Thread 2049 (LWP 21883)]
+                              [New Thread 1026 (LWP 21884)]
+                              [New Thread 2051 (LWP 21885)]
+                              [New Thread 3076 (LWP 21886)]
+                              [New Thread 4101 (LWP 21887)]
+                              [New Thread 5126 (LWP 21888)]
+                              [New Thread 6151 (LWP 21889)]
+                              [New Thread 7176 (LWP 21890)]
+                              [New Thread 8201 (LWP 21891)]
+                              [New Thread 9226 (LWP 21892)]
+                              [New Thread 14347 (LWP 21953)]
+                              Loaded symbols for /lib/libpthread.so.0
+                              Reading symbols from /lib/libcrypt.so.1...done.
+                              Loaded symbols for /lib/libcrypt.so.1
+                              Reading symbols from /lib/libnsl.so.1...done.
+                              Loaded symbols for /lib/libnsl.so.1
+                              Reading symbols from /usr/lib/libstdc++-libc6.2-2.so.3...done.
+                              Loaded symbols for /usr/lib/libstdc++-libc6.2-2.so.3
+                              Reading symbols from /lib/libm.so.6...done.
+                              Loaded symbols for /lib/libm.so.6
+                              Reading symbols from /lib/libc.so.6...done.
+                              Loaded symbols for /lib/libc.so.6
+                              Reading symbols from /lib/ld-linux.so.2...done.
+                              Loaded symbols for /lib/ld-linux.so.2
+                              Reading symbols from /lib/libnss_compat.so.2...done.
+                              Loaded symbols for /lib/libnss_compat.so.2
+                              0x702a8b6c in select () from /lib/libc.so.6
+                              (gdb) c
+                              Continuing.
+
+                              Program received signal SIGBUS, Bus error.
+                              [Switching to Thread 14347 (LWP 21953)]
+                              0x0013a854 in mysqld_show (thd=0x9c9160, wild=0x0, variables=0x4592c0,
+                                  value_type=OPT_SESSION, mutex=0x458024) at sql_show.cc:1241
+                                  1241            net_store_data(&packet2,(ulong) *(bool*) value ? "ON" : "OFF");
+                                  (gdb) list
+                                  1236            break;
+                                  1237          case SHOW_HA_ROWS:
+                                  1238            net_store_data(&packet2,(longlong) *(ha_rows*) value);
+                                  1239            break;
+                                  1240          case SHOW_BOOL:
+                                  1241            net_store_data(&packet2,(ulong) *(bool*) value ? "ON" : "OFF");
+                                  1242            break;
+                                  1243          case SHOW_MY_BOOL:
+                                  1244            net_store_data(&packet2,(ulong) *(my_bool*) value ? "ON" : "OFF");
+                                  1245            break;
+                                  (gdb) p value
+                                  $1 = 0x44b6b6 ""
+                                  (gdb) p *value
+                                  $2 = 0 '\0'
+                                  (gdb) p show_type
+                                  $3 = SHOW_BOOL
+                                  (gdb) p *variables
+                                  $4 = {name = 0x3a1628 "lower_case_file_system", value = 0x44b6b6 "",
+                                    type = SHOW_BOOL}
+                                    (gdb) p packet2
+                                    $5 = {
+                                      Ptr = 0x72d81598 "\026lower_case_file_systemFFe/mysql/english/tendoi8_ru latin2 swe7 usa7 cp1251 danish hebrew win1251 estonia hungarian koi8_ukr win1251ukr greek win1250 croat cp1257 latin5", str_length = 23, Alloced_length = 8192,
+                                        alloced = false}
+                                        (gdb) bt
+                                        #0  0x0013a854 in mysqld_show (thd=0x9c9160, wild=0x0, variables=0x4592c0,
+                                            value_type=OPT_SESSION, mutex=0x458024) at sql_show.cc:1241
+                                            #1  0x000c3b18 in mysql_execute_command () at sql_parse.cc:2179
+                                            #2  0x000c5460 in mysql_parse (thd=0x9c9160, inBuf=0x9c9290 "", length=14)
+                                                at sql_parse.cc:2998
+                                                #3  0x000c1544 in dispatch_command (command=COM_QUERY, thd=0x9c9160,
+                                                    packet=0x9c9c99 "", packet_length=14) at sql_parse.cc:1082
+                                                    #4  0x000c1098 in do_command (thd=0x9c9160) at sql_parse.cc:953
+                                                    #5  0x000c088c in handle_one_connection (arg=0x9c916c) at sql_parse.cc:737
+                                                    #6  0x70065918 in pthread_start_thread () from /lib/libpthread.so.0
+                                                    #7  0x702aefa8 in clone () from /lib/libc.so.6
+
+                                                    The value of the variable named "value", is an address pointer that is 16bit aligned, but not 32 or 64 bit aligned.
+
+                                                    Maybe all this casting in mysqld_show()  is not good for any CPU that can not access unaligned types ?  I'd guess the fact its 64bit isn't relevant to the problem.
+
+                                                    Maybe the memory allocation of variables->value member needs to take into consideration alignment rules for CPUs that have them (generally not x86) if they are to be accessed in the way mysqld_show() does.  Or the net_store_data() needs to be a better API, its usage just looks plain weird / wrong, but then I dont know jack about it.
+
+                                                    Regards,
+
+                                                    [30 Sep 2004 0:51] Darryl Miles
+
+                                                    sql/set_var.cc
+                                                        1.52.2.1 04/05/19 16:37:59 monty@mysql.com +1 -3
+                                                            Fixed bug when showing lower_case_file_system
+
+                                                            This ChangeLog entry in 4.0.21 fixes my problem.
+
+                                                            [1 Oct 2004 11:08] Matthew Lord
+
+                                                            This was fixed in 4.0.21.
+
+iii

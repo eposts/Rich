@@ -1,0 +1,32 @@
+Description: Adjust scp quoting in verbose mode
+ Tweak scp's reporting of filenames in verbose mode to be a bit less
+ confusing with spaces.
+ .
+ This should be revised to mimic real shell quoting.
+Author: Nicolas Valcárcel <nvalcarcel@ubuntu.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/89945
+Last-Update: 2010-02-27
+
+Index: b/scp.c
+===================================================================
+--- a/scp.c
++++ b/scp.c
+@@ -168,8 +168,16 @@
+ 
+ 	if (verbose_mode) {
+ 		fprintf(stderr, "Executing:");
+-		for (i = 0; i < a->num; i++)
+-			fprintf(stderr, " %s", a->list[i]);
++		for (i = 0; i < a->num; i++) {
++			if (i == 0)
++				fprintf(stderr, " %s", a->list[i]);
++			else
++				/*
++				 * TODO: misbehaves if a->list[i] contains a
++				 * single quote
++				 */
++				fprintf(stderr, " '%s'", a->list[i]);
++		}
+ 		fprintf(stderr, "\n");
+ 	}
+ 	if ((pid = fork()) == -1)

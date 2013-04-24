@@ -1,0 +1,448 @@
+#
+# openssh debconf translation to spanish
+# Copyright (C) 2003-2007 Software in the Public Interest
+# This file is distributed under the same license as the XXXX package.
+#
+# Changes:
+# - Initial translation
+#    Carlos Valdivia Yagüe <valyag@dat,etsit.upm.es>, 2003
+# - Revision
+#    Javier Fernandez-Sanguino Peña <jfs@computer.org>, 2004
+# - Translation updates
+#    Javier Fernandez-Sanguino Peña <jfs@computer.org>, 2006-2008
+#
+#  Traductores, si no conoce el formato PO, merece la pena leer la 
+#  documentación de gettext, especialmente las secciones dedicadas a este
+#  formato, por ejemplo ejecutando:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+#   http://www.debian.org/intl/spanish/coordinacion
+#   especialmente las notas de traducción en
+#   http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+#   /usr/share/doc/po-debconf/README-trans
+#   o http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openssh 3.6.1p2-11\n"
+"Report-Msgid-Bugs-To: openssh@packages.debian.org\n"
+"POT-Creation-Date: 2010-01-02 08:55+0000\n"
+"PO-Revision-Date: 2008-05-22 00:56+0200\n"
+"Last-Translator: Javier Fernandez-Sanguino Peña <jfs@debian.org>\n"
+"Language-Team: Debian L10n Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-POFile-SpellExtra: usr pid PasswordAuthentication PermitRootLogin server\n"
+"X-POFile-SpellExtra: PAM start OpenSSH OpenSSL init sshhostkey daemon var\n"
+"X-POFile-SpellExtra: config pam pidfile vulnkey run Potato keys share stop\n"
+"X-POFile-SpellExtra: gz README ssh sshd doc keygen ARCHIVOCLAVESISTEMA SSH\n"
+"X-POFile-SpellExtra: openssh root compromised\n"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid "Do you want to risk killing active SSH sessions?"
+msgstr "¿Desea correr el riesgo de matar las sesiones SSH activas?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"The currently installed version of /etc/init.d/ssh is likely to kill all "
+"running sshd instances. If you are doing this upgrade via an SSH session, "
+"you're likely to be disconnected and leave the upgrade procedure unfinished."
+msgstr ""
+"La versión de /etc/init.d/ssh que tiene instalada es muy probable que mate "
+"todas las estancias que están ejecutándose de sshd. Es muy probable que se "
+"le desconecte y el procedimiento de actualización quede a medidas si "
+"continúa y está realizando esta actualizando."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:1001
+msgid ""
+"This can be fixed by manually adding \"--pidfile /var/run/sshd.pid\" to the "
+"start-stop-daemon line in the stop section of the file."
+msgstr ""
+"Puede arreglarlo añadiendo manualmente «--pidfile /var/run/sshd.pid» a la "
+"línea «start-stop-daemon», en la sección «stop» del fichero."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "New host key mandatory"
+msgstr "Nueva clave de sistema obligatoria"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid ""
+"The current host key, in /etc/ssh/ssh_host_key, is encrypted with the IDEA "
+"algorithm. OpenSSH can not handle this host key file, and the ssh-keygen "
+"utility from the old (non-free) SSH installation does not appear to be "
+"available."
+msgstr ""
+"La clave actual de su sistema, en /etc/ssh/ssh_host_key, está cifrada con el "
+"algoritmo IDEA. OpenSSH no puede manejar este fichero de clave y tampoco "
+"parece estar disponible la utilidad «ssh-keygen» de la instalación antigua de "
+"SSH (no libre)."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:2001
+msgid "You need to manually generate a new host key."
+msgstr "Debe generar manualmente una nueva clave de sistema."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid "Disable challenge-response authentication?"
+msgstr "¿Desea deshabilitar la autenticación basada en desafío-respuesta?"
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"Password authentication appears to be disabled in the current OpenSSH server "
+"configuration. In order to prevent users from logging in using passwords "
+"(perhaps using only public key authentication instead) with recent versions "
+"of OpenSSH, you must disable challenge-response authentication, or else "
+"ensure that your PAM configuration does not allow Unix password file "
+"authentication."
+msgstr ""
+"Parece que la configuración actual de su servidor de OpenSSH tiene "
+"deshabilitada la autenticación mediante contraseñas. En las versiones "
+"recientes de OpenSSH para impedir que los usuarios se puedan conectar con "
+"contraseñas (y obligar la utilización de sistemas de autenticación con clave "
+"pública) debe deshabilitar la autenticación basada en desafío-respuesta o "
+"asegurarse de que su configuración PAM no permite autenticación basada en el "
+"fichero de contraseñas Unix."
+
+#. Type: boolean
+#. Description
+#: ../openssh-server.templates:3001
+msgid ""
+"If you disable challenge-response authentication, then users will not be "
+"able to log in using passwords. If you leave it enabled (the default "
+"answer), then the 'PasswordAuthentication no' option will have no useful "
+"effect unless you also adjust your PAM configuration in /etc/pam.d/ssh."
+msgstr ""
+"Si deshabilita la autenticación mediante desafío-respuesta los usuarios no "
+"podrán acceder con contraseñas. Si la deja habilitada (respuesta por "
+"omisión) entonces la opción «PasswordAuthentication no» no tendrá ninguna "
+"utilidad a menos que ajuste su configuración de PAM en «/etc/pam.d/ssh»."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "Vulnerable host keys will be regenerated"
+msgstr "Se regenerarán las claves vulnerables del sistema"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Some of the OpenSSH server host keys on this system were generated with a "
+"version of OpenSSL that had a broken random number generator. As a result, "
+"these host keys are from a well-known set, are subject to brute-force "
+"attacks, and must be regenerated."
+msgstr ""
+"Algunas de las claves de sistema del servidor OpenSSH en este equipo se "
+"generaron con una versión de OpenSSL que tenía un generador de números "
+"aleatorios defectuoso. Consecuentemente, estas claves de sistema son de un "
+"conjunto de claves conocidas y están sujetas a ataques de fuerza bruta por "
+"lo que conviene regenerarlas."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"Users of this system should be informed of this change, as they will be "
+"prompted about the host key change the next time they log in. Use 'ssh-"
+"keygen -l -f HOST_KEY_FILE' after the upgrade to print the fingerprints of "
+"the new host keys."
+msgstr ""
+"Se informará a los usuarios de este sistema ya que se les informará del "
+"cambio de clave la siguiente vez que se conecten. Utilice «ssh-keygen -l -f "
+"ARCHIVO_CLAVE_SISTEMA» después de la actualización para obtener la huella "
+"digital de las nuevas claves del sistema."
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid "The affected host keys are:"
+msgstr "Las claves del sistema afectadas son:"
+
+#. Type: note
+#. Description
+#: ../openssh-server.templates:4001
+msgid ""
+"User keys may also be affected by this problem. The 'ssh-vulnkey' command "
+"may be used as a partial test for this. See /usr/share/doc/openssh-server/"
+"README.compromised-keys.gz for more details."
+msgstr ""
+"Las claves de los usuarios también pueden estar afectadas por este problema. "
+"Se puede utilizar el programa «ssh-vulnkey» como un test parcial para "
+"detectar el problema. Consulte la información en «/usr/share/doc/openssh-"
+"server/README.compromised-keys.gz» para conocer los detalles."
+
+#~ msgid "Generate a new configuration file for OpenSSH?"
+#~ msgstr "¿Desea generar un nuevo fichero de configuración para OpenSSH?"
+
+#~ msgid ""
+#~ "This version of OpenSSH has a considerably changed configuration file "
+#~ "from the version shipped in Debian 'Potato', which you appear to be "
+#~ "upgrading from. This package can now generate a new configuration file (/"
+#~ "etc/ssh/sshd.config), which will work with the new server version, but "
+#~ "will not contain any customizations you made with the old version."
+#~ msgstr ""
+#~ "Esta versión de OpenSSH ha cambiado considerablemente el fichero de "
+#~ "configuración del incluido en Debian 'Potato', que es la versión desde la "
+#~ "que parece estar actualizando. Puede crear automáticamente un nuevo "
+#~ "fichero de configuración (/etc/ssh/sshd.config), que funcionará con la "
+#~ "nueva versión del servidor, pero no incluirá las modificaciones que "
+#~ "hiciera en la versión antigua."
+
+#~ msgid ""
+#~ "Please note that this new configuration file will set the value of "
+#~ "'PermitRootLogin' to 'yes' (meaning that anyone knowing the root password "
+#~ "can ssh directly in as root). Please read the README.Debian file for more "
+#~ "details about this design choice."
+#~ msgstr ""
+#~ "Además, recuerde que este nuevo fichero de configuración dirá sí en la "
+#~ "opción «PermitRootLogin», por lo que cualquiera que conozca la contraseña "
+#~ "de root podrá entrar mediante ssh directamente como root. Puede leer "
+#~ "README.Debian si quiere conocer más información sobre esta elección de "
+#~ "diseño."
+
+#~ msgid ""
+#~ "It is strongly recommended that you choose to generate a new "
+#~ "configuration file now."
+#~ msgstr ""
+#~ "Es muy recomendable que elija generar un nuevo fichero de configuración "
+#~ "ahora."
+
+#~ msgid "Warning: you must create a new host key"
+#~ msgstr "Aviso: debe crear una nueva clave para su servidor"
+
+#~ msgid "Warning: telnetd is installed --- probably not a good idea"
+#~ msgstr "Aviso: tiene telnetd instalado (posiblemente no es una buena idea)"
+
+#~ msgid ""
+#~ "I'd advise you to either remove the telnetd package (if you don't "
+#~ "actually need to offer telnet access) or install telnetd-ssl so that "
+#~ "there is at least some chance that telnet sessions will not be sending "
+#~ "unencrypted login/password and session information over the network."
+#~ msgstr ""
+#~ "Es muy aconsejable que borre el paquete telnetd si no necesita realmente "
+#~ "ofrecer acceso mediante telnet o instalar telnetd-ssl para que las "
+#~ "contraseñas, nombres de usuario y demás información de las sesiones "
+#~ "telnet no viajen sin cifrar por la red."
+
+#~ msgid "Warning: rsh-server is installed --- probably not a good idea"
+#~ msgstr ""
+#~ "Aviso: tiene rsh-server instalado (seguramente, esto no es una buena idea)"
+
+#~ msgid ""
+#~ "having rsh-server installed undermines the security that you were "
+#~ "probably wanting to obtain by installing ssh.  I'd advise you to remove "
+#~ "that package."
+#~ msgstr ""
+#~ "Tener rsh-server instalado representa un menoscabo de la seguridad que "
+#~ "probablemente desea obtener instalando ssh. Es muy aconsejable que borre "
+#~ "ese paquete."
+
+#~ msgid "Do you want ssh-keysign to be installed SUID root?"
+#~ msgstr "¿Quiere instalar ssh-keysign SUID root?"
+
+#~ msgid ""
+#~ "You have the option of installing the ssh-keysign helper with the SUID "
+#~ "bit set."
+#~ msgstr ""
+#~ "Puede instalar ssh-keysign con el bit SUID (se ejecutará con privilegios "
+#~ "de root)."
+
+#~ msgid ""
+#~ "If you make ssh-keysign SUID, you will be able to use SSH's Protocol 2 "
+#~ "host-based authentication."
+#~ msgstr ""
+#~ "Si hace ssh-keysign SUID, podrá usar la autenticación basada en servidor "
+#~ "de la versión 2 del protocolo SSH."
+
+#~ msgid ""
+#~ "If in doubt, I suggest you install it with SUID.  If it causes problems "
+#~ "you can change your mind later by running:   dpkg-reconfigure ssh"
+#~ msgstr ""
+#~ "Si duda, se recomienda que lo instale SUID. Si le causa problemas puede "
+#~ "cambiar de opinión posteriormente ejecutando «dpkg-reconfigure ssh»."
+
+#~ msgid "Allow SSH protocol 2 only"
+#~ msgstr "Permitir sólo la versión 2 del protocolo SSH"
+
+#~ msgid ""
+#~ "This version of OpenSSH supports version 2 of the ssh protocol, which is "
+#~ "much more secure.  Disabling ssh 1 is encouraged, however this will slow "
+#~ "things down on low end machines and might prevent older clients from "
+#~ "connecting (the ssh client shipped with \"potato\" is affected)."
+#~ msgstr ""
+#~ "Esta versión de OpenSSH soporta la versión 2 del protocolo ssh, que es "
+#~ "mucho más segura que la anterior. Se recomienda desactivar la versión 1, "
+#~ "aunque funcionará más lento en máquinas modestas y puede impedir que se "
+#~ "conecten clientes antiguos, como, por ejemplo, el incluido en «potato»."
+
+#~ msgid ""
+#~ "Also please note that keys used for protocol 1 are different so you will "
+#~ "not be able to use them if you only allow protocol 2 connections."
+#~ msgstr ""
+#~ "También tenga en cuenta que las claves utilizadas para el protocolo 1 son "
+#~ "diferentes, por lo que no podrá usarlas si únicamente permite conexiones "
+#~ "mediante la versión 2 del protocolo."
+
+#~ msgid ""
+#~ "If you later change your mind about this setting, README.Debian has "
+#~ "instructions on what to do to your sshd_config file."
+#~ msgstr ""
+#~ "Si más tarde cambia de opinión, el fichero README.Debian contiene "
+#~ "instrucciones sobre cómo modificar en el fichero sshd_config."
+
+#~ msgid "NOTE: Forwarding of X11 and Authorization disabled by default."
+#~ msgstr "NOTA: Reenvío de X11 y Autorización desactivadas por defecto."
+
+#~ msgid ""
+#~ "For security reasons, the Debian version of ssh has ForwardX11 and "
+#~ "ForwardAgent set to ``off'' by default."
+#~ msgstr ""
+#~ "Por razones de seguridad, la versión de ssh de Debian tiene por defecto "
+#~ "ForwardX11 y ForwardAgent desactivadas."
+
+#~ msgid ""
+#~ "You can enable it for servers you trust, either in one of the "
+#~ "configuration files, or with the -X command line option."
+#~ msgstr ""
+#~ "Puede activar estas opciones para los servidores en los que confíe, en "
+#~ "los ficheros de configuración o con la opción -X en línea de comandos."
+
+#~ msgid "More details can be found in /usr/share/doc/ssh/README.Debian"
+#~ msgstr "Puede encontrar más detalles en /usr/share/doc/ssh/README.Debian."
+
+#~ msgid "ssh2 keys merged in configuration files"
+#~ msgstr "Las claves ssh2 ya se incluyen en los ficheros de configuración"
+
+#~ msgid ""
+#~ "As of version 3 OpenSSH no longer uses separate files for ssh1 and ssh2 "
+#~ "keys. This means the authorized_keys2 and known_hosts2 files are no "
+#~ "longer needed. They will still be read in order to maintain backwards "
+#~ "compatibility"
+#~ msgstr ""
+#~ "A partir de la versión 3, OpenSSH ya no utiliza ficheros diferentes para "
+#~ "las claves ssh1 y ssh2. Esto quiere decir que ya no son necesarios los "
+#~ "ficheros authorized_keys2 y known_hosts2, aunque aún se seguirán leyendo "
+#~ "para mantener compatibilidad hacia atrás."
+
+#~ msgid "Do you want to run the sshd server?"
+#~ msgstr "¿Quiere ejecutar el servidor sshd?"
+
+#~ msgid "This package contains both the ssh client, and the sshd server."
+#~ msgstr "Este paquete contiene el cliente ssh y el servidor sshd."
+
+#~ msgid ""
+#~ "Normally the sshd Secure Shell Server will be run to allow remote logins "
+#~ "via ssh."
+#~ msgstr ""
+#~ "Generalmente, el servidor de ssh (Secure Shell Server) se ejecuta para "
+#~ "permitir el acceso remoto mediante ssh."
+
+#~ msgid ""
+#~ "If you are only interested in using the ssh client for outbound "
+#~ "connections on this machine, and don't want to log into it at all using "
+#~ "ssh, then you can disable sshd here."
+#~ msgstr ""
+#~ "Si sólo está interesado en usar el cliente ssh en conexiones salientes "
+#~ "del sistema y no quiere acceder a él mediante ssh, entonces puede "
+#~ "desactivar sshd."
+
+#~ msgid "Environment options on keys have been deprecated"
+#~ msgstr "Las opciones de entorno para las claves, en desuso"
+
+#~ msgid ""
+#~ "This version of OpenSSH disables the environment option for public keys "
+#~ "by default, in order to avoid certain attacks (for example, LD_PRELOAD). "
+#~ "If you are using this option in an authorized_keys file, beware that the "
+#~ "keys in question will no longer work until the option is removed."
+#~ msgstr ""
+#~ "Esta versión de OpenSSH tiene desactivada por defecto la opción de "
+#~ "entorno para las claves públicas, para evitar ciertos ataques (por "
+#~ "ejemplo, basados en LD_PRELOAD). Si utiliza esta opción en un fichero "
+#~ "authorized_keys, las claves implicadas no funcionarán hasta que borre la "
+#~ "opción."
+
+#~ msgid ""
+#~ "To re-enable this option, set \"PermitUserEnvironment yes\" in /etc/ssh/"
+#~ "sshd_config after the upgrade is complete, taking note of the warning in "
+#~ "the sshd_config(5) manual page."
+#~ msgstr ""
+#~ "Para volver a activar esta opción, escriba «PermitUserEnvironment yes» en /"
+#~ "etc/ssh/sshd_config al terminar la actualización, teniendo en cuenta el "
+#~ "aviso de la página de manual de sshd_config(5)."
+
+#~ msgid "Privilege separation"
+#~ msgstr "Separación de privilegios"
+
+#~ msgid ""
+#~ "Privilege separation is turned on by default, so if you decide you want "
+#~ "it turned off, you need to add \"UsePrivilegeSeparation no\" to /etc/ssh/"
+#~ "sshd_config."
+#~ msgstr ""
+#~ "La separación de privilegios está activa por defecto, por lo que si "
+#~ "decide desactivarla, tiene que añadir «UsePrivilegeSeparation no» al "
+#~ "fichero /etc/ssh/sshd_config."
+
+#~ msgid "Enable Privilege separation"
+#~ msgstr "Activar separación de privilegios"
+
+#~ msgid ""
+#~ "This version of OpenSSH contains the new privilege separation option. "
+#~ "This significantly reduces the quantity of code that runs as root, and "
+#~ "therefore reduces the impact of security holes in sshd."
+#~ msgstr ""
+#~ "Esta versión de OpenSSH incluye una nueva opción de separación de "
+#~ "privilegios que reduce significativamente la cantidad de código que se "
+#~ "ejecuta como root, por lo que reduce el impacto de posibles agujeros de "
+#~ "seguridad en sshd."
+
+#~ msgid ""
+#~ "Unfortunately, privilege separation interacts badly with PAM. Any PAM "
+#~ "session modules that need to run as root (pam_mkhomedir, for example) "
+#~ "will fail, and PAM keyboard-interactive authentication won't work."
+#~ msgstr ""
+#~ "Desafortunadamente, la separación de privilegios no funciona "
+#~ "correctamente con PAM. Cualquier módulo PAM que necesite ejecutarse como "
+#~ "root (como, por ejemplo, pam_mkhomedir) y la autenticación interactiva "
+#~ "PAM con teclado no funcionarán."
+
+#~ msgid ""
+#~ "Since you've opted to have me generate an sshd_config file for you, you "
+#~ "can choose whether or not to have privilege separation turned on or not. "
+#~ "Unless you know you need to use PAM features that won't work with this "
+#~ "option, you should enable it."
+#~ msgstr ""
+#~ "Puesto que ha elegido crear automáticamente el fichero sshd_config, puede "
+#~ "decidir ahora si quiere activar la opción de separación de privilegios. A "
+#~ "menos que necesite usar ciertas características de PAM que no funcionan "
+#~ "con esta opción, debería responder sí a esta pregunta."
+
+#~ msgid ""
+#~ "NB! If you are running a 2.0 series Linux kernel, then privilege "
+#~ "separation will not work at all, and your sshd will fail to start unless "
+#~ "you explicitly turn privilege separation off."
+#~ msgstr ""
+#~ "Nota: Si utiliza un núcleo Linux 2.0, la separación de privilegios "
+#~ "fallará estrepitosamente y sshd no funcionará a no ser que la desactive."

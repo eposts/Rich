@@ -1,0 +1,12 @@
+#! /bin/sh
+
+rm -f key1 key1.pub key2 key2.pub
+LD_PRELOAD="$(pwd)/getpid.so" FORCE_PID=1234 \
+	../../build-deb/ssh-keygen -N '' -f key1 >/dev/null
+LD_PRELOAD="$(pwd)/getpid.so" FORCE_PID=1234 \
+	../../build-deb/ssh-keygen -N '' -f key2 >/dev/null
+if cmp -s key1 key2; then
+	echo "Generated two identical keys!" >&2
+	exit 1
+fi
+exit 0

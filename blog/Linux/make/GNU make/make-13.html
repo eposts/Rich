@@ -1,0 +1,175 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>第十三章 和其它版本的兼容</title>
+<style>
+<!--
+h1
+	{margin-top:12.0pt;
+	margin-right:0pt;
+	margin-bottom:12.0pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	page-break-after:avoid;
+	tab-stops:list 21.6pt;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:Arial;
+	}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	margin-left:0pt; margin-right:0pt; margin-top:0pt}
+-->
+</style>
+</head>
+
+<body>
+
+<h1 align="center" style="text-align: center; text-indent: 0pt; margin-left: 9.9pt">
+<a name="chapter_13"><span style="font-size: 18.0pt; font-family: 楷体_GB2312">
+第十三章</span><span style="font-size: 18.0pt"> </span>
+<span style="font-size: 18.0pt; font-family: 楷体_GB2312">和其它版本的兼容</span></a></h1>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center"></span>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+GNU make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">存在一些和其它版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">不兼容的功能，其它版本</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">具有的部分功能，在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中也没有实现。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">POSIX.2
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+标准</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+（</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">IEEE 
+Standard 1003.2-1992</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）没有规定以下的这些特点需要在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中实现。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">形如“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">FILE((ENTRY))</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”的目标代表静态库文件“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">FILE</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”的一个成员。它的成员不是用文件名，而是一个定义了连接符号“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">ENTRY</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”的</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">.o</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">文件。</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">没有支持它的原因是：书写这样的规则要求书写者对静态库内部符号索引表熟悉。</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">对静态库成员的更新可参考</span><span style="font-size: 12.0pt; font-family: Arial; color: black">
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+<a href="make-11.html">第十一章</a></span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">以字符“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">~</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”</span><span style="font-size: 12.0pt; font-family: Arial; color: black">
+</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+结尾的后缀在</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">System 
+V make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">的后缀规则中有特别的含义；它指的是对应目标文件的依赖文件是没有“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">~</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”的</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">SCCS
+</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">
+文件。例如，</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">System 
+V</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">的后缀规则“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">.c~.o</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”含义是：“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">N.o</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”是从</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">SCCS</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">文件“</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">s.N.c</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">”中提取的。为了完全覆盖，可能需要一系列的这样的规则。</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">对它的处理是：使用两个模式规则从</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">SCCS</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">文件抽取一个文件，这两个模式规则形成一个隐含规则链。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">可参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.4">
+10.4<span lang="EN-US" style="font-family: 楷体_GB2312"> 隐含规则链</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">System 
+V </span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+4.3 BSD make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，通过“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">VPATH</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”指定的目录搜寻（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-04.html#_gnu_make_4.5">
+4.5 <span lang="EN-US" style="font-family: 楷体_GB2312">目录搜索</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）的文件，对应的文件名需要经过</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">改变后才加入对应规则到命令行中。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">使用自动环变量来实现这一功能。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在一些</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，自动化变量“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$*</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”（参考</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+<span lang="EN-US">
+<a style="color: blue; text-decoration: underline; text-underline: single" href="make-10.html#_gnu_make_10.5.3">
+10.5.3<span lang="EN-US" style="font-family: 楷体_GB2312"> 自动化变量</span></a> </span>
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一节）作为规则的依赖时，具有奇怪的特征：它会被扩展为该规则的目标全名。它和</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">$*</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的含义完全不同。</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span>
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+</p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在一些</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Unix</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中。会为所有目标搜索隐含规则，不仅仅对那些没有命令的目标。就是说如果我们的规则时这样的话：</span><span style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">foo.o:</span></i></b></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cc -c 
+foo.c</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这种版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">就会认为目标“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.o</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的依赖文件是“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">foo.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+我们认为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的这种处理方法容易导致混乱。因为</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">Makefile</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">已经对目标有明确的定义，而在为目标搜索隐含规则是不合逻辑的。因此</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">没有支持这种方式的规则处理。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">
+GNU make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">不包含任何编译以及预处理</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">EFL</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">程序的内嵌隐含规则。如果其它那种版本的</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">已经实现了这个特性，我们会很乐意地把它加入到</span><span lang="EN-US" style="font-size: 12.0pt; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; font-family: 楷体_GB2312; color: black">支持的特性中。</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">&Oslash;<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black"> 
+SVR4</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中，一个没有命令的后缀规则被作为一个空命令规则来处理。例如：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.c.a:</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+这个规则将覆盖内嵌的目标为“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.c.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”的规则。</span></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 42.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">
+GNU make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">对这个规则的行为是为目标</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.a</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">添加一个依赖类型</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">.c</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">。上述的行为在</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">中的实现是：</span></p>
+<p class="MsoNormal" style="margin-left:58.2pt"><b><i>
+<span lang="EN-US" style="font-size: 12.0pt; font-family: Arial">.c.a: ;</span></i></b></p>
+<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: -21.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other; margin-left: 21.0pt">
+<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Wingdings; color: black">
+&Oslash;<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+一些版本的</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make
+</span>
+<span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">
+在调用</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">时使用“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">-e</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”参数告诉</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">shell</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">，在除执行“</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">make 
+-k</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">”时，一旦命令行执行失败（返回状态非</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">0</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">）就立即退出。我们认为对于不同的命令的执行结果要视情况来处理。因此</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; font-family: Arial; color: black">GNU 
+make</span><span style="font-size: 12.0pt; line-height: 150%; font-family: 楷体_GB2312; color: black">的没有支持这种方式。</span></p>
+	<span lang="EN-US" style="font-size: 12.0pt; line-height: 150%; color: #222222">
+	<hr size="1" width="100%" align="center">
+
+	<span style="font-size: 12.0pt; font-family: Arial; ">
+	<p class="MsoNormal" style="text-align: justify; text-justify: inter-ideograph; text-indent: 24.0pt; line-height: 150%; text-autospace: ideograph-numeric ideograph-other">
+	<font face="楷体_GB2312" size="4"><a href="make-14.html">下一章</a>
+	<a href="make-12.html">上一章</a> <a href="index.html#content">目录</a></font></p>
+	</span>
+</body>
+
+</html>

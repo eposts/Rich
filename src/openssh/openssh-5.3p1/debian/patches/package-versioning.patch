@@ -1,0 +1,50 @@
+Description: Include the Debian version in our identification
+ This makes it easier to audit networks for versions patched against
+ security vulnerabilities.  It has little detrimental effect, as attackers
+ will generally just try attacks rather than bothering to scan for
+ vulnerable-looking version strings.  (However, see debian-banner.patch.)
+Author: Matthew Vernon <matthew@debian.org>
+Forwarded: not-needed
+Last-Update: 2010-02-28
+
+Index: b/sshconnect.c
+===================================================================
+--- a/sshconnect.c
++++ b/sshconnect.c
+@@ -537,7 +537,7 @@
+ 	snprintf(buf, sizeof buf, "SSH-%d.%d-%.100s%s",
+ 	    compat20 ? PROTOCOL_MAJOR_2 : PROTOCOL_MAJOR_1,
+ 	    compat20 ? PROTOCOL_MINOR_2 : minor1,
+-	    SSH_VERSION, compat20 ? "\r\n" : "\n");
++	    SSH_RELEASE, compat20 ? "\r\n" : "\n");
+ 	if (roaming_atomicio(vwrite, connection_out, buf, strlen(buf))
+ 	    != strlen(buf))
+ 		fatal("write: %.100s", strerror(errno));
+Index: b/sshd.c
+===================================================================
+--- a/sshd.c
++++ b/sshd.c
+@@ -426,7 +426,7 @@
+ 		minor = PROTOCOL_MINOR_1;
+ 	}
+ 	snprintf(buf, sizeof buf, "SSH-%d.%d-%.100s%s", major, minor,
+-	    SSH_VERSION, newline);
++	    SSH_RELEASE, newline);
+ 	server_version_string = xstrdup(buf);
+ 
+ 	/* Send our protocol version identification. */
+Index: b/version.h
+===================================================================
+--- a/version.h
++++ b/version.h
+@@ -3,4 +3,9 @@
+ #define SSH_VERSION	"OpenSSH_5.3"
+ 
+ #define SSH_PORTABLE	"p1"
+-#define SSH_RELEASE	SSH_VERSION SSH_PORTABLE
++#define SSH_RELEASE_MINIMUM	SSH_VERSION SSH_PORTABLE
++#ifdef SSH_EXTRAVERSION
++#define SSH_RELEASE	SSH_RELEASE_MINIMUM " " SSH_EXTRAVERSION
++#else
++#define SSH_RELEASE	SSH_RELEASE_MINIMUM
++#endif

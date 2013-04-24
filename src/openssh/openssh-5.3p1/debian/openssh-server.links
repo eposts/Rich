@@ -1,0 +1,2 @@
+usr/lib/openssh/sftp-server usr/lib/sftp-server
+usr/share/doc/openssh-client usr/share/doc/openssh-server
