@@ -4,4 +4,4 @@ git config --global user.email "richard.lee8681@gmail.com"
 git add .
 git commit -m "My First Git"
 git remote add origin git@github.com:richardlee8681/Rich.git
-git push
+git push origin master
