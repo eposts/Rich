@@ -11,6 +11,7 @@ chmod 755 /etc/X11/Xsession.d/95xinput
 *********************************************************************************
 Install Google Input Method
 
+apt-get install scim
 git clone git://github.com/tchaikov/scim-googlepinyin.git
 apt-get install libscim-dev
 cd scim-googlepinyin.git
