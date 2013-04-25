@@ -1,8 +1,10 @@
  vim ±àÒë cscope
 
+apt-get install python-dev
 apt-get install libgtk2.0-dev
 
-./configure --with-features=huge --enable-cscope --enable-fontset --enable-multibyte --enable-perlinterp --enable-rubyinterp --enable-pythoninterp --enable-gui=gtk2
+./configure --prefix=/usr --with-features=huge --enable-cscope --enable-fontset --enable-multibyte --enable-perlinterp=yes --enable-rubyinterp=yes --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config/ --enable-tclinterp=yes --enable-gpm --enable-gui=gtk2 
+
 
 ------------------------------------------------------------------------------------------------------
 gvim×î´ó»¯
