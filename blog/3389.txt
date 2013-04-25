@@ -1,0 +1,127 @@
+echo Windows Registry Editor Version 5.00>3389.reg
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]>>3389.reg
+echo "fDenyTSConnections"=dword:00000000>>3389.reg
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]>>3389.reg
+echo "PortNumber"=dword:00000d3d>>3389.reg
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp]>>3389.reg
+echo "PortNumber"=dword:00000d3d>>3389.reg
+regedit /s 3389.reg 
+del 3389.reg
+
+
+远程桌面连接是不是就是terminal services
+
+我的2003“服务”列表中找不到“terminal services”
+
+如何重新安装远程桌面
+
+难道就是安装“终端服务”?
+
+--------------------------------------------------------------------------------
+
+Windows Server 2003将两种模式彻底分开，Remote Administration模式通过My Computer的属性进行设置，而Application Sharing mode通过Terminal Server组件安装，因此不再有mode的概念。但是其实仍然都是依赖于同一个Terminal Service的Windows Service。Remote Desktop client优先使用Terminal Server（相当于Application sharing模式）进行连接，因此在Terminal server license过期之后，即使设置Allow users to connect remotely to this computer，仍然无法连接，这应该就是出现上述问题的原因。
+
+--------------------------------------------------------------------------------
+
+
+
+sc create TermServices binpath= "C:\Windows\System32\svchost.exe -k NetworkService" start=auto displayname= "Terminal Services" 
+
+C:\Documents and Settings\Administrator>sc create TermServices binpath= "C:\Wind
+ows\System32\svchost.exe -k termsvcs" start= auto displayname= "Terminal Service
+s"
+创建服务成功但是在启动时提示Terminal Services 服务在启动时暂停。
+
+--------------------------------------------------------------------------------
+
+安装组件也于事无补，看了下c:\windwos\system32\termsrv.dll也是正常的
+又不想重装服务器
+
+--------------------------------------------------------------------------------
+
+
+C:\>net use \\xxx.xxx.xxx.xxx\ipc$ "password" /user:"name" 
+
+第一步，检查对方是否真的禁用了Terminal server 
+
+C:\>sc \\xxx.xxx.xxx.xxx qc termservice 
+[SC] GetServiceConfig SUCCESS 
+
+SERVICE_NAME: termservice 
+TYPE : 10 WIN32_OWN_PROCESS 
+START_TYPE : 4 DISABLED 
+ERROR_CONTROL : 1 NORMAL 
+BINARY_PATH_NAME : C:\WINNT\System32\termsrv.exe 
+LOAD_ORDER_GROUP : 
+TAG : 0 
+DISPLAY_NAME : Terminal Services 
+DEPENDENCIES : 
+SERVICE_START_NAME : LocalSystem 
+
+仔细看 START_TYPE一项，显示对方该服务的启动模式为“DISABLED”也就是“禁用”。 
+
+第二步，更改对方终端服务的启动模式 
+
+C:\>sc \\xxx.xxx.xxx.xxx config termservice start= auto 
+
+[SC] ChangeServiceConfig SUCCESS 
+
+好了，现在我们已经把对方终端服务的启动模式修改成自动了。 
+
+第三步，再检查一便对方终端服务的启动模式（.abu.:呵呵，习惯问题） 
+
+C:\>sc \\TEST qc termservice 
+[SC] GetServiceConfig SUCCESS 
+
+SERVICE_NAME: termservice 
+TYPE : 10 WIN32_OWN_PROCESS 
+START_TYPE : 2 AUTO_START 
+ERROR_CONTROL : 1 NORMAL 
+BINARY_PATH_NAME : C:\WINNT\System32\termsrv.exe 
+LOAD_ORDER_GROUP : 
+TAG : 0 
+DISPLAY_NAME : Terminal Services 
+DEPENDENCIES : 
+SERVICE_START_NAME : LocalSystem 
+
+仔细看 START_TYPE一项，显示对方该服务的启动模式为“AUTO_START”也就是“自动”。 
+
+OK 
+第四步，启动对方的终端服务 
+
+C:\>sc \\xxx.xxx.xxx.xxx start termservice 
+
+SERVICE_NAME: termservice 
+TYPE : 10 WIN32_OWN_PROCESS 
+STATE : 2 START_PENDING 
+(NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN) 
+WIN32_EXIT_CODE : 0 (0x0) 
+SERVICE_EXIT_CODE : 0 (0x0) 
+CHECKPOINT : 0x1 
+WAIT_HINT : 0x7530 
+
+C:\>sc \\xxx.xxx.xxx.xxx query termservice 
+
+SERVICE_NAME: termservice 
+TYPE : 10 WIN32_OWN_PROCESS 
+STATE : 4 RUNNING 
+(NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN) 
+WIN32_EXIT_CODE : 0 (0x0) 
+SERVICE_EXIT_CODE : 0 (0x0) 
+CHECKPOINT : 0x0 
+WAIT_HINT : 0x0 
+
+
+sc config termservice start= auto
+sc start termservice
+
+再看:
+sc query termservice
+SERVICE_NAME: termservice
+TYPE : 10 WIN32_OWN_PROCESS
+STATE : 2 START_PENDING //没有runing,而是正在启动状态(未决)
+(NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
+WIN32_EXIT_CODE : 0 (0x0)
+SERVICE_EXIT_CODE : 0 (0x0)
+CHECKPOINT : 0x0
+WAIT_HINT : 0x7d0 

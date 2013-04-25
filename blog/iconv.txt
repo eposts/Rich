@@ -1,0 +1,25 @@
+用什么命令把GB2312/GBK/GB18030编码的文档转换为utf-8编码？如何反向转换？
+ 
+答：gb2312/gbk/gb18030 to utf-8使用如下命令将编码为gb18030的file1转化为编码为utf-8的file2： 
+ iconv -f gb18030 -t utf-8 file1 > file2
+
+有的系统没有gb18030字符集的支持，这个时候可以用： 
+ iconv -f gbk -t utf-8 file1 > file2
+
+或者： 
+ iconv -f gb2312 -t utf-8 file1 > file2
+
+
+ iconv -f gb2312 -t utf-8 file1 -o file2
+
+反之，可以这样转换： 
+ iconv -f utf-8 -t gb18030 file2 > file1
+
+或者： 
+ iconv -f utf-8 -t gbk file2 > file1
+
+或者： 
+ iconv -f utf-8 -t gb2312 file2 > file1
+
+更详细的用法请man iconv 
+

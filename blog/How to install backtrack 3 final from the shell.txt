@@ -1,0 +1,62 @@
+How to install backtrack 3 final from the shell 
+--------------------------------------------------------------------------------
+
+This tutorial is going to assume a few things....
+
+1. You have at least 2 neurons in your brain and that there is not to much tar build up between them from smoking tweed.
+
+2. Your already partitioned and ready to go. (If you need a tutorial on partitioning I cant help you)
+
+3. You have heard of a shell and know how to get one going.
+
+Alright so lets begin. I'm going to cover installing backtrack to harddrive to ways. #1 with a /boot partition and #2 where bt is all on one partition. (just a side note. The team is trying to shy away from HD installs and is encouraging USB install which in my humble opinion is the best way to go).Most of this info is from various sources on the wiki and I will attempt to put it into one tutorial for newer members.
+So you have a fresh HD with 3 partitions..
+sda1=/boot
+sda2=swap
+sda3= /
+
+Boot your live cd and open a bash shell and begin.
+
+If your swap is not yet made then do this..(otherwise omit this step)
+bt~#mkswap /dev/sda2
+bt~#swapon /dev/sda2
+
+bt~#mkdir /mnt/backtrack
+bt~#mount /dev/sda3 /mnt/backtrack/
+bt~#mkdir /mnt/backtrack/boot/
+bt~#mount /dev/sda1 /mnt/backtrack/boot/ (note: If you only have one partiton to install backtrack to simply omit this step)
+bt~#cp --preserve -R /{bin,dev,home,pentest,root,usr,etc,lib,opt,sbin,va r} /mnt/backtrack/ <<< note: there is no space in var. Seems to be a glitch in the matrix
+bt~#mkdir /mnt/backtrack/{mnt,proc,sys,tmp}
+bt~#mount --bind /dev/ /mnt/backtrack/dev/
+bt~#mount -t proc proc /mnt/backtrack/proc/
+bt~#cp /boot/vmlinuz /mnt/backtrack/boot/ 
+
+Now for lilo.
+bt~#chroot /mnt/backtrack/ /bin/bash
+bt~#nano /etc/lilo.conf 
+
+Now I like to delete all the bulls**t in the lilo config file so here is what mine would look like. (remember to set your own VGA accordingly )
+
+lba32
+boot /dev/sda
+prompt
+timeout=60
+change-rules
+reset
+vga=791
+image = /boot/vmlinuz
+root = /dev/sda3
+label = backtrack3_final 
+
+Excellent. Save that and then execute lilo (I like to use the verbose flag)
+bt~#lilo -v
+
+after that exit your chroot enviorment
+bt/~exit
+
+and reboot and cross your fingers
+
+bt~#reboot
+ 
+
+

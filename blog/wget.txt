@@ -1,0 +1,13 @@
+ Wget可下载整个网站，如下载http://man.chinaunix.net整个Man手册中心。
+
+#wget -r -p -np -k -e robots=off http://man.chinaunix.net 
+
+    其中-r   参数是指使用递归下载，
+        -p   是指下载所有显示完整网页所以需要的文件，如图片等，
+        -np  是指不搜索上层目录，
+        -k   则是指将绝对链接转换为相对链接。
+        -e robots=off         关闭 robots
+
+
+
+wget -m        //mirror	
