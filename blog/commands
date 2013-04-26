@@ -15,3 +15,4 @@ dmidecode | grep "Product Name"      查看机器型号
 tsocks            Shell wrapper to use of the tsocks library to transparently allow an application to use a SOCKS proxy: tsocks firefox
 proxychains
 warden            FreeBSD. The jail management program.
+ntpdate
