@@ -1,0 +1,3 @@
+sudo ntpdate ntp.ubuntu.com
+
+sudo ntpdate-debian
