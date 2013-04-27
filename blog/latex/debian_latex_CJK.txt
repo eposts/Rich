@@ -1,0 +1,14 @@
+use latex CJK
+
+sudo apt-get install texlive-latex-base
+sudo apt-get install latex-cjk-chinese
+sudo apt-get install texlive-latex-recommended
+
+
+
+----------------------------------------------------------------
+use xelatex
+
+sudo apt-get install --reinstall texlive-xetex
+sudo fmtutil-sys --all
+sudo texhash
