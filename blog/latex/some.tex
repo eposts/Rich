@@ -1,0 +1,311 @@
+\documentclass[10pt,twoside,openany]{book}
+
+\usepackage[BoldFont,SlantFont,CJKsetspaces,CJKchecksingle]{xeCJK}
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage{titlesec,titletoc}
+
+\usepackage{amsmath} %数学符号与公式
+\usepackage{amsfonts} %数学符号与字体
+
+
+\usepackage[paperwidth=14.3cm,paperheight=20.7cm]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=2.5cm,rmargin=1cm,headheight=0.5cm,headsep=0.4cm,footskip=1cm}
+
+
+\usepackage{setspace}
+
+\setCJKmainfont[BoldFont=SimHei]{SimSun}
+% 设置缺省中文字体
+\setCJKmonofont{SimSun}
+\usepackage{fancyhdr}
+\setCJKfamilyfont{song}{SimSun}
+\newcommand{\song}{\CJKfamily{song}}
+
+\setCJKfamilyfont{hei}{SimHei}
+\newcommand{\hei}{\CJKfamily{hei}}
+
+\setCJKfamilyfont{fs}{FangSong_GB2312}
+\newcommand{\fs}{\CJKfamily{fs}}
+
+\setCJKfamilyfont{kai}{KaiTi_GB2312}
+\newcommand{\kai}{\CJKfamily{kai}}
+
+\setCJKfamilyfont{wqy}{WenQuanYi Zen Hei}
+\newcommand{\wqy}{\CJKfamily{wqy}}
+
+
+\linespread{1.2} %行距
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+%段首缩进
+\usepackage{fontspec,xunicode,xltxtra}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-tree}
+\usepackage{pst-plot}
+\usepackage{pst-text}
+\usepackage{wrapfig}
+\usepackage{picins}
+%图形
+
+%选择题排列
+\newsavebox{\temp}
+\def\pai #1 #2 #3 #4 {%
+    \sbox{\temp}{ #1\hspace{20pt} #2\hspace{20pt} #3\hspace{20pt} #4}
+    \ifdim\wd\temp < 0.95\textwidth%
+    \noindent #1\hspace{20pt} #2\hspace{20pt} #3\hspace{20pt} #4\\
+    \else
+    \sbox{\temp}{ #1}
+    \ifdim\wd\temp < 0.48\textwidth%
+    \sbox{\temp}{ #2}
+    \ifdim\wd\temp < 0.48\textwidth%
+    \sbox{\temp}{ #3}
+    \ifdim\wd\temp < 0.48\textwidth%
+    \sbox{\temp}{ #4}
+    \ifdim\wd\temp < 0.48\textwidth%
+    \noindent
+    \begin{tabular}{p{0.5\textwidth}l}
+        #1 & #2\\
+        #3 & #4
+    \end{tabular}\\
+    \else
+    \noindent #1\\ #2\\ #3\\ #4\\
+    \fi
+    \else
+    \noindent #1\\ #2\\ #3\\ #4\\
+    \fi
+    \else
+    \noindent #1\\ #2\\ #3\\ #4\\
+    \fi
+    \else
+    \noindent #1\\ #2\\ #3\\ #4\\
+    \fi
+\fi}
+
+%页眉与页脚
+\pagestyle{fancy}
+\fancyhead{} % clear all fields
+\fancyhead[RO,LE]{\hei 高中物理公式大全\surd}
+\fancyhead[LO,RE]{\CJKfamily{hei>} \bfseries \leftmark}
+
+\fancyfoot[CE,CO]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\qpai}[4]{\begin{tabular}{lll}
+        #1 & \hspace{20pt} & #2 \\
+        #3 & \hspace{20pt} & #4 \\
+\end{tabular}}
+
+\newcommand{\hpai}[4]{#1 \hspace{20pt} #2 \hspace{20pt} #3 \hspace{20pt} #4\hspace{20pt}}
+\newcommand{\vpai}[4]{#1\\#2\\#3\\#4}
+
+
+
+\usepackage[Lenny]{fncychap}
+
+\usepackage{titlesec}
+
+\newcommand\secformat[1]{%
+    \parbox[b]{0.5\textwidth}{\large{\centering\bfseries #1}}%
+    \quad\S\
+{\fontsize{11}{11}\selectfont\thesection}}
+\titleformat{\section}[block]
+{\centering\normalfont\sffamily}{}{10pt}{\secformat}
+\titlespacing*{\section}{20pt}{*4}{*4}[20pt]
+
+%开始
+\begin{document}
+
+\title{高中物理公式、概念大全}
+\author{\kai{谢宝良编写}}
+\date{2011.3.5}
+
+\maketitle
+% 生成title
+\include{preface} % 序言
+\tableofcontents % 生成目录
+\setcounter{tocdepth}{3} % 设置目录深度
+\include{introduction} % 第一章 导 言
+
+\mainmatter
+\chapter{高一物理}
+
+\section{第一章\hspace{30pt}力}
+
+
+\subsection{概念和公式}
+1. 力: a. 物质性 b. 相互性 c. 矢量性 d. 力的分类
+
+2.重力
+\left \lbrace\begin{array}{l}\mbox{公式：$ G=mg $}\\\mbox{方向：竖直向下}\\ \mbox{重心：重力的等效作用点}\end{array}
+
+    3.弹力
+    $ \left\lbrace
+    \begin{array}{l}
+        \mbox{产生条件：接触、挤压、形变}\\
+        \mbox{支持力的方向:与接触面垂直，指向被支持的物体}\\
+        \mbox{绳子拉力方向：沿绳子收缩方向}\\
+        \mbox{公式：$ F=kx $}
+    \end{array}
+    \right. $
+
+    4.摩擦力
+    \left \lbrace
+    \begin{array}{l}
+    \mbox{静摩擦力}\left \lbrace\begin{array}{l}\mbox{大小:平衡条件确定}\\\mbox{方向：与相对的运动趋势相反}\end{array}\\
+    \mbox{滑动摩擦力}\left \lbrace\begin{array}{l}\mbox{大小：$ f=\mu F_{n} $}\\\mbox{方向:与相对的运动相反}\\\mbox{最大静摩擦力}\end{array}
+    \end{array}
+
+    5.力的合成与分解
+    \left \lbrace
+    \begin{array}{l}
+    \mbox{合力和分力}\left \lbrace\begin{array}{l}\mbox{作用效果：相同}\\\mbox{数值：可能大于、小于、等于分力}\end{array}\\
+        \mbox{矢量，遵守：平行三边形定则\\}\\
+        \mbox{合力取值范围：$|F_{1}-F_{2}| \leq F \leq F_{1}+F_{2}$}
+    \end{array}
+
+
+    \subsection{学习建议}
+    \hspace{20pt}
+    本章的内容是整个高中力学的基础.学习时应加强对基础概念的理解。比如弹力和摩擦力的特点、产生条件、大小和方向。
+
+    \subsection{经典题目}
+    1．如图所示，一根弹性杆的一端固定在倾角为30°的斜面上，杆的另一端固定一个重量是2N的小球，小球处于静止状态时，弹性杆对小球的弹力(　　)
+    \parpic(4cm,2cm)[r]{\includegraphics[scale=1.3]{1.png}}
+    \pai A.大小为2N，方向平行于斜面向上 B．大小为1N，方向平行于斜面向上 C．大小为2N，方向垂直于斜面向上 D．大小为2N，方向竖直向上 \\
+    答案 （D） 解析:由于小球处于静止状态，故小球受力平衡，弹性杆对小球的弹力$F_{N}=G=2$N，方向竖直向上
+
+    \parpic(2.5cm,2cm)[r]{\includegraphics[scale=1]{2.png}}
+    2.如图所示，长为l的细绳一端固定在O点，另一端悬挂质量为m的小球A，为使细绳与竖直方向夹角为30°，且使小球A处于静止状态，则对小球施加的最小的力等于\underline{　　　　}.
+    答案　$mg$
+    \parpic(2.5cm,2cm)[r]{\includegraphics[scale=0.8]{3.png}}
+    解析：对小球受力分析如图，将$mg$沿绳和垂直绳方向分解，绳子拉力可以和$G_{x}$平衡，外力F直接与$G_{y}$平衡时，外力F最小$F_{min}=G_{y}=mg\sin30°$
+    ∴$F_{min}=mg$.
+
+    3.如图所示，水平面上有一重为40N的物体，受到$F_{1}=13$ N 和$ F_{2}=16 $N的水平力的作用而保持静止．已知物体与水平面间的动摩擦因数$ \mu=0.2$.设最大静摩擦力等于滑动摩擦力，求：
+    \parpic(2cm,2cm)[r]{\includegraphics[scale=1.2]{4.png}}
+    (1)物体所受的摩擦力的大小与方向．\\
+    (2)当只将$F_{1}$撤去，物体受到的摩擦力的大小和方向．\\
+    (3)若撤去的力不是$F_{1}$而是$F_{2}$，则物体受到的摩擦力大小方向又如何？
+
+    答案 (1)7N，水平向右(2)6N，水平向左(3)8N，水平向右
+
+    解析：最大静摩擦力$F_{m}=\mu F_{N}=\mu G=0.2×40$N=8N\\
+    (1)因为$F_{1}-F_{2}$＝13N $-$ 6N＝7N $<F_{m}$，所以摩擦力为静摩擦力，且$F_{f1}=7$ N，方向与物体相对运动趋势
+    方向相反，即水平向右．\\
+    (2)因为$F_{2}=6$N $< F_{m} $，所以摩擦力为静摩擦力，且$F_{f2}=6$ N，方向与$F_{2}$方向相反，即水平向左．\\
+    (3)因为$F_{1}$=13N$>F_{m}$，所以摩擦力为滑动摩擦力，\\
+    $F_{f3}=\mu F_{N}=8$N，方向与$F_{1}$方向相反，即水平向右．
+
+    \parpic(2cm,2cm)[r]{\includegraphics[scale=0.2]{5.png}}
+    4.用手握住一个油瓶并保持静止(油瓶始终
+    处于竖直方向，如图所示)，下列说法
+    中正确的是（\qquad）
+
+    \pai{A．当瓶中油的质量增大时，手握瓶的力必须增大 }{B．手握得越紧，油瓶受到的摩擦力越大}{C．不论手握得多紧，油瓶受到的摩擦力总是一定的}{D．摩擦力等于油瓶与油的总重力}
+    答案：CD \\
+    解析：因为油瓶处于平衡状态，故摩擦力与油和瓶的总重力大小相等，又因为是静摩擦力，根据其特点，大小与压力无关，故C、D正确，B错误．而最大静摩擦力$F_{fmax}$与正压力有关．在压力一定的情况下，最大静摩擦力一定．若平衡时，静摩擦力未达到最大值，当适当增加油的质量时，若$ G \leq F_{fmax} $，不增加压力仍可平衡，A错．
+
+
+
+    \section{第二章\hspace{30pt}直线运动}
+
+
+    \section{第十七章 \hspace{30pt}交变电流}
+
+    \subsection{概念和公式}
+    1.交流电的产生
+\left \lbrace\begin{array}{l}\mbox{装置}\\\mbox{公式}\left \lbrace\begin{array}{l}\mbox{$ i=I_{m}\sin\omega t $}\\\mbox{$ u=U_{m}\sin\omega t$}\\\mbox{$ e=E_{m}\sin\omega t$}\end{array}\\\mbox{图像}\end{array}
+
+    2.交流电
+\left \lbrace\begin{array}{l}\mbox{最大值、有效值}\\\mbox{周期、频率}\end{array}
+
+
+    \subsection{概念和公式}
+    \subsection{学习建议}
+    \subsection{经典题目}
+
+
+
+    \chapter{高三物理}
+
+
+    \subsection{概念和公式}
+
+
+    \subsection{学习建议}
+    \subsection{经典题目}
+
+    \setCJKfamilyfont{fzsong}{Simsun (Founder Extended)}     %方正宋体超大字符集   fzsong  
+    \newcommand{\fzsong}{\CJKfamily{fzsong}}  
+    \setCJKfamilyfont{fzyao}{FZYaoTi}                                    %方正姚体  fzy  
+    \newcommand{\fzyao}{\CJKfamily{fzyao}}  
+    \setCJKfamilyfont{fzshu}{FZShuTi}                                    %方正舒体 fzshu  
+    \newcommand{\fzshu}{\CJKfamily{fzshu}}  
+
+    \setCJKfamilyfont{asong}{Adobe Song Std}                        %Adobe 宋体  asong  
+    \newcommand{\asong}{\CJKfamily{asong}}  
+    \setCJKfamilyfont{ahei}{Adobe Heiti Std}                            %Adobe 黑体  ahei  
+    \newcommand{\ahei}{\CJKfamily{ahei}}  
+    \setCJKfamilyfont{akai}{Adobe Kaiti Std}                            %Adobe 楷体  akai  
+    \newcommand{\akai}{\CJKfamily{akai}}  
+
+    %------------------------------设置字体大小------------------------%  
+    \newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}     %初号  
+    \newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont} %小初号  
+    \newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}      %一号  
+    \newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}      %二号  
+    \newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}  %小二号  
+    \newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}  %三号  
+    \newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}%     四号  
+    \newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  %小四号  
+    \newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    %五号  
+    \newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   %小五号  
+    \newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  %六号  
+    \newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    %七号  
+    %------------------------------标题名称中文化-----------------------------%  
+    \renewcommand\abstractname{\hei 摘\ 要}  
+    \renewcommand\refname{\hei 参考文献}  
+    \renewcommand\figurename{\hei 图}  
+    \renewcommand\tablename{\hei 表}  
+    %------------------------------定理名称中文化-----------------------------%  
+    \newtheorem{dingyi}{\hei 定义~}[section]  
+    \newtheorem{dingli}{\hei 定理~}[section]  
+    \newtheorem{yinli}[dingli]{\hei 引理~}  
+    \newtheorem{tuilun}[dingli]{\hei 推论~}  
+    \newtheorem{mingti}[dingli]{\hei 命题~}  
+    \newtheorem{lizi}{{例}}  
+
+
+
+    \begin{document}  
+    \title{高质量纹理重建中的遮蔽处理}  
+    \author{Archie}  
+    \date{}  
+
+    [plain] view plaincopy
+
+    %摘要单栏设置  
+    \twocolumn[  
+        \begin{@twocolumnfalse}  
+            \maketitle<span style="white-space:pre">                        </span>%生成标题  
+            \renewcommand{\abstractname} {}<span style="white-space:pre">           </span>%不显示摘要名字  
+            \begin{abstract}  
+                \noindent<span style="white-space:pre">         </span>%摘要无缩进  
+                摘要正文  
+            \end{abstract}  
+            \renewcommand{\abstractname}{摘要}  
+        \end{@twocolumnfalse}  
+    ]  
+
+    正文  
+
+
+
+    \end{document}  
