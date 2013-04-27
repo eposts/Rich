@@ -12,3 +12,12 @@ use xelatex
 sudo apt-get install --reinstall texlive-xetex
 sudo fmtutil-sys --all
 sudo texhash
+
+
+----------------------------------------------------------------
+latex    不能使用系统字体,需要制作字体库
+xelatex  unicode,可以使用系统字体,需要加入 \usepackage{xeCJK}支持中文,且文件内容只支持utf-8编码
+
+vim中 :set fileencoding=utf-8
+fc-list :lang=zh        //列出系统使用的字体语言,exp: zh
+\setCJKmainfont{需要使用的字体名称}
