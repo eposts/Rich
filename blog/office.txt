@@ -1,0 +1,2 @@
+Office 显示一直安装解决方法:
+命令1（用于Office 2003）：reg add HKCU\Software\Microsoft\Office\11.0\Word\Options /v NoReReg /t REG_DWORD /d 1命令2（用于Office 2007）：reg add HKCU\Software\Microsoft\Office\12.0\Word\Options /v NoReReg /t REG_DWORD /d 1命令3（用于Office 2010）：reg add HKCU\Software\Microsoft\Office\14.0\Word\Options /v NoReReg /t REG_DWORD /d 1
