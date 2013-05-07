@@ -1,2 +1,2 @@
-我用在archlinux下是xrandr -s 1024x768 -r 60这个命令
-1024x768是分辨率  60是刷新率 
+鎴戠敤鍦╝rchlinux涓嬫槸xrandr -s 1024x768 -r 60杩欎釜鍛戒护
+1024x768鏄垎杈ㄧ巼  60鏄埛鏂扮巼 

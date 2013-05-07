@@ -1,6 +1,6 @@
-linux sort �������
-sort ���� Linux ��ǳ����õ�һ�����������ģ����о���������Ӹ㶨 sort�����ڿ�ʼ��
-sort ���ļ���ÿһ����Ϊһ����λ���໥�Ƚϣ��Ƚ�ԭ���Ǵ����ַ�������ΰ� ASCII ��ֵ���бȽϣ�������ǰ����������
+linux sort 命令详解
+sort 是在 Linux 里非常常用的一个命令，管排序的，集中精力，五分钟搞定 sort，现在开始！
+sort 将文件的每一行作为一个单位，相互比较，比较原则是从首字符向后，依次按 ASCII 码值进行比较，最后将他们按升序输出。
 [rocrocket@rocrocket programming]$ cat seq.txt
 banana
 apple
@@ -12,8 +12,8 @@ banana
 orange
 pear
 -u
-2 sort ��-u ѡ��
-�������úܼ򵥣��������������ȥ���ظ��С�
+2 sort 的-u 选项
+它的作用很简单，就是在输出行中去除重复行。
 [rocrocket@rocrocket programming]$ cat seq.txt
 banana
 apple
@@ -31,10 +31,10 @@ apple
 banana
 orange
 pear
-pear �����ظ���-u ѡ�������ɾ���ˡ�
+pear 由于重复被-u 选项无情的删除了。
 -r
-3 sort ��-r ѡ��
-sort Ĭ�ϵ�����ʽ�����������ĳɽ��򣬾ͼӸ�-r �͸㶨�ˡ�
+3 sort 的-r 选项
+sort 默认的排序方式是升序，如果想改成降序，就加个-r 就搞定了。
 [rocrocket@rocrocket programming]$ cat number.txt
 1
 3
@@ -54,18 +54,18 @@ sort Ĭ�ϵ�����ʽ�����������ĳɽ��򣬾ͼӸ�-r �͸㶨�ˡ�
 2
 1
 -o
-4 sort ��-o ѡ��
-���� sort Ĭ���ǰѽ���������׼�����
-������Ҫ���ض�����ܽ����д���ļ���
-���� sort
-filename > newfile��
-���ǣ��������������������ԭ�ļ��У����ض���ɾͲ����ˡ�
+4 sort 的-o 选项
+由于 sort 默认是把结果输出到标准输出，
+所以需要用重定向才能将结果写入文件，
+形如 sort
+filename > newfile。
+但是，如果你想把排序结果输出到原文件中，用重定向可就不行了。
 [rocrocket@rocrocket programming]$ sort -r number.txt > number.txt
 [rocrocket@rocrocket programming]$ cat number.txt
 [rocrocket@rocrocket programming]$
-������Ȼ�� number ����ˡ�
-�������ʱ��-o ѡ������ˣ����ɹ��Ľ����������⣬������ĵĽ����д��ԭ�ļ���
-�����Ҳ��-o ���ض����Ψһ�������ڡ�
+看，竟然将 number 清空了。
+就在这个时候，-o 选项出现了，它成功的解决了这个问题，让你放心的将结果写入原文件。
+这或许也是-o 比重定向的唯一优势所在。
 [rocrocket@rocrocket programming]$ cat number.txt
 1
 3
@@ -80,11 +80,11 @@ filename > newfile��
 2
 1
 -n
-5 sort ��-n ѡ��
-����û��������10��2С��������ҷ�������������������������������������Щ����
-���ַ��������ˣ����������ȱȽ�1��2����Ȼ1С�����Ծͽ�10����2ǰ��ඡ���Ҳ��
-sort ��һ�����硣
-���������ı�������״����Ҫʹ��-n ѡ������� sort����Ҫ����ֵ�����򡱣�
+5 sort 的-n 选项
+你有没有遇到过10比2小的情况。我反正遇到过。出现这种情况是由于排序程序将这些数字
+按字符来排序了，排序程序会先比较1和2，显然1小，所以就将10放在2前面喽。这也是
+sort 的一贯作风。
+我们如果想改变这种现状，就要使用-n 选项，来告诉 sort，“要以数值来排序”！
 [rocrocket@rocrocket programming]$ cat number.txt
 1
 10
@@ -108,157 +108,157 @@ sort ��һ�����硣
 19
 -t
 -k
-6 sort ��-t ѡ���-k ѡ��
-�����һ���ļ���������������
+6 sort 的-t 选项和-k 选项
+如果有一个文件的内容是这样：
 [rocrocket@rocrocket programming]$ cat facebook.txt
 banana:30:5.5
 apple:10:2.5
 pear:90:2.3
 orange:20:3.4
-����ļ������У�������֮����ð�Ÿ����ˣ���һ�б�ʾˮ�����ͣ��ڶ��б�ʾˮ��������
-�����б�ʾˮ���۸�
-��ô������ˮ������������Ҳ�����Եڶ���������������� sort ʵ�֣�
-�Һã�sort �ṩ��-t ѡ���������趨�������
-���ǲ��������� cut �� paste ��-d ѡ�
-����������
-ָ���˼����֮�󣬾Ϳ�����-k ��ָ�������ˡ�
+这个文件有三列，列与列之间用冒号隔开了，第一列表示水果类型，第二列表示水果数量，
+第三列表示水果价格。
+那么我想以水果数量来排序，也就是以第二列来排序，如何利用 sort 实现？
+幸好，sort 提供了-t 选项，后面可以设定间隔符。
+（是不是想起了 cut 和 paste 的-d 选项，
+共鸣～～）
+指定了间隔符之后，就可以用-k 来指定列数了。
 [rocrocket@rocrocket programming]$ sort -n -k 2 -t : facebook.txt
 apple:10:2.5
 orange:20:3.4
 banana:30:5.5
 pear:90:2.3
-����ʹ��ð����Ϊ�����������Եڶ�����������ֵ�������򣬽�����������⡣
-7 ������ sort ����ѡ��
--f �ὫСд��ĸ��ת��Ϊ��д��ĸ�����бȽϣ��༴���Դ�Сд
--c �����ļ��Ƿ����ź�����������������һ��������е������Ϣ����󷵻�1
--C �����ļ��Ƿ����ź���������򣬲�������ݣ�������1
--M �����·������򣬱��� JAN С�� FEB �ȵ�
--b �����ÿһ��ǰ������пհײ��֣��ӵ�һ���ɼ��ַ���ʼ�Ƚϡ�
-��ʱ��ѧϰ�ű�����ᷢ�� sort ����������һ������-k1,2������-k1.2 -k3.4�Ķ�����
-��Щ������˼�����죬���Ǿ����㶨����-k ѡ�
-1 ׼���ز�
+我们使用冒号作为间隔符，并针对第二列来进行数值升序排序，结果很令人满意。
+7 其他的 sort 常用选项
+-f 会将小写字母都转换为大写字母来进行比较，亦即忽略大小写
+-c 会检查文件是否已排好序，如果乱序，则输出第一个乱序的行的相关信息，最后返回1
+-C 会检查文件是否已排好序，如果乱序，不输出内容，仅返回1
+-M 会以月份来排序，比如 JAN 小于 FEB 等等
+-b 会忽略每一行前面的所有空白部分，从第一个可见字符开始比较。
+有时候学习脚本，你会发现 sort 命令后面跟了一堆类似-k1,2，或者-k1.2 -k3.4的东东，
+有些匪夷所思。今天，我们就来搞定它—-k 选项！
+1 准备素材
 $ cat facebook.txt
 google 110 5000
 baidu 100 5000
 guge 50 3000
 sohu 100 4500
-��һ�����ǹ�˾���ƣ��ڶ������ǹ�˾����������������Ա��ƽ�����ʡ�
-�����˹�˾���ƣ�
-�����ı��ţ���Ϲд��^_^��
-2 ����������ļ�����˾����ĸ˳������Ҳ���ǰ���һ����������� �� ���
-��
-facebook.txt �ļ���������
-$ sort -t �� �� -k 1 facebook.txt
+第一个域是公司名称，第二个域是公司人数，第三个域是员工平均工资。
+（除了公司名称，
+其他的别信，都瞎写的^_^）
+2 我想让这个文件按公司的字母顺序排序，也就是按第一个域进行排序 ： 这个
+（
+facebook.txt 文件有三个域）
+$ sort -t ‘ ‘ -k 1 facebook.txt
 baidu 100 5000
 google 110 5000
 guge 50 3000
 sohu 100 4500
-�����˰ɣ���ֱ����-k 1�趨�Ϳ����ˡ�
-����ʵ�˴������ϸ��Ժ���ͻ�֪����
-3 ������ facebook.txt ���չ�˾��������
-$ sort -n -t �� �� -k 2 facebook.txt
+看到了吧，就直接用-k 1设定就可以了。
+（其实此处并不严格，稍后你就会知道）
+3 我想让 facebook.txt 按照公司人数排序
+$ sort -n -t ‘ ‘ -k 2 facebook.txt
 guge 50 3000
 baidu 100 5000
 sohu 100 4500
 google 110 5000
-���ý��ͣ����������ܶ���
-���ǣ��˴����������⣬�Ǿ��� baidu �� sohu �Ĺ�˾������ͬ������100�ˣ����ʱ����
-ô���أ�����Ĭ�Ϲ�أ��Ǵӵ�һ����ʼ��������������� baidu ������ sohu ǰ�档
-4 ������ facebook.txt ���չ�˾�������� ��������ͬ�İ���Ա��ƽ��������������
-$ sort -n -t �� �� -k 2 -k 3 facebook.txt
+不用解释，我相信你能懂。
+但是，此处出现了问题，那就是 baidu 和 sohu 的公司人数相同，都是100人，这个时候怎
+么办呢？按照默认规矩，是从第一个域开始进行升序排序，因此 baidu 排在了 sohu 前面。
+4 我想让 facebook.txt 按照公司人数排序 ，人数相同的按照员工平均工资升序排序：
+$ sort -n -t ‘ ‘ -k 2 -k 3 facebook.txt
 guge 50 3000
 sohu 100 4500
 baidu 100 5000
 google 110 5000
-�������Ǽ���һ��-k2 -k3�ͽ�������⡣�ԵΣ�sort ֧�������趨������˵�趨�������
-���ȼ������Ե�2����������������ͬ�����Ե�3�����������
-�������Ը�⣬����һ
-ֱ��ôд��ȥ���趨�ܶ���������ȼ���
-5 ������ facebook.txt ����Ա�����ʽ����������Ա��������ͬ�ģ����չ�˾����
-��������
-������е��Ѷ�ඣ�
-$ sort -n -t �� �� -k 3r -k 2 facebook.txt
+看，我们加了一个-k2 -k3就解决了问题。对滴，sort 支持这种设定，就是说设定域排序的
+优先级，先以第2个域进行排序，如果相同，再以第3个域进行排序。
+（如果你愿意，可以一
+直这么写下去，设定很多个排序优先级）
+5 我想让 facebook.txt 按照员工工资降序排序，如果员工人数相同的，则按照公司人数
+升序排序：
+（这个有点难度喽）
+$ sort -n -t ‘ ‘ -k 3r -k 2 facebook.txt
 baidu 100 5000
 google 110 5000
 sohu 100 4500
 guge 50 3000
-�˴���ʹ����һЩС���ɣ�����ϸ��������-k 3����͵͵������һ��Сд��ĸ r�������룬
-�ٽ��������һƪ���£�
-�ܵõ���ô�������� ��-r ѡ���������һ���ģ�
+此处有使用了一些小技巧，你仔细看看，在-k 3后面偷偷加上了一个小写字母 r。你想想，
+再结合我们上一篇文章，
+能得到答案么？揭晓： 和-r 选项的作用是一样的，
 r
-���Ǳ�ʾ����
-��Ϊ sort Ĭ���ǰ�����������ģ����Դ˴���Ҫ���� r ��ʾ��������Ա��ƽ�����ʣ���
-���ս������򡣴˴��㻹���Լ��� n���ͱ�ʾ��������������ʱ��Ҫ������ֵ��С������
-�򣬾ٸ����Ӱɣ�
-$ sort -t �� �� -k 3nr -k 2n facebook.txt
+就是表示逆序。
+因为 sort 默认是按照升序排序的，所以此处需要加上 r 表示第三个域（员工平均工资）是
+按照降序排序。此处你还可以加上 n，就表示对这个域进行排序时，要按照数值大小进行排
+序，举个例子吧：
+$ sort -t ‘ ‘ -k 3nr -k 2n facebook.txt
 baidu 100 5000
 google 110 5000
 sohu 100 4500
 guge 50 3000
-��������ȥ������ǰ���-n ѡ����ǽ������뵽��ÿһ��-k ѡ�����ˡ�
-6 -k ѡ��ľ����﷨��ʽ
-Ҫ������������Ļ����Ͳ��ò���������֪ʶ������Ҫ�˽�-k ѡ����﷨��ʽ�����£�
+看，我们去掉了最前面的-n 选项，而是将它加入到了每一个-k 选项中了。
+6 -k 选项的具体语法格式
+要继续往下深入的话，就不得不来点理论知识。你需要了解-k 选项的语法格式，如下：
 [ FStart [ .CStart ] ] [ Modifier ] [ , [ FEnd [ .CEnd ] ][ Modifier ] ]
-����﷨��ʽ���Ա����еĶ��ţ�����������Ϊ���󲿷֣�Start ���ֺ� End ���֡�
-�ȸ������һ��˼�룬�Ǿ��ǡ�������趨 End ���֣���ô����Ϊ End ���趨Ϊ��β������
-���������Ҫ�ģ��������㲻����������
-Start ����Ҳ����������ɣ����е� Modifier ���־�������֮ǰ˵�������� n �� r ��ѡ��
-���֡������ص�˵˵ Start ���ֵ� FStart �� C.Start��
-C.Start Ҳ�ǿ���ʡ�Եģ�ʡ�ԵĻ��ͱ�ʾ�ӱ���Ŀ�ͷ���ֿ�ʼ��֮ǰ�����е�-k 2��-k
-3����ʡ���� C.Start ������ඡ�
-FStart.CStart������ FStart ���Ǳ�ʾʹ�õ��򣬶� CStart ���ʾ�� FStart ���дӵڼ�
-���ַ���ʼ�㡰�������ַ�����
-ͬ������ End �����У�������趨 FEnd.CEnd��
-�����ʡ��.CEnd��
-���ʾ��β������β����
-����������һ���ַ������ߣ�����㽫 CEnd �趨Ϊ0(��)��Ҳ�Ǳ�ʾ��β������β����
-7 ͻ�����룬�ӹ�˾Ӣ�����Ƶĵڶ�����ĸ��ʼ��������
-$ sort -t �� �� -k 1.2 facebook.txt
+这个语法格式可以被其中的逗号（“，”）分为两大部分，Start 部分和 End 部分。
+先给你灌输一个思想，那就是“如果不设定 End 部分，那么就认为 End 被设定为行尾”。这
+个概念很重要的，但往往你不会重视它。
+Start 部分也由三部分组成，其中的 Modifier 部分就是我们之前说过的类似 n 和 r 的选项
+部分。我们重点说说 Start 部分的 FStart 和 C.Start。
+C.Start 也是可以省略的，省略的话就表示从本域的开头部分开始。之前例子中的-k 2和-k
+3就是省略了 C.Start 的例子喽。
+FStart.CStart，其中 FStart 就是表示使用的域，而 CStart 则表示在 FStart 域中从第几
+个字符开始算“排序首字符”。
+同理，在 End 部分中，你可以设定 FEnd.CEnd，
+如果你省略.CEnd，
+则表示结尾到“域尾”，
+即本域的最后一个字符。或者，如果你将 CEnd 设定为0(零)，也是表示结尾到“域尾”。
+7 突发奇想，从公司英文名称的第二个字母开始进行排序：
+$ sort -t ‘ ‘ -k 1.2 facebook.txt
 baidu 100 5000
 sohu 100 4500
 google 110 5000
 guge 50 3000
-��������ʹ����-k 1.2����ͱ�ʾ�Ե�һ����ĵڶ����ַ���ʼ����������һ���ַ�Ϊֹ
-���ַ�������������ᷢ�� baidu ��Ϊ�ڶ�����ĸ�� a �����а��ס�sohu �� google
-�ڶ����ַ����� o�� sohu �� h �� google �� o ǰ�棬
-��
-�������߷ֱ����ڵڶ��͵�����
+看，我们使用了-k 1.2，这就表示对第一个域的第二个字符开始到本域的最后一个字符为止
+的字符串进行排序。你会发现 baidu 因为第二个字母是 a 而名列榜首。sohu 和 google
+第二个字符都是 o， sohu 的 h 在 google 的 o 前面，
+但
+所以两者分别排在第二和第三。
 guge
-ֻ�����ӵ����ˡ�
-8 ��ͻ�����룬
-��ֻ��Թ�˾Ӣ�����Ƶĵڶ�����ĸ�������������ͬ�İ���Ա�����ʽ�
-�н�������
-$ sort -t �� �� -k 1.2,1.2 -k 3,3nr facebook.txt
+只能屈居第四了。
+8 又突发奇想，
+，只针对公司英文名称的第二个字母进行排序，如果相同的按照员工工资进
+行降序排序：
+$ sort -t ‘ ‘ -k 1.2,1.2 -k 3,3nr facebook.txt
 baidu 100 5000
 google 110 5000
 sohu 100 4500
 guge 50 3000
-����ֻ�Եڶ�����ĸ����������������ʹ����-k 1.2,1.2�ı�ʾ��ʽ����ʾ���ǡ�ֻ���Ե�
-������ĸ��������
-��������ʡ���ʹ��-k 1.2��ô���У�������Ȼ���У���Ϊ��ʡ���� End
-���֣������ζ���㽫�Դӵڶ�����ĸ�𵽱������һ���ַ�Ϊֹ���ַ�����������
-����
-��Ա�����ʽ����� ������Ҳʹ����-k 3,3��������׼ȷ�ı�������ʾ���ǡ�ֻ���Ա����
-��������Ϊ�����ʡ���˺����3���ͱ�������ǡ��Ե�3����ʼ�����һ����λ�õ���
-�ݽ������� �ˡ�
-9 �� modifier ���ֻ������õ���Щѡ�
-�����õ� b��d��f��i��n �� r��
-���� n �� r ��϶��Ѿ�����Ϥ�ˡ�
-b ��ʾ���Ա����ǩ���հ׷��š�
-d ��ʾ�Ա������ֵ�˳�����򣨼���ֻ���ǿհ׺���ĸ��
-��
-f ��ʾ�Ա�����Դ�Сд��������
-i ��ʾ���ԡ����ɴ�ӡ�ַ�����ֻ��Կɴ�ӡ�ַ���������
-����Щ ASCII ���ǲ��ɴ�ӡ�ַ���
-����\a �Ǳ�����\b ���˸�\n �ǻ��У�\r �ǻس��ȵȣ�
+由于只对第二个字母进行排序，所以我们使用了-k 1.2,1.2的表示方式，表示我们“只”对第
+二个字母进行排序。
+（如果你问“我使用-k 1.2怎么不行？”，当然不行，因为你省略了 End
+部分，这就意味着你将对从第二个字母起到本域最后一个字符为止的字符串进行排序）
+。对
+于员工工资进行排 序，我们也使用了-k 3,3，这是最准确的表述，表示我们“只”对本域进
+行排序，因为如果你省略了后面的3，就变成了我们“对第3个域开始到最后一个域位置的内
+容进行排序” 了。
+9 在 modifier 部分还可以用到哪些选项？
+可以用到 b、d、f、i、n 或 r。
+其中 n 和 r 你肯定已经很熟悉了。
+b 表示忽略本域的签到空白符号。
+d 表示对本域按照字典顺序排序（即，只考虑空白和字母）
+。
+f 表示对本域忽略大小写进行排序。
+i 表示忽略“不可打印字符”，只针对可打印字符进行排序。
+（有些 ASCII 就是不可打印字符，
+比如\a 是报警，\b 是退格，\n 是换行，\r 是回车等等）
 -k -u
-10 ˼��˼������-k ��-u ����ʹ�õ����ӣ�
+10 思考思考关于-k 和-u 联合使用的例子：
 $ cat facebook.txt
 google 110 5000
 baidu 100 5000
 guge 50 3000
 sohu 100 4500
-������ԭʼ�� facebook.txt �ļ���
+这是最原始的 facebook.txt 文件。
 $ sort -n -k 2 facebook.txt
 guge 50 3000
 baidu 100 5000
@@ -268,8 +268,8 @@ $ sort -n -k 2 -u facebook.txt
 guge 50 3000
 baidu 100 5000
 google 110 5000
-���趨�Թ�˾Ա���������ֵ����Ȼ���-u ��sohu һ�оͱ�ɾ���ˣ�ԭ��-u ֻʶ��
-��-k �趨���򣬷�����ͬ���ͽ�������ͬ���ж�ɾ����
+当设定以公司员工域进行数值排序，然后加-u 后，sohu 一行就被删除了！原来-u 只识别
+用-k 设定的域，发现相同，就将后续相同的行都删除。
 $ sort -k 1 -u facebook.txt
 baidu 100 5000
 google 110 5000
@@ -279,48 +279,48 @@ $ sort -k 1.1,1.1 -u facebook.txt
 baidu 100 5000
 google 110 5000
 sohu 100 4500
-�������Ҳͬ������ͷ�ַ��� g �� guge ��û���������ѡ�
+这个例子也同理，开头字符是 g 的 guge 就没有幸免于难。
 $ sort -n -k 2 -k 3 -u facebook.txt
 guge 50 3000
 sohu 100 4500
 baidu 100 5000
 google 110 5000
-�ף����������������������ȼ�������£�ʹ��-u ��û��ɾ���κ��С�ԭ��-u �ǻ�Ȩ����
-��-k ѡ�������ͬ�ĲŻ�ɾ����ֻҪ������һ����ͬ����������ɾ���� :)�����ţ����
-���Լ���һ�� sina 100 4500���Կ���
-11 ����������
+咦！这里设置了两层排序优先级的情况下，使用-u 就没有删除任何行。原来-u 是会权衡所
+有-k 选项，将都相同的才会删除，只要其中有一级不同都不会轻易删除的 :)（不信，你可
+以自己加一行 sina 100 4500试试看）
+11 最诡异的排序：
 $ sort -n -k 2.2,3.1 facebook.txt
 guge 50 3000
 baidu 100 5000
 sohu 100 4500
 google 110 5000
-�Եڶ�����ĵڶ����ַ���ʼ����������ĵ�һ���ַ������Ĳ��ֽ�������
-��һ�У�����ȡ0 3���ڶ�����ȡ00 5����������ȡ00 4����������ȡ10 5��
-����Ϊ sort ��Ϊ0С��00С��000С��0000��.
-���0 3�϶����ڵ�һ����10 5�϶��������һ������Ϊʲô00 5ȴ��00 4ǰ���أ�����
-�����Լ���ʵ��˼��һ�¡�
-��
-�𰸽�����ԭ����������趨�Ǹ����󡱣�sort ֻ��Ƚϵڶ�����ĵڶ����ַ����ڶ�����
-�����һ���ַ��Ĳ��֣�������ѵ�������Ŀ�ͷ�ַ�����ȽϷ�Χ��������00��00��ͬ
-ʱ��sort �ͻ��Զ��Ƚϵ�һ����ȥ�ˡ���Ȼ baidu �� sohu ǰ���ˡ���һ����������֤ʵ��
+以第二个域的第二个字符开始到第三个域的第一个字符结束的部分进行排序。
+第一行，会提取0 3，第二行提取00 5，第三行提取00 4，第四行提取10 5。
+又因为 sort 认为0小于00小于000小于0000….
+因此0 3肯定是在第一个。10 5肯定是在最后一个。但为什么00 5却在00 4前面呢？（你
+可以自己做实验思考一下。
+）
+答案揭晓：原来“跨域的设定是个假象”，sort 只会比较第二个域的第二个字符到第二个域
+的最后一个字符的部分，而不会把第三个域的开头字符纳入比较范围。当发现00和00相同
+时，sort 就会自动比较第一个域去了。当然 baidu 在 sohu 前面了。用一个范例即可证实：
 $ sort -n -k 2.2,3.1 -k 1,1r facebook.txt
 guge 50 3000
 sohu 100 4500
 baidu 100 5000
 google 110 5000
-+1 -2��Щ���ţ�����ʲô������
-12 ��ʱ���� sort �����ῴ��+1 -2
-���������﷨�����µ� sort ����ô���н��͵ģ�
-On older systems, `sort�� supports an obsolete origin-zero syntax `+POS1
-[-POS2]�� for specifying sort keys.
++1 -2这些符号，这是什么东东？
+12 有时候在 sort 命令后会看到+1 -2
+关于这种语法，最新的 sort 是这么进行解释的：
+On older systems, `sort’ supports an obsolete origin-zero syntax `+POS1
+[-POS2]‘ for specifying sort keys.
 POSIX 1003.1-2001 (*note Standards
-        conformance::) does not allow this; use `-k�� instead.
-ԭ����
-���ֹ��ϵı�ʾ��ʽ�Ѿ�����̭�ˣ�
-�Ժ������ֱ��׳�ı���ʹ�����ֱ�ʾ�����Ľ�
-��ඣ�
-��Ϊ�˷�ֹ���Ͻű��Ĵ��ڣ�������˵һ�����ֱ�ʾ�������Ӻű�ʾ Start ���֣����ű�ʾ
-End ���֡�������Ҫ��һ���ǣ����ַ�ʽ�����Ǵ�0��ʼ�����ģ���ǰ��˵�ĵ�һ����
-��
-�˱���ʾΪ��0������ǰ�ĵ�2���ַ����ڴ˱�ʾΪ��1���ַ���
-��
+        conformance::) does not allow this; use `-k’ instead.
+原来，
+这种古老的表示方式已经被淘汰了，
+以后可以理直气壮的鄙视使用这种表示方法的脚
+本喽！
+（为了防止古老脚本的存在，在这再说一下这种表示方法，加号表示 Start 部分，减号表示
+End 部分。最最重要的一点是，这种方式方法是从0开始计数的，以前所说的第一个域，
+在
+此被表示为第0个域。以前的第2个字符，在此表示为第1个字符。
+）

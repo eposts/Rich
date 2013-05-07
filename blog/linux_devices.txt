@@ -1,156 +1,156 @@
-Linux�ں��ܹ�ʶ����豸����ӦԴ����Documentation/devices.txt�ļ�
+Linux内核能够识别的设备，对应源码中Documentation/devices.txt文件
 
 ----------------------------------------------------------------------
-���豸��        �豸����
-                ���豸��=�ļ���          ��Ҫ˵��
+主设备号        设备类型
+                次设备号=文件名          简要说明
 ----------------------------------------------------------------------
 
-  0     δ�����豸(���磺���صķ��豸)
-          0 = Ϊ���豸�ű���
+  0     未命名设备(例如：挂载的非设备)
+          0 = 为空设备号保留
 
 
-  1 char    �ڴ��豸
-          1 = /dev/mem      ֱ�Ӵ�ȡ�����ڴ�
-          2 = /dev/kmem     ��ȡ�����ں�����֮����ڴ�
-          3 = /dev/null     ���豸���κ�д�붼����ֱ�Ӷ������κζ�ȡ�����õ�EOF��
-          4 = /dev/port     ��ȡ I/O �˿�
-          5 = /dev/zero     ���ֽ�Դ��ֻ�ܶ�ȡ�����޶�����ֽڡ�
-          7 = /dev/full     ���豸���κ�д�붼��ʧ�ܣ�����errno��ΪENOSPC�Ա�ʾû��ʣ��ռ䡣
-          8 = /dev/random   ���������������ȫ���û��������������������
-                    ����û�ֹͣ���ж�������ֹͣ�����µ��������
-          9 = /dev/urandom  ���죬���ǲ�����ȫ������������������������û��������������������
-                    ����û�ֹͣ���ж���������Ѿ��������������Ϊ�����������µ��������
-         10 = /dev/aio      �첽 I/O ֪ͨ�ӿ�
-         11 = /dev/kmsg     �κζԸ��ļ���д�붼����Ϊ printk �����
+  1 char    内存设备
+          1 = /dev/mem      直接存取物理内存
+          2 = /dev/kmem     存取经过内核虚拟之后的内存
+          3 = /dev/null     空设备。任何写入都将被直接丢弃，任何读取都将得到EOF。
+          4 = /dev/port     存取 I/O 端口
+          5 = /dev/zero     零字节源，只能读取到无限多的零字节。
+          7 = /dev/full     满设备。任何写入都将失败，并把errno设为ENOSPC以表示没有剩余空间。
+          8 = /dev/random   随机数发生器。完全由用户的输入来产生随机数。
+                    如果用户停止所有动作，则停止产生新的随机数。
+          9 = /dev/urandom  更快，但是不够安全的随机数发生器。尽可能由用户的输入来产生随机数，
+                    如果用户停止所有动作，则把已经产生的随机数做为种子来产生新的随机数。
+         10 = /dev/aio      异步 I/O 通知接口
+         11 = /dev/kmsg     任何对该文件的写入都将作为 printk 的输出
 
 
   1 block   RAM disk
-          0 = /dev/ram0     ��1�� RAM disk (initrdֻ��ʹ��ram0)
-          1 = /dev/ram1     ��2�� RAM disk
+          0 = /dev/ram0     第1个 RAM disk (initrd只能使用ram0)
+          1 = /dev/ram1     第2个 RAM disk
             ...
-        200 = /dev/ram200   ��200�� RAM disk
+        200 = /dev/ram200   第200个 RAM disk
 
 
-  4 char    TTY(�ն�)�豸
-          0 = /dev/tty0     ��ǰ�������̨
-          1 = /dev/tty1     ��1���������̨
+  4 char    TTY(终端)设备
+          0 = /dev/tty0     当前虚拟控制台
+          1 = /dev/tty1     第1个虚拟控制台
             ...
-         63 = /dev/tty63    ��63���������̨
+         63 = /dev/tty63    第63个虚拟控制台
 
 
-  4 block   ������ļ�ϵͳ������ֻ����ʽ���صģ���ô�Ͳ����ܴ����������豸�ڵ㣬
-        ��ʱ��ʹ�ø��豸��Ϊ��̬�������(major)�豸�ı���
+  4 block   如果根文件系统以是以只读方式挂载的，那么就不可能创建真正的设备节点，
+        此时就使用该设备作为动态分配的主(major)设备的别名
                   0 = /dev/root
 
 
-  5 char    ���� TTY �豸
-          0 = /dev/tty      ��ǰ TTY �豸
-          1 = /dev/console  ϵͳ����̨(һ����/dev/tty0)
-          2 = /dev/ptmx     ���� PTY master �ĸ�����
+  5 char    其他 TTY 设备
+          0 = /dev/tty      当前 TTY 设备
+          1 = /dev/console  系统控制台(一般是/dev/tty0)
+          2 = /dev/ptmx     所有 PTY master 的复用器
 
 
-  7 char    �������̨��׽�豸(��Щ�豸��������Ҳ����д)
-          0 = /dev/vcs      ��ǰ�������̨(vc)���ı�����
-          1 = /dev/vcs1     tty1 ���ı�����
+  7 char    虚拟控制台捕捉设备(这些设备既允许读也允许写)
+          0 = /dev/vcs      当前虚拟控制台(vc)的文本内容
+          1 = /dev/vcs1     tty1 的文本内容
             ...
-         63 = /dev/vcs63    tty63 ���ı�����
-        128 = /dev/vcsa     ��ǰ�������̨(vc)���ı�/��������
-        129 = /dev/vcsa1    tty1 ���ı�/��������
+         63 = /dev/vcs63    tty63 的文本内容
+        128 = /dev/vcsa     当前虚拟控制台(vc)的文本/属性内容
+        129 = /dev/vcsa1    tty1 的文本/属性内容
             ...
-        191 = /dev/vcsa63   tty63 ���ı�/��������
+        191 = /dev/vcsa63   tty63 的文本/属性内容
 
 
-  7 block   �ػ��豸(��һ����ͨ�Ĵ����ļ���ģ��һ�����豸)
-        �Իػ��豸�İ��� mount(8) �� losetup(8) ����
-          0 = /dev/loop0    ��1���ػ��豸
-          1 = /dev/loop1    ��2���ػ��豸
+  7 block   回环设备(用一个普通的磁盘文件来模拟一个块设备)
+        对回环设备的绑定由 mount(8) 或 losetup(8) 处理
+          0 = /dev/loop0    第1个回环设备
+          1 = /dev/loop1    第2个回环设备
             ...
 
 
-  8 block   SCSI ����(0-15)
-          0 = /dev/sda      ��1�� SCSI ����(��������)
-         16 = /dev/sdb      ��2�� SCSI ����(��������)
-         32 = /dev/sdc      ��3�� SCSI ����(��������)
+  8 block   SCSI 磁盘(0-15)
+          0 = /dev/sda      第1个 SCSI 磁盘(整个磁盘)
+         16 = /dev/sdb      第2个 SCSI 磁盘(整个磁盘)
+         32 = /dev/sdc      第3个 SCSI 磁盘(整个磁盘)
             ...
-        240 = /dev/sdp      ��16�� SCSI ����(��������)
+        240 = /dev/sdp      第16个 SCSI 磁盘(整个磁盘)
 
-        ������ʾ��������(�Ե�3�� SCSI ����Ϊ��)
-         33 = /dev/sdc1     ��1������
-         34 = /dev/sdc2     ��2������
+        分区表示方法如下(以第3个 SCSI 磁盘为例)
+         33 = /dev/sdc1     第1个分区
+         34 = /dev/sdc2     第2个分区
             ...
-         47 = /dev/sdc15    ��15������
-        ����Linux/i386��˵������1-4����������5-15���߼�������
+         47 = /dev/sdc15    第15个分区
+        对于Linux/i386来说，分区1-4是主分区，5-15是逻辑分区。
 
 
-  9 block   Metadisk(RAID)�豸
-          0 = /dev/md0      ��1�� metadisk
-          1 = /dev/md1      ��2�� metadisk
+  9 block   Metadisk(RAID)设备
+          0 = /dev/md0      第1组 metadisk
+          1 = /dev/md1      第2组 metadisk
             ...
-        metadisk �������ڽ�ͬһ���ļ�ϵͳ�ָ������������ϡ�
+        metadisk 驱动用于将同一个文件系统分割到多个物理磁盘上。
 
 
- 10 char    �Ǵ�����꣬���������豸������
-          1 = /dev/psaux    PS/2���
-        131 = /dev/temperature  �����ڲ��¶�
-        134 = /dev/apm_bios APM(�߼���Դ����) BIOS
-        135 = /dev/rtc      ʵʱʱ��(Real Time Clock)
-        144 = /dev/nvram    ����ʧ���� RAM
-        162 = /dev/smbus    ϵͳ��������(System Management Bus)
-        164 = /dev/ipmo     Intel������ƽ̨����(Intelligent Platform Management)�ӿ�
-        173 = /dev/ipmikcs  ����ƽ̨����(Intelligent Platform Management)�ӿ�
-        175 = /dev/agpgart  AGPͼ�ε�ַ��ӳ���(Graphics Address Remapping Table)
-        182 = /dev/perfctr  ���ܼ��Ӽ�����
-        183 = /dev/hwrng    ͨ��Ӳ�������������
-        184 = /dev/cpu/microcode CPU΢������½ӿ�
-        186 = /dev/atomicps ����״̬���ݵ�ԭ�ӿ���
-        188 = /dev/smbusbios    SMBus(ϵͳ��������) BIOS
-        200 = /dev/net/tun  TAP/TUN �����豸(TAP/TUN�������ķ�ʽʵ���������豸)
-                    TAPģ������̫��֡(�ڶ���)��TUNģ����IP��(������)��
-        202 = /dev/emd/ctl  ��ǿ�� Metadisk RAID (EMD) ������
+ 10 char    非串口鼠标，各种杂项设备和特性
+          1 = /dev/psaux    PS/2鼠标
+        131 = /dev/temperature  机器内部温度
+        134 = /dev/apm_bios APM(高级电源管理) BIOS
+        135 = /dev/rtc      实时时钟(Real Time Clock)
+        144 = /dev/nvram    非易失配置 RAM
+        162 = /dev/smbus    系统管理总线(System Management Bus)
+        164 = /dev/ipmo     Intel的智能平台管理(Intelligent Platform Management)接口
+        173 = /dev/ipmikcs  智能平台管理(Intelligent Platform Management)接口
+        175 = /dev/agpgart  AGP图形地址重映射表(Graphics Address Remapping Table)
+        182 = /dev/perfctr  性能监视计数器
+        183 = /dev/hwrng    通用硬件随机数发生器
+        184 = /dev/cpu/microcode CPU微代码更新接口
+        186 = /dev/atomicps 进程状态数据的原子快照
+        188 = /dev/smbusbios    SMBus(系统管理总线) BIOS
+        200 = /dev/net/tun  TAP/TUN 网络设备(TAP/TUN以软件的方式实现了网络设备)
+                    TAP模拟了以太网帧(第二层)，TUN模拟了IP包(第三层)。
+        202 = /dev/emd/ctl  增强型 Metadisk RAID (EMD) 控制器
         220 = /dev/mptctl   Message passing technology (MPT) control
-        223 = /dev/input/uinput �û��������豸����֧��
+        223 = /dev/input/uinput 用户层输入设备驱动支持
         227 = /dev/mcelog   X86_64 Machine Check Exception driver
         228 = /dev/hpet     HPET driver
-        229 = /dev/fuse     Fuse(�û��ռ�������ļ�ϵͳ)
-        231 = /dev/snapshot ϵͳ�ڴ����
-        232 = /dev/kvm      �����ں˵��鹹��(����AMD SVM��Intel VTӲ�����⼼��)
+        229 = /dev/fuse     Fuse(用户空间的虚拟文件系统)
+        231 = /dev/snapshot 系统内存快照
+        232 = /dev/kvm      基于内核的虚构机(基于AMD SVM和Intel VT硬件虚拟技术)
 
 
- 11 block   SCSI CD-ROM �豸
-          0 = /dev/scd0     ��1�� SCSI CD-ROM
-          1 = /dev/scd1     ��2�� SCSI CD-ROM
+ 11 block   SCSI CD-ROM 设备
+          0 = /dev/scd0     第1个 SCSI CD-ROM
+          1 = /dev/scd1     第2个 SCSI CD-ROM
             ...
 
 
- 13 char    ���������豸
-         32 = /dev/input/mouse0     ��1�����
-         33 = /dev/input/mouse1     ��2�����
+ 13 char    核心输入设备
+         32 = /dev/input/mouse0     第1个鼠标
+         33 = /dev/input/mouse1     第2个鼠标
             ...
-         62 = /dev/input/mouse30    ��31�����
-         63 = /dev/input/mice       ��������ͳһ
-         64 = /dev/input/event0     ��1���¼�����
-         65 = /dev/input/event1     ��2���¼�����
+         62 = /dev/input/mouse30    第31个鼠标
+         63 = /dev/input/mice       所有鼠标的统一
+         64 = /dev/input/event0     第1个事件队列
+         65 = /dev/input/event1     第2个事件队列
             ...
-         95 = /dev/input/event1     ��32���¼�����
+         95 = /dev/input/event1     第32个事件队列
 
 
- 21 char    ͨ�� SCSI �豸(ͨ����SCSI����)
-          0 = /dev/sg0      ��1��ͨ�� SCSI �豸
-          1 = /dev/sg1      ��2��ͨ�� SCSI �豸
+ 21 char    通用 SCSI 设备(通常是SCSI光驱)
+          0 = /dev/sg0      第1个通用 SCSI 设备
+          1 = /dev/sg1      第2个通用 SCSI 设备
             ...
 
 
- 29 char    ͨ��֡����(frame buffer)�豸
-          0 = /dev/fb0      ��1��֡�����豸
-          1 = /dev/fb1      ��2��֡�����豸
+ 29 char    通用帧缓冲(frame buffer)设备
+          0 = /dev/fb0      第1个帧缓冲设备
+          1 = /dev/fb1      第2个帧缓冲设备
             ...
-         31 = /dev/fb31     ��32��֡�����豸
+         31 = /dev/fb31     第32个帧缓冲设备
 
 
- 30 char    iBCS-2 �����豸
-          0 = /dev/socksys  �׽��ַ��ʽӿ�
-          1 = /dev/spx      SVR3 ���� X �ӿ�
-         32 = /dev/inet/ip  ������ʽӿ�
+ 30 char    iBCS-2 兼容设备
+          0 = /dev/socksys  套接字访问接口
+          1 = /dev/spx      SVR3 本地 X 接口
+         32 = /dev/inet/ip  网络访问接口
          33 = /dev/inet/icmp
          34 = /dev/inet/ggp
          35 = /dev/inet/ipip
@@ -161,7 +161,7 @@ Linux�ں��ܹ�ʶ����豸����ӦԴ����Documentation/devices.txt�ļ�
          40 = /dev/inet/idp
          41 = /dev/inet/rawip
 
-        ���⣬iBCS-2 ����Ҫ��������ӱ������
+        此外，iBCS-2 还需要下面的连接必须存在
         /dev/ip -> /dev/inet/ip
         /dev/icmp -> /dev/inet/icmp
         /dev/ggp -> /dev/inet/ggp
@@ -178,117 +178,117 @@ Linux�ں��ܹ�ʶ����豸����ӦԴ����Documentation/devices.txt�ļ�
         /dev/X0R -> /dev/null
 
 
- 36 char    Netlink ֧��
-          0 = /dev/route    ·��, �豸����, kernel to user
-          3 = /dev/fwmonitor    Firewall packet ����
+ 36 char    Netlink 支持
+          0 = /dev/route    路由, 设备更新, kernel to user
+          3 = /dev/fwmonitor    Firewall packet 复制
 
 
- 59 char    sf ����ǽģ��
-          0 = /dev/firewall �� sf �ں�ģ��ͨ��
+ 59 char    sf 防火墙模块
+          0 = /dev/firewall 与 sf 内核模块通信
 
 
- 65 block   SCSI ����(16-31)
-          0 = /dev/sdq      ��17�� SCSI ����(��������)
-         16 = /dev/sdr      ��18�� SCSI ����(��������)
-         32 = /dev/sds      ��19�� SCSI ����(��������)
+ 65 block   SCSI 磁盘(16-31)
+          0 = /dev/sdq      第17个 SCSI 磁盘(整个磁盘)
+         16 = /dev/sdr      第18个 SCSI 磁盘(整个磁盘)
+         32 = /dev/sds      第19个 SCSI 磁盘(整个磁盘)
             ...
-        240 = /dev/sdaf     ��32�� SCSI ����(��������)
+        240 = /dev/sdaf     第32个 SCSI 磁盘(整个磁盘)
 
 
- 66 block   SCSI ����(32-47)
-          0 = /dev/sdag     ��33�� SCSI ����(��������)
-         16 = /dev/sdah     ��34�� SCSI ����(��������)
-         32 = /dev/sdai     ��35�� SCSI ����(��������)
+ 66 block   SCSI 磁盘(32-47)
+          0 = /dev/sdag     第33个 SCSI 磁盘(整个磁盘)
+         16 = /dev/sdah     第34个 SCSI 磁盘(整个磁盘)
+         32 = /dev/sdai     第35个 SCSI 磁盘(整个磁盘)
             ...
-        240 = /dev/sdav     ��48�� SCSI ����(��������)
+        240 = /dev/sdav     第48个 SCSI 磁盘(整个磁盘)
 
 
- 89 char    I2C ���߽ӿ�
-          0 = /dev/i2c-0    ��1�� I2C ������
-          1 = /dev/i2c-1    ��2�� I2C ������
-            ...
-
-
-
- 98 block   �û�ģʽ�µ�������豸(����������ʽ�� SCSI ������ͬ)
-          0 = /dev/ubda     ��1���û�ģʽ���豸
-         16 = /dev/udbb     ��2���û�ģʽ���豸
+ 89 char    I2C 总线接口
+          0 = /dev/i2c-0    第1个 I2C 适配器
+          1 = /dev/i2c-1    第2个 I2C 适配器
             ...
 
 
-103 block   ���(Audit)�豸
-          0 = /dev/audit    ���(Audit)�豸
+
+ 98 block   用户模式下的虚拟块设备(分区处理方式与 SCSI 磁盘相同)
+          0 = /dev/ubda     第1个用户模式块设备
+         16 = /dev/udbb     第2个用户模式块设备
+            ...
+
+
+103 block   审计(Audit)设备
+          0 = /dev/audit    审计(Audit)设备
 
 
 128-135 char    Unix98 PTY master
 
-        ��Щ�豸��Ӧ�������豸�ڵ㣬��Ӧ��ͨ�� /dev/ptmx �ӿڷ��ʡ�
+        这些设备不应当存在设备节点，而应当通过 /dev/ptmx 接口访问。
 
 
 136-143 char    Unix98 PTY slave
-        ��Щ�豸�ڵ����Զ����ɵ�(�����ʵ���Ȩ�޺�ģʽ)�������ֶ�������
-        ������ͨ��ʹ���ʵ��� mount ѡ��(ͨ���ǣ�mode=0620,gid=<"tty"���gid>)
-        �� devpts �ļ�ϵͳ���ص� /dev/pts Ŀ¼���ɡ�
-          0 = /dev/pts/0    ��1�� Unix98 PTY slave
-          1 = /dev/pts/1    ��2�� Unix98 PTY slave
+        这些设备节点是自动生成的(伴有适当的权限和模式)，不能手动创建。
+        方法是通过使用适当的 mount 选项(通常是：mode=0620,gid=<"tty"组的gid>)
+        将 devpts 文件系统挂载到 /dev/pts 目录即可。
+          0 = /dev/pts/0    第1个 Unix98 PTY slave
+          1 = /dev/pts/1    第2个 Unix98 PTY slave
             ...
 
 
-153 block   Enhanced Metadisk RAID (EMD) �洢��Ԫ(����������ʽ�� SCSI ������ͬ)
-          0 = /dev/emd/0    ��1���洢��Ԫ
-          1 = /dev/emd/0p1  ��1���洢��Ԫ�ĵ�1������
-          2 = /dev/emd/0p2  ��1���洢��Ԫ�ĵ�2������
+153 block   Enhanced Metadisk RAID (EMD) 存储单元(分区处理方式与 SCSI 磁盘相同)
+          0 = /dev/emd/0    第1个存储单元
+          1 = /dev/emd/0p1  第1个存储单元的第1个分区
+          2 = /dev/emd/0p2  第1个存储单元的第2个分区
             ...
-         15 = /dev/emd/0p15 ��1���洢��Ԫ�ĵ�15������
+         15 = /dev/emd/0p15 第1个存储单元的第15个分区
 
-         16 = /dev/emd/1    ��2���洢��Ԫ
-         32 = /dev/emd/2    ��3���洢��Ԫ
+         16 = /dev/emd/1    第2个存储单元
+         32 = /dev/emd/2    第3个存储单元
             ...
-        240 = /dev/emd/15   ��16���洢��Ԫ
+        240 = /dev/emd/15   第16个存储单元
 
 
-180 char    USB �ַ��豸
-         96 = /dev/usb/hiddev0  ��1��USB�˻������豸(���/����/��Ϸ��/��д����˲�����������豸)
+180 char    USB 字符设备
+         96 = /dev/usb/hiddev0  第1个USB人机界面设备(鼠标/键盘/游戏杆/手写版等人操作计算机的设备)
             ...
-        111 = /dev/usb/hiddev15 ��16��USB�˻������豸
+        111 = /dev/usb/hiddev15 第16个USB人机界面设备
 
 
-180 block   USB ���豸(U��֮��)
-          0 = /dev/uba      ��1��USB ���豸
-          8 = /dev/ubb      ��2��USB ���豸
-         16 = /dev/ubc      ��3��USB ���豸
-            ...
-
-
-192 char    �ں� profiling �ӿ�
-          0 = /dev/profile  Profiling �����豸
-          1 = /dev/profile0 CPU 0 �� Profiling �豸
-          2 = /dev/profile1 CPU 1 �� Profiling �豸
+180 block   USB 块设备(U盘之类)
+          0 = /dev/uba      第1个USB 块设备
+          8 = /dev/ubb      第2个USB 块设备
+         16 = /dev/ubc      第3个USB 块设备
             ...
 
 
-193 char    �ں��¼����ٽӿ�
-          0 = /dev/trace    ���ٿ����豸
-          1 = /dev/trace0   CPU 0 �ĸ����豸
-          2 = /dev/trace1   CPU 1 �ĸ����豸
+192 char    内核 profiling 接口
+          0 = /dev/profile  Profiling 控制设备
+          1 = /dev/profile0 CPU 0 的 Profiling 设备
+          2 = /dev/profile1 CPU 1 的 Profiling 设备
             ...
 
 
-195 char    Nvidia ͼ���豸(�����Կ�)
-          0 = /dev/nvidia0      ��1�� Nvidia ��
-          1 = /dev/nvidia1      ��2�� Nvidia ��
-            ...
-        255 = /dev/nvidiactl        Nvidia �������豸
-
-
-202 char    �ض���CPUģʽ�ļĴ���(model-specific register,MSR)
-          0 = /dev/cpu/0/msr        CPU 0 �� MSRs
-          1 = /dev/cpu/1/msr        CPU 1 �� MSRs
+193 char    内核事件跟踪接口
+          0 = /dev/trace    跟踪控制设备
+          1 = /dev/trace0   CPU 0 的跟踪设备
+          2 = /dev/trace1   CPU 1 的跟踪设备
             ...
 
-203 char    CPU CPUID ��Ϣ
-          0 = /dev/cpu/0/cpuid      CPU 0 �� CPUID
-          1 = /dev/cpu/1/cpuid      CPU 1 �� CPUID
+
+195 char    Nvidia 图形设备(比如显卡)
+          0 = /dev/nvidia0      第1个 Nvidia 卡
+          1 = /dev/nvidia1      第2个 Nvidia 卡
+            ...
+        255 = /dev/nvidiactl        Nvidia 卡控制设备
+
+
+202 char    特定于CPU模式的寄存器(model-specific register,MSR)
+          0 = /dev/cpu/0/msr        CPU 0 的 MSRs
+          1 = /dev/cpu/1/msr        CPU 1 的 MSRs
+            ...
+
+203 char    CPU CPUID 信息
+          0 = /dev/cpu/0/cpuid      CPU 0 的 CPUID
+          1 = /dev/cpu/1/cpuid      CPU 1 的 CPUID
 
 		    LINUX ALLOCATED DEVICES (2.6+ version)
 
@@ -3503,70 +3503,70 @@ nodes for the slaves on demand using the "devpts" filesystem.
 
 
 
-Linux �豸�ļ�����
+Linux 设备文件介绍
 
-��Linux��,���е��豸���ļ�����ʽ������Ŀ¼ /dev �С����ǿɶ�����д���������Ȩ����ô���Ļ����豸�ļ��б��ܹ���ʾ�豸��һЩ��Ҫϸ�ڣ�ls -l /dev/ttys3
+在Linux中,所有的设备以文件的形式出现在目录 /dev 中。它们可读、可写，如果你有权限这么做的话。设备文件列表能够揭示设备的一些重要细节：ls -l /dev/ttys3
 
-�ҵ�ϵͳ�������µ������crwxr-xr-x 1 root tty 4, 67 Mar 13 22:59 ttyS3
+我的系统给出如下的输出：crwxr-xr-x 1 root tty 4, 67 Mar 13 22:59 ttyS3
 
-����ߵġ�c����������һ���ַ��豸������ǡ�b������ζ�š����豸������p��=�����ȳ��豸��FIFO������u��=�ǻ����ַ��豸����d��=Ŀ ¼����l��=�������ӡ����֡�4��67������˼�����豸Ϊ4�����豸��Ϊ67��Ϊ��ʹ��ϵͳ�������û���ʹ��ĳЩ�豸������Ҫ���豸�ļ�������ȷ��Ȩ�ޡ�
+最左边的“c”表明这是一个字符设备。如果是“b”则意味着“块设备”，“p”=先入先出设备（FIFO），“u”=非缓冲字符设备，“d”=目 录，“l”=符号链接。数字“4，67”的意思是主设备为4，次设备好为67。为了使你系统中所有用户能使用某些设备，你需要对设备文件设置正确的权限。
 
-���磺
+例如：
 
 ls -l /dev/usb/scanner0
 chmod 666 /dev/usb/scanner0
 
-������һ�������豸���嵥��
+这里有一个常见设备的清单：
 
-    /dev/ttyS0  ��һ�����пڡ����ͨ���������
-    /dev/ttyS1  �ڶ������пڡ���ĵ��ƽ�����ܿ��ܽ������
-    /dev/ttyS2 �� /dev/ttyS3 �ǵ����͵��ĸ����пڣ�һ�㲻���ڣ���������õ��ƽ�������Ա����ó�ʹ������֮һ����
-    /dev/modem  ���ڵ��ƽ������ͨ����һ��ָ�� /dev/ttyS1��/dev/ttyS2 �� /dev/ttyS3 �ķ������ӣ�����ȡ������ĵ��ƽ���������Ǹ����ж˿ڡ�
-    /dev/mouse  ��ꡣͨ����һ��ָ�� /dev/ttyS0 �������豸�����ϣ��ķ������ӣ�����ȡ��������������ĸ����ж˿ڡ�
-    /dev/lp0  ���ڵ�һ�����пڵĴ�ӡ����ͨ����Ĵ�ӡ���������
-    /dev/lp1  ���ڵڶ������пڵĴ�ӡ����һ�㲻���ڣ���
-    /dev/fd0  ��һ��������������һ�㶼�У���
-    /dev/fd0H1440  ��һ�������������ĸ��ܶ�ģʽ��������һ������£�����������򣨻��������������ֵ��豸�������������ض��ܶȸ�ʽ��һ�����̵�ʱ�򱻵��á� Slackware ����֧�ֽ�һ��3.5Ӣ�����̸�ʽ��Ϊ���1.7MB����������Ĭ������£�RedHat �� Mandrake û����Щ��������
-    /dev/fd1  �ڶ���������������
-    /dev/hda  ��һ�� IDE Ӳ�̣�����Ӳ�̣�������� IBM ���� PC ��Ӳ���� IDE �豸��
-    /dev/hdb  �ڶ��� IDE Ӳ�̣�����Ӳ�̣����ܶ������У�IDE �����������
-    /dev/hdc  ������ IDE Ӳ�̣�����Ӳ�̣����ܶ������У�IDE �����������
-    /dev/cdrom  ָ����Ӧ�豸�����ӣ�ͨ���� /dev/hdc �� /dev/hdb��CDROM����/dev/scd0��CD-R/RW����
-    /dev/hda1  ��һ�� IDE Ӳ�̵ĵ�һ��������/dev/hda2 ʱ��һ�� IDE Ӳ�̵ĵڶ������������Ѳ²⣬/dev/hdd8 �����ǵ��ĸ�IDEӲ�̵ĵڰ˷�����
-    /dev/tty1  ��һ���ַ��նˡ�/dev/tty2 ʱ�ڶ����ַ��նˣ��Դ����ơ�
-    /dev/dsp  ������Ƶ��������������dsp���ǡ�digital signal processing�������źŴ�����������д��
-    /dev/sndstat  �� cat /dev/sndstat ��������˽��������״̬��
-    /dev/null  ���㲻��Ҫ�����ʱ����͵����
-    /dev/random  ������α��������� cat /dev/random ������Ļ����ʾһ�����߰�����ַ�������һ�� /dev/urandom �豸�������ɵ���������������С�
-    /dev/sda  ��һ�� SCSI Ӳ�̣�����Ӳ�̣�����һ̨���ü�����У���̫������ SCSI �豸�����󣩡�
-    /dev/sdb  �ڶ��� SCSI Ӳ�̣���sdc���ǵ����� SCSI Ӳ�̣��Դ����ơ�һ��ϵͳ�п����ж�� SCSI Ӳ�̣���
-    /dev/sda1  ��һ�� SCSI Ӳ�̵ĵ�һ��������
-    /dev/sr0  ��һ�� SCSI ��������ʱ����/dev/scd0�����������һ�� ATAPI CD Writer��Ҳ���������
-    /dev/sr1  �ڶ��� SCSI ��������ʱ���� /dev/scd1������/dev/sr2 �ǵ����� SCSI �������Դ����ơ�ϵͳ�п����ж�� SCSI ������
-    /dev/usb/scanner0  һ�� usb ɨ���ǡ�
+    /dev/ttyS0  第一个串行口。鼠标通常接在这里。
+    /dev/ttyS1  第二个串行口。你的调制解调器很可能接在这里。
+    /dev/ttyS2 和 /dev/ttyS3 是第三和第四个串行口（一般不存在，但你的内置调制解调器可以被设置成使用其中之一）。
+    /dev/modem  串口调制解调器。通常是一个指向 /dev/ttyS1、/dev/ttyS2 或 /dev/ttyS3 的符号链接，具体取决于你的调制解调器接在那个串行端口。
+    /dev/mouse  鼠标。通常是一个指向 /dev/ttyS0 或相似设备（见上）的符号链接，具体取决于你的鼠标接在哪个串行端口。
+    /dev/lp0  接在第一个并行口的打印机。通常你的打印机接在这里。
+    /dev/lp1  接在第二个并行口的打印机（一般不存在）。
+    /dev/fd0  第一个软盘驱动器（一般都有）。
+    /dev/fd0H1440  第一个软盘驱动器的高密度模式驱动程序。一般情况下，这个驱动程序（或其他有相似名字的设备驱动程序）在以特定密度格式化一张软盘的时候被调用。 Slackware 还有支持将一张3.5英寸软盘格式化为最大1.7MB的驱动程序。默认情况下，RedHat 和 Mandrake 没有这些驱动程序。
+    /dev/fd1  第二个软盘驱动器。
+    /dev/hda  第一个 IDE 硬盘（整个硬盘）。大多数 IBM 兼容 PC 的硬盘是 IDE 设备。
+    /dev/hdb  第二个 IDE 硬盘（整个硬盘）。很多计算机中，IDE 光驱接在这里。
+    /dev/hdc  第三个 IDE 硬盘（整个硬盘）。很多计算机中，IDE 光驱接在这里。
+    /dev/cdrom  指向相应设备的链接，通常是 /dev/hdc 或 /dev/hdb（CDROM）或/dev/scd0（CD-R/RW）。
+    /dev/hda1  第一个 IDE 硬盘的第一个分区。/dev/hda2 时第一个 IDE 硬盘的第二个分区。不难猜测，/dev/hdd8 将会是第四个IDE硬盘的第八分区。
+    /dev/tty1  第一个字符终端。/dev/tty2 时第二个字符终端，以此类推。
+    /dev/dsp  数字音频，例如声卡。“dsp”是“digital signal processing（数字信号处理）”的缩写。
+    /dev/sndstat  用 cat /dev/sndstat 来更多地了解你的声卡状态。
+    /dev/null  当你不想要输出的时候就送到这里。
+    /dev/random  用来读伪随机数。用 cat /dev/random 来在屏幕上显示一对乱七八糟的字符。还有一个 /dev/urandom 设备用来生成低质量的随机数序列。
+    /dev/sda  第一个 SCSI 硬盘（整个硬盘）。在一台家用计算机中，不太可能有 SCSI 设备（昂贵）。
+    /dev/sdb  第二个 SCSI 硬盘（“sdc”是第三个 SCSI 硬盘，以此类推。一个系统中可以有多个 SCSI 硬盘）。
+    /dev/sda1  第一个 SCSI 硬盘的第一个分区。
+    /dev/sr0  第一个 SCSI 光驱（有时叫做/dev/scd0）。如果你有一个 ATAPI CD Writer，也可能在这里。
+    /dev/sr1  第二个 SCSI 光驱（有时叫做 /dev/scd1）。（/dev/sr2 是第三个 SCSI 光驱，以此类推。系统中可以有多个 SCSI 光驱）
+    /dev/usb/scanner0  一个 usb 扫描仪。
 
-���� less /usr/src/linux/Documentation/usb/scanner.txt �˽���δ�ͷ��ʼ����ɨ���ǡ����˽���ࣺ
+试用 less /usr/src/linux/Documentation/usb/scanner.txt 了解如何从头开始配置扫描仪。欲了解更多：
 
 less /usr/src/linux/Documentation/devices.txt
 man MAKEDEV
 
-�� /usr/src/linux/Documentation/devices.txt ���͵��������ҿ�����Ҫ����һЩָ���豸�ļ������ķ��������������ҵ�ϵͳ����ֻ��һ���򵥵�ʵ����������ζ��ͨ�õĽ��顣��Ȼ�������Щ���Ӵ��ڣ�����Ӧ�������µģ�
+象 /usr/src/linux/Documentation/devices.txt 解释的那样，我可能需要创建一些指向设备文件本身的符号链接来配置我的系统。这只是一个简单的实例，并不意味着通用的建议。当然，如果这些链接存在，它们应该有以下的：
 
-    /dev/mouse ��ǰ���˿�***
-    /dev/tape ��ǰ�Ŵ��豸
-    /dev/cdrom ��ǰ�����豸***
-    /dev/cdwriter ��ǰ CD-writer �豸�������ҵ� RedHat �� /dev/cdrecorder��
-    /dev/scanner ��ǰɨ�����豸
-    /dev/modem ��ǰ���������ƽ�������˿�
-    /dev/root ��ǰ root �ļ�ϵͳ
-    /dev/swap ��ǰ swap �豸
+    /dev/mouse 当前鼠标端口***
+    /dev/tape 当前磁带设备
+    /dev/cdrom 当前光驱设备***
+    /dev/cdwriter 当前 CD-writer 设备（但是我的 RedHat 是 /dev/cdrecorder）
+    /dev/scanner 当前扫描仪设备
+    /dev/modem 当前拨出（调制解调器）端口
+    /dev/root 当前 root 文件系统
+    /dev/swap 当前 swap 设备
 
-*** ��ʾ�ҵ� Marndrake ϵͳ��ȷʵ���ڵķ������ӡ����磬��������ʲô���⣬�һ�����������飨�� root����
+*** 表示我的 Marndrake 系统中确实存在的符号链接。例如，如果鼠标有什么问题，我会做下面的事情（以 root）：
 
-ls -l /dev/mouse ���������豸�Ƿ������ָ�����
-ln -s /dev/ttyS0 /dev/mouse ������һ���������� /dev/mouse ָ���һ�����ж˿ڣ�
+ls -l /dev/mouse （检查鼠标设备是否存在且指向哪里）
+ln -s /dev/ttyS0 /dev/mouse （创建一个符号链接 /dev/mouse 指向第一个串行端口）
 
-���� SCSI����ATAPI���豸��/dev/tape �� /dev/cdrom Ӧ��ָ���족�豸��/dev/st* �� /dev/sr* ��Ӧ�أ����� /dev/cdwriter �� /dev/scanner Ӧ��ָ����Ӧ����ͨ SCSI �豸��/dev/sg*��������ʱ�׽��ֺ͹ܵ����ܴ����� /dev���������У�
+对于 SCSI（及ATAPI）设备，/dev/tape 和 /dev/cdrom 应该指向“熟”设备（/dev/st* 和 /dev/sr* 相应地），而 /dev/cdwriter 和 /dev/scanner 应该指向相应的普通 SCSI 设备（/dev/sg*）。非临时套接字和管道可能存在于 /dev。常见的有：
 
 /dev/printer socket lpd local socket
 /dev/log socket syslog local socket

@@ -54,7 +54,7 @@ On early UNIX systems, the root directory was a fixed point in the filesystem. O
 
 The root directory appears at the top of the directory hierarchy and has no parent: A process cannot access any files above the root directory (because they do not exist). If, for example, you run a program (process) and specify its root directory as /home/sam/jail, the program would have no concept of any files in /home/sam or above: jail is the program's root directory and is labeled / (not jail).
 
-By creating an artificial root directory, frequently called a (chroot) jail, you prevent a program from accessing or modifyingópossibly maliciouslyófiles outside the directory hierarchy starting at its root. You must set up a chroot jail properly to increase security: If you do not set up the chroot jail correctly, you can actually make it easier for a malicious user to gain access to a system than if there were no chroot jail.
+By creating an artificial root directory, frequently called a (chroot) jail, you prevent a program from accessing or modifyingÊ¢°ossibly maliciouslyÊ¢ñiles outside the directory hierarchy starting at its root. You must set up a chroot jail properly to increase security: If you do not set up the chroot jail correctly, you can actually make it easier for a malicious user to gain access to a system than if there were no chroot jail.
 
 Using chroot
 
@@ -118,4 +118,4 @@ Some servers are already set up to take advantage of chroot jails. For example, 
 Security considerations
 Some services need to be run as root, but they release their root privileges once started (Procmail and vsftpd are examples). If you are running such a service, you do not need to put su inside the jail.
 
-A process run as root could potentially escape from a chroot jail. For this reason, you should always su to another user before starting a program running inside the jail. Also, be careful about which setuid (page 205) binaries you allow inside a jailóa security hole in one of them could compromise the security of the jail. In addition, make sure the user cannot access executable files that he uploads.
+A process run as root could potentially escape from a chroot jail. For this reason, you should always su to another user before starting a program running inside the jail. Also, be careful about which setuid (page 205) binaries you allow inside a jailÊ¢ê security hole in one of them could compromise the security of the jail. In addition, make sure the user cannot access executable files that he uploads.

@@ -167,15 +167,15 @@ https://www.dan.me.uk/blog/2012/05/05/full-disk-encryption-in-freebsd-9-x-well-a
 
 Full disk encryption in FreeBSD 9.x (well, almost!)
 
-This article will tell you how to fully encrypt your hard disk in FreeBSD 9.x.  When I say ¡®fully¡¯, I mean as close as possible.  It will leave the bootloader and /boot folder unencrypted, but everything else will be encrypted (including your swap space).  Basically, all your data is encrypted and that¡¯s the point¡­
+This article will tell you how to fully encrypt your hard disk in FreeBSD 9.x.  When I say â€˜fullyâ€™, I mean as close as possible.  It will leave the bootloader and /boot folder unencrypted, but everything else will be encrypted (including your swap space).  Basically, all your data is encrypted and thatâ€™s the pointâ€¦
 
 Boot from any FreeBSD 9 install medium (except bootonly), and choose Live CD at the installer menu.
 
-For this article, I will assume you¡¯re using the /dev/ada0 disk, a 10GB /boot, a 4GB swap and remaining disk encrypted.  The contents will be encrypted using AES-XTS 256-bit encryption  with a 4 kilobit random data partial key and a passphrase (required to type on boot).  This method requires no external data (no USB sticks, no bootable CDs to boot the OS) ¨C but does not offer two factor authentication which is better than this method.  For general encryption needs, this method is more than sufficient.
+For this article, I will assume youâ€™re using the /dev/ada0 disk, a 10GB /boot, a 4GB swap and remaining disk encrypted.  The contents will be encrypted using AES-XTS 256-bit encryption  with a 4 kilobit random data partial key and a passphrase (required to type on boot).  This method requires no external data (no USB sticks, no bootable CDs to boot the OS) â€“ but does not offer two factor authentication which is better than this method.  For general encryption needs, this method is more than sufficient.
 
 Note that more recent CPUs support AESNI flag for offloading. As GELI uses the crypto(4) framework, the OS will utilise this function of your CPU to assist the encryption to decrease CPU load.
 
-First, we need to remove any existing GPT or MBR partition tables on the disk ¨C ignore any ¡®invalid argument¡¯ messages you get at this stage:
+First, we need to remove any existing GPT or MBR partition tables on the disk â€“ ignore any â€˜invalid argumentâ€™ messages you get at this stage:
 
     gpart destroy -F ada0
 
@@ -187,7 +187,7 @@ We will now create a 64kb boot partition (this contains the boot loader only, so
 
     gpart add -s 128 -t freebsd-boot ada0
 
-Next, we will create the /boot partition ¨C you can adjust the sizes here if you need, but i¡¯d suggest not shrinking it too much or you¡¯ll get into problems when doing OS upgrades later¡­
+Next, we will create the /boot partition â€“ you can adjust the sizes here if you need, but iâ€™d suggest not shrinking it too much or youâ€™ll get into problems when doing OS upgrades laterâ€¦
 
     gpart add -s 10G -t freebsd-ufs ada0
 
@@ -199,7 +199,7 @@ Finally, we assign the remaining data to a partition.  This will form the entire
 
     gpart add -t freebsd-ufs ada0
 
-OK, so we¡¯ve created¡­ ada0p1 (bootloader), adap2 (unencrypted /boot partition), adap3 (swap partition) and adap4 (encrypted disk partition).  We need to write the boot loader to the disk now:
+OK, so weâ€™ve createdâ€¦ ada0p1 (bootloader), adap2 (unencrypted /boot partition), adap3 (swap partition) and adap4 (encrypted disk partition).  We need to write the boot loader to the disk now:
 
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ada0
 
@@ -215,19 +215,19 @@ Now we will create a 4kb random data file that will form part of the encryption 
 
     dd if=/dev/random of=/mnt/encryption.key bs=4096 count=1
 
-Now we¡¯re in a position to encrypt the main disk.  This part will ask for a passphrase twice to complete:
+Now weâ€™re in a position to encrypt the main disk.  This part will ask for a passphrase twice to complete:
 
     kldload geom_eli
     geli init -a HMAC/SHA256 -b -B /mnt/ada0p4.eli -e AES-XTS -K /mnt/encryption.key -l 256 -s 4096 /dev/ada0p4
     geli attach -k /mnt/encryption.key /dev/ada0p4
 
-You will receive some messages on the console about checksum mismatches ¨C this is normal and please ignore them.
+You will receive some messages on the console about checksum mismatches â€“ this is normal and please ignore them.
 
-If you have time, I recommend writing the entire disk with random data to initialise the checksums.  This is a VERY time consuming step ¨C you can skip it if you wish, but it is recommended:
+If you have time, I recommend writing the entire disk with random data to initialise the checksums.  This is a VERY time consuming step â€“ you can skip it if you wish, but it is recommended:
 
     dd if=/dev/random of=/dev/ada0p4.eli bs=1m
 
-Next we will unmount the old parition so we can mount the new ¡°root" after formatting  (and re-mount the /boot partition too):
+Next we will unmount the old parition so we can mount the new â€œroot" after formatting  (and re-mount the /boot partition too):
 
     umount /mnt
     newfs -O2 -U -j -m 6 /dev/ada0p4.eli
@@ -235,7 +235,7 @@ Next we will unmount the old parition so we can mount the new ¡°root" after form
     mkdir /mnt/bootdir
     mount /dev/ada0p2 /mnt/bootdir
 
-OK, we¡¯re ready to install the OS files onto the disk now¡­ We will install the base, kernel, src and ports tarballs as follows:
+OK, weâ€™re ready to install the OS files onto the disk nowâ€¦ We will install the base, kernel, src and ports tarballs as follows:
 
     cd /mnt
     unxz -c /usr/freebsd-dist/base.txz | tar xpf -
@@ -243,39 +243,39 @@ OK, we¡¯re ready to install the OS files onto the disk now¡­ We will install the
     unxz -c /usr/freebsd-dist/src.txz | tar xpf -
     unxz -c /usr/freebsd-dist/ports.txz | tar xpf -
 
-Note: this can take a while (especially the ports extraction) so please be patient.  If you¡¯d like to see some kind of progress, change the ¡°xpf" to ¡°xvpf" and it will scroll the files to the screen as they are extracted.
+Note: this can take a while (especially the ports extraction) so please be patient.  If youâ€™d like to see some kind of progress, change the â€œxpf" to â€œxvpf" and it will scroll the files to the screen as they are extracted.
 
-Now we have to move the /boot folder to the unencrypted partition (it¡¯s really not much use if it¡¯s encrypted!) ¨C we will also move the keyfile and backup file into the /boot folder:
+Now we have to move the /boot folder to the unencrypted partition (itâ€™s really not much use if itâ€™s encrypted!) â€“ we will also move the keyfile and backup file into the /boot folder:
 
     mv boot bootdir/
     ln -fs bootdir/boot
     mv encryption.key ada0p4.eli bootdir/boot/
 
-Now we need to prepare a few things in the installed OS ¨C so we will chroot into the folder:
+Now we need to prepare a few things in the installed OS â€“ so we will chroot into the folder:
 
     chroot /mnt
 
-We need to tell the boot loader to load kernel modules for decryption, and also tell it about the keyfile for the partition¡­ edit the file /boot/loader.conf and enter the following:
+We need to tell the boot loader to load kernel modules for decryption, and also tell it about the keyfile for the partitionâ€¦ edit the file /boot/loader.conf and enter the following:
 
     vfs.root.mountfrom="ufs:/dev/ada0p4.eli"
     aesni_load="YES"
     geom_eli_load="YES"
     geli_ada0p4_keyfile0_load="YES"
-    geli_ada0p4_keyfile0_type="ada0p4:geli_keyfile0¡å
+    geli_ada0p4_keyfile0_type="ada0p4:geli_keyfile0â€³
     geli_ada0p4_keyfile0_name="/boot/encryption.key"
 
-Now we need to tell the system to encrypt our swap space using a one-time key on each boot (note: this prevents system dumps from working)¡­ edit /etc/rc.conf and enter:
+Now we need to tell the system to encrypt our swap space using a one-time key on each boot (note: this prevents system dumps from working)â€¦ edit /etc/rc.conf and enter:
 
     geli_swap_flags="-e AES-XTS -l 256 -s 4096 -d"
 
-Next we need to tell the system our mountpoints¡­ edit the file /etc/fstab and enter:
+Next we need to tell the system our mountpointsâ€¦ edit the file /etc/fstab and enter:
 
     # Device                   Mountpoint FStype Options Dump Pass#
     /dev/ada0p4.eli   /                   ufs    rw      0    0
     /dev/ada0p2         /bootdir   ufs    rw      1    1
     /dev/ada0p3.eli   none           swap   sw      0    0
 
-Now we need to initialise a few things¡­ let¡¯s start by setting the root password:
+Now we need to initialise a few thingsâ€¦ letâ€™s start by setting the root password:
 
     passwd root
 
@@ -288,11 +288,11 @@ And initialise the sendmail aliases file:
     cd /etc/mail
     make aliases
 
-You can do any other system setup you need now, such as adding users, configuring SSH or networking¡­  when you¡¯re done:
+You can do any other system setup you need now, such as adding users, configuring SSH or networkingâ€¦  when youâ€™re done:
 
     exit
 
-Now we¡¯re done, we can reboot¡­
+Now weâ€™re done, we can rebootâ€¦
 
     reboot
 
@@ -300,8 +300,8 @@ On boot, you will see a prompt for:
 
     Enter passphrase for ada0p4:
 
-Note, however, that devices are still being detected while this occurs so it may scroll off the screen (usually while detecting USB devices) ¨C this doesn¡¯t affect your ability to enter the passphrase, but can be confusing if you¡¯re not expecting it!
+Note, however, that devices are still being detected while this occurs so it may scroll off the screen (usually while detecting USB devices) â€“ this doesnâ€™t affect your ability to enter the passphrase, but can be confusing if youâ€™re not expecting it!
 
 Once the system is up and running, you can use it as normal.
 
-The only point to note is that when you do an OS upgrade, during the ¡°mergemaster" stage, it will complain that /boot is a symlink not a directory.  Simply tell it to ignore/do nothing and it will install the files as normal.
+The only point to note is that when you do an OS upgrade, during the â€œmergemaster" stage, it will complain that /boot is a symlink not a directory.  Simply tell it to ignore/do nothing and it will install the files as normal.

@@ -1,33 +1,33 @@
-vmware ����������Ĵ��̿ռ� .
-��ʱ�򴴽��������ʱ��û�и����̷���ܴ�Ŀռ䣬��������ʱ������ƣ�ԭ������
-�Ĵ��̿ռ��Ѿ��������ˣ���ô���أ��ѵ�Ҫ������װһ��������𣿺Ǻǣ���Ȼ��������
-�������� vmware ��������������̿ռ䡣
-1.����������Ҫ�ҵ� vmware �İ�װ·��������"D:\Program Files\vm7����
-2.Ȼ�����Ǵ� command ���ڣ�Ŀ¼�л���"D:\Program Files\vm7����
-3.���ǻ�Ҫ֪���Լ������װ����ʲô�ط���
-�ҵ��� vmdk ��·����
-���磺
+vmware 增大虚拟机的磁盘空间 .
+有时候创建虚拟机的时候没有给磁盘分配很大的空间，但是随着时间的推移，原来分配
+的磁盘空间已经不够用了，怎么办呢？难道要重新再装一个虚拟机吗？呵呵，当然不，我们
+可以利用 vmware 的命令来增大磁盘空间。
+1.首先我们需要找到 vmware 的安装路径，比如"D:\Program Files\vm7”；
+2.然后我们打开 command 窗口，目录切换到"D:\Program Files\vm7”；
+3.我们还要知道自己虚拟机装在了什么地方，
+找到其 vmdk 的路径，
+比如：
 
 "E:\red hat enterprise
-5\Red Hat Enterprise Linux 5.vmdk"��
-4.�������� vmware-vdiskmanager.exe -x 15Gb "E:\red hat enterprise 5\Red Hat Enterprise Linux
-5.vmdk ���
-5.���Կ�������� 100%done��������̺�����
-���������ӵ� 15Gb �Ĺ���������ˡ�
+5\Red Hat Enterprise Linux 5.vmdk"；
+4.接着运行 vmware-vdiskmanager.exe -x 15Gb "E:\red hat enterprise 5\Red Hat Enterprise Linux
+5.vmdk 命令；
+5.可以看到，最后 100%done（这个过程很慢）
+，我们增加到 15Gb 的工作就完成了。
 
-����ֻ�ǼӴ��������������Ӳ�̿ռ䣬�����ļ�ϵͳ�Ŀռ䲢û�������ļӴ�
-��ʱ�������������� fdisk ��������������ռ䡣
-1.fdisk -l(��һ�´��̵��������)
+上面只是加大了虚拟机的物理硬盘空间，但是文件系统的空间并没有真正的加大，
+这时候进入虚拟机，用 fdisk 增大分区的物理空间。
+1.fdisk -l(看一下磁盘的利用情况)
 2.fdisk /dev/sda
-3.m(��һ���б�)
-4.p(�鿴��ǰ�ķ����� print)
-5.d��ɾ��������
-6.3����������� swap �����������п��ܱ�����Ŷ��
-7.n�����ӷ�����
-8.p������������ primary��
-9.3���������ţ�
-10.w��������ģ�
-11.�������ӣ�
-�������������ǻ�Ҫ���µķ������ص�ָ��Ŀ¼��
-��/etc/fstab �ļ�����������һ�У� /dev/sda3 / ext3 defaults 0 0
-��һ���ֶα�ʾ�Ǹ��������ڶ����ֶα�ʾ���ص��Ǹ��ļ��£�ext3 ������������ĸ�ʽ������ֶξ�������������Ŀ¼�¾����µĿռ���������ˣ���Ϳ�������Ŀ¼�½����µ��ļ��ˡ�
+3.m(看一下列表)
+4.p(查看当前的分区表 print)
+5.d（删除分区）
+6.3（这个数字是 swap 分区，否则有可能崩溃的哦）
+7.n（增加分区）
+8.p（增加主分区 primary）
+9.3（主分区号）
+10.w（保存更改）
+11.重启机子，
+重新启动后，我们还要将新的分区挂载到指定目录：
+打开/etc/fstab 文件，添加下面一行： /dev/sda3 / ext3 defaults 0 0
+第一个字段表示那个分区，第二个字段表示挂载到那个文件下，ext3 代表这个新区的格式，后边字段具体具体查这样主目录下就有新的空间可以利用了，你就可以在主目录下建立新的文件了。

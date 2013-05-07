@@ -10,7 +10,7 @@ How-To
     06  Converting the virtual machine .vmdk file to .img with StarWind V2V Converter
     07  Instaling and configuring StarWind iSCSI SAN with image .img
     08  Rebuilding the file ipxe.iso with UltraISO
-    09  Editing with notepad++ the menu file ¡®menu.lst¡¯ of TFTP Root
+    09  Editing with notepad++ the menu file â€˜menu.lstâ€™ of TFTP Root
     10  Testing the solution
 
 Software Requirements

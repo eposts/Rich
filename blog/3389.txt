@@ -9,17 +9,17 @@ regedit /s 3389.reg
 del 3389.reg
 
 
-Ô¶³Ì×ÀÃæÁ¬½ÓÊÇ²»ÊÇ¾ÍÊÇterminal services
+è¿œç¨‹æ¡Œé¢è¿æ¥æ˜¯ä¸æ˜¯å°±æ˜¯terminal services
 
-ÎÒµÄ2003¡°·şÎñ¡±ÁĞ±íÖĞÕÒ²»µ½¡°terminal services¡±
+æˆ‘çš„2003â€œæœåŠ¡â€åˆ—è¡¨ä¸­æ‰¾ä¸åˆ°â€œterminal servicesâ€
 
-ÈçºÎÖØĞÂ°²×°Ô¶³Ì×ÀÃæ
+å¦‚ä½•é‡æ–°å®‰è£…è¿œç¨‹æ¡Œé¢
 
-ÄÑµÀ¾ÍÊÇ°²×°¡°ÖÕ¶Ë·şÎñ¡±?
+éš¾é“å°±æ˜¯å®‰è£…â€œç»ˆç«¯æœåŠ¡â€?
 
 --------------------------------------------------------------------------------
 
-Windows Server 2003½«Á½ÖÖÄ£Ê½³¹µ×·Ö¿ª£¬Remote AdministrationÄ£Ê½Í¨¹ıMy ComputerµÄÊôĞÔ½øĞĞÉèÖÃ£¬¶øApplication Sharing modeÍ¨¹ıTerminal Server×é¼ş°²×°£¬Òò´Ë²»ÔÙÓĞmodeµÄ¸ÅÄî¡£µ«ÊÇÆäÊµÈÔÈ»¶¼ÊÇÒÀÀµÓÚÍ¬Ò»¸öTerminal ServiceµÄWindows Service¡£Remote Desktop clientÓÅÏÈÊ¹ÓÃTerminal Server£¨Ïàµ±ÓÚApplication sharingÄ£Ê½£©½øĞĞÁ¬½Ó£¬Òò´ËÔÚTerminal server license¹ıÆÚÖ®ºó£¬¼´Ê¹ÉèÖÃAllow users to connect remotely to this computer£¬ÈÔÈ»ÎŞ·¨Á¬½Ó£¬ÕâÓ¦¸Ã¾ÍÊÇ³öÏÖÉÏÊöÎÊÌâµÄÔ­Òò¡£
+Windows Server 2003å°†ä¸¤ç§æ¨¡å¼å½»åº•åˆ†å¼€ï¼ŒRemote Administrationæ¨¡å¼é€šè¿‡My Computerçš„å±æ€§è¿›è¡Œè®¾ç½®ï¼Œè€ŒApplication Sharing modeé€šè¿‡Terminal Serverç»„ä»¶å®‰è£…ï¼Œå› æ­¤ä¸å†æœ‰modeçš„æ¦‚å¿µã€‚ä½†æ˜¯å…¶å®ä»ç„¶éƒ½æ˜¯ä¾èµ–äºåŒä¸€ä¸ªTerminal Serviceçš„Windows Serviceã€‚Remote Desktop clientä¼˜å…ˆä½¿ç”¨Terminal Serverï¼ˆç›¸å½“äºApplication sharingæ¨¡å¼ï¼‰è¿›è¡Œè¿æ¥ï¼Œå› æ­¤åœ¨Terminal server licenseè¿‡æœŸä¹‹åï¼Œå³ä½¿è®¾ç½®Allow users to connect remotely to this computerï¼Œä»ç„¶æ— æ³•è¿æ¥ï¼Œè¿™åº”è¯¥å°±æ˜¯å‡ºç°ä¸Šè¿°é—®é¢˜çš„åŸå› ã€‚
 
 --------------------------------------------------------------------------------
 
@@ -30,19 +30,19 @@ sc create TermServices binpath= "C:\Windows\System32\svchost.exe -k NetworkServi
 C:\Documents and Settings\Administrator>sc create TermServices binpath= "C:\Wind
 ows\System32\svchost.exe -k termsvcs" start= auto displayname= "Terminal Service
 s"
-´´½¨·şÎñ³É¹¦µ«ÊÇÔÚÆô¶¯Ê±ÌáÊ¾Terminal Services ·şÎñÔÚÆô¶¯Ê±ÔİÍ£¡£
+åˆ›å»ºæœåŠ¡æˆåŠŸä½†æ˜¯åœ¨å¯åŠ¨æ—¶æç¤ºTerminal Services æœåŠ¡åœ¨å¯åŠ¨æ—¶æš‚åœã€‚
 
 --------------------------------------------------------------------------------
 
-°²×°×é¼şÒ²ÓÚÊÂÎŞ²¹£¬¿´ÁËÏÂc:\windwos\system32\termsrv.dllÒ²ÊÇÕı³£µÄ
-ÓÖ²»ÏëÖØ×°·şÎñÆ÷
+å®‰è£…ç»„ä»¶ä¹Ÿäºäº‹æ— è¡¥ï¼Œçœ‹äº†ä¸‹c:\windwos\system32\termsrv.dllä¹Ÿæ˜¯æ­£å¸¸çš„
+åˆä¸æƒ³é‡è£…æœåŠ¡å™¨
 
 --------------------------------------------------------------------------------
 
 
 C:\>net use \\xxx.xxx.xxx.xxx\ipc$ "password" /user:"name" 
 
-µÚÒ»²½£¬¼ì²é¶Ô·½ÊÇ·ñÕæµÄ½ûÓÃÁËTerminal server 
+ç¬¬ä¸€æ­¥ï¼Œæ£€æŸ¥å¯¹æ–¹æ˜¯å¦çœŸçš„ç¦ç”¨äº†Terminal server 
 
 C:\>sc \\xxx.xxx.xxx.xxx qc termservice 
 [SC] GetServiceConfig SUCCESS 
@@ -58,17 +58,17 @@ DISPLAY_NAME : Terminal Services
 DEPENDENCIES : 
 SERVICE_START_NAME : LocalSystem 
 
-×ĞÏ¸¿´ START_TYPEÒ»Ïî£¬ÏÔÊ¾¶Ô·½¸Ã·şÎñµÄÆô¶¯Ä£Ê½Îª¡°DISABLED¡±Ò²¾ÍÊÇ¡°½ûÓÃ¡±¡£ 
+ä»”ç»†çœ‹ START_TYPEä¸€é¡¹ï¼Œæ˜¾ç¤ºå¯¹æ–¹è¯¥æœåŠ¡çš„å¯åŠ¨æ¨¡å¼ä¸ºâ€œDISABLEDâ€ä¹Ÿå°±æ˜¯â€œç¦ç”¨â€ã€‚ 
 
-µÚ¶ş²½£¬¸ü¸Ä¶Ô·½ÖÕ¶Ë·şÎñµÄÆô¶¯Ä£Ê½ 
+ç¬¬äºŒæ­¥ï¼Œæ›´æ”¹å¯¹æ–¹ç»ˆç«¯æœåŠ¡çš„å¯åŠ¨æ¨¡å¼ 
 
 C:\>sc \\xxx.xxx.xxx.xxx config termservice start= auto 
 
 [SC] ChangeServiceConfig SUCCESS 
 
-ºÃÁË£¬ÏÖÔÚÎÒÃÇÒÑ¾­°Ñ¶Ô·½ÖÕ¶Ë·şÎñµÄÆô¶¯Ä£Ê½ĞŞ¸Ä³É×Ô¶¯ÁË¡£ 
+å¥½äº†ï¼Œç°åœ¨æˆ‘ä»¬å·²ç»æŠŠå¯¹æ–¹ç»ˆç«¯æœåŠ¡çš„å¯åŠ¨æ¨¡å¼ä¿®æ”¹æˆè‡ªåŠ¨äº†ã€‚ 
 
-µÚÈı²½£¬ÔÙ¼ì²éÒ»±ã¶Ô·½ÖÕ¶Ë·şÎñµÄÆô¶¯Ä£Ê½£¨.abu.:ºÇºÇ£¬Ï°¹ßÎÊÌâ£© 
+ç¬¬ä¸‰æ­¥ï¼Œå†æ£€æŸ¥ä¸€ä¾¿å¯¹æ–¹ç»ˆç«¯æœåŠ¡çš„å¯åŠ¨æ¨¡å¼ï¼ˆ.abu.:å‘µå‘µï¼Œä¹ æƒ¯é—®é¢˜ï¼‰ 
 
 C:\>sc \\TEST qc termservice 
 [SC] GetServiceConfig SUCCESS 
@@ -84,10 +84,10 @@ DISPLAY_NAME : Terminal Services
 DEPENDENCIES : 
 SERVICE_START_NAME : LocalSystem 
 
-×ĞÏ¸¿´ START_TYPEÒ»Ïî£¬ÏÔÊ¾¶Ô·½¸Ã·şÎñµÄÆô¶¯Ä£Ê½Îª¡°AUTO_START¡±Ò²¾ÍÊÇ¡°×Ô¶¯¡±¡£ 
+ä»”ç»†çœ‹ START_TYPEä¸€é¡¹ï¼Œæ˜¾ç¤ºå¯¹æ–¹è¯¥æœåŠ¡çš„å¯åŠ¨æ¨¡å¼ä¸ºâ€œAUTO_STARTâ€ä¹Ÿå°±æ˜¯â€œè‡ªåŠ¨â€ã€‚ 
 
 OK 
-µÚËÄ²½£¬Æô¶¯¶Ô·½µÄÖÕ¶Ë·şÎñ 
+ç¬¬å››æ­¥ï¼Œå¯åŠ¨å¯¹æ–¹çš„ç»ˆç«¯æœåŠ¡ 
 
 C:\>sc \\xxx.xxx.xxx.xxx start termservice 
 
@@ -115,11 +115,11 @@ WAIT_HINT : 0x0
 sc config termservice start= auto
 sc start termservice
 
-ÔÙ¿´:
+å†çœ‹:
 sc query termservice
 SERVICE_NAME: termservice
 TYPE : 10 WIN32_OWN_PROCESS
-STATE : 2 START_PENDING //Ã»ÓĞruning,¶øÊÇÕıÔÚÆô¶¯×´Ì¬(Î´¾ö)
+STATE : 2 START_PENDING //æ²¡æœ‰runing,è€Œæ˜¯æ­£åœ¨å¯åŠ¨çŠ¶æ€(æœªå†³)
 (NOT_STOPPABLE,NOT_PAUSABLE,IGNORES_SHUTDOWN)
 WIN32_EXIT_CODE : 0 (0x0)
 SERVICE_EXIT_CODE : 0 (0x0)

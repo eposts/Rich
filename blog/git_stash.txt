@@ -1,69 +1,69 @@
- Git:�����ͻ�����������
+ Git:代码冲突常见解决方法
 
-���ϵͳ����һЩ�����ļ��ڷ����������������޸�,Ȼ�����������������һЩ�������ʱ��,
-�ڷ�����������ļ���ʱ��,�ᷢ�������ͻ:
+如果系统中有一些配置文件在服务器上做了配置修改,然后后续开发又新添加一些配置项的时候,
+在发布这个配置文件的时候,会发生代码冲突:
 
 error: Your local changes to the following files would be overwritten by merge:
         protected/config/main.php
 Please, commit your changes or stash them before you can merge.
 
-���ϣ�����������������������ĸĶ�,����������������, ������������:
+如果希望保留生产服务器上所做的改动,仅仅并入新配置项, 处理方法如下:
 
 git stash
 git pull
 git stash pop
 
-Ȼ�����ʹ��git diff -w +�ļ��� ��ȷ�ϴ����Զ��ϲ������.
+然后可以使用git diff -w +文件名 来确认代码自动合并的情况.
 
  
 
-������,���ϣ���ô�����е��ļ���ȫ���Ǳ��ع����汾. ��������:
+反过来,如果希望用代码库中的文件完全覆盖本地工作版本. 方法如下:
 
 git reset --hard
 git pull
 
-����git reset����԰汾,���������ļ����˱����޸�,ʹ��
+其中git reset是针对版本,如果想针对文件回退本地修改,使用
 
 git checkout HEAD file/to/restore
 
 
-������Ա��������������������˼���ʱ��һֱ����һ���¹��ܣ��Ѹ��˲��ʮ�����ļ���ͻȻ��һ��bug��Ҫ���������Ȼ���һ��build�����顣��Git����֮ǰ�����Ͽ��ֶ����ݣ�ʱ�����׳�����
+开发人员常常遇到这种情况：花了几天时间一直在做一个新功能，已改了差不多十几个文件，突然有一个bug需要紧急解决，然后给一个build测试组。在Git问世之前基本上靠手动备份，时且容易出错。
 
-git stash��������֮���ǰ���������Ա��ʱ���õ�ǰ�����ĸĶ������˵��Ķ�ǰ��״̬�����������ı�Ҫ���������緢�������߽��һ��bug������branch���ȵȣ���֮�󻹿�����������֮ǰ���õĸĶ�����cool�ɣ�
+git stash命令简而言之就是帮助开发人员暂时搁置当前已做的改动，倒退到改动前的状态，进行其他的必要操作（比如发布，或者解决一个bug，或者branch，等等），之后还可以重新载入之前搁置的改动，很cool吧？
 
-���ȣ���git add�����еĸĶ��ӵ�staging area��
+首先，用git add把所有的改动加到staging area。
 
 git add .
 
-������git stash����Щ�Ķ����á�
+接着用git stash把这些改动搁置。
 
 git stash
 
-�������ǰ����ƽ̨�ͻظ����Ķ�֮ǰ�ˡ��ø������˴�ʡ��1���֡�
+到这里，当前工作平台就回复到改动之前了。该干嘛干嘛，此处省略1万字。
 
-��Ҫ�һ�֮ǰ���õĸĶ�������ǰ�Ĺ����ˣ�
+需要找回之前搁置的改动继续先前的工作了？
 
-git stash apply ���ɡ�
+git stash apply 即可。
 
-Ҳ������ git stash list ���鿴���и��ð汾�����ܸ����˺ܶ�Σ���ò�Ҫ���������׸�죩
+也可以用 git stash list 来查看所有搁置版本（可能搁置了很多次，最好不要这样，容易搞混）
 
-�ڳ���һ������ջ������£�������������һ�ջ�еĵ�2���������� git stash apply stash@{1}
+在出现一个搁置栈的情况下，比如如果你想找回栈中的第2个，可以用 git stash apply stash@{1}
 
-������һص�1���������� git stash pop
+如果想找回第1个，可以用 git stash pop
 
-�����ɾ��һ��stash��git stash drop <id>
+如果想删除一个stash，git stash drop <id>
 
-ɾ������stash��git stash clear
+删除所有stash，git stash clear
 
 
-git stash�ڱ����굱ǰ����Ŀ¼���ݴ����Ժ󣬻���HEAD���������ߡ���Ϊ֮ǰ���޸�û���ύ��HEADָ�����ǰ��İ汾������stash�Ժ���Ŀ¼���ݴ����ͻᱻǰ��ĵİ汾�����á�
+git stash在保存完当前工作目录和暂存区以后，会用HEAD重置这两者。因为之前的修改没有提交，HEAD指向的是前天的版本，所以stash以后工作目录和暂存区就会被前天的的版本所重置。
 
-��ȷ������Ӧ������git stash����ִ��git stash apply����ǰ�Ĺ���Ŀ¼�ͻָ������ˡ�
+正确的做法应该是在git stash后再执行git stash apply，当前的工作目录就恢复回来了。
 
-git stash apply�൱�����ù�ȥ����(stashed)�Ĺ���Ŀ¼���գ��ָ���ǰ�Ĺ���Ŀ¼���������Ŀ¼������֮�����˱仯���ָ�ʱ�ͻ������ͻ(conflict)�����������git stash apply��Թ���Ŀ¼����merge������
+git stash apply相当于利用过去贮藏(stashed)的工作目录快照，恢复当前的工作目录。如果工作目录在贮藏之后发生了变化，恢复时就会产生冲突(conflict)，这种情况下git stash apply会对工作目录进行merge操作。
 
-��mergeһ����git stash apply֮ǰҪ���ֵ�ǰĿ¼�Ǹɾ���(û��δ�ύ�ĸı�)������ᱣ����
+和merge一样，git stash apply之前要保持当前目录是干净的(没有未提交的改变)，否则会保错：
 
     error: Your local changes to the following files would be overwritten by merge: Please, commit your changes or stash them before you can merge.
 
-git stash applyֻ�ָܻ�����Ŀ¼���������ݴ���Ҳ��������ʱ���ݴ����ָ��Ļ������Լ���--index������ݴ����ָ�ʱ������ͻ�˻���ô���أ��ٺ٣�����ֱ�ӱ�������������ô����
+git stash apply只能恢复工作目录，如果想把暂存区也按照贮藏时的暂存区恢复的话，可以加上--index，如果暂存区恢复时发生冲突了会怎么办呢？嘿嘿，它会直接报错不允许你这么做：

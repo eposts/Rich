@@ -1,30 +1,30 @@
-udev ���
-�����ʹ��Linux�Ƚϳ�ʱ���ˣ������֪�����ڶԴ��豸�ļ���飬Linux�ı��˼��β��ԡ���Linux���ڣ��豸�ļ���������һЩ�����ʵ������� ������ͨ�ļ�������mknod��������ļ������/devĿ¼�¡�������������devfs,һ�������ں˵Ķ�̬�豸�ļ�ϵͳ�����״γ�����2.3.46 �ں��С�Mandrake��Gentoo��Linux�ַ��汾���������ַ�ʽ��devfs�������豸�ļ��Ƕ�̬�ġ�����devfs��һЩ���ص����ƣ��� 2.6.13�汾�������ˡ�Ŀǰȡ�����ı����ı�Ҫ�ᵽ��udev����һ���û��ռ����
+udev 详解
+如果你使用Linux比较长时间了，那你就知道，在对待设备文件这块，Linux改变了几次策略。在Linux早期，设备文件仅仅是是一些带有适当的属性 集的普通文件，它由mknod命令创建，文件存放在/dev目录下。后来，采用了devfs,一个基于内核的动态设备文件系统，他首次出现在2.3.46 内核中。Mandrake，Gentoo等Linux分发版本采用了这种方式。devfs创建的设备文件是动态的。但是devfs有一些严重的限制，从 2.6.13版本后移走了。目前取代他的便是文本要提到的udev－－一个用户空间程序。
 
-Ŀǰ�ܶ��Linux�ַ��汾������udev�ķ�ʽ����Ϊ����Linux�豸���ʣ��ر�����Щ���豸�м��������վ�㣨������Ҫ������ǧ��Ӳ�̣����Ȳ�� �豸������USB����ͷ��MP3���������Ͻ���˼������⡣������������������ι���udev�豸��
+目前很多的Linux分发版本采纳了udev的方式，因为它在Linux设备访问，特别是那些对设备有极端需求的站点（比如需要控制上千个硬盘）和热插拔 设备（比如USB摄像头和MP3播放器）上解决了几个问题。下面我我们来看看如何管理udev设备。
 
-ʵ���ϣ�������ЩΪ���̣��ն��豸��׼���ı�׼�����ļ����ԣ��㲻��Ҫ�޸�ʲô�����ǣ�����Ҫ�˽�udev������ʹ���µĻ��������豸��������޸����ã� ��Щ�豸�����޷����ʣ�����˵Linux���ܻ���ò�ǡ�������֣������Ȩ����������Щ�豸�ļ��������Ҳ��֪������޸�RS��232���ڣ���Ƶ�豸���� �����������Ȩ�ޡ������ʵ�ʵ�Linuxʵʩ���ǻ������ġ�
+实际上，对于那些为磁盘，终端设备等准备的标准配置文件而言，你不需要修改什么。但是，你需要了解udev配置来使用新的或者外来设备，如果不修改配置， 这些设备可能无法访问，或者说Linux可能会采用不恰当的名字，属组或权限来创建这些设备文件。你可能也想知道如何修改RS－232串口，音频设备等文 件的属组或者权限。这点在实际的Linux实施中是会遇到的。
 
 
-Ϊʲôʹ��udev
+为什么使用udev
 
-�ڴ�֮ǰ���豸�ļ�������������̬�ļ���devfs���м���ȱ�㣺
+在此之前的设备文件管理方法（静态文件和devfs）有几个缺点：
 
-* ��ȷ�����豸ӳ�䡣�ر�����Щ��̬�豸������USB�豸���豸�ļ���ʵ���豸��ӳ�䲢���ɿ���ȷ������һ�����ӣ������������USB��ӡ����һ�����ܳ�Ϊ /dev/usb/lp0,����һ������/dev/usb/lp1�����ǵ����ĸ����ĸ����������lp0,lp1��ʵ�ʵ��豸û��һһ��Ӧ�Ĺ�ϵ����Ϊ�� ������Ϊ�����豸��˳�򣬴�ӡ�������رյ�ԭ�����������ӳ�䲢��ȷ��������ķ�ʽӦ���ǣ�������ӡ��Ӧ�ò��û������ǵ����кŻ���������ʶ��Ϣ��Ψһ�� ���ļ���ӳ�䡣���Ǿ�̬�ļ���devfs���޷�������㡣
+* 不确定的设备映射。特别是那些动态设备，比如USB设备，设备文件到实际设备的映射并不可靠和确定。举一个例子：如果你有两个USB打印机。一个可能称为 /dev/usb/lp0,另外一个便是/dev/usb/lp1。但是到底哪个是哪个并不清楚，lp0,lp1和实际的设备没有一一对应的关系，因为他 可能因为发现设备的顺序，打印机本身关闭等原因而导致这种映射并不确定。理想的方式应该是：两个打印机应该采用基于他们的序列号或者其他标识信息的唯一设 备文件来映射。但是静态文件和devfs都无法做到这点。
 
-*û���㹻����/���豸�š�����֪����ÿһ���豸�ļ���������8λ�����֣�һ�������豸�� ������һ���Ǹ��豸��������ġ�������8λ�����ּ����豸���ͣ����豸�����ַ��豸����Ψһ��ʶһ���豸�����ҵ��ǣ�������Щ���ߵĵ����ֲ����㹻��
+*没有足够的主/辅设备号。我们知道，每一个设备文件是有两个8位的数字：一个是主设备号 ，另外一个是辅设备号来分配的。这两个8位的数字加上设备类型（块设备或者字符设备）来唯一标识一个设备。不幸的是，关联这些身边的的数字并不足够。
 
-*/devĿ¼���ļ�̫�ࡣһ��ϵͳ���þ�̬�豸�ļ������ķ�ʽ����ô���Ŀ¼�µ��ļ���Ȼ���㹻�ࡣ��ͬʱ���ֲ�֪�������ϵͳ�ϵ�������Щ�豸�ļ��Ǽ���ġ�
+*/dev目录下文件太多。一个系统采用静态设备文件关联的方式，那么这个目录下的文件必然是足够多。而同时你又不知道在你的系统上到底有那些设备文件是激活的。
 
-*��������������devfs�������ǰ��һЩ���⣬�����������ִ�����һЩ���⡣����һ���������������������ǳ��򵥵ľ����޸��豸�ļ����� �֡�ȱʡ��devfs������Ʊ���Ҳ����֣�����Ҫ�޸Ĵ����������ļ��ͳ���;
+*命名不够灵活。尽管devfs解决了以前的一些问题，但是它自身又带来了一些问题。其中一个就是命名不够灵活；你别想非常简单的就能修改设备文件的名 字。缺省的devfs命令机制本身也很奇怪，他需要修改大量的配置文件和程序。;
 
-*�ں��ڴ�ʹ�ã�devfs���е�����һ�������ǣ���Ϊ�ں�����ģ�飬devfs��Ҫ���Ĵ������ڴ棬�ر�ϵͳ���д������豸ʱ���������������ᵽ��ϵͳһ�����кü�ǧ����ʱ��
+*内核内存使用，devfs特有的另外一个问题是，作为内核驱动模块，devfs需要消耗大量的内存，特别当系统上有大量的设备时（比如上面我们提到的系统一个上有好几千磁盘时）
 
-udev��Ŀ�������������ᵽ����Щ���⣬��ͨ�����û��ռ�(user-space)����������/dev/Ŀ¼���������ļ�ϵͳ�ֿ���֪����θı�ȱʡ ����������֮����ζ����Լ���ϵͳ�����紴���豸�ַ����ӣ��ı��豸�ļ����飬Ȩ�޵ȡ�
+udev的目标是想解决上面提到的这些问题，他通采用用户空间(user-space)工具来管理/dev/目录树，他和文件系统分开。知道如何改变缺省 配置能让你之大如何定制自己的系统，比如创建设备字符连接，改变设备文件属组，权限等。
 
-udev�����ļ�
+udev配置文件
 
-��Ҫ��udev�����ļ���/etc/udev/udev.conf������ļ�ͨ���̣ܶ�������ֻ�ǰ�������#��ͷ��ע�ͣ�Ȼ���м���ѡ�
+主要的udev配置文件是/etc/udev/udev.conf。这个文件通常很短，他可能只是包含几行#开头的注释，然后有几行选项：
 
 udev_root="/dev/"
 
@@ -32,54 +32,54 @@ udev_rules="/etc/udev/rules.d/"
 
 udev_log="err"
 
-����ĵڶ��зǳ���Ҫ����Ϊ����ʾudev����洢��Ŀ¼�����Ŀ¼�洢������.rules�������ļ���ÿһ���ļ�����һϵ�й���������udev�������ָ��豸�ļ��Ա�֤�ܱ��ں�ʶ��
-���/etc/udev/rules.d��������кü���udev�����ļ�����Щ�ļ�һ������udev����װ�ģ�����һ�������ǿ����Ǳ��Ӳ������������ ���ɵġ�������Fedora Core 5ϵͳ�ϣ�sane-backends���ͻᰲװ60-libsane.rules�ļ�������initscripts���ᰲװ60-net.rules�� ������Щ�����ļ����ļ���ͨ�����������ֿ�ͷ������ʾϵͳӦ�øù����˳��
+上面的第二行非常重要，因为他表示udev规则存储的目录，这个目录存储的是以.rules结束的文件。每一个文件处理一系列规则来帮助udev分配名字给设备文件以保证能被内核识别。
+你的/etc/udev/rules.d下面可能有好几个udev规则文件，这些文件一部分是udev包安装的，另外一部分则是可能是别的硬件或者软件包 生成的。比如在Fedora Core 5系统上，sane-backends包就会安装60-libsane.rules文件，另外initscripts包会安装60-net.rules文 件。这些规则文件的文件名通常是两个数字开头，它表示系统应用该规则的顺序。
 
-�����ļ���Ĺ�����һϵ�еļ�/ֵ����ɣ���/ֵ��֮���ö���(,)�ָÿһ�����������û�ƥ�����������һ����ֵ����ƥ���ȷ�������Ƿ�Ӧ�ã����� ֵ����ʾ����ĳֵ���ü�����Щֵ��Ӱ��udev�������豸�ļ�����ֵ�����Դ���һ����ֵ�б���ƥ����͸�ֵ�����������ͼ��±���
-
-
-                       udev ��/ֵ�Բ�����
-������     ƥ���ֵt                         ����
-��������������������������������������������������������������������������������
-==            ƥ��              ��ȱȽ�
-!=            ƥ��             ���ȱȽ�
-=            ��ֵ              ����һ���ض���ֵ���ü��������Ը���֮ǰ�ĸ�ֵ��
-+=      ��ֵ              ׷���ض���ֵ���Ѿ����ڵļ�
-:=            ��ֵ                  ����һ���ض���ֵ���ü�������Ĺ��򲻿��ܸ�������
+规则文件里的规则有一系列的键/值对组成，键/值对之间用逗号(,)分割。每一个键或者是用户匹配键，或者是一个赋值键。匹配键确定规则是否被应用，而赋 值键表示分配某值给该键。这些值将影响udev创建的设备文件。赋值键可以处理一个多值列表。匹配键和赋值键操作符解释见下表：
 
 
-���е��������ǳ����ı�����ԣ�����C���ԡ�ֻ������ļ�һ�ο��Դ������ֵ����һЩ����udev�����ļ��ﾭ�����֣���Щ����ֵ����ʹ��ͨ���(*,?,������Χ������[0-9])����Щ���ü��о����£�
+                       udev 键/值对操作符
+操作符     匹配或赋值t                         解释
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+==            匹配              相等比较
+!=            匹配             不等比较
+=            赋值              分配一个特定的值给该键，他可以覆盖之前的赋值。
++=      赋值              追加特定的值给已经存在的键
+:=            赋值                  分配一个特定的值给该键，后面的规则不可能覆盖它。
 
 
-����udev��
-��        ����
-ACTION         һ��ʱ�������֣�����add�����豸���ӵ�ʱ��
-KERNEL         ���ں��￴�����豸���֣�����sd*��ʾ����SCSI�����豸
-DEVPATH       �ں��豸¼��������/devices/*
-SUBSYSTEM       ��ϵͳ���֣�����sound,net
-BUS         ���ߵ����֣�����IDE,USB
-DRIVER         �豸���������֣�����ide-cdrom
-ID           �������ں����ֵ��豸����
-SYSFS{ value}       sysfs����ֵ�������Ա�ʾ����
-ENV{ key}       �������������Ա�ʾ����
-PROGRAM       ��ִ�е��ⲿ����������򷵻�0ֵ���ü�����ΪΪ��(true)
-RESULT         ��һ��PROGRAM���÷��صı�׼�����
-NAME         ����������򴴽����豸�ļ����ļ�����ע�⣺������һ�е�NAME��������Ч�ģ�����ľ����ԡ�
-                                  �������ʹ��ʹ���������ϵ�����������һ���豸�Ļ������Կ���SYMLINK����
-SYMLINK       ���ݹ��򴴽����ַ�������
-OWNER         �豸�ļ�������
-GROUP         �豸�ļ����ڵ��顣
-MODE         �豸�ļ���Ȩ�ޣ�����8����
-RUN         Ϊ�豸��ִ�еĳ����б�
-LABEL         �������ļ���Ϊ�ڲ����ƶ����õ����ֱ�ǩ(�������GOTO����)
-GOTO         ����ƥ��Ĺ���ͨ��LABEL����ʶ�����е����Ƴ��������е�GOTO
-IMPORT{ type}     ����һ���ļ�����һ������ִ�к�����ɵĹ��򼯵���ǰ�ļ�
-WAIT_FOR_SYSFS   �ȴ�һ���ض����豸�ļ��Ĵ�������Ҫ������ʱ����������⡣
-PTIONS         �ض���ѡ� last_rule �������豸�ն˹���ִ�У� ignore_device ���Ե�ǰ���� ignore_remove ���Խ������Ĳ���������
-           all_partitions Ϊ���еĴ��̷��������豸�ļ���
+这有点类似我们常见的编程语言，比如C语言。只是这里的键一次可以处理多个值。有一些键在udev规则文件里经常出现，这些键的值可以使用通配符(*,?,甚至范围，比如[0-9])，这些常用键列举如下：
 
 
-���Ǹ���һ���������������ʹ����Щ�����������������Fedora Core 5ϵͳ�ı�׼�����ļ���
+常用udev键
+键        含义
+ACTION         一个时间活动的名字，比如add，当设备增加的时候
+KERNEL         在内核里看到的设备名字，比如sd*表示任意SCSI磁盘设备
+DEVPATH       内核设备录进，比如/devices/*
+SUBSYSTEM       子系统名字，比如sound,net
+BUS         总线的名字，比如IDE,USB
+DRIVER         设备驱动的名字，比如ide-cdrom
+ID           独立于内核名字的设备名字
+SYSFS{ value}       sysfs属性值，他可以表示任意
+ENV{ key}       环境变量，可以表示任意
+PROGRAM       可执行的外部程序，如果程序返回0值，该键则认为为真(true)
+RESULT         上一个PROGRAM调用返回的标准输出。
+NAME         根据这个规则创建的设备文件的文件名。注意：仅仅第一行的NAME描述是有效的，后面的均忽略。
+                                  如果你想使用使用两个以上的名字来访问一个设备的话，可以考虑SYMLINK键。
+SYMLINK       根据规则创建的字符连接名
+OWNER         设备文件的属组
+GROUP         设备文件所在的组。
+MODE         设备文件的权限，采用8进制
+RUN         为设备而执行的程序列表
+LABEL         在配置文件里为内部控制而采用的名字标签(下下面的GOTO服务)
+GOTO         跳到匹配的规则（通过LABEL来标识），有点类似程序语言中的GOTO
+IMPORT{ type}     导入一个文件或者一个程序执行后而生成的规则集到当前文件
+WAIT_FOR_SYSFS   等待一个特定的设备文件的创建。主要是用作时序和依赖问题。
+PTIONS         特定的选项： last_rule 对这类设备终端规则执行； ignore_device 忽略当前规则； ignore_remove 忽略接下来的并移走请求。
+           all_partitions 为所有的磁盘分区创建设备文件。
+
+
+我们给出一个列子来解释如何使用这些键。下面的例子来自Fedora Core 5系统的标准配置文件。
 
 KERNEL=="*", OWNER="root" GROUP="root", MODE="0600"
 KERNEL=="tty", NAME="%k", GROUP="tty", MODE="0666", OPTIONS="last_rule"
@@ -87,33 +87,33 @@ KERNEL=="scd[0-9]*", SYMLINK+="cdrom cdrom-%k"
 KERNEL=="hd[a-z]", BUS=="ide", SYSFS{removable}=="1", SYSFS{device/media}=="cdrom", SYMLINK+="cdrom cdrom-%k"
 ACTION=="add", SUBSYSTEM=="scsi_device", RUN+="/sbin/modprobe sg"
 
-��������Ӹ�����5������ÿһ������KERNEL����ACTION����ͷ��
+上面的例子给出了5个规则，每一个都是KERNEL或者ACTION键开头：
 
-*��һ��������ȱʡ�ģ���ƥ�����ⱻ�ں�ʶ�𵽵��豸��Ȼ���趨��Щ�豸��������root������root������Ȩ��ģʽ��0600(-rw------ -)����Ҳ��һ����ȫ��ȱʡ���ñ�֤���е��豸��Ĭ�������ֻ��root���Զ�д��
-*�ڶ�������Ҳ�ǱȽϵ��͵Ĺ����ˡ���ƥ���ն��豸(tty)��Ȼ�������µ�Ȩ��Ϊ0600�����ڵ�����tty����Ҳ������һ���ر���豸�ļ���:%K�� �����������%k�����豸���ں����֡���Ҳ����ζ���ں�ʶ�����Щ�豸��ʲô���֣��ʹ���ʲô�����豸�ļ�����
+*第一个规则是缺省的，他匹配任意被内核识别到的设备，然后设定这些设备的属组是root，组是root，访问权限模式是0600(-rw------ -)。这也是一个安全的缺省设置保证所有的设备在默认情况下只有root可以读写。
+*第二个规则也是比较典型的规则了。它匹配终端设备(tty)，然后设置新的权限为0600，所在的组是tty。它也设置了一个特别的设备文件名:%K。 在这里例子里，%k代表设备的内核名字。那也就意味着内核识别出这些设备是什么名字，就创建什么样的设备文件名。
 
-*�����п�ʼ��KERNEL=="scd[0-9]*",��ʾ SCSI CD-ROM ����. ������һ���豸�������ӣ�cdrom��cdrom-%k��
+*第三行开始的KERNEL=="scd[0-9]*",表示 SCSI CD-ROM 驱动. 它创建一对设备符号连接：cdrom和cdrom-%k。
 
-*�����У���ʼ�� KERNEL=="hd[a-z]", ��ʾATA CDROM��������������򴴽�������Ĺ�����ͬ�ķ������ӡ�ATA CDROM��������Ҫsysfsֵ����������ATA�豸����ΪSCSI CDROM���Ա��ں�Ψһʶ��.
+*第四行，开始的 KERNEL=="hd[a-z]", 表示ATA CDROM驱动器。这个规则创建和上面的规则相同的符号连接。ATA CDROM驱动器需要sysfs值以来区别别的ATA设备，因为SCSI CDROM可以被内核唯一识别。.
 
-*�������� ACTION=="add"��ʼ��������udev���� /sbin/modprobe sg �������б���������SCSI�豸���ӵ�ϵͳ����Щ���ִ�С���Ч�����Ǽ����Ӧ�û�����sg�ں�ģ��������µ�SCSI�豸��
+*第五行以 ACTION=="add"开始，它告诉udev增加 /sbin/modprobe sg 到命令列表，当任意SCSI设备增加到系统后，这些命令将执行。其效果就是计算机应该会增加sg内核模块来侦测新的SCSI设备。
 
-��Ȼ�����������һС�������ӣ�������ϵͳ������udev��ʽ������Ӧ�ÿ��Կ�������Ĺ�����������޸��豸��Ȩ�޻��ߴ����ŵķ������ӣ���ô����Ҫ�����Щ�����ر���Ҫ��ϸע�����޸ĵ���Щ��֮��ص��豸��
+当然，上面仅仅是一小部分例子，如果你的系统采用了udev方式，那你应该可以看到更多的规则。如果你想修改设备的权限或者创建信的符号连接，那么你需要熟读这些规则，特别是要仔细注意你修改的那些与之相关的设备。
 
-�޸����udev����
+修改你的udev配置
 
-���޸�udev����֮ǰ������һ��Ҫ��ϸ��ͨ���Ŀ����ǣ�����ò�Ҫ�޸�ϵͳԤ�õ���Щ�����ر�Ҫָ��Ӱ��ǳ��㷺�����ã��������������еĵ�һ�С� ����ȷ�����ÿ��ܻᵼ�����ص�ϵͳ�������ϵͳ�������޷������ȷ�ķ����豸��
+在修改udev配置之前，我们一定要仔细，通常的考虑是：你最好不要修改系统预置的那些规则，特别不要指定影响非常广泛的配置，比如上面例子中的第一行。 不正确的配置可能会导致严重的系统问题或者系统根本就无法这个正确的访问设备。
 
-��������ȷ������Ӧ������/etc/udev/rules.d/�´���һ���ŵĹ����ļ���ȷ����������ļ��ĺ�׺��rules�ļ�����������������Ӧ�ñ� ��׼�����ļ��ߡ����磬����Դ���һ����Ϊ99-my-udev.rules�Ĺ����ļ�������Ĺ����ļ��У������ָ���κ������޸ĵ����ã����磬������ �޸��޸�floppy�豸�������飬��׼������һ���ŵķ�������/dev/floppy�����������ôд��
+而我们正确的做法应该是在/etc/udev/rules.d/下创建一个信的规则文件。确定你给出的文件的后缀是rules文件名给出的数字序列应该比 标准配置文件高。比如，你可以创建一个名为99-my-udev.rules的规则文件。在你的规则文件中，你可以指定任何你想修改的配置，比如，假设你 修改修改floppy设备的所在组，还准备创建一个信的符号连接/dev/floppy，那你可以这么写：
 KERNEL=="fd[0-9]*", GROUP="users",   SYMLINK+="floppy"
 
 
-��Щ���а汾������Fedora���������ⲿ�ű����޸�ĳЩ�ض��豸�����飬���ϵ��Ȩ�ޡ��������ĸĶ����ܲ���������Ч�������������������⣬��� ��Ҫ���ٺ��޸�����ű����ﵽ���Ŀ�ġ�����������޸�PROGRAM��RUN����ֵ��������㡣
+有些发行版本，比如Fedora，采用了外部脚本来修改某些特定设备的属组，组关系和权限。因此上面的改动可能并不见得生效。如果你遇到了这个问题，你就 需要跟踪和修改这个脚本来达到你的目的。或者你可以修改PROGRAM或RUN键的值来做到这点。
 
-ĳЩ������޸Ŀ�����Ҫ������ھ򡣱��磬���������һ���豸��ʹ��sysfs��Ϣ��Ψһ��ʶһ���豸����Щ��Ϣ���ͨ��udevinfo��������ȡ��
+某些规则的修改可能需要更深的挖掘。比如，你可能想在一个设备上使用sysfs信息来唯一标识一个设备。这些信息最好通过udevinfo命令来获取。
 $ udevinfo ?a ?p $(udevinfo ?q path ?n /dev/hda)
 
-�������������ʹ��udevinfo��һ���Ƿ���sysfs�豸·��(��ͨ�������ǿ�����Linux�豸�ļ�������·������/dev/hda������ͬ)�� �ڶ��β��ǲ�ѯ����豸·����������Ƿǳ�����syfs��Ϣ���ܡ�������ҵ������Ϣ��Ψһ��־����豸������Բ����ʵ����滻udev�����ļ��е� SYSFSѡ�����Ľ������������������
+上面的命令两次使用udevinfo：一次是返回sysfs设备路径(他通常和我们看到的Linux设备文件名所在路径－－/dev/hda－－不同)； 第二次才是查询这个设备路径，结果将是非常常的syfs信息汇总。你可以找到最够的信息来唯一标志你的设备，你可以采用适当的替换udev配置文件中的 SYSFS选项。下面的结果就是上面的命令输出
 
 [root@localhost rules.d]# udevinfo -a -p $(udevinfo -q path    -n /dev/hda1)
 
@@ -176,7 +176,7 @@ looking at parent device '/devices/pci0000:00':
    DRIVERS==""
 
 
-��һ�����ӣ����������޸�USBɨ���ǵ����á�ͨ��һϵ�еĳ��ԣ����Ѿ�Ϊ���ɨ���Ǳ�ʶ��Linux�豸�ļ�(ÿ�δ�ɨ����ʱ�����ֶ����)������� ʹ������������滻�����ȷ��Linux�豸�ļ�����Ȼ��λ����Ĳ���SYSFS{idVendor}�к�SYSFS{idProduct}�С������ ����ʹ����Щ��Ϣ��Ϊ���ɨ���Ǵ����µ�ѡ�
+举一个例子：假设你想修改USB扫描仪的配置。通过一系列的尝试，你已经为这个扫描仪标识了Linux设备文件(每次打开扫描仪时，名字都会变)。你可以 使用上面的命令替换这个正确的Linux设备文件名，然后定位输出的采用SYSFS{idVendor}行和SYSFS{idProduct}行。最后你 可以使用这些信息来为这个扫描仪创建新的选项。
 
 
 SYSFS{idVendor}=="0686", \
@@ -187,115 +187,115 @@ SYMLINK+="scanner", MODE="0664", \
 
 group="scanner"
 
-��������ӱ�ʾ��ɨ���ǵ�������Ϊscanner������Ȩ������Ϊ0664,ͬʱ����һ��/dev/scanner�ķ������ӡ�
+上面的例子表示将扫描仪的组设置为scanner，访问权限设置为0664,同时创建一个/dev/scanner的符号连接。
 
 Udev
 From ArchWiki
-ע��: ������Ǵ�DevFS������Udev, ��鿴 DevFS to Udev.
+注意: 如果您是从DevFS升级到Udev, 请查看 DevFS to Udev.
 
-��ƪ�ĵ�������udev��һЩ�µı仯����084�濪ʼ��udev�ܹ�����hotplug��coldplug�����й��ܡ�����Ϊ������hotplug���Ѿ���Arch�ֿ���ȥ���ˡ�
+这篇文档将介绍udev的一些新的变化。从084版开始，udev能够代替hotplug和coldplug的所有功能。正因为这样，hotplug包已经从Arch仓库中去掉了。
 Contents
 [hide]
 
-    * 1 ��Ҫ��ʾ
-    * 2 ��������
-    * 3 �������
-    * 4 ģ������б�
-    * 5 load_modules: ���õ���������
-    * 6 ��֪��Ӳ������
-    * 7 �Զ����ش�����һЩ����
-          o 7.1 CPUFreqģ��
-          o 7.2 ���������һЩ�����Զ����ص�ģ��
-          o 7.3 ���ͬ�����豸��������������ÿ�������Ķ���ͬ
-    * 8 �Լ������ں���ɵ�һЩ��֪����
-          o 8.1 Udev�޷�����
-          o 8.2 CD/DVD���ź�Ȩ�޴���
-    * 9 UdevС����
-          o 9.1 �Զ�����usb�豸
+    * 1 重要提示
+    * 2 基本需求
+    * 3 最近更新
+    * 4 模块禁用列表
+    * 5 load_modules: 有用的启动参数
+    * 6 已知的硬件问题
+    * 7 自动加载带来的一些问题
+          o 7.1 CPUFreq模块
+          o 7.2 声音问题和一些不能自动加载的模块
+          o 7.3 多个同类型设备（网卡，声卡）每次启动的都不同
+    * 8 自己编译内核造成的一些已知问题
+          o 8.1 Udev无法启动
+          o 8.2 CD/DVD符号和权限错误
+    * 9 Udev小窍门
+          o 9.1 自动加载usb设备
 
-��Ҫ��ʾ
+重要提示
 
-...�мǣ���ʹ��udev�����κ�modules���ں�ģ�飩֮ǰ�������Ƿ�������ʱ�Զ����أ�����������/etc/rc.conf�� MOD_AUTOLOADѡ������Ϊyes �������������ֶ�������Щmodules���������޸�rc.conf�е�MODULES����ʹ��modprobe�������ֶ�����������Ҫ�� modules����һ�ַ�������hwdetect --modules����ϵͳӲ����modules�б���Ȼ������б����ӵ�rc.conf����ϵͳ����ʱ�Զ�������Щmodules��
+...切记，在使用udev加载任何modules（内核模块）之前（无论是否是启动时自动加载），您必须在/etc/rc.conf将 MOD_AUTOLOAD选项设置为yes ，否则您必须手动加载这些modules。您可以修改rc.conf中的MODULES或者使用modprobe命令来手动加载您所需要的 modules。另一种方法是用hwdetect --modules生成系统硬件的modules列表，然后将这个列表添加到rc.conf中让系统启动时自动加载这些modules。
 
-��������
+基本需求
 
-    * �ں�: 2.6.15����߰汾��
-    * �����޷���fstab��bootloader��������ʹ��DevFS��ʽ���豸����! �������������鿴DevFS to Udev��
+    * 内核: 2.6.15或更高版本。
+    * 您将无法在fstab和bootloader设置中再使用DevFS格式的设备名称! 更多相关内容请查看DevFS to Udev。
 
-�������
+最近更新
 
-    * startudev����ȡ���������Ҫ���¼���udev������ʹ�� /etc/start_udev��
-    * Udev������hotplug��hwdetect�Ĺ��ܡ�ͬʱ���Ǳ�����hwdetect������ֻ�� mkinitrd��������initrd��ʱ���õ���
-    * Udev����ͬʱ���ض��ģ�飬�������Լӿ������ٶȣ�Ȼ�����������Ľ���������ܱ�֤ÿ�μ��ص�˳�����Ե���ʹ�ö�������������ʱ��ͻ�������⣬����������潫�������ۡ�
+    * startudev程序被取出。如果需要重新加载udev规则请使用 /etc/start_udev。
+    * Udev代替了hotplug和hwdetect的功能。同时我们保存了hwdetect，并且只在 mkinitrd程序生成initrd的时候用到。
+    * Udev可以同时加载多个模块，这样可以加快启动速度，然而，这样做的结果是她不能保证每次加载的顺序，所以当你使用多声卡或网卡的时候就会出现问题，这个问题下面将会再讨论。
 
-ģ������б�
+模块禁用列表
 
-udevҲ�᷸������ش����ģ�顣Ϊ�˷�ֹ����ķ����������ʹ��ģ������б� ��һ��������б���ģ�飬����������ʱ������ʱ����ʱ����usbӲ�̵ȣ�udev�����������Щģ�顣
+udev也会犯错或加载错误的模块。为了防止错误的发生，你可以使用模块禁用列表 。一旦加入该列表的模块，无论是启动时，或者时运行时（如usb硬盘等）udev都不会加载这些模块。
 
-ֻ�������� rc.conf��MODULES�ж�Ӧģ��ǰ���ϸ�̾�ţ�!���Ϳɽ��ø�ģ�顣
+只需在您在 rc.conf的MODULES中对应模块前加上感叹号（!）就可禁用该模块。
 
-����,
+例如,
 
 MODULES=(!moduleA !moduleB)
 
-load_modules: ���õ���������
+load_modules: 有用的启动参数
 
-��������ں����������м���load_modules=off����ôudev��ֹͣ�κ��Զ����ع���. ���ϵͳ��������ʱ��������ܻ�ʮ�����á����udev�������������ģ�鵼��ϵͳ��������������ص�����ʱ�������ʹ����������������Զ����أ��Դ��� ��ֹ�����������ģ�顣
+如果您在内核启动参数中加入load_modules=off，那么udev会停止任何自动加载工作. 如果系统出现问题时，这个功能会十分有用。如果udev加载了有问题的模块导致系统挂起或者其它严重的问题时，你可以使用这个参数来禁用自动加载，以此来 防止加载有问题的模块。
 
-��֪��Ӳ������
+已知的硬件问题
 
-- BusLogic�豸���𻵶��ҵ�������ʱ������
+- BusLogic设备被损坏而且导致启动时死机。
 
-����һ���ں˵�BugĿǰ��û��������
+这是一个内核的Bug目前还没有修正。
 
-- PCMCIA����������Ϊ�ǿ��Ƴ��豸.
+- PCMCIA读卡器被认为是可移除设备.
 
-�����Ǽ��뵽/etc/pmount.allow�У�ʹ��hal��pmount����ȡ
+把它们加入到/etc/pmount.allow中，使用hal的pmount来读取
 
-�Զ����ش�����һЩ����
+自动加载带来的一些问题
 
-CPUFreqģ��
+CPUFreq模块
 
-���Ż�û���ҵ�һ���ܺõķ������ز�ͬ��CPUFreq���������������ǰѴ��Զ����ؽ��������ȥ���ˡ��������Ҫ����CPUƵ�ʣ��������rc.conf��MODULES��������ʽ�ļ�����ʵ�ģ�顣
+我门还没有找到一个很好的方法加载不同的CPUFreq控制器，所以我们把从自动加载进程里把它去掉了。如果您需要测量CPU频率，你必须在rc.conf的MODULES队列中显式的加入合适的模块。
 
-���������һЩ�����Զ����ص�ģ��
+声音问题和一些不能自动加载的模块
 
-һЩ�û����ٷ����������/etc/modprobe.conf��һЩ�ɵĲ��֣�����ȥ����Щ�ɵĲ��������Կ���
-���ͬ�����豸��������������ÿ�������Ķ���ͬ
+一些用户跟踪发现问题出在/etc/modprobe.conf中一些旧的部分，试着去掉这些旧的部分再试试看。
+多个同类型设备（网卡，声卡）每次启动的都不同
 
-��Ϊudevͬʱ��������ģ�飬����һЩ�豸���ܳ�ʼ��˳��ͬ������ͬʱ����������ʱ������������eth0��eth1֮�������ȥ��
+因为udev同时加载所有模块，所以一些设备可能初始化顺序不同。例如同时有两个网卡时，它们总是在eth0和eth1之间变来变去。
 
-���õĽ���취��������rc.conf�ļ���ͨ���޸�MODULES������ָ��˳������������ģ�齫��udev�Զ�����֮ǰ��ϵͳ���أ���������Կ���ģ��������ʱ����˳��
+常用的解决办法是在您的rc.conf文件中通过修改MODULES队列来指明顺序。这个队列里的模块将在udev自动加载之前由系统加载，因此您可以控制模块在启动时加载顺序。
 
-# ��e100֮ǰ����8139too
+# 在e100之前加载8139too
 MODULES=(8139too e100)
 
-��һ����������ķ�����ʹ��udev-sanctified����Ϊÿ��������̬�����������ļ�/etc/udev/rules.d/10-network.rulesȻ�󽫲�ͬ������ͨ��MAC��ַ�󶨵���ͬ�������ϣ�
+另一个解决网卡的方法是使用udev-sanctified方法为每个网卡静态命名。创建文件/etc/udev/rules.d/10-network.rules然后将不同的网卡通过MAC地址绑定到不同的名字上：
 
 SUBSYSTEM=="net", SYSFS{address}=="aa:bb:cc:dd:ee:ff", NAME="lan0"
 SUBSYSTEM=="net", SYSFS{address}=="ff:ee:dd:cc:bb:aa", NAME="wlan0"
 
-ͬʱ������Ҫע����������:
+同时，您需要注意以下内容:
 
-    * ������ͨ�������������������MAC��ַ:: udevinfo -a -p /sys/class/net/<�������>
-    * ע����udev�����ļ���ʹ��Сд��16����MAC��ַ����Ϊudev�޷�ʶ���д��MAC��ַ��
-    * һЩ�û���ʹ�þɵ�������ʽʱ�������⣬����: eth0, eth1, �ȵ�. �������������⣬����ʹ�� "lan"����"wlan"֮�������.
+    * 您可以通过下面的命令获得网卡的MAC地址:: udevinfo -a -p /sys/class/net/<你的网卡>
+    * 注意在udev规则文件中使用小写的16进制MAC地址，因为udev无法识别大写的MAC地址。
+    * 一些用户在使用旧的命名方式时出现问题，例如: eth0, eth1, 等等. 如果出现这个问题，试试使用 "lan"或者"wlan"之类的名字.
 
-ע�ⲻҪ�����޸�����/dec/rc.conf������ʹ��ethX�����������ļ���
+注意不要忘记修改您的/dec/rc.conf和其它使用ethX命名的配置文件。
 
-�Լ������ں���ɵ�һЩ��֪����
+自己编译内核造成的一些已知问题
 
-Udev�޷�����
+Udev无法启动
 
-��ȷ�������ں˰汾���ڻ����2.6.15��������ں�û��udev�Զ�װ������Ҫ��uevent���ܡ�
+请确定您的内核版本大于或等于2.6.15。较早的内核没有udev自动装载所需要的uevent功能。
 
-CD/DVD���ź�Ȩ�޴���
+CD/DVD符号和权限错误
 
-�����ʹ��2.6.15���ں˵Ļ�������Ҫ��װABS��uevent����������2.6.16�ں��г�ȡ��һЩuevent���ܣ���������ʹ��abs������ ͬ��ABS����Ȼ�����Ϳ�����/var/abs/kernels/kernel26/���ҵ�abs������
+如果您使用2.6.15的内核的话，您需要安装ABS的uevent补丁（它从2.6.16内核中抽取了一些uevent功能）。您可以使用abs命令来 同步ABS树，然后您就可以在/var/abs/kernels/kernel26/下找到abs补丁。
 
-UdevС����
+Udev小窍门
 
-�Զ�����usb�豸
+自动加载usb设备
 
 KERNEL=="sd[a-z]", NAME="%k", SYMLINK+="usb%m", GROUP="users", OPTIONS="last_rule"
 ACTION=="add", KERNEL=="sd[a-z][0-9]", SYMLINK+="usb%n", GROUP="users", NAME="%k"
@@ -305,9 +305,9 @@ ACTION=="add", KERNEL=="sd[a-z][0-9]", RUN+="/bin/mount -t auto -o rw,noauto,syn
 ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/umount -l /mnt/usb%n"
 ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/rmdir /mnt/usb%n", OPTIONS="last_rule"
 
-����Щudev����ŵ�/etc/udev/rules.d/���κ�һ���ļ�����.rules��β���ļ��У�����/etc/udev/rules.d/sda.rules��
+把这些udev规则放到/etc/udev/rules.d/下任何一个文件名以.rules结尾的文件中，例如/etc/udev/rules.d/sda.rules。
 
-�����ͬʱ����/media��/mnt�������ӣ�����ʹ������İ汾:
+如果想同时建立/media到/mnt符号连接，可以使用下面的版本:
 
 KERNEL=="sd[a-z]", NAME="%k", SYMLINK+="usbhd-%k", GROUP="users", OPTIONS="last_rule"
 ACTION=="add", KERNEL=="sd[a-z][0-9]", SYMLINK+="usbhd-%k", GROUP="users", NAME="%k"
@@ -319,7 +319,7 @@ ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/rm -f /mnt/usbhd-%k"
 ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/umount -l /media/usbhd-%k"
 ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/rmdir /media/usbhd-%k", OPTIONS="last_rule"
 
-ע�⣡��������õ������Ĺ̶��豸������SATA��Ӳ�̣������Դ�/etc/fstab�в鿴����ʶ��Ϊ/dev/sdX���������sd[a-z] ��ȥ������Ǹ�sdX�����磬�������SATAӲ�̱���ʶ��Ϊ/dev/sda��������Ҫ�����еġ�sd[a-z]���滻�ɡ�sd[b-z]�����ڹ����� �����ļ���ǰ�������֣���:010.udev.rules���Ǹ��ܺõ����⣬����udev�ڶ�ȡ��׼����ǰ�������ȡ��������ļ�����Щ�������ú���Ҫ �޸�/etc/fstab�ļ�����鿴mount����Ĳ������޸�Ȩ�޵����ԣ������Դ���̳�����鿴mount����Ĳ�����Ȼ�����������Ҫ�޸����ǣ��� 
+注意！如果你是用的其它的固定设备（例如SATA的硬盘，您可以从/etc/fstab中查看）被识别为/dev/sdX，您必须从sd[a-z] 中去掉你的那个sdX。例如，如果您的SATA硬盘被是识别为/dev/sda，您就需要把所有的“sd[a-z]”替换成“sd[b-z]”。在规则文 件的文件名前加上数字（如:010.udev.rules）是个很好的主意，这样udev在读取标准规则前，将会读取这个规则文件。这些规则设置后不需要 修改/etc/fstab文件。请查看mount命令的参数来修改权限等特性（您可以从论坛搜索查看mount命令的参数，然后根据您的需要修改它们）。 
 
 
 
@@ -327,19 +327,19 @@ ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/rmdir /media/usbhd-%k", OPT
 
 
 
- ����ʵ��udev/mdev�Զ�������ж��
-���ࣺ ���� �Linuxϵͳ 2012-02-03 11:10 599���Ķ� ����(0) �ղ� �ٱ�
-permissionsregexcommand�ű�actiondeprecated
+ 关于实现udev/mdev自动挂载与卸载
+分类： 配置 搭建Linux系统 2012-02-03 11:10 599人阅读 评论(0) 收藏 举报
+permissionsregexcommand脚本actiondeprecated
 
-ת�ԣ�http://blog.csdn.net/czh52911/article/details/6652791
+转自：http://blog.csdn.net/czh52911/article/details/6652791
 
-       �������кܶ���ڽ�mdev���Զ����ػ����϶���һ���汾�����������Զ�����ȷʵ���У����ǹ����Զ�ж��mdev�ƺ����ܺܺõ�֧�֣������޸��Ѿ�����������udev��Ч�����ơ������ڹ��ص�Ŀ¼�н����Ȳ�Σ������������⣬�������������´β���U��ʱ�������Ӱ�죬���ܶ�U�����𻵡�
+       在网上有很多关于讲mdev的自动挂载基本上都是一个版本，经过测试自动挂载确实可行，但是关于自动卸载mdev似乎不能很好的支持，经过修改已经可以做到与udev的效果相似。不能在挂载的目录中进行热插拔，否则会出现问题，不过此问题在下次插入U盘时不会造成影响，可能对U盘有损坏。
 
-���Ľ�����mdev��udev���ַ�����ʵ���Զ����أ����߿ɸ�����Ҫ��ѡ��һ���ɡ�
+本文介绍了mdev与udev两种方法来实现自动挂载，读者可根据需要任选其一即可。
 
-        ���Ƚ���һ��mdev��udev֮��Ĺ�ϵ��
+        首先介绍一下mdev与udev之间的关系：
 
-        mdev��busybox�е�һ��udev���������һ������棬��Ҳ����ʵ���豸�ڵ���Զ��������豸���Զ����أ�ֻ����ʵ�ֵĹ������е���죬�ڷ����Ȳ��ʱ���ʱ��mdev�Ǳ�hotplugֱ�ӵ��ã���ʱmdevͨ�����������е� ACTION �� DEVPATH����ȷ���˴��Ȳ���¼��Ķ����Լ�Ӱ����/sys�е��Ǹ�Ŀ¼�����Żῴ�����Ŀ¼���Ƿ��С�dev���������ļ�������о�������Щ��ϢΪ����豸��/dev �´����豸�ڵ��ļ���
+        mdev是busybox中的一个udev管理程序的一个精简版，他也可以实现设备节点的自动创建和设备的自动挂载，只是在实现的过程中有点差异，在发生热插拔时间的时候，mdev是被hotplug直接调用，这时mdev通过环境变量中的 ACTION 和 DEVPATH，来确定此次热插拔事件的动作以及影响了/sys中的那个目录。接着会看看这个目录中是否有“dev”的属性文件，如果有就利用这些信息为这个设备在/dev 下创建设备节点文件。
 
  
 
@@ -347,16 +347,16 @@ permissionsregexcommand�ű�actiondeprecated
 
 /***********************************************************************************************************************************************************************************/
 
-1.mdev֧��
+1.mdev支持
 
-    ����busybox�������ļ�ϵͳ��ʱ��Ҫѡ��֧��mdev����
+    ①用busybox制作根文件系统的时候，要选择支持mdev机制
 
         Linux System Utilities  --->   
                    [*] mdev      
                    [*]   Support /etc/mdev.conf
                    [*]     Support command execution at device addition/removal
 
-    �����ļ�ϵͳ/etc/init.d/rsC�ļ���������������
+    ②在文件系统/etc/init.d/rsC文件中添加如下内容
 
         Vi  /etc/init.d/rcS
                 mount -t tmpfs mdev /dev
@@ -367,21 +367,21 @@ permissionsregexcommand�ű�actiondeprecated
                 echo /sbin/mdev>/proc/sys/kernel/hotplug
                 mdev ?s
 
-    ��Щ����������busybox��/doc/mdev.txt�п����ҵ���
+    这些语句的添加在busybox的/doc/mdev.txt中可以找到。
 
      
 
-    �����Ӷ��Ȳ���¼�����Ӧ��ʵ��U�̺�SD�����Զ����ء�
+    ③添加对热插拔事件的响应，实现U盘和SD卡的自动挂载。
 
         Vi /etc/mdev.conf
                sd[a-z][0-9]      0:0 666        @/etc/mdev/udisk_insert                        
                  sd[a-z]                   0:0 666          $/etc/mdev/udisk_remove
 
-    ��ɫ���֣���һ���ű����ű����ݿ��Ը������ǵ���Ҫ���ƣ�����ʵ�ֹ��أ�ж�ػ�����һЩ���ܡ�
+    红色部分，是一个脚本，脚本内容可以根据我们的需要定制，可以实现挂载，卸载或其他一些功能。
 
-    ע��@��ʾ���ڲ��루�����豸��㣩��ִ�к���Ľű���$��ʾ�ڰγ���ɾ���豸��㣩ǰִ�к���Ľű���
+    注：@表示是在插入（创建设备结点）后执行后面的脚本，$表示在拔出（删除设备结点）前执行后面的脚本。
 
-    �������Զ����غ�ж�صĽű����Ƽ������ݣ�
+    如下是自动挂载和卸载的脚本名称及其内容：
 
             #!/bin/sh
 
@@ -393,7 +393,7 @@ permissionsregexcommand�ű�actiondeprecated
 
             fi
 
-    ���ļ�ϵͳ�е�etc/mdev/udisk_remove�ļ�����:
+    根文件系统中的etc/mdev/udisk_remove文件内容:
 
                 #!/bin/sh
                 umount -l /media/$MDEV
@@ -403,45 +403,45 @@ permissionsregexcommand�ű�actiondeprecated
                 umount -l /media/sd*
                 rm -rf /media/sd*
 
-    �޸�Ϊ��ɫ���ֺ��ܹ��Զ�����
+    修改为红色部分后能够自动挂载
 
-    ���������ű���Ҫ��ִ��Ȩ�ޣ�chmod +x  /etc/mdev/udisk_insert
+    以上两个脚本需要可执行权限：chmod +x  /etc/mdev/udisk_insert
 
                                chmod +x etc/mdev/udisk_remove
 
 /***********************************************************************************************************************************************************************************/
 
-2.udev֧�� 
+2.udev支持 
 
-        linux��ͳ��ʹ�þ�̬�豸�����ķ�������dev�´����˴����Ľڵ㣬��������Щ�ڵ���Ӧ��Ӳ���豸�Ƿ���ڡ�����udev�ķ�����ϵͳ��⵽�豸�Ż�ȥ������Щ�豸��Ӧ�Ľڵ㡣
+        linux传统上使用静态设备创建的方法，在dev下创建了大量的节点，而不管这些节点相应的硬件设备是否存在。采用udev的方法，系统检测到设备才会去创建这些设备对应的节点。
 
-        �������Ǽ򵥵�˵һ��udev�Ĺ���ԭ����
+        这里我们简单的说一下udev的工作原理：
 
-        udev��������sysfs�ģ���ϵͳ������һ���µ��豸���ں˼�⵽��ͻ����һ��hotplug event������/proc/sys/kernel/hotplugȥ�ҳ������豸���ӵ��û��ռ������udev�Ѿ��������ں˻�֪ͨudevȥ���sysfs�й���������豸����Ϣ�������豸�ڵ㡣��/dev/vcs,��/sys/class/tty/vcs/dev��ŵ��ǡ�7:0������/dev/vcs�������豸�š�����udev�������/etc/udev/rules.d�еĹ����ļ�ʵ��һЩ��Ӧ�Ĺ��ܡ�
+        udev是依赖于sysfs的，当系统中添加一个新的设备后，内核检测到后就会产生一个hotplug event并查找/proc/sys/kernel/hotplug去找出管理设备连接的用户空间程序，若udev已经启动，内核会通知udev去检测sysfs中关于这个新设备的信息并创建设备节点。如/dev/vcs,在/sys/class/tty/vcs/dev存放的是”7:0”，既/dev/vcs的主次设备号。并且udev还会根据/etc/udev/rules.d中的规则文件实现一些相应的功能。
 
-�������ǽ���һ�����ʵ���豸�ڵ���Զ�������u�̻�sd�����Զ����ء�
+下面我们介绍一下如何实现设备节点的自动创建及u盘或sd卡的自动挂载。
 
-    ��Ϊ�ļ�ϵͳ��Ĭ����û�ж�udev����֧�ֵģ�����������ֲһ��udev��
+    因为文件系统中默认是没有对udev进行支持的，所以我们移植一个udev。
 
-    1.����udevԴ��udev-100.tar.bz2������ѹ
+    1.下载udev源码udev-100.tar.bz2，并解压
 
-    ��ַ��http://www.us.kernel.org/pub/linux/utils/kernel/hotplug
+    网址：http://www.us.kernel.org/pub/linux/utils/kernel/hotplug
 
-    2.������롣
+    2.交叉编译。
 
-    �޸�makefile,�����޸����£�
+    修改makefile,具体修改如下：
 
             cross = arm-linux-
 
-    �����˳���
+    保存退出。
 
-    Ȼ��ִ�����make ���б��룬Ȼ��ִ��arm-linux-strip udev udevd udevstart udevinfo udevtest����������Щ�ļ���Ŀ�����ļ�/binĿ¼���档
+    然后执行命令：make 进行编译，然后执行arm-linux-strip udev udevd udevstart udevinfo udevtest，并拷贝这些文件到目标板根文件/bin目录下面。
 
-    3.����udev��֧��
+    3.添加udev的支持
 
-    �������ַ���������ͬ
+    下面三种方法功能相同
 
-            (1)���޸�etc/init.d/rcs�ű���Ȼ�������������
+            (1)并修改etc/init.d/rcs脚本，然后添加如下命令：
 
             /bin/mount -t sysfs sysfs /sys 
 
@@ -451,13 +451,13 @@ permissionsregexcommand�ű�actiondeprecated
 
             /bin/udevstart
 
-            (2)���linuxrc�Ƕ������ļ��Ļ� 
+            (2)如果linuxrc是二进制文件的话 
 
             rm /linuxrc
 
             vi /linuxrc
 
-            ������������
+            添加如下内容
 
             /bin/mount -t sysfs sysfs /sys
 
@@ -469,7 +469,7 @@ permissionsregexcommand�ű�actiondeprecated
 
             exec /sbin/init
 
-            (3)�޸�/etc/fstabΪ
+            (3)修改/etc/fstab为
 
             #device mount-point type options dump fsck order
 
@@ -481,21 +481,21 @@ permissionsregexcommand�ű�actiondeprecated
 
             tmpfs /dev tmpfs defaults 0 0
 
-            �޸�/etc/init.d/rcs,������������
+            修改/etc/init.d/rcs,添加如下内容
 
         /bin/udevd --daemon
 
         /bin/udevstart
 
-            ��������ϵͳ���ļ�ϵͳ���ܹ��Զ������ڵ㡣
+            重新启动系统，文件系统就能够自动创建节点。
 
      
 
-    4.��/etc�´���udevĿ¼
+    4.在/etc下创建udev目录
 
-    5.��/etc/udev�´���Ŀ¼rules.d���ļ�udev.conf
+    5.在/etc/udev下穿件目录rules.d和文件udev.conf
 
-    6.��udev.conf��������������
+    6.在udev.conf中添加如下内容
 
     # udev.conf
 
@@ -507,13 +507,13 @@ permissionsregexcommand�ű�actiondeprecated
 
             udev_log="err"
 
-    7.��rules.d�´��������ļ�
+    7.在rules.d下创建规则文件
 
-    ��ʵ��u���Զ�����
+    如实现u盘自动挂载
 
             vim 11-add-usb.rules
 
-    ������������
+    添加如下内容
 
             action!="add",goto="farsight"
 
@@ -521,9 +521,9 @@ permissionsregexcommand�ű�actiondeprecated
 
             label="farsight"
 
-    ����ļ���action����˵����ʲô�¼���kernel����˵����ʲô�豸����sda1��mmcblk0p1�ȣ�run����豸�����ȥִ���ĸ�����%k�Ǵ����������Ĳ���������%k=kernel��ֵҲ����sda1��http://www.woaidiannao.com��
+    这个文件中action后是说明是什么事件，kernel后是说明是什么设备比如sda1，mmcblk0p1等，run这个设备插入后去执行哪个程序%k是传入这个程序的参数，这里%k=kernel的值也就是sda1等http://www.woaidiannao.com。
 
-    ��/sbin/�´���mount-usb.sh�ļ������������� �����
+    在/sbin/下创建mount-usb.sh文件添加如下内容 计算机
 
             #!/bin/sh
 
@@ -531,11 +531,11 @@ permissionsregexcommand�ű�actiondeprecated
 
             sync
 
-    �޸��ļ�Ȩ��Ϊ�����ӿ�ִ�е�Ȩ�ޡ�
+    修改文件权限为其添加可执行的权限。
 
-    ������ʵ����u�̵��Զ����أ����渽��u�̵�ж�ع����ļ���sd�����ļ�
+    这样就实现了u盘的自动挂载，下面附上u盘的卸载规则文件和sd卡的文件
 
-    usbж��
+    usb卸载
 
     11-add-remove.rules
 
@@ -555,7 +555,7 @@ permissionsregexcommand�ű�actiondeprecated
 
             umount /tmp/
 
-    sd������
+    sd卡挂载
 
     12-add-sd.rules
 
@@ -575,7 +575,7 @@ permissionsregexcommand�ű�actiondeprecated
 
      
 
-    sdж��
+    sd卸载
 
     12-remove-sd.rules
 
@@ -597,36 +597,36 @@ permissionsregexcommand�ű�actiondeprecated
 
 =============================================================================================================================================
 
-linuxǶ��ʽϵͳ��mdev������
-ת�ԣ�http://blog.csdn.net/guojiuming/article/details/6141978
+linux嵌入式系统中mdev的配置
+转自：http://blog.csdn.net/guojiuming/article/details/6141978
 
-1��mdev��ʲô��
+1、mdev是什么。
 
-busybox��mdev��һ�������˵�udev�������򣬶�udev��linux2.6�ں������һ���µ��豸�ļ��������ƣ�����ȡ���ϵ�devfs.udev�����е���ǿ��Զ�̬�Ĺ���/devĿ¼�µ��豸�ļ�����������ϵͳ��ʼ��ʱ�ͽ�����Ҫ�õ����豸�����������������Ը����豸������Ϣ�����豸�ڵ㣬���������ں�ͳһ���䡣
-
- 
-
-2�������Ƕ��ʽϵͳ�п���mdev��
-
-  1����busybox�����Ӷ�mdev��֧�֡�
+busybox的mdev是一个精简了的udev管理程序，而udev是linux2.6内核引入的一种新的设备文件管理机制，用于取代老的devfs.udev最大的有点就是可以动态的管理/dev目录下的设备文件，而不用再系统初始化时就将可能要用到的设备都创建起来，还可以根据设备具体信息命名设备节点，而不是有内核统一分配。
 
  
 
-  2����/etc/rc.d/rcS������
+2、如何在嵌入式系统中开启mdev。
 
-  #��/sys�й���sysfs�ļ�ϵͳ������mdev���еĻ�������֮һ
+  1）在busybox中添加对mdev的支持。
+
+ 
+
+  2）在/etc/rc.d/rcS中添加
+
+  #在/sys中挂载sysfs文件系统，它是mdev运行的基础条件之一
 
   mount -t sysfs sysfs /sys
 
  
 
-  #����ϵͳ��hotplug����Ϊmdev
+  #设置系统的hotplug程序为mdev
 
   echo /sbin/mdev > /proc/sys/kernel/hotplug  
 
   
 
-  #mdev�������/sys��/proc���ļ�ϵͳ���豸��Ϣ����/dev��������Ӧ���豸�ڵ�
+  #mdev程序检索/sys和/proc中文件系统的设备信息，在/dev中生成相应的设备节点
 
   mdev ?s
 
@@ -636,7 +636,7 @@ busybox��mdev��һ�������˵�udev�������򣬶�udev��linux2.6�ں������һ���µ��豸�
 
  
 
-  3��ȷ�������ں�ʱ��������ѡ�
+  3）确保编译内核时编译如下选项：
 
   CONFIG_PROC_FS=y
 
@@ -648,7 +648,7 @@ busybox��mdev��һ�������˵�udev�������򣬶�udev��linux2.6�ں������һ���µ��豸�
 
  
 
-  ע������udev�ٷ��ļ��Ľ���(http://git.kernel.org/?p=linux/hotplug/udev.git;a=blob;hb=HEAD;f=README)������udev��Ҫ��������ѡ���ò���2.6.27�����Ժ�汾��
+  注：根据udev官方文件的介绍(http://git.kernel.org/?p=linux/hotplug/udev.git;a=blob;hb=HEAD;f=README)，编译udev需要配置如下选项；最好采用2.6.27及其以后版本。
 
   CONFIG_HOTPLUG=y
   CONFIG_UEVENT_HELPER_PATH=""
@@ -663,18 +663,18 @@ busybox��mdev��һ�������˵�udev�������򣬶�udev��linux2.6�ں������һ���µ��豸�
   CONFIG_TMPFS_POSIX_ACL=y (user ACLs for device nodes)
   CONFIG_BLK_DEV_BSG=y (SCSI devices)
  
-  4������/etc/uedv/udev.conf�ļ���һ�㶨�����¼���������
+  4）建立/etc/uedv/udev.conf文件，一般定义如下几个参数：
 
-udev_root��udev �������豸����ŵ�Ŀ¼��Ĭ��ֵ�� /dev/�����鲻Ҫ�޸ĸò�������Ϊ�ܶ�Ӧ�ó���Ĭ�ϻ�Ӹ�Ŀ¼�����豸�ļ���
-udev_db��udev ��Ϣ��ŵ����ݿ��������Ŀ¼��Ĭ��ֵ�� /dev/.udev.tdb��
-udev_rules��udev �����ļ������ֻ�������Ŀ¼��Ĭ��ֵ�� /etc/udev/rules.d/��
-udev_permissions��udev Ȩ���ļ������ֻ�������Ŀ¼��Ĭ��ֵ�� /etc/udev/permissions.d/��
-default_mode/ default_owner/ default_group������豸�ļ���Ȩ��û����Ȩ���ļ���ָ������ʹ�øò�����ΪĬ��Ȩ�ޣ�Ĭ��ֵ�ֱ��ǣ�0600/root/root��
-udev_log���Ƿ���Ҫ syslog��¼ udev ��־�Ŀ��أ�Ĭ��ֵ�� no��
+udev_root：udev 产生的设备所存放的目录，默认值是 /dev/。建议不要修改该参数，因为很多应用程序默认会从该目录调用设备文件。
+udev_db：udev 信息存放的数据库或者所在目录，默认值是 /dev/.udev.tdb。
+udev_rules：udev 规则文件的名字或者所在目录，默认值是 /etc/udev/rules.d/。
+udev_permissions：udev 权限文件的名字或者所在目录，默认值是 /etc/udev/permissions.d/。
+default_mode/ default_owner/ default_group：如果设备文件的权限没有在权限文件里指定，就使用该参数作为默认权限，默认值分别是：0600/root/root。
+udev_log：是否需要 syslog记录 udev 日志的开关，默认值是 no。
 
   
 
-  5)��/etc/udev/rules.d/Ŀ¼�½�����Ҫ�Ĺ����ļ�*.rules��mdev���Զ�������Щ�ļ����ݣ����յõ��豸�ڵ�����ơ�Ȩ�޵ȡ����ڹ����ļ������׫д����μ�������һ��дudev���� һ�ġ�
+  5)在/etc/udev/rules.d/目录下建立需要的规则文件*.rules，mdev会自动搜索这些文件内容，最终得到设备节点的名称、权限等。关于规则文件的如何撰写，请参见“跟我一起写udev规则” 一文。
 
  
 
@@ -685,11 +685,11 @@ udev_log���Ƿ���Ҫ syslog��¼ udev ��־�Ŀ��أ�Ĭ��ֵ�� no��
 
  
 
-ִ��mdev -s ���ԡ�-s��Ϊ��������λ�� /sbinĿ¼д��mdev����ʵ�Ǹ����ӣ������Ǵ��ݲ�����/binĿ¼�µ�busybox���򲢵���������mdevɨ�� /sys/class �� /sys/block �����е����豸Ŀ¼�������Ŀ¼�к�����Ϊ��dev�����ļ������ļ��а��������豸�ţ���mdev��������Щ��ϢΪ����豸��/dev �´����豸�ڵ��ļ���һ��ֻ������ʱ��ִ��һ�� ��mdev -s����
+执行mdev -s ：以‘-s’为参数调用位于 /sbin目录写的mdev（其实是个链接，作用是传递参数给/bin目录下的busybox程序并调用它），mdev扫描 /sys/class 和 /sys/block 中所有的类设备目录，如果在目录中含有名为“dev”的文件，且文件中包含的是设备号，则mdev就利用这些信息为这个设备在/dev 下创建设备节点文件。一般只在启动时才执行一次 “mdev -s”。
 
  
 
-�Ȳ���¼�����������ʱ���������echo /sbin/mdev > /proc/sys/kernel/hotplug ����ô�����Ȳ���¼�����ʱ���ں˾ͻ����λ�� /sbinĿ¼��mdev����ʱmdevͨ�����������е� ACTION �� DEVPATH����ȷ���˴��Ȳ���¼��Ķ����Լ�Ӱ����/sys�е��Ǹ�Ŀ¼�����Żῴ�����Ŀ¼���Ƿ��С�dev���������ļ�������о�������Щ��ϢΪ����豸��/dev �´����豸�ڵ��ļ���
+热插拔事件：由于启动时运行了命令：echo /sbin/mdev > /proc/sys/kernel/hotplug ，那么当有热插拔事件产生时，内核就会调用位于 /sbin目录的mdev。这时mdev通过环境变量中的 ACTION 和 DEVPATH，来确定此次热插拔事件的动作以及影响了/sys中的那个目录。接着会看看这个目录中是否有“dev”的属性文件，如果有就利用这些信息为这个设备在/dev 下创建设备节点文件。
 
 
 ==================================================================================================================================================
@@ -829,50 +829,50 @@ to stall for two seconds.
 
 
 
-ʹ�� udev ��Ч����̬�ع��� Linux �豸�ļ�
+使用 udev 高效、动态地管理 Linux 设备文件
 
-������
+概述：
 
-Linux �û���������Ѽ���ͬһ���͵��豸�������� eth0, eth1, sda, sdb �ȵȡ�ͨ���۲���Щ�豸���ں��豸���ƣ��û�ͨ����֪����Щ��ʲô���͵��豸�����ǲ�֪����һ���豸��������Ҫ�ġ����磬��һ������ű��ش��̺͹��˴��̵��豸���嵥 (/dev/sd*) �У��û��޷��ҵ�һ�����к�Ϊ��35000c50000a7ef67���Ĵ��̡�����������£�udev ���ܶ�̬���� /devĿ¼������Լ���Ҫ�ġ���ʶ��ǿ���豸�ļ������豸���ӣ��Դ˰����û������ݵ��ҵ�������豸�ļ���
+Linux 用户常常会很难鉴别同一类型的设备名，比如 eth0, eth1, sda, sdb 等等。通过观察这些设备的内核设备名称，用户通常能知道这些是什么类型的设备，但是不知道哪一个设备是他们想要的。例如，在一个充斥着本地磁盘和光纤磁盘的设备名清单 (/dev/sd*) 中，用户无法找到一个序列号为“35000c50000a7ef67”的磁盘。在这种情况下，udev 就能动态地在 /dev目录里产生自己想要的、标识性强的设备文件或者设备链接，以此帮助用户方便快捷地找到所需的设备文件。
 
-udev ���
+udev 简介
 
-ʲô�� udev?
+什么是 udev?
 
-udev �� Linux2.6 �ں����һ�����ܣ��������ԭ���� devfs����Ϊ��ǰ Linux Ĭ�ϵ��豸�������ߡ�udev ���ػ����̵���ʽ���У�ͨ�������ں˷������� uevent ������ /devĿ¼�µ��豸�ļ�������֮ǰ���豸�������ߣ�udev ���û��ռ� (user space) ���У��������ں˿ռ� (kernel space) ���С�
+udev 是 Linux2.6 内核里的一个功能，它替代了原来的 devfs，成为当前 Linux 默认的设备管理工具。udev 以守护进程的形式运行，通过侦听内核发出来的 uevent 来管理 /dev目录下的设备文件。不像之前的设备管理工具，udev 在用户空间 (user space) 运行，而不在内核空间 (kernel space) 运行。
 
-ʹ�� udev �ĺô���
+使用 udev 的好处：
 
-���Ƕ�֪�������е��豸�� Linux �ﶼ�����豸�ļ�����ʽ���ڡ������ڵ� Linux �汾�У�/devĿ¼���������п��ܳ��ֵ��豸���豸�ļ����������� Linux �û��������Щ�������豸�ļ����ҵ�ƥ���������豸�ļ������� udev ֻΪ��Щ���ӵ� Linux ����ϵͳ���豸�����豸�ļ������� udev ��ͨ������һ�� udev ���� (rule) ������ƥ���豸���Ե��豸�ļ�����Щ�豸���Կ������ں��豸���ơ�����·�����������ơ��ͺš����кŻ��ߴ��̴�С�ȵȡ�
+我们都知道，所有的设备在 Linux 里都是以设备文件的形式存在。在早期的 Linux 版本中，/dev目录包含了所有可能出现的设备的设备文件。很难想象 Linux 用户如何在这些大量的设备文件中找到匹配条件的设备文件。现在 udev 只为那些连接到 Linux 操作系统的设备产生设备文件。并且 udev 能通过定义一个 udev 规则 (rule) 来产生匹配设备属性的设备文件，这些设备属性可以是内核设备名称、总线路径、厂商名称、型号、序列号或者磁盘大小等等。
 
-    ��̬���������豸���� / ɾ��ʱ��udev ���ػ��������������ں˵� uevent���Դ����ӻ���ɾ�� /dev�µ��豸�ļ������� udev ֻΪ�Ѿ����ӵ��豸�����豸�ļ����������� /dev�²����������޵��豸�ļ���
-    �Զ�����������ͨ�� Linux Ĭ�ϵĹ����ļ���udev �� /dev/ ��Ϊ���е��豸�������ں��豸���ƣ����� /dev/sda��/dev/hda��/dev/fd�ȵȡ����� udev �����û��ռ� (user space) ���У�Linux �û�����ͨ���Զ���Ĺ����ļ������ز�����ʶ��ǿ���豸�ļ��������� /dev/boot_disk��/dev/root_disk��/dev/color_printer�ȵȡ�
-    �趨�豸��Ȩ�޺������� / �飺udev ���԰�һ���������������豸�ļ���Ȩ�޺��豸�ļ������� / �顣�ڲ�ͬ�� udev �汾�У�ʵ�ֵķ�����ͬ���ڡ�������ú�ʹ�� udev���л���⡣
+    动态管理：当设备添加 / 删除时，udev 的守护进程侦听来自内核的 uevent，以此添加或者删除 /dev下的设备文件，所以 udev 只为已经连接的设备产生设备文件，而不会在 /dev下产生大量虚无的设备文件。
+    自定义命名规则：通过 Linux 默认的规则文件，udev 在 /dev/ 里为所有的设备定义了内核设备名称，比如 /dev/sda、/dev/hda、/dev/fd等等。由于 udev 是在用户空间 (user space) 运行，Linux 用户可以通过自定义的规则文件，灵活地产生标识性强的设备文件名，比如 /dev/boot_disk、/dev/root_disk、/dev/color_printer等等。
+    设定设备的权限和所有者 / 组：udev 可以按一定的条件来设置设备文件的权限和设备文件所有者 / 组。在不同的 udev 版本中，实现的方法不同，在“如何配置和使用 udev”中会详解。
 
-���������ͼ��ʾ udev ���� / ɾ���豸�ļ��Ĺ��̡�
+下面的流程图显示 udev 添加 / 删除设备文件的过程。
 
-ͼ 1. udev ��������ͼ��
-ͼ 1. udev ��������ͼ��
+图 1. udev 工作流程图：
+图 1. udev 工作流程图：
 
-������
+相关术语：
 
-    �豸�ļ������ڱ����Խ�ͨ�׵ķ�ʽ���� udev�������豸�ļ��Ƿ�ָ�� /dev/�£��ɱ�Ӧ�ó����������豸�����������ļ����������ر�������豸�ļ����豸�ڵ�����豸�����ļ���
-    devfs��devfs�� Linux ���ڵ��豸�������ߣ��Ѿ��� udev ȡ����
-    sysfs��sysfs�� Linux 2.6 �ں����һ�������ļ�ϵͳ (/sys)�������豸����������Ϣ���ں˵��豸ģ�鵼�����û��ռ� (userspace)���Ӹ��ļ�ϵͳ�У�Linux �û����Ի�ȡ�ܶ��豸�����ԡ�
-    devpath�����ĵ� devpath��ָһ���豸�� sysfs�ļ�ϵͳ (/sys)�µ����·������·�������˸��豸�������ļ���udev ��Ķ����������� devpath�����ġ����磺sda�� devpath�� /block/sda��sda2 �� devpath�� /block/sda/sda2��
-    �ں��豸���ƣ��豸�� sysfs������ƣ��� udev Ĭ��ʹ�õ��豸�ļ�����
+    设备文件：由于本文以较通俗的方式讲解 udev，所以设备文件是泛指在 /dev/下，可被应用程序用来和设备驱动交互的文件。而不会特别地区分设备文件、设备节点或者设备特殊文件。
+    devfs：devfs是 Linux 早期的设备管理工具，已经被 udev 取代。
+    sysfs：sysfs是 Linux 2.6 内核里的一个虚拟文件系统 (/sys)。它把设备和驱动的信息从内核的设备模块导出到用户空间 (userspace)。从该文件系统中，Linux 用户可以获取很多设备的属性。
+    devpath：本文的 devpath是指一个设备在 sysfs文件系统 (/sys)下的相对路径，该路径包含了该设备的属性文件。udev 里的多数命令都是针对 devpath操作的。例如：sda的 devpath是 /block/sda，sda2 的 devpath是 /block/sda/sda2。
+    内核设备名称：设备在 sysfs里的名称，是 udev 默认使用的设备文件名。
 
-��ҳ��
+回页首
 
-������ú�ʹ�� udev
+如何配置和使用 udev
 
-������� RHEL4.8 �� RHEL5.3 Ϊƽ̨���ֱ����� udev �����ú�ʹ�ã�
+下面会以 RHEL4.8 和 RHEL5.3 为平台，分别描述 udev 的配置和使用：
 
-���غͰ�װ udev
+下载和安装 udev
 
-�� Fedora3 �� Red Hat Enterprise4 ��ʼ��udev ����Ĭ�ϵ��豸�������ߣ������������ذ�װ��
+从 Fedora3 和 Red Hat Enterprise4 开始，udev 就是默认的设备管理工具，无需另外下载安装。
 
-�嵥 1. ��� udev �� RHEL4.8 ��İ汾���������
+清单 1. 检查 udev 在 RHEL4.8 里的版本和运行情况
 
                 
  [root@HOST_RHEL4 dev]# rpm -qa |grep -i udev 
@@ -884,7 +884,7 @@ udev �� Linux2.6 �ں����һ�����ܣ��������ԭ���� devfs����Ϊ��ǰ Linux Ĭ�ϵ���
 
 
 
-�嵥 2. ��� udev �� RHEL5.3 ��İ汾���������
+清单 2. 检查 udev 在 RHEL5.3 里的版本和运行情况
 
                 
  [root@HOST_RHEL5 ~]# rpm -qa |grep -i udev 
@@ -895,11 +895,11 @@ udev �� Linux2.6 �ں����һ�����ܣ��������ԭ���� devfs����Ϊ��ǰ Linux Ĭ�ϵ���
  root      5466     1  0 18:32 ?      00:00:00 /sbin/udevd -d 
 
 
-��� Linux �û������ udev �������Դ� http://www.kernel.org/pub/linux/utils/kernel/hotplug/���ز���װ��
+如果 Linux 用户想更新 udev 包，可以从 http://www.kernel.org/pub/linux/utils/kernel/hotplug/下载并安装。
 
-udev �������ļ� (/etc/udev/udev.conf)
+udev 的配置文件 (/etc/udev/udev.conf)
 
-�嵥 3. RHEL �� . ���� udev �������ļ�
+清单 3. RHEL ４ . ８下 udev 的配置文件
 
                 
  [root@HOST_RHEL4 dev]# cat /etc/udev/udev.conf 
@@ -940,17 +940,17 @@ udev �������ļ� (/etc/udev/udev.conf)
  udev_log="no"
 
 
-Linux �û�����ͨ�����ļ��������²�����
+Linux 用户可以通过该文件设置以下参数：
 
-    udev_root��udev �������豸����ŵ�Ŀ¼��Ĭ��ֵ�� /dev/�����鲻Ҫ�޸ĸò�������Ϊ�ܶ�Ӧ�ó���Ĭ�ϻ�Ӹ�Ŀ¼�����豸�ļ���
-    udev_db��udev ��Ϣ��ŵ����ݿ��������Ŀ¼��Ĭ��ֵ�� /dev/.udev.tdb��
-    udev_rules��udev �����ļ������ֻ�������Ŀ¼��Ĭ��ֵ�� /etc/udev/rules.d/��
-    udev_permissions��udev Ȩ���ļ������ֻ�������Ŀ¼��Ĭ��ֵ�� /etc/udev/permissions.d/��
-    default_mode/ default_owner/ default_group������豸�ļ���Ȩ��û����Ȩ���ļ���ָ������ʹ�øò�����ΪĬ��Ȩ�ޣ�Ĭ��ֵ�ֱ��ǣ�0600/root/root��
-    udev_log���Ƿ���Ҫ syslog��¼ udev ��־�Ŀ��أ�Ĭ��ֵ�� no��
+    udev_root：udev 产生的设备所存放的目录，默认值是 /dev/。建议不要修改该参数，因为很多应用程序默认会从该目录调用设备文件。
+    udev_db：udev 信息存放的数据库或者所在目录，默认值是 /dev/.udev.tdb。
+    udev_rules：udev 规则文件的名字或者所在目录，默认值是 /etc/udev/rules.d/。
+    udev_permissions：udev 权限文件的名字或者所在目录，默认值是 /etc/udev/permissions.d/。
+    default_mode/ default_owner/ default_group：如果设备文件的权限没有在权限文件里指定，就使用该参数作为默认权限，默认值分别是：0600/root/root。
+    udev_log：是否需要 syslog记录 udev 日志的开关，默认值是 no。
 
 
-�嵥 4. RHEL5.3 �� udev �������ļ�
+清单 4. RHEL5.3 下 udev 的配置文件
 
                 
  [root@HOST_RHEL5 ~]# cat /etc/udev/udev.conf 
@@ -962,21 +962,21 @@ Linux �û�����ͨ�����ļ��������²�����
  udev_log="err"
 
 
-udev_log��syslog��¼��־�ļ���Ĭ��ֵ�� err�������Ϊ info ���� debug �Ļ��������߳��� udev ��־����¼������
+udev_log：syslog记录日志的级别，默认值是 err。如果改为 info 或者 debug 的话，会有冗长的 udev 日志被记录下来。
 
-ʵ������ RHEL5.3 ����������ļ����г��Ĳ��� udev_log�⣬Linux �û��������޸Ĳ��� udev_root�� udev_rules( ��ο�����ġ�RHEL4.8 �� udev �����ļ���)��ֻ������ 2 �������ǲ������޸ĵģ�����û��ʾ�� udev.conf �
+实际上在 RHEL5.3 里，除了配置文件里列出的参数 udev_log外，Linux 用户还可以修改参数 udev_root和 udev_rules( 请参考上面的“RHEL4.8 的 udev 配置文件”)，只不过这 2 个参数是不建议修改的，所以没显示在 udev.conf 里。
 
-�ɼ��ð汾�� udev.conf �Ķ���С��syslogĬ�ϻ��¼ udev ����־��Linux �û�ֻ���޸���־�ļ��� (err��info��degub �� )���豸��Ȩ�޲����� udev.conf ���趨������Ҫ�ڹ����ļ� (*.rules) ���趨��
+可见该版本的 udev.conf 改动不小：syslog默认会记录 udev 的日志，Linux 用户只能修改日志的级别 (err、info、degub 等 )；设备的权限不能在 udev.conf 里设定，而是要在规则文件 (*.rules) 里设定。
 
-ͨ�� udev �趨�豸�ļ���Ȩ��
+通过 udev 设定设备文件的权限
 
-�� RHEL4.8 �� udev���豸��Ȩ����ͨ��Ȩ���ļ������á�
+在 RHEL4.8 的 udev，设备的权限是通过权限文件来设置。
 
-�嵥 5. RHEL4.8 �� udev ��Ȩ���ļ�
+清单 5. RHEL4.8 下 udev 的权限文件
 
                 
  [root@HOST_RHEL4 ~]# cat /etc/udev/permissions.d/50-udev.permissions 
-����
+……
  # disk devices 
  hd*:root:disk:0660 
  sd*:root:disk:0660 
@@ -996,161 +996,161 @@ udev_log��syslog��¼��־�ļ���Ĭ��ֵ�� err�������Ϊ info ���� debug �Ļ������
  npt*:root:disk:0660 
  st*:root:disk:0660 
  nst*:root:disk:0660 
-����
+……
 
 
-RHEL4.8 �� udev ��Ȩ���ļ���Ϊ���г��õ��豸�趨Ȩ�޺� ownership��������豸û�б�Ȩ���ļ�����Ȩ�ޣ�udev �Ͱ��� udev.conf ���Ĭ��Ȩ��ֵΪ��Щ�豸����Ȩ�ޡ�����ƪ�������ƣ���ͼֻ��ʾ�� udev Ȩ���ļ���һ���֣��ò����� �������п��������ϵĴ����豸�ʹŴ��豸��Ȩ�޺� ownership��
+RHEL4.8 里 udev 的权限文件会为所有常用的设备设定权限和 ownership，如果有设备没有被权限文件设置权限，udev 就按照 udev.conf 里的默认权限值为这些设备设置权限。由于篇幅的限制，上图只显示了 udev 权限文件的一部分，该部分设 置了所有可能连接上的磁盘设备和磁带设备的权限和 ownership。
 
-���� RHEL5.3 �� udev���Ѿ�û��Ȩ���ļ������е�Ȩ�޶���ͨ�������ļ� (*.rules)�����ã�������Ĺ����ļ����ù��̻���ܵ���
+而在 RHEL5.3 的 udev，已经没有权限文件，所有的权限都是通过规则文件 (*.rules)来设置，在下面的规则文件配置过程会介绍到。
 
-udev �Ĺ���͹����ļ�
+udev 的规则和规则文件
 
-�����ļ��� udev ������Ҫ�Ĳ��֣�Ĭ���Ǵ���� /etc/udev/rules.d/�¡����еĹ����ļ������ԡ�.rules��Ϊ��׺����RHEL ��Ĭ�ϵĹ����ļ�����ЩĬ�Ϲ����ļ�����Ϊ�豸�����ں��豸���ƣ����������ʶ��ǿ�ķ������ӡ����磺
+规则文件是 udev 里最重要的部分，默认是存放在 /etc/udev/rules.d/下。所有的规则文件必须以“.rules”为后缀名。RHEL 有默认的规则文件，这些默认规则文件不仅为设备产生内核设备名称，还会产生标识性强的符号链接。例如：
 
  [root@HOST_RHEL5 ~]# ls /dev/disk/by-uuid/ 
  16afe28a-9da0-482d-93e8-1a9474e7245c 
 
 
-����Щ�������ϳ������׵��ã�����ͨ����Ҫ�Զ�������ļ����Դ˲��������ұ�ʶ��ǿ���豸�ļ���������ӡ�
+但这些链接名较长，不易调用，所以通常需要自定义规则文件，以此产生易用且标识性强的设备文件或符号链接。
 
-���⣬һЩӦ�ó���Ҳ���� /dev/�²���һЩ������õķ������ӡ�������� 40-multipath.rules Ϊ���̲�������ķ������ӣ�
+此外，一些应用程序也会在 /dev/下产生一些方便调用的符号链接。例如规则 40-multipath.rules 为磁盘产生下面的符号链接：
 
  [root@ HOST_RHEL5 ~]# ls /dev/mpath/* 
  /dev/mpath/mpath0  /dev/mpath/mpath0p1  /dev/mpath/mpath0p2 
 
 
-udev ���չ����ļ�������ĸ˳������ѯȫ�������ļ���Ȼ��Ϊƥ�������豸�������豸�ļ����ļ����ӡ���Ȼ udev ������Ϊһ���豸ƥ����һ�������ֹͣ��������Ĺ����ļ������ǽ�����˳����Ȼ����Ҫ��ͨ������£��������Լ���Ҫ�Ĺ����ļ����ȱ����������磬����һ����Ϊ /etc/udev/rules.d/10-myrule.rules���ļ���������Ĺ���д����ļ������� udev �ͻ��ڽ���ϵͳĬ�ϵĹ����ļ�֮ǰ����������ļ���
+udev 按照规则文件名的字母顺序来查询全部规则文件，然后为匹配规则的设备管理其设备文件或文件链接。虽然 udev 不会因为一个设备匹配了一条规则而停止解析后面的规则文件，但是解析的顺序仍然很重要。通常情况下，建议让自己想要的规则文件最先被解析。比如，创建一个名为 /etc/udev/rules.d/10-myrule.rules的文件，并把你的规则写入该文件，这样 udev 就会在解析系统默认的规则文件之前解析到你的文件。
 
-RHEL5.3 �� udev �����ļ��� RHEL4.8 ��ĸ����ơ���ƪ�������ƣ�ͬʱҲΪ�˲��ô�һ��������Ľ����� RHEL4.8 ��Ĺ����ļ�������⣬������ڹ����ļ������ú�ʵ�������� RHEL5.3 �Ͻ��еġ���������Ҫ���� RHEL4 �� udev �����ļ��������Ȳ������� RHEL5.3 �����ù��̣�Ȼ���ѯ RHEL4 ����û��ֲ� (man udev) ��������á�
+RHEL5.3 的 udev 规则文件比 RHEL4.8 里的更完善。受篇幅的限制，同时也为了不让大家混淆，本文将不对 RHEL4.8 里的规则文件进行详解，下面关于规则文件的配置和实例都是在 RHEL5.3 上进行的。如果大家需要配置 RHEL4 的 udev 规则文件，可以先参照下面 RHEL5.3 的配置过程，然后查询 RHEL4 里的用户手册 (man udev) 后进行配置。
 
-�ڹ����ļ�������ԡ�#����ͷ���У�ע�ͣ������еķǿ��ж�����Ϊһ�����򣬵���һ����������չ�����С��������ɶ�� ��ֵ�ԣ�key-value pairs����ɣ����ɶ��Ÿ�������ֵ�Կ��Է�Ϊ ����ƥ���ֵ��( ���¼�ơ�ƥ��� ��) �� ��ֵ��ֵ��( ���¼�ơ���ֵ�� ��)��һ����������ж���ƥ����Ͷ�����ֵ����ƥ�����ƥ��һ���豸���Ե�������������һ���豸������ƥ���˸ù��������е�ƥ���������Ϊ����������Ч��Ȼ���ո�ֵ�������ݣ�ִ�иù���ĸ�ֵ��������һ���򵥵Ĺ���
+在规则文件里，除了以“#”开头的行（注释），所有的非空行都被视为一条规则，但是一条规则不能扩展到多行。规则都是由多个 键值对（key-value pairs）组成，并由逗号隔开，键值对可以分为 条件匹配键值对( 以下简称“匹配键 ”) 和 赋值键值对( 以下简称“赋值键 ”)，一条规则可以有多条匹配键和多条赋值键。匹配键是匹配一个设备属性的所有条件，当一个设备的属性匹配了该规则里所有的匹配键，就认为这条规则生效，然后按照赋值键的内容，执行该规则的赋值。下面是一个简单的规则：
 
-�嵥 6. ��˵����ֵ�Ե�����
+清单 6. 简单说明键值对的例子
 
                 
  KERNEL=="sda", NAME="my_root_disk", MODE="0660"
 
 
-KERNEL ��ƥ�����NAME �� MODE �Ǹ�ֵ���������������˼�ǣ������һ���豸���ں��豸����Ϊ sda�����������Ч��ִ�к���ĸ�ֵ���� /dev�²���һ����Ϊ my_root_disk���豸�ļ��������豸�ļ���Ȩ����Ϊ 0660��
+KERNEL 是匹配键，NAME 和 MODE 是赋值键。这条规则的意思是：如果有一个设备的内核设备名称为 sda，则该条件生效，执行后面的赋值：在 /dev下产生一个名为 my_root_disk的设备文件，并把设备文件的权限设为 0660。
 
-ͨ�������򵥵Ĺ��򣬴��Ӧ�ö� udev ������ֱ�۵��˽⡣�����ܻ�����ɻ�Ϊʲô KERNEL ��ƥ������� NAME �� MODE �Ǹ�ֵ���أ������м�Ĳ����� (operator) ������
+通过这条简单的规则，大家应该对 udev 规则有直观的了解。但可能会产生疑惑，为什么 KERNEL 是匹配键，而 NAME 和 MODE 是赋值键呢？这由中间的操作符 (operator) 决定。
 
-�����������ǡ�==�����ߡ�!=��ʱ����Ϊƥ�������Ϊ����������ʱ�����Ǹ�ֵ����
+仅当操作符是“==”或者“!=”时，其为匹配键；若为其他操作符时，都是赋值键。
 
-    RHEL5.3 �� udev ��������в�������
+    RHEL5.3 里 udev 规则的所有操作符：
 
-    ��==�����Ƚϼ���ֵ�������ڣ�����������㣻
+    “==”：比较键、值，若等于，则该条件满足；
 
-    ��!=���� �Ƚϼ���ֵ���������ڣ�����������㣻
+    “!=”： 比较键、值，若不等于，则该条件满足；
 
-    ��=���� ��һ������ֵ��
+    “=”： 对一个键赋值；
 
-    ��+=����Ϊһ����ʾ�����Ŀ�ļ���ֵ��
+    “+=”：为一个表示多个条目的键赋值。
 
-    ��:=������һ������ֵ�����ܾ�֮�����жԸü��ĸĶ���Ŀ���Ƿ�ֹ����Ĺ����ļ��Ըü���ֵ��
-    RHEL5.3 �� udev �����ƥ���
+    “:=”：对一个键赋值，并拒绝之后所有对该键的改动。目的是防止后面的规则文件对该键赋值。
+    RHEL5.3 里 udev 规则的匹配键
 
-    ACTION�� �¼� (uevent) ����Ϊ�����磺add( �����豸 )��remove( ɾ���豸 )��
+    ACTION： 事件 (uevent) 的行为，例如：add( 添加设备 )、remove( 删除设备 )。
 
-    KERNEL�� �ں��豸���ƣ����磺sda, cdrom��
+    KERNEL： 内核设备名称，例如：sda, cdrom。
 
-    DEVPATH���豸�� devpath ·����
+    DEVPATH：设备的 devpath 路径。
 
-    SUBSYSTEM�� �豸����ϵͳ���ƣ����磺sda ����ϵͳΪ block��
+    SUBSYSTEM： 设备的子系统名称，例如：sda 的子系统为 block。
 
-    BUS�� �豸�� devpath ����������ƣ����磺usb��
+    BUS： 设备在 devpath 里的总线名称，例如：usb。
 
-    DRIVER�� �豸�� devpath ����豸�������ƣ����磺ide-cdrom��
+    DRIVER： 设备在 devpath 里的设备驱动名称，例如：ide-cdrom。
 
-    ID�� �豸�� devpath ���ʶ��š�
+    ID： 设备在 devpath 里的识别号。
 
-    SYSFS{filename}�� �豸�� devpath ·���£��豸�������ļ���filename��������ݡ�
+    SYSFS{filename}： 设备的 devpath 路径下，设备的属性文件“filename”里的内容。
 
-    ���磺SYSFS{model}==��ST936701SS����ʾ������豸���ͺ�Ϊ ST936701SS������豸ƥ��� ƥ�����
+    例如：SYSFS{model}==“ST936701SS”表示：如果设备的型号为 ST936701SS，则该设备匹配该 匹配键。
 
-    ��һ�������У������趨������� SYSFS �� ƥ�����
+    在一条规则中，可以设定最多五条 SYSFS 的 匹配键。
 
-    ENV{key}�� ������������һ�������У������趨����������������� ƥ�����
+    ENV{key}： 环境变量。在一条规则中，可以设定最多五条环境变量的 匹配键。
 
-    PROGRAM�������ⲿ���
+    PROGRAM：调用外部命令。
 
-    RESULT�� �ⲿ���� PROGRAM �ķ��ؽ�������磺
+    RESULT： 外部命令 PROGRAM 的返回结果。例如：
 
      PROGRAM=="/lib/udev/scsi_id -g -s $devpath", RESULT=="35000c50000a7ef67"
 
 
-    �����ⲿ���� /lib/udev/scsi_id��ѯ�豸�� SCSI ID��������ؽ��Ϊ 35000c50000a7ef67������豸ƥ��� ƥ�����
-    RHEL5.3 �� udev ����Ҫ��ֵ��
+    调用外部命令 /lib/udev/scsi_id查询设备的 SCSI ID，如果返回结果为 35000c50000a7ef67，则该设备匹配该 匹配键。
+    RHEL5.3 里 udev 的重要赋值键
 
-    NAME���� /dev�²������豸�ļ�����ֻ�е�һ�ζ�ĳ���豸�� NAME �ĸ�ֵ��Ϊ��Ч��֮��ƥ��Ĺ����ٶԸ��豸�� NAME ��ֵ��Ϊ�������ԡ����û���κι�����豸�� NAME ��ֵ��udev ��ʹ���ں��豸�����������豸�ļ���
+    NAME：在 /dev下产生的设备文件名。只有第一次对某个设备的 NAME 的赋值行为生效，之后匹配的规则再对该设备的 NAME 赋值行为将被忽略。如果没有任何规则对设备的 NAME 赋值，udev 将使用内核设备名称来产生设备文件。
 
-    SYMLINK��Ϊ /dev/�µ��豸�ļ������������ӡ����� udev ֻ��Ϊĳ���豸����һ���豸�ļ�������Ϊ�˲�����ϵͳĬ�ϵ� udev �������������ļ����Ƽ�ʹ�÷������ӡ�
+    SYMLINK：为 /dev/下的设备文件产生符号链接。由于 udev 只能为某个设备产生一个设备文件，所以为了不覆盖系统默认的 udev 规则所产生的文件，推荐使用符号链接。
 
-    OWNER, GROUP, MODE��Ϊ�豸�趨Ȩ�ޡ�
+    OWNER, GROUP, MODE：为设备设定权限。
 
-    ENV{key}������һ������������
-    RHEL5.3 �� udev ��ֵ�Ϳɵ��õ��滻������
+    ENV{key}：导入一个环境变量。
+    RHEL5.3 里 udev 的值和可调用的替换操作符
 
-    �ڼ�ֵ���еļ��Ͳ��������������ˣ������ֵ (value)��Linux �û���������ض��� udev �����ļ���ֵ�����磺my_root_disk, my_printer��ͬʱҲ��������������滻��������
+    在键值对中的键和操作符都介绍完了，最后是值 (value)。Linux 用户可以随意地定制 udev 规则文件的值。例如：my_root_disk, my_printer。同时也可以引用下面的替换操作符：
 
-    $kernel, %k���豸���ں��豸���ƣ����磺sda��cdrom��
+    $kernel, %k：设备的内核设备名称，例如：sda、cdrom。
 
-    $number, %n���豸���ں˺��룬���磺sda3 ���ں˺����� 3��
+    $number, %n：设备的内核号码，例如：sda3 的内核号码是 3。
 
-    $devpath, %p���豸�� devpath·����
+    $devpath, %p：设备的 devpath路径。
 
-    $id, %b���豸�� devpath��� ID �š�
+    $id, %b：设备在 devpath里的 ID 号。
 
-    $sysfs{file}, %s{file}���豸�� sysfs�� file �����ݡ���ʵ�����豸������ֵ��
-    ���磺$sysfs{size} ��ʾ���豸 ( ���� ) �Ĵ�С��
+    $sysfs{file}, %s{file}：设备的 sysfs里 file 的内容。其实就是设备的属性值。
+    例如：$sysfs{size} 表示该设备 ( 磁盘 ) 的大小。
 
-    $env{key}, %E{key}��һ������������ֵ��
+    $env{key}, %E{key}：一个环境变量的值。
 
-    $major, %M���豸�� major �š�
+    $major, %M：设备的 major 号。
 
-    $minor %m���豸�� minor �š�
+    $minor %m：设备的 minor 号。
 
-    $result, %c��PROGRAM ���صĽ����
+    $result, %c：PROGRAM 返回的结果。
 
-    $parent, %P�����豸���豸�ļ�����
+    $parent, %P：父设备的设备文件名。
 
-    $root, %r��udev_root��ֵ��Ĭ���� /dev/��
+    $root, %r：udev_root的值，默认是 /dev/。
 
-    $tempnode, %N����ʱ�豸����
+    $tempnode, %N：临时设备名。
 
-    %%������ % ������
+    %%：符号 % 本身。
 
-    $$������ $ ������
+    $$：符号 $ 本身。
 
 
-    �嵥 7. ˵���滻�������Ĺ�������
+    清单 7. 说明替换操作符的规则例子
 
                     
      KERNEL=="sd*", PROGRAM="/lib/udev/scsi_id -g -s %p", \
      RESULT=="35000c50000a7ef67", SYMLINK="%k_%c"
 
 
-    �ù����ִ�У������һ���ں��豸������ sd ��ͷ���� SCSI ID Ϊ 35000c50000a7ef67����Ϊ�豸�ļ�����һ���������ӡ�sda_35000c50000a7ef67��.
+    该规则的执行：如果有一个内核设备名称以 sd 开头，且 SCSI ID 为 35000c50000a7ef67，则为设备文件产生一个符号链接“sda_35000c50000a7ef67”.
 
-��ҳ��
+回页首
 
-�ƶ� udev ����Ͳ�ѯ�豸��Ϣ��ʵ����
+制定 udev 规则和查询设备信息的实例：
 
-��β����豸����Ϣ ( ���� ) ���ƶ� udev ����
+如何查找设备的信息 ( 属性 ) 来制定 udev 规则：
 
-������Ϊָ�����豸�趨����ʱ��������Ҫ֪�����豸�����ԣ������豸�����кš����̴�С������ ID���豸·���ȵȡ�ͨ�����ǿ���ͨ�����µķ�����ã�
+当我们为指定的设备设定规则时，首先需要知道该设备的属性，比如设备的序列号、磁盘大小、厂商 ID、设备路径等等。通常我们可以通过以下的方法获得：
 
-    ��ѯsysfs�ļ�ϵͳ��
+    查询sysfs文件系统：
 
-    ǰ����ܹ���sysfs ������˺ܶ��豸����������Ϣ��
+    前面介绍过，sysfs 里包含了很多设备和驱动的信息。
 
-    ���磺�豸 sda �� SYSFS{size} ����ͨ�� cat /sys/block/sda/size�õ���SYSFS{model} ��Ϣ����ͨ�� cat /sys/block/sda/device/model�õ���
-    udevinfo���
+    例如：设备 sda 的 SYSFS{size} 可以通过 cat /sys/block/sda/size得到；SYSFS{model} 信息可以通过 cat /sys/block/sda/device/model得到。
+    udevinfo命令：
 
-    udevinfo ���Բ�ѯ udev ���ݿ�����豸��Ϣ�����磺�� udevinfo ��ѯ�豸 sda �� model �� size ��Ϣ��
+    udevinfo 可以查询 udev 数据库里的设备信息。例如：用 udevinfo 查询设备 sda 的 model 和 size 信息：
 
 
-    �嵥 8. ͨ�� udevinfo ��ѯ�豸���Ե�����
+    清单 8. 通过 udevinfo 查询设备属性的例子
 
                     
      [root@HOST_RHEL5 rules.d]# udevinfo -a -p /block/sda | egrep "model|size"
@@ -1158,52 +1158,52 @@ KERNEL ��ƥ�����NAME �� MODE �Ǹ�ֵ���������������˼�ǣ������һ���豸���ں���
         SYSFS{model}=="ST936701SS      "
 
 
-    �����ⲿ���
+    其他外部命令：
 
-    �嵥 9. ͨ�� scsi_id ��ѯ���̵� SCSI_ID ������
+    清单 9. 通过 scsi_id 查询磁盘的 SCSI_ID 的例子
 
                     
      [root@HOST_RHEL5 ~]# scsi_id -g -s /block/sda 
      35000c50000a7ef67 
 
 
-udev �ļ򵥹���
+udev 的简单规则：
 
-�嵥 10. ���������豸�ļ��Ĺ���
+清单 10. 产生网卡设备文件的规则
 
                 
  SUBSYSTEM=="net", SYSFS{address}=="AA:BB:CC:DD:EE:FF", NAME="public_NIC"
 
 
-�ù����ʾ����������豸����ϵͳΪ net�����ҵ�ַ (MAC address) Ϊ��AA:BB:CC:DD:EE:FF����Ϊ���豸����һ����Ϊ public_NIC ���豸�ļ���
+该规则表示：如果存在设备的子系统为 net，并且地址 (MAC address) 为“AA:BB:CC:DD:EE:FF”，为该设备产生一个名为 public_NIC 的设备文件。
 
-�嵥 11. Ϊָ����С�Ĵ��̲����������ӵĹ���
+清单 11. 为指定大小的磁盘产生符号链接的规则
 
                 
  SUBSYSTEM=="block", SYSFS{size}=="71096640", SYMLINK ="my_disk"
 
 
-�ù����ʾ����������豸����ϵͳΪ block�����Ҵ�СΪ 71096640(block)����Ϊ���豸���豸�ļ�������һ����Ϊ my_disk �ķ������ӡ�
+该规则表示：如果存在设备的子系统为 block，并且大小为 71096640(block)，则为该设备的设备文件名产生一个名为 my_disk 的符号链接。
 
-�嵥 12. ͨ���ⲿ����Ϊָ�����кŵĴ��̲����豸�ļ��Ĺ���
+清单 12. 通过外部命令为指定序列号的磁盘产生设备文件的规则
 
                 
  KERNEL=="sd*[0-9]", PROGRAM=="/lib/udev/scsi_id -g -s %p", \
  RESULT=="35000c50000a7ef67", NAME +="root_disk%n"
 
 
-�ù����ʾ����������豸���ں��豸�������� sd ��ͷ ( �����豸 )�������ֽ�β ( ���̷��� )������ͨ���ⲿ�����ѯ���豸�� SCSI_ID ��Ϊ��35000c50000a7ef67���������һ���� root_disk ��ͷ���ں˺����β���豸�ļ������滻ԭ�����豸�ļ���������ڵĻ��������磺�����豸�� /dev/root_disk2���滻ԭ�����豸�� /dev/sda2��
+该规则表示：如果存在设备的内核设备名称是以 sd 开头 ( 磁盘设备 )，以数字结尾 ( 磁盘分区 )，并且通过外部命令查询该设备的 SCSI_ID 号为“35000c50000a7ef67”，则产生一个以 root_disk 开头，内核号码结尾的设备文件，并替换原来的设备文件（如果存在的话）。例如：产生设备名 /dev/root_disk2，替换原来的设备名 /dev/sda2。
 
-�����������򣬿����� /etc/fstab�ﱣ��ϵͳ�������Ƶ�һ���ԣ�����������������˳����ߴ��̱�ǩ���ƻ���Ӱ�죬���²���ϵͳ����ʱ�Ҳ���ϵͳ������
+运用这条规则，可以在 /etc/fstab里保持系统分区名称的一致性，而不会受驱动加载顺序或者磁盘标签被破坏的影响，导致操作系统启动时找不到系统分区。
 
-�������õ� udev ���
+其他常用的 udev 命令：
 
     udevtest:
 
-    udevtest�����һ���豸���ڲ���Ҫ uevent �����������ģ��һ�� udev�����У��������ѯ�����ļ��Ĺ��̡���ִ�е���Ϊ�������ļ���ִ�н����ͨ��ʹ�� udevtest�����Թ����ļ���������һ������豸 sda �� udevtest���ӡ����� udevtest��ɨ�����еĹ����ļ� ( ����ϵͳ�Դ��Ĺ����ļ� )�����Ի�����߳��������Ϊ���ö���������˽� udevtest������ֻ�ڹ���Ŀ¼�ﱣ��һ������
+    udevtest会针对一个设备，在不需要 uevent 触发的情况下模拟一次 udev的运行，并输出查询规则文件的过程、所执行的行为、规则文件的执行结果。通常使用 udevtest来调试规则文件。以下是一个针对设备 sda 的 udevtest例子。由于 udevtest是扫描所有的规则文件 ( 包括系统自带的规则文件 )，所以会产生冗长的输出。为了让读者清楚地了解 udevtest，本例只在规则目录里保留一条规则：
 
 
-    �嵥 13. Ϊ udevtest �����Ĺ���
+    清单 13. 为 udevtest 保留的规则
 
                     
      KERNEL=="sd*", PROGRAM="/lib/udev/scsi_id -g -s %p", RESULT=="35000c50000a7ef67", \
@@ -1212,7 +1212,7 @@ udev �ļ򵥹���
 
 
 
-    �嵥 14. udevtest ��ִ�й���
+    清单 14. udevtest 的执行过程
 
                     
      [root@HOST_RHEL5 rules.d]# udevtest /block/sda 
@@ -1230,23 +1230,23 @@ udev �ļ򵥹���
      udev_node_add: creating symlink '/dev/symlink_root_disk' to 'root_disk'
 
 
-    ���Կ�����udevtest�� sda ִ�����ⲿ���� scsi_id, �õ��� stdout �͹����ļ���� RESULT ƥ�䣬���Ըù���ƥ�䡣Ȼ�� ( ģ�� ) �����豸�ļ� /dev/root_disk�ͷ������� /dev/symlink_root_disk����Ϊ���趨Ȩ�ޡ�
+    可以看出，udevtest对 sda 执行了外部命令 scsi_id, 得到的 stdout 和规则文件里的 RESULT 匹配，所以该规则匹配。然后 ( 模拟 ) 产生设备文件 /dev/root_disk和符号链接 /dev/symlink_root_disk，并为其设定权限。
     start_udev:
 
-    start_dev�������� udev�ػ����̣��������е��豸���²�ѯ����Ŀ¼�����еĹ����ļ���Ȼ��ִ����ƥ��Ĺ��������Ϊ��ͨ��ʹ�ø��������µĹ����ļ�������Ч��
+    start_dev命令重启 udev守护进程，并对所有的设备重新查询规则目录下所有的规则文件，然后执行所匹配的规则里的行为。通常使用该命令让新的规则文件立即生效：
 
 
-    �嵥 15. start_udev ��ִ�й���
+    清单 15. start_udev 的执行过程
 
                     
      [root@HOST_RHEL5 rules.d]# start_udev 
      Starting udev:                                             [  OK  ] 
 
 
-    start_udevһ��û�б�׼��������е� udev �����Ϣ�����������ļ� (udev.conf)�Ĳ������ã��� syslog��¼��
+    start_udev一般没有标准输出，所有的 udev 相关信息都按照配置文件 (udev.conf)的参数设置，由 syslog记录。
 
-��ҳ��
+回页首
 
-С�᣺
+小结：
 
-udev �Ǹ�Ч���豸�������ߣ������������Ƕ�̬�����豸���Զ����豸���������������� devfs ��Ϊ Linux Ĭ�ϵ��豸�������ߡ�ͨ���Ķ����ģ�Linux �û��ܹ��˽⵽ udev �Ĺ���ԭ�������̣��������� udev �����ļ����Ӷ�����ع��� Linux �豸�ļ���
+udev 是高效的设备管理工具，其最大的优势是动态管理设备和自定义设备的命名规则，因此替代 devfs 成为 Linux 默认的设备管理工具。通过阅读本文，Linux 用户能够了解到 udev 的工作原理和流程，灵活地运用 udev 规则文件，从而方便地管理 Linux 设备文件。

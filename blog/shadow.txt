@@ -1,36 +1,36 @@
-shadowÎÄ¼þÖÐÃÜÂëµÄ¼ÓÃÜ·½Ê½
-1) ²é¿´shadowÎÄ¼þµÄÄÚÈÝ
+shadowæ–‡ä»¶ä¸­å¯†ç çš„åŠ å¯†æ–¹å¼
+1) æŸ¥çœ‹shadowæ–‡ä»¶çš„å†…å®¹
 cat /etc/shadow
-¿ÉÒÔµÃµ½shadowÎÄ¼þµÄÄÚÈÝ£¬ÏÞÓÚÆª·ù£¬ÎÒÃÇ¾ÙÀýËµÃ÷£º
+å¯ä»¥å¾—åˆ°shadowæ–‡ä»¶çš„å†…å®¹ï¼Œé™äºŽç¯‡å¹…ï¼Œæˆ‘ä»¬ä¸¾ä¾‹è¯´æ˜Žï¼š
 root:$1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.:14838:0:99999:7:::
-Æä¸ñÊ½Îª£º
-{ÓÃ»§Ãû}£º{¼ÓÃÜºóµÄ¿ÚÁîÃÜÂë}£º{¿ÚÁî×îºóÐÞ¸ÄÊ±¼ä¾àÔ­µã(1970-1-1)µÄÌìÊý}£º{¿ÚÁî×îÐ¡ÐÞ¸Ä¼ä¸ô(·ÀÖ¹ÐÞ¸Ä¿ÚÁî£¬Èç¹ûÊ±ÏÞÎ´µ½£¬½«»Ö¸´ÖÁ¾É¿ÚÁî)£º{¿ÚÁî×î´óÐÞ¸Ä¼ä¸ô}£º{¿ÚÁîÊ§Ð§Ç°µÄ¾¯¸æÌìÊý}£º{ÕË»§²»»î¶¯ÌìÊý}£º{ÕËºÅÊ§Ð§ÌìÊý}£º{±£Áô}
-¡¾×¢¡¿£ºshadowÎÄ¼þÎª¿É¶ÁÎÄ¼þ£¬ÆÕÍ¨ÓÃ»§Ã»ÓÐ¶ÁÐ´È¨ÏÞ£¬³¬¼¶ÓÃ»§ÓµÓÐ¶ÁÐ´È¨ÏÞ¡£Èç¹ûÃÜÂë×Ö·û´®Îª*£¬Ôò±íÊ¾ÏµÍ³ÓÃ»§²»ÄÜ±»µÇÈë£»Èç¹û×Ö·û´®Îª£¡£¬Ôò±íÊ¾ÓÃ»§Ãû±»½ûÓÃ£»Èç¹û×Ö·û´®Îª¿Õ£¬Ôò±íÊ¾Ã»ÓÐÃÜÂë¡£
-ÎÒÃÇ¿ÉÒÔÊ¹ÓÃpasswd ?d ÓÃ»§Ãû Çå¿ÕÒ»¸öÓÃ»§µÄ¿ÚÁîÃÜÂë¡£
-2) ½âÎöshadowÎÄ¼þÖÐÃÜÂë×Ö·û´®µÄÄÚÈÝ
-¶ÔÓÚÊ¾ÀýµÄÃÜÂëÓò$1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.£¬ÎÒÃÇ²Î¿¼ÁËlinux±ê×¼Ô´ÎÄ¼þpasswd.c£¬ÔÚÆäÖÐµÄpw_encryptº¯ÊýÖÐÕÒµ½ÁË¼ÓÃÜ·½·¨¡£
-ÎÒÃÇ·¢ÏÖËùÎ½µÄ¼ÓÃÜËã·¨£¬ÆäÊµ¾ÍÊÇÓÃÃ÷ÎÄÃÜÂëºÍÒ»¸ö½ÐsaltµÄ¶«Î÷Í¨¹ýº¯Êýcrypt()Íê³É¼ÓÃÜ¡£
-¶øËùÎ½µÄÃÜÂëÓòÃÜÎÄÒ²ÊÇÓÉÈý²¿·Ö×é³ÉµÄ£¬¼´£º$id$salt$encrypted¡£
-¡¾×¢¡¿£º idÎª1Ê±£¬²ÉÓÃmd5½øÐÐ¼ÓÃÜ£»
-idÎª5Ê±£¬²ÉÓÃSHA256½øÐÐ¼ÓÃÜ£»
-idÎª6Ê±£¬²ÉÓÃSHA512½øÐÐ¼ÓÃÜ¡£
-3) Êý¾Ý¼ÓÃÜº¯Êýcrypt()½²½â
-i. Í·ÎÄ¼þ£º#define _XOPEN_SOURCE
+å…¶æ ¼å¼ä¸ºï¼š
+{ç”¨æˆ·å}ï¼š{åŠ å¯†åŽçš„å£ä»¤å¯†ç }ï¼š{å£ä»¤æœ€åŽä¿®æ”¹æ—¶é—´è·åŽŸç‚¹(1970-1-1)çš„å¤©æ•°}ï¼š{å£ä»¤æœ€å°ä¿®æ”¹é—´éš”(é˜²æ­¢ä¿®æ”¹å£ä»¤ï¼Œå¦‚æžœæ—¶é™æœªåˆ°ï¼Œå°†æ¢å¤è‡³æ—§å£ä»¤)ï¼š{å£ä»¤æœ€å¤§ä¿®æ”¹é—´éš”}ï¼š{å£ä»¤å¤±æ•ˆå‰çš„è­¦å‘Šå¤©æ•°}ï¼š{è´¦æˆ·ä¸æ´»åŠ¨å¤©æ•°}ï¼š{è´¦å·å¤±æ•ˆå¤©æ•°}ï¼š{ä¿ç•™}
+ã€æ³¨ã€‘ï¼šshadowæ–‡ä»¶ä¸ºå¯è¯»æ–‡ä»¶ï¼Œæ™®é€šç”¨æˆ·æ²¡æœ‰è¯»å†™æƒé™ï¼Œè¶…çº§ç”¨æˆ·æ‹¥æœ‰è¯»å†™æƒé™ã€‚å¦‚æžœå¯†ç å­—ç¬¦ä¸²ä¸º*ï¼Œåˆ™è¡¨ç¤ºç³»ç»Ÿç”¨æˆ·ä¸èƒ½è¢«ç™»å…¥ï¼›å¦‚æžœå­—ç¬¦ä¸²ä¸ºï¼ï¼Œåˆ™è¡¨ç¤ºç”¨æˆ·åè¢«ç¦ç”¨ï¼›å¦‚æžœå­—ç¬¦ä¸²ä¸ºç©ºï¼Œåˆ™è¡¨ç¤ºæ²¡æœ‰å¯†ç ã€‚
+æˆ‘ä»¬å¯ä»¥ä½¿ç”¨passwd ?d ç”¨æˆ·å æ¸…ç©ºä¸€ä¸ªç”¨æˆ·çš„å£ä»¤å¯†ç ã€‚
+2) è§£æžshadowæ–‡ä»¶ä¸­å¯†ç å­—ç¬¦ä¸²çš„å†…å®¹
+å¯¹äºŽç¤ºä¾‹çš„å¯†ç åŸŸ$1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.ï¼Œæˆ‘ä»¬å‚è€ƒäº†linuxæ ‡å‡†æºæ–‡ä»¶passwd.cï¼Œåœ¨å…¶ä¸­çš„pw_encryptå‡½æ•°ä¸­æ‰¾åˆ°äº†åŠ å¯†æ–¹æ³•ã€‚
+æˆ‘ä»¬å‘çŽ°æ‰€è°“çš„åŠ å¯†ç®—æ³•ï¼Œå…¶å®žå°±æ˜¯ç”¨æ˜Žæ–‡å¯†ç å’Œä¸€ä¸ªå«saltçš„ä¸œè¥¿é€šè¿‡å‡½æ•°crypt()å®ŒæˆåŠ å¯†ã€‚
+è€Œæ‰€è°“çš„å¯†ç åŸŸå¯†æ–‡ä¹Ÿæ˜¯ç”±ä¸‰éƒ¨åˆ†ç»„æˆçš„ï¼Œå³ï¼š$id$salt$encryptedã€‚
+ã€æ³¨ã€‘ï¼š idä¸º1æ—¶ï¼Œé‡‡ç”¨md5è¿›è¡ŒåŠ å¯†ï¼›
+idä¸º5æ—¶ï¼Œé‡‡ç”¨SHA256è¿›è¡ŒåŠ å¯†ï¼›
+idä¸º6æ—¶ï¼Œé‡‡ç”¨SHA512è¿›è¡ŒåŠ å¯†ã€‚
+3) æ•°æ®åŠ å¯†å‡½æ•°crypt()è®²è§£
+i. å¤´æ–‡ä»¶ï¼š#define _XOPEN_SOURCE
 #include <unistd.h>
-ii. º¯ÊýÔ­ÐÍ£ºchar *crypt(const char *key, const char *salt);
-iii. º¯ÊýËµÃ÷£ºcrypt()½«Ê¹ÓÃDESÑÝËã·¨½«²ÎÊýkeyËùÖ¸µÄ×Ö·û´®¼ÓÒÔ±àÂë£¬key×Ö·û´®³¤¶È½öÈ¡Ç°8¸ö×Ö·û£¬³¬¹ý´Ë³¤¶ÈµÄ×Ö·ûÃ»ÓÐÒâÒå¡£²ÎÊýsaltÎªÁ½¸ö×Ö·û×é³ÉµÄ×Ö·û´®£¬ÓÉa-z¡¢A-Z¡¢0-9£¬¡¯.¡¯ºÍ¡¯/¡¯Ëù×é³É£¬ÓÃÀ´¾ö¶¨Ê¹ÓÃ4096ÖÖ²»Í¬ÄÚ½¨±í¸ñµÄÄÄÒ»ÖÖ¡£º¯ÊýÖ´ÐÐ³É¹¦ºó»á·µ»ØÖ¸Ïò±àÂë¹ýµÄ×Ö·û´®Ö¸Õë£¬²ÎÊýkeyËùÖ¸ÏòµÄ×Ö·û´®²»»áÓÐËù¸Ä¶¯¡£±àÂë¹ýµÄ×Ö·û´®³¤¶ÈÎª13¸ö×Ö·û£¬Ç°Á½¸ö×Ö·ûÎª²ÎÊýsalt´ú±íµÄ×Ö·û´®¡£
-iv. ·µ»ØÖµ£º·µ»ØÒ»¸öÖ¸ÏòÒÔNULL½áÎ²µÄÃÜÂë×Ö·û´®
-v. ¸½¼ÓËµÃ÷£ºÊ¹ÓÃGCC±àÒëÊ±ÐèÒª¼ÓÉÏ ?lcrypt
-4) ¼ÓÃÜ²ÎÊýsaltµÄÓÉÀ´
-ÔÚÎÒÃÇµÄÊ¾ÀýÃÜÂëÓòÖÐsaltÎªBg1H/4mz£¬ÄÇÃ´ËüÓÖÊÇÈçºÎÀ´µÄ£¿
-ÎÒÃÇ»¹ÊÇ´Ó±ê×¼Ô´ÎÄ¼þpasswd.cÖÐ²éÕÒ´ð°¸¡£ÔÚpasswd.cÖÐ£¬ÎÒÃÇÕÒµ½ÁËÓësaltÏà¹ØµÄº¯Êýcrypt_make_salt¡£
-ÔÚº¯Êýcrypt_make_saltÖÐ³öÏÖÁËºÜ¶àµÄÅÐ¶ÏÌõ¼þÀ´Ñ¡ÔñÒÔºÎÖÖ·½Ê½¼ÓÃÜ(Í¨¹ýidÖµÀ´ÅÐ¶Ï)£¬µ«ÆäÖÐ¶ÔÎÒÃÇ×îÖØÒªµÄÒ»ÌõÓï¾äÊÇgensalt(salt_len)¡£
-ÎÒÃÇ¼ÌÐø²é¿´ÁËº¯Êýstatic char *gensalt (unsigned int salt_size)£¬²Å·¢ÏÖÔ­À´ÉñÃØÎÞ±ÈµÄsalt²ÎÊýÖ»ÊÇÄ³¸ö¹Ì¶¨³¤¶ÈµÄËæ»ú×Ö·û´®¶øÒÑ¡£
-5) ×îÖÕ½áÂÛ
-ÔÚÎÒÃÇÃ¿´Î¸ÄÐ´ÃÜÂëÊ±£¬¶¼»áËæ»úÉú³ÉÒ»¸öÕâÑùµÄsalt¡£ÎÒÃÇµÇÂ¼Ê±ÊäÈëµÄÃ÷ÎÄÃÜÂë¾­¹ýÉÏÊöµÄÑÝ»¯ºóÓëshadowÀïµÄÃÜÂëÓò½øÐÐ×Ö·û´®±È½Ï£¬ÒÔ´ËÀ´ÅÐ¶ÏÊÇ·ñÔÊÐíÓÃ»§µÇÂ¼¡£
-¡¾×¢¡¿£º¾­¹ýÉÏÊöµÄ·ÖÎö£¬ÎÒÃÇ·¢ÏÖÆÆ½âlinuxÏÂµÄ¿ÚÁîÒ²²»ÊÇÊ²Ã´ÄÑÊÂ£¬µ«Ç°ÌáÊÇÄãÓÐ»ú»áÄÃµ½¶Ô·½µÄshadowÎÄ¼þ¡£
+ii. å‡½æ•°åŽŸåž‹ï¼šchar *crypt(const char *key, const char *salt);
+iii. å‡½æ•°è¯´æ˜Žï¼šcrypt()å°†ä½¿ç”¨DESæ¼”ç®—æ³•å°†å‚æ•°keyæ‰€æŒ‡çš„å­—ç¬¦ä¸²åŠ ä»¥ç¼–ç ï¼Œkeyå­—ç¬¦ä¸²é•¿åº¦ä»…å–å‰8ä¸ªå­—ç¬¦ï¼Œè¶…è¿‡æ­¤é•¿åº¦çš„å­—ç¬¦æ²¡æœ‰æ„ä¹‰ã€‚å‚æ•°saltä¸ºä¸¤ä¸ªå­—ç¬¦ç»„æˆçš„å­—ç¬¦ä¸²ï¼Œç”±a-zã€A-Zã€0-9ï¼Œâ€™.â€™å’Œâ€™/â€™æ‰€ç»„æˆï¼Œç”¨æ¥å†³å®šä½¿ç”¨4096ç§ä¸åŒå†…å»ºè¡¨æ ¼çš„å“ªä¸€ç§ã€‚å‡½æ•°æ‰§è¡ŒæˆåŠŸåŽä¼šè¿”å›žæŒ‡å‘ç¼–ç è¿‡çš„å­—ç¬¦ä¸²æŒ‡é’ˆï¼Œå‚æ•°keyæ‰€æŒ‡å‘çš„å­—ç¬¦ä¸²ä¸ä¼šæœ‰æ‰€æ”¹åŠ¨ã€‚ç¼–ç è¿‡çš„å­—ç¬¦ä¸²é•¿åº¦ä¸º13ä¸ªå­—ç¬¦ï¼Œå‰ä¸¤ä¸ªå­—ç¬¦ä¸ºå‚æ•°saltä»£è¡¨çš„å­—ç¬¦ä¸²ã€‚
+iv. è¿”å›žå€¼ï¼šè¿”å›žä¸€ä¸ªæŒ‡å‘ä»¥NULLç»“å°¾çš„å¯†ç å­—ç¬¦ä¸²
+v. é™„åŠ è¯´æ˜Žï¼šä½¿ç”¨GCCç¼–è¯‘æ—¶éœ€è¦åŠ ä¸Š ?lcrypt
+4) åŠ å¯†å‚æ•°saltçš„ç”±æ¥
+åœ¨æˆ‘ä»¬çš„ç¤ºä¾‹å¯†ç åŸŸä¸­saltä¸ºBg1H/4mzï¼Œé‚£ä¹ˆå®ƒåˆæ˜¯å¦‚ä½•æ¥çš„ï¼Ÿ
+æˆ‘ä»¬è¿˜æ˜¯ä»Žæ ‡å‡†æºæ–‡ä»¶passwd.cä¸­æŸ¥æ‰¾ç­”æ¡ˆã€‚åœ¨passwd.cä¸­ï¼Œæˆ‘ä»¬æ‰¾åˆ°äº†ä¸Žsaltç›¸å…³çš„å‡½æ•°crypt_make_saltã€‚
+åœ¨å‡½æ•°crypt_make_saltä¸­å‡ºçŽ°äº†å¾ˆå¤šçš„åˆ¤æ–­æ¡ä»¶æ¥é€‰æ‹©ä»¥ä½•ç§æ–¹å¼åŠ å¯†(é€šè¿‡idå€¼æ¥åˆ¤æ–­)ï¼Œä½†å…¶ä¸­å¯¹æˆ‘ä»¬æœ€é‡è¦çš„ä¸€æ¡è¯­å¥æ˜¯gensalt(salt_len)ã€‚
+æˆ‘ä»¬ç»§ç»­æŸ¥çœ‹äº†å‡½æ•°static char *gensalt (unsigned int salt_size)ï¼Œæ‰å‘çŽ°åŽŸæ¥ç¥žç§˜æ— æ¯”çš„saltå‚æ•°åªæ˜¯æŸä¸ªå›ºå®šé•¿åº¦çš„éšæœºå­—ç¬¦ä¸²è€Œå·²ã€‚
+5) æœ€ç»ˆç»“è®º
+åœ¨æˆ‘ä»¬æ¯æ¬¡æ”¹å†™å¯†ç æ—¶ï¼Œéƒ½ä¼šéšæœºç”Ÿæˆä¸€ä¸ªè¿™æ ·çš„saltã€‚æˆ‘ä»¬ç™»å½•æ—¶è¾“å…¥çš„æ˜Žæ–‡å¯†ç ç»è¿‡ä¸Šè¿°çš„æ¼”åŒ–åŽä¸Žshadowé‡Œçš„å¯†ç åŸŸè¿›è¡Œå­—ç¬¦ä¸²æ¯”è¾ƒï¼Œä»¥æ­¤æ¥åˆ¤æ–­æ˜¯å¦å…è®¸ç”¨æˆ·ç™»å½•ã€‚
+ã€æ³¨ã€‘ï¼šç»è¿‡ä¸Šè¿°çš„åˆ†æžï¼Œæˆ‘ä»¬å‘çŽ°ç ´è§£linuxä¸‹çš„å£ä»¤ä¹Ÿä¸æ˜¯ä»€ä¹ˆéš¾äº‹ï¼Œä½†å‰ææ˜¯ä½ æœ‰æœºä¼šæ‹¿åˆ°å¯¹æ–¹çš„shadowæ–‡ä»¶ã€‚
 
-6) Ê¾Àý´úÂë(²âÊÔ´úÂë)£º
+6) ç¤ºä¾‹ä»£ç (æµ‹è¯•ä»£ç )ï¼š
 #include <pwd.h>
 #include <stddef.h>
 #include <string.h>
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-±àÒë£º gcc passwd.c -lcrypt -o passwd
-ÔËÐÐ£º ./passwd root 123
-½á¹û£º salt: $1$Bg1H/4mz$, crypt: $1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.
+ç¼–è¯‘ï¼š gcc passwd.c -lcrypt -o passwd
+è¿è¡Œï¼š ./passwd root 123
+ç»“æžœï¼š salt: $1$Bg1H/4mz$, crypt: $1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.
             shadowd passwd: $1$Bg1H/4mz$X89TqH7tpi9dX1B9j5YsF.

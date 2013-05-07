@@ -9,217 +9,217 @@ map  --mem  (hd0,0)/myiso.iso  (hd32)
 map  --hook
 chainloader  (hd32)
 boot
-win7�����ʹ��GRUB4DOS������Ӳ�̰�װLINUXϵͳ��
+win7下如何使用GRUB4DOS来引导硬盘安装LINUX系统？
 
-1�������ص�grub4dos��ѹ���������е�grldr��grldr.mbr�����ļ���C�̸�Ŀ¼�������GRUB֧�����ģ��ǾͰ�china�ļ����е�grldr����C�̸�Ŀ¼�¡�
-2����winrar�������������LINUX��ISO�ļ���������ubuntu-9.10-dvd-i386.isoΪ��������.disk��casper�����ļ��н�ѹ��C�̸�Ŀ¼����ʵ��һ������C�̸�Ŀ¼���κ�һ�����������ԣ�ֻҪ���menu.lst�ļ�����������ȷ�Ϳ����ˣ�����ֻ��һ��Ӳ�̣�����D�̾��ǣ�hd0,4��,E�̾��ǣ�hd0,5���������ƣ���menu.lst��ָ��initrd.lz��vmlinuz�����ļ���·����casper�ļ��оͿ����ˣ�����һ��Ҫ��initrd.lz��vmlinuz�����ļ��ŵ���Ŀ¼�ġ�
-3����WIN7���Թ���Ա����������cmd����������ʾ������������ʾ�������μ����������
+1、将下载的grub4dos解压，复制其中的grldr和grldr.mbr两个文件到C盘根目录，如果想GRUB支持中文，那就把china文件夹中的grldr放在C盘根目录下。
+2、用winrar或者虚拟光驱打开LINUX的ISO文件，这里以ubuntu-9.10-dvd-i386.iso为例，将其.disk和casper两个文件夹解压到C盘根目录（其实不一定放在C盘根目录，任何一个分区都可以，只要你的menu.lst文件参数配置正确就可以了，例如只有一块硬盘，放在D盘就是（hd0,4）,E盘就是（hd0,5）依次类推），menu.lst中指定initrd.lz和vmlinuz两个文件的路径是casper文件夹就可以了，并不一定要把initrd.lz和vmlinuz两个文件放到根目录的。
+3、在WIN7里以管理员的身份运行cmd，打开命令提示符，在命令提示符下依次键入以下命令：
 
-  bcdedit /create /d ��GRUB4DOS�� /application bootsector
+  bcdedit /create /d “GRUB4DOS” /application bootsector
 
-#�����������һ��guid��ӡ��cmd�����У����磬�ҵľ���{90e14995-d284-11de-a325-a4ab4deca1b7}��
+#这个命令会产生一个guid打印在cmd窗口中，例如，我的就是{90e14995-d284-11de-a325-a4ab4deca1b7}。
 
   bcdedit /set {90e14995-d284-11de-a325-a4ab4deca1b7} device partition=C: 
 
-#������������øո�������������������������������C�̣���Ϊ���ǵ��ļ�����C�̡�
+#这个命令是设置刚刚添加启动项的启动分区，这里设的是C盘，因为我们的文件都在C盘。
 
   bcdedit /set {90e14995-d284-11de-a325-a4ab4deca1b7} path \grldr.mbr 
 
-#��������ʱ���е��ļ���
+#设置启动时运行的文件。
 
   bcdedit /displayorder {90e14995-d284-11de-a325-a4ab4deca1b7} /addlast
 
-#���ֻ��Ϊ�˽����ӵ�������ŵ�����������ĺ��档
+#这个只是为了将增加的启动项放到其他启动项的后面。
 
-��������  bcdedit /enum  �鿴һ�£��ῴ��ִ�������������������������á�
+最后可以用  bcdedit /enum  查看一下，会看到执行上述命令后产生的启动项配置。
 
-ʵģʽ��������
-��������������
-��ʶ��                  {90e14995-d284-11de-a325-a4ab4deca1b7}
+实模式启动扇区
+———————
+标识符                  {90e14995-d284-11de-a325-a4ab4deca1b7}
 device                  partition=C:
 path                    \grldr.mbr
 description             GRUB4DOS
 
-�������������WIN7�����˵�����GRUB��ѡ�����ˣ�ֻҪ����C�̸�Ŀ¼��дһ����ȷ��menu.lst�ļ��Ϳ�������Ӳ�̰�װLINUX���� 
+这样就完成了在WIN7启动菜单添加GRUB的选择项了，只要你在C盘根目录下写一个正确的menu.lst文件就可以引导硬盘安装LINUX啦。 
 
 
 
 
-1����ȥ����grub4dos
-2����ѹgrldr.mbr,grldr,menu.lst�����ļ���C�̸�Ŀ¼��ע���Ǹ�Ŀ¼Ŷ��
-3��Ȼ���Թ���Աģʽ����cmd������bcdedit /create /d "grub" /application bootsector
-����һ��id��Ҫ���£�����Ҫ�ã�Ȼ��
-4��bcdedit /set {id} device partition=c:
-5��bcdedit /set {id} path \grldr.mbr
-6��bcdedit /displayorder {id} /addlast
+1：先去下载grub4dos
+2：解压grldr.mbr,grldr,menu.lst三个文件到C盘根目录，注意是根目录哦！
+3：然后以管理员模式运行cmd，输入bcdedit /create /d "grub" /application bootsector
+会有一大串id，要记下，等下要用，然后：
+4：bcdedit /set {id} device partition=c:
+5：bcdedit /set {id} path \grldr.mbr
+6：bcdedit /displayorder {id} /addlast
 
 
-���߷����ڵ�5��������������µ���grub4dos����û���ҵ� \grub.mbr�Ǹ��ļ�ֻ��\grldr֮���Ҿ�Ȼ����һ�裬ֱ�Ӱ��Ǹ�������� \grldr������֮��Win7��C�̵������������ĳ���grub����
-����һ����ѭ�������ˣ�������Grub��������ʹ��
+杯具发生在第5条命令，当我在我下到的grub4dos里面没有找到 \grub.mbr那个文件只有\grldr之后，我居然脑子一昏，直接把那个命令换成了 \grldr，启动之后，Win7的C盘的启动扇区被改成了grub……
+于是一个死循环出现了，当我在Grub命令行里使用
 
 1. root (hd0,0)
 2. chainloader +1
 3. boot
-�Ƚ�һЩ��Ϊ���õ�����  
+先讲一些最为常用的命令  
 help 
-������ʾ����������÷������ӣ�  
+用来显示其它命令的用法，例子：  
 help root  
 default 
-ָ��ȱʡ�Ĳ˵����0��ʼ�������ӣ� default 0 ����������ڵ�һ��title֮ǰָ��  
+指定缺省的菜单项，由0开始算起，例子： default 0 该命令必须在第一个title之前指定  
 timeout 
-ȱʡ�ĵȴ�ʱ�䣬�����ָ����ʱ��(����Ϊ��λ)�����κμ����������ȱʡ�Ĳ˵�����ӣ� timeout 10����������ڵ�һ��title֮ǰָ��  
+缺省的等待时间，如果在指定的时间(以秒为单位)不按任何键，则会启动缺省的菜单项，例子： timeout 10该命令必须在第一个title之前指定  
 root 
-����ָ�����豸�����ӣ� root (hd0,0)  
+用来指定根设备，例子： root (hd0,0)  
 rootnoverify 
-������Ҳ��������ָ�����豸��root�����ø��豸ǰ���Ȳ���һ�¸÷������ļ�ϵͳ�Ƿ����ʶ�𣬶�rootnoverify��ʡ����һ���ԡ�rootnoverify (hd0,0)  
+该命令也可以用来指定根设备。root在设置根设备前，先测试一下该分区的文件系统是否可以识别，而rootnoverify则省略这一测试。rootnoverify (hd0,0)  
 chainloader 
-����������������װ���ڴ棬����+1ָ���ǰѷ����ĵ�һ�����������ӣ� chainloader +1  
+把启动扇区的内容装入内存，参数+1指的是把分区的第一个扇区，例子： chainloader +1  
 boot 
-��������ϵͳ����ʹ�ø�����ǰ��������kernel����chainloader��ϵͳ�ں˻�����������/�����ļ�װ���ڴ档���ӣ� boot  
-�������ļ��в���Ҫʹ��������������ΪGRUB��ִ���˲˵������������󣬻��Զ�����boot��������һ���������н�����ʹ�á�  
+启动操作系统。在使用该命令前，必须用kernel或者chainloader把系统内核或者启动扇区/启动文件装入内存。例子： boot  
+在配置文件中不需要使用这个命令。这是因为GRUB在执行了菜单项的所有命令后，会自动加上boot。该命令一般在命令行界面里使用。  
 
 
-Grub4dos�߼����� 
-������� 
-GRUB4DOS�е������������map����ʵ�ֵġ�map����Ĺ��ܽ������£�  
-���̽��� 
-map������GRUB Legacy�е�Ҳ���ڣ������������̽�����  
-����˵��������ֻӲ�̣�����ֻӲ���Ͼ��п�������ϵͳ���ڵ�һֻӲ��������ʱ������Ҫ����Ĵ�����ֱ����chainloaderװ�����������Ϳ����ˡ����������Ҫ�ӵڶ�ֻӲ������������ô������chainloader�ǲ����ģ�������Ϊ�ܶ����ϵͳ��ȱʡ�شӵ�һֻӲ����װ������������ļ�������ļ��������ϣ�ϵͳ�㲻��˳���ض�ȡ���Ӷ���������ʧ�ܡ�  
-һ��ԭʼ�Ľ����������BIOS���޸�����˳�򣬰���Ҫ������Ӳ�̷ŵ���ǰ�档��ô��������������Ӳ�̱���Ϊ��һֻӲ�̣��Ӷ���������������  
-GRUB�е�map�������Ϊ�˽������������Ƶģ�������������ʱ�������̣��������޸�BIOS�����磺  
+Grub4dos高级功能 
+虚拟磁盘 
+GRUB4DOS中的虚拟磁盘是由map命令实现的。map命令的功能介绍如下：  
+磁盘交换 
+map命令在GRUB Legacy中的也存在，它是用作磁盘交换。  
+比如说，你有两只硬盘，但两只硬盘上均有可启动的系统。在第一只硬盘上启动时，不需要特殊的处理，直接用chainloader装载启动扇区就可以了。不过，如果要从第二只硬盘上启动，那么单单用chainloader是不够的，这是因为很多操作系统都缺省地从第一只硬盘上装载启动所需的文件，如果文件不在其上，系统便不能顺利地读取，从而导致启动失败。  
+一个原始的解决方法是在BIOS中修改启动顺序，把需要启动的硬盘放到最前面。那么，重启计算机后该硬盘便会成为第一只硬盘，从而可以正常启动。  
+GRUB中的map命令便是为了解决这个问题而设计的，它可以在运行时交换磁盘，而无需修改BIOS。例如：  
 title Boot First Partition on Second Disk map (hd0) (hd1) map (hd1) (hd0) chainloader (hd1,0)+1 boot    
-�ڸ������У�ʹ����map����ʵ����(hd0)��(hd1)�Ľ�����Ҫע����ǣ�������������boot�����Ч�ġ������chainloader�����У���ȡ����Ȼ�ǵڶ�ֻӲ�̡�  
-����������� 
-��GRUB4DOS�У�������չ��map������÷������ø�������Խ���������̣����ӣ�  
-��(hd0,0)��Ŀ¼�µ�aa.dsk�ļ�ӳ��Ϊ�ڶ�ֻӲ�̣�����ʹ��ԭ��Ӳ���ϵ�ϵͳ������   title Create Virtual Disk map (hd0,0)/aa.dsk (hd1) root (hd0,0) chainloader +1 boot    
-��(hd0,0)��Ŀ¼�µ�aa.dsk�ļ�ӳ��Ϊ��һֻӲ�̣�ԭ���ĵ�һֻӳ��Ϊ�ڶ�ֻӲ�̣����Ҵ�aa.dsk����������Ĵ�����������   title Boot From Virtual Disk map (hd0,0)/aa.dsk (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot   �������ᵽ��map�����ӳ�䲻�����������õġ����ǣ�Ҫ������������������ͱ�����ж�ȡ���ݣ������Ҫʹӳ����ǰ��Ч�������ϵ������У�map --hook�����ñ���ʹǰ��map����ָ����ӳ��������Ч��  
+在该例子中，使用了map命令实现了(hd0)和(hd1)的交换。要注意的是，交换是在命令boot后才生效的。因此在chainloader命令中，读取的仍然是第二只硬盘。  
+建立虚拟磁盘 
+在GRUB4DOS中，大大地扩展了map命令的用法。利用该命令可以建立虚拟磁盘，例子：  
+把(hd0,0)根目录下的aa.dsk文件映射为第二只硬盘，并且使用原来硬盘上的系统启动：   title Create Virtual Disk map (hd0,0)/aa.dsk (hd1) root (hd0,0) chainloader +1 boot    
+把(hd0,0)根目录下的aa.dsk文件映射为第一只硬盘，原来的第一只映射为第二只硬盘，并且从aa.dsk里虚拟出来的磁盘中启动：   title Boot From Virtual Disk map (hd0,0)/aa.dsk (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot   在上面提到，map命令的映射不是马上起作用的。但是，要从虚拟磁盘中启动，就必须从中读取数据，因此需要使映射提前起效。在以上的例子中，map --hook的作用便是使前面map命令指定的映射立刻生效。  
 
 
-��(hd0,0)��Ŀ¼�µ�aa.img�ļ�ӳ��Ϊ��һֻ�������̣�������������   title Boot From Virtual Floppy map (hd0,0)/aa.img (fd0) map --hook root (fd0) chainloader +1 boot    
-ʹ�����ַ�ʽ����ӳ���������̵����ݺ�Ӱ���ļ���������ͬ���ģ�Ҳ����˵��������޸���������̵����ݣ�Ӱ���ļ�Ҳͬ�������¡�����������˻��������޸ĵ�Ч����Ȼ���ڡ�  
-��ʹ�����ַ�ʽ����ӳ��ʱ��Ӱ���ļ��ڴ����ϵĴ�ű����������ġ�  
-GRUB4DOS�н�����������̣�����������˵���ڴ��̣�����ͨ����ȡINT 13��ʵ�ֵġ�����������˲���ϵͳ�������ϵͳ��ͨ��INT 13�����ʴ��̵ģ���������DOS����ô�ڽ���ϵͳ����Ȼ���Է��������̡����ϵͳ�ǲ���������ʽ�����ʴ��̣�����Linux������Unix��Windows NTϵ�еĲ���ϵͳ����ô�ڽ���ϵͳ��㲻�ܷ��������̡�Windows 9Xϵ�еĲ���ϵͳ�Ƚ����⣬��ͨ����ʹ�ñ���ģʽ�����������ʴ��̣��������Ҳ������ʵ�����ʱ��������ʹ��INT 13�����ʴ��̣���ˣ���Windows 9X��Ҳ���Է���������̡�  
-���������ڴ��� 
-��mapҲ���Խ��������ڴ��̣����÷������ϵĺ����ƣ���ֻ��Ҫ��map���������̵������м���--mem���������ˡ����ӣ�  
-��(hd0,0)��Ŀ¼�µ�aa.dsk�ļ�ӳ��Ϊ��һֻӲ�̣�ԭ���ĵ�һֻӳ��Ϊ�ڶ�ֻӲ�̣����Ҵ�aa.dsk����������Ĵ�����������   title Boot From Virtual Disk map --mem (hd0,0)/aa.dsk (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot    
-��(hd0,0)��Ŀ¼�µ�aa.img�ļ�ӳ��Ϊ��һֻ�������̣�������������   title Boot From Virtual Floppy map --mem (hd0,0)/aa.img (fd0) map --hook root (fd0) chainloader +1 boot    
-ʹ���˸�ӳ�䷽ʽ��Ӱ���ļ���������װ�ص��ڴ��Ž���ӳ�䡣����ζ�ţ���������㹻���ڴ������Ӱ�������ϵͳ�����ң�������̺�Ӱ���ļ��Ƿ���ģ�����������������޸Ĳ��ᱻ���µ�Ӱ���ļ��С�  
-������ӳ�䷽ʽ�У�Ӱ���ļ��ڴ����ϵĴ�Ų���Ҫ�������ġ�  
-�Զ�����MBR 
-Ӱ���ļ����������͡�һ�����ļ�ϵͳӰ��������ֻ����ĳһ���ļ�ϵͳ�����ݡ���һ���Ǵ���Ӱ�����������������������Ӳ�̵Ľṹ��Ҳ���ǣ�Ӱ����MBR��ʼ��Ȼ������ļ�ϵͳ�����ݡ����������ڴ��̣���ṹ����������ʵӲ�̵ģ������ʹ��map�������ӳ��ʱ��Ӧ��ʹ�ô���Ӱ��  
-GRUB4DOS���ǵ���������⡣Ϊ�����û�ʹ�ø��ӷ��㣬GRUB4DOS�������µĸĽ������Ѵ���Ӱ������ڴ�ʱ�����������ṹ������������ļ�ϵͳӰ����ô����ǰ���Զ�����MBR��������Ϊ����Ӱ����ˣ������û�ѡ��ʹ���ļ�ϵͳӰ���Ǵ���Ӱ��װ�ص��ڴ�󶼻�����ȷ�ĸ�ʽ��  
-�Զ�����MBR����һ��Ӧ�ã�����ֱ�Ӵ�Ӳ���ϵ�װ�ط������Ӷ�����������̡����磺  
+把(hd0,0)根目录下的aa.img文件映射为第一只虚拟软盘，并从中启动：   title Boot From Virtual Floppy map (hd0,0)/aa.img (fd0) map --hook root (fd0) chainloader +1 boot    
+使用这种方式进行映射后，虚拟磁盘的内容和影像文件的内容是同步的，也就是说，如果你修改了虚拟磁盘的内容，影像文件也同样被更新。如果你重启了机器，该修改的效果仍然存在。  
+在使用这种方式进行映射时，影像文件在磁盘上的存放必须是连续的。  
+GRUB4DOS中建立的虚拟磁盘，包括以下所说的内存盘，都是通过截取INT 13来实现的。因此在启动了操作系统后，如果该系统是通过INT 13来访问磁盘的，例如各类的DOS，那么在进入系统后仍然可以访问虚拟盘。如果系统是采用其它方式来访问磁盘，例如Linux，各类Unix和Windows NT系列的操作系统，那么在进入系统后便不能访问虚拟盘。Windows 9X系列的操作系统比较特殊，它通常是使用保护模式的驱动来访问磁盘，但当它找不到合适的驱动时，会依旧使用INT 13来访问磁盘，因此，在Windows 9X下也可以访问虚拟磁盘。  
+建立虚拟内存盘 
+用map也可以建立虚拟内存盘，其用法和以上的很相似，你只需要在map建立虚拟盘的命令中加上--mem参数就行了。例子：  
+把(hd0,0)根目录下的aa.dsk文件映射为第一只硬盘，原来的第一只映射为第二只硬盘，并且从aa.dsk里虚拟出来的磁盘中启动：   title Boot From Virtual Disk map --mem (hd0,0)/aa.dsk (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot    
+把(hd0,0)根目录下的aa.img文件映射为第一只虚拟软盘，并从中启动：   title Boot From Virtual Floppy map --mem (hd0,0)/aa.img (fd0) map --hook root (fd0) chainloader +1 boot    
+使用了该映射方式，影像文件的内容是装载到内存后才进行映射。这意味着，你必须有足够的内存来存放影像和启动系统。而且，虚拟磁盘和影像文件是分离的，对虚拟磁盘所作的修改不会被更新到影像文件中。  
+在这种映射方式中，影像文件在磁盘上的存放不需要是连续的。  
+自动生成MBR 
+影像文件有两种类型。一种是文件系统影像，它里面只包含某一个文件系统的数据。另一种是磁盘影像，它里面包含了类似于物理硬盘的结构，也就是，影像以MBR开始，然后才是文件系统的数据。对于虚拟内存盘，其结构是类似于真实硬盘的，因此在使用map命令进行映射时，应该使用磁盘影像。  
+GRUB4DOS考虑到了这个问题。为了让用户使用更加方便，GRUB4DOS作了如下的改进：当把磁盘影像读入内存时，程序会检测其结构，如果发现是文件系统影像，那么在它前面自动生成MBR，把它变为磁盘影像。因此，无论用户选择使用文件系统影像还是磁盘影像，装载到内存后都会变成正确的格式。  
+自动生成MBR还有一个应用，就是直接从硬盘上的装载分区，从而生成虚拟磁盘。例如：  
 title Load Partition From Disk map --mem (hd0,0)+1 (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot    
-�ò˵��Ĺ����ǰ�Ӳ���ϵ�һ������������װ�ص��ڴ棬�����Զ�����ǰ�����MBR������������̡�Ȼ�󣬰Ѹ��������ӳ��Ϊ��һֻӲ�̣�ԭ����Ӳ��ӳ��Ϊ�ڶ�ֻӲ�̡���󣬴����������������  
+该菜单的功能是把硬盘上第一个分区的内容装载到内存，并且自动在其前面加上MBR而生成虚拟磁盘。然后，把该虚拟磁盘映射为第一只硬盘，原来的硬盘映射为第二只硬盘。最后，从虚拟磁盘中启动。  
 
  
 
-��ʹ�øò˵�������ϵͳ���������ݺͺ����ԭ��һ��������ʱʵ����ʹ�����ڴ����������̡��Է������޸�����������������ʧ��  
-�ò˵��ǰ���������������װ�ص��ڴ棬Ҫȷ���ڴ��㹻�󣬷��������ɹ���  
-��map�����У�(hd0,0)+1��ָ����(hd0,0)������������(hd0,0)�ĵ�һ�����������ֱ�ʾֻ����map���������ã��������ĵط���(hd0,0)+1 ����ԭ�������塣  
-�����豸(md) 
-��GRUB4DOS�У���������豸(md)�����������ڴ棬�ͺ���(nd)���������豸����(cd)�����ʹ������ơ�  
-GRUB4DOSҲ��չ��cat�����������--hex����ʮ�����������Ҳ������--locate=STRING�����ļ��������ַ�����  
-���ӣ�  
-cat --hex (hd0)+1   ��ʮ��������ʽ��ʾ��һֻӲ�̵�MBR��  
-cat --hex (hd0,0)+1   ��ʮ��������ʽ��ʾ��һֻӲ�̵�һ����������������  
-cat --hex (md)+2   ��ʮ��������ʽ��ʾ�ڴ濪ʼ1K�����ݣ�������ʵ���ж���������  
-cat --hex (md)0x800+1   ��ʮ��������ʽ��ʾ�ڴ��0x800 * 512 = 1M ��ʼ512�ֽڵ����ݣ�Ҳ���Ǵ���չ�ڴ濪ʼ��512�ֽڡ�  
-�����豸(rd) 
-�������豸(md)���Է��ʴӵ�ַ0��ʼ�������ڴ棬��ʹ��(rd)����Է��ʴ�ĳһ��ַ��ʼ���ڴ档  
-map --rd-base=ADDR   ��������(rd)�ڴ��豸�Ŀ�ʼ��ַ(���ֽ�Ϊ��λ)��  
-map --rd-size=SIZE   ��������(rd)�ڴ��豸�ĳ���(���ֽ�Ϊ��λ)��  
-����grub.exe��Ϊlinux�ں�����ʱ��������ָ����ʼ�̡�����grub��(rd)�豸�Ŀ�ʼ��ַ�ͳ����Զ�����Ϊ��ʼ�̵ĵ�ַ�ͳ��ȡ���ˣ�������grub����(rd)�豸�����ʳ�ʼ�̡�  
+在使用该菜单启动后，系统分区的内容和好像和原来一样，但这时实际是使用在内存里的虚拟磁盘。对分区的修改在重启机器后便会消失。  
+该菜单是把整个分区的内容装载到内存，要确定内存足够大，否则命令不会成功。  
+在map命令中，(hd0,0)+1是指整个(hd0,0)分区，而不是(hd0,0)的第一个扇区。这种表示只是在map命令中适用，在其它的地方，(hd0,0)+1 还是原来的意义。  
+虚拟设备(md) 
+在GRUB4DOS中，你可以用设备(md)来访问整个内存，就和用(nd)访问网络设备，用(cd)来访问光盘类似。  
+GRUB4DOS也扩展了cat命令，它可以用--hex来以十六进制输出，也可以用--locate=STRING来在文件中搜索字符串。  
+例子：  
+cat --hex (hd0)+1   以十六进制形式显示第一只硬盘的MBR。  
+cat --hex (hd0,0)+1   以十六进制形式显示第一只硬盘第一个分区的启动扇区  
+cat --hex (md)+2   以十六进制形式显示内存开始1K的内容，这里其实是中断向量表。  
+cat --hex (md)0x800+1   以十六进制形式显示内存从0x800 * 512 = 1M 开始512字节的内容，也就是从扩展内存开始的512字节。  
+虚拟设备(rd) 
+用虚拟设备(md)可以访问从地址0开始的物理内存，而使用(rd)则可以访问从某一地址开始的内存。  
+map --rd-base=ADDR   用来设置(rd)内存设备的开始地址(以字节为单位)。  
+map --rd-size=SIZE   用来设置(rd)内存设备的长度(以字节为单位)。  
+当把grub.exe作为linux内核启动时，可以用指定初始盘。进入grub后，(rd)设备的开始地址和长度自动设置为初始盘的地址和长度。因此，可以在grub中用(rd)设备来访问初始盘。  
 map --ram-drive=RD    
-�����趨����(rd)�ڴ��豸��BIOS�豸����ȱʡֵ��0x7F����ʾ(rd)��Ӧ���������������豸�����(rd)��Ӧ����������Ӳ���豸����ô��Ҫ����RD, ʹ�� 0x80< RD < 0xFF��  
-map���������� 
+用来设定访问(rd)内存设备的BIOS设备名。缺省值是0x7F，表示(rd)对应的虚拟盘是软盘设备。如果(rd)对应的虚拟盘是硬盘设备，那么需要设置RD, 使得 0x80< RD < 0xFF。  
+map的其他参数 
 * --status  
-������ʾ��ǰ�Ĵ���ӳ�䡣   map --status    
+用于显示当前的磁盘映射。   map --status    
 * --floppies=M, --harddrives=N  
-ָ������/Ӳ�̵���Ŀ��   map --harddrvies=2   ʹ�ø�����󣬱���Ӳ�̵���Ŀ��Ϊ2��  
+指定软盘/硬盘的数目。   map --harddrvies=2   使用该命令后，本地硬盘的数目设为2。  
 * --memdisk-raw=RAW  
-RAWȡֵ0��1(ȱʡ��1)��RAW=0ʱ��ʹ��int15/ah=87h����չ�ڴ档RAW=1ʱ��ʹ���ڲ��ĺ���������չ�ڴ档   map --memdisk-raw=0    
-* --safe-mbr-hook=SMH ��--int13-scheme=SCH  
-������������Ϊ����Windows 9X��������ʹ�������̶���ġ�  
-SMHȡֵ0��1(ȱʡ��1)��������Windows 9X��ʹ��������ʱ��������ʱ����������ʹ�����µ����   map --safe-mbr-hook=0    
-SCHȡֵҲ��0��1(ȱʡ��1)��������Windows 9X��ʹ��������ʱ��������ʱ��Ҳ��������ʹ�����µ����   map --int13-scheme=0    
+RAW取值0或1(缺省是1)。RAW=0时，使用int15/ah=87h读扩展内存。RAW=1时，使用内部的函数来读扩展内存。   map --memdisk-raw=0    
+* --safe-mbr-hook=SMH ，--int13-scheme=SCH  
+这两个参数是为了在Windows 9X下能正常使用虚拟盘而设的。  
+SMH取值0或1(缺省是1)，当你在Windows 9X下使用虚拟盘时出现问题时，可以试试使用以下的命令：   map --safe-mbr-hook=0    
+SCH取值也是0或1(缺省是1)，当你在Windows 9X下使用虚拟盘时出现问题时，也可以试试使用以下的命令：   map --int13-scheme=0    
 * --read-only  
-ʹ���˸ò����󣬵�ǰ����ӳ��Ĵ��̱���Ϊֻ��ģʽ��   map --mem --read-only (hd0,0)/aa.dsk (hd1)    
+使用了该参数后，当前进行映射的磁盘被设为只读模式。   map --mem --read-only (hd0,0)/aa.dsk (hd1)    
 * --fake-write  
-ʹ���˸ò����󣬵�ǰ����ӳ��Ĵ��̿��ƿ�д����д������ݾ���������   map --mem --fake-write (hd0,0)/aa.dsk (hd1)    
+使用了该参数后，当前进行映射的磁盘看似可写，但写入的内容均被丢弃。   map --mem --fake-write (hd0,0)/aa.dsk (hd1)    
 
  
 
 * --heads=H, --sectors-per-track=S  
-һ����˵��map���������ȷ�ؼ����Ӱ���ļ���ʹ�õĴ��̲�������������ֶ����ã���ô����ʹ��������ѡ�   map --mem --heads=63 --sectors-per-track=255 (hd0,0)/aa.dsk (hd1)    
-����memdisk���������ڴ��� 
-memdisk��syslinux�е�һ�����ߣ�������Ҳ�������������ڴ��̣�  
+一般来说，map命令可以正确地计算出影像文件中使用的磁盘参数。如果你想手动设置，那么可以使用这两个选项。   map --mem --heads=63 --sectors-per-track=255 (hd0,0)/aa.dsk (hd1)    
+利用memdisk生成虚拟内存盘 
+memdisk是syslinux中的一个工具，利用它也可以生成虚拟内存盘：  
 title Create virtual disk using memdisk kernel (hd0,0)/memdisk initrd (hd0,0)/aa.dsk boot    
-�������aa.dskװ���ڴ����������ڴ��̣�����������Ϊ��һֻӲ�̣�ԭ��Ӳ�̵��������ƶ�����󣬴�����������������һϵ�еĲ���������memdisk����ɵģ�GRUB������ֻ�ǰ�aa.dskװ���ڴ棬Ȼ���װ�صĵ�ַ���ݸ�memdisk��  
-���ֻ��һֻӲ�̣���ô���ϵĲ������������µ�������ɣ�  
+该命令把aa.dsk装入内存生成虚拟内存盘，该虚拟盘作为第一只硬盘，原来硬盘的序号向后移动。最后，从虚拟盘中启动。这一系列的操作都是在memdisk内完成的，GRUB的任务只是把aa.dsk装入内存，然后把装载的地址传递给memdisk。  
+如果只有一只硬盘，那么以上的操作可以用以下的命令完成：  
 title Create virtual disk using map map --mem (hd0,0)/aa.dsk (hd0) map (hd0) (hd1) map --hook root (hd0,0) chainloader +1 boot    
-map��memdisk������  
-* map��GRUB4DOS���õĹ��ܣ���memdisk��һ���ⲿ�ĳ���  
-* map����ֱ��ӳ������ϵ��ļ�����memdisk����Ҫ���ļ�װ�ص��ڴ��  
-* map���԰�Ӱ���ļ�ӳ��Ϊ�ڶ�ֻӲ�̣�����memdiskֻ��ӳ��Ϊ��һֻӲ�̡�  
-* map���Զ�����MBR�Ĺ��ܣ���memdiskû�С����memdiskֻ��ʹ�ô���Ӱ�񣬲���ʹ���ļ�ϵͳӰ��  
-������� 
-��GRUB4DOS��ʹ�ù��� 
-�����µ�������Գ�ʼ��������   cdrom --init   ��ʼ���󣬽���ʹ��map --hook����ô�Ϳ�����(cd0),(cd1)�������ʹ�����  
-GRUB��֧�ֵĹ����豸��(cd)���������ÿ�������������GRUBʱ(���̵�������������һ�ڽ���)�����������Ĺ����豸�����豸��ֱ��ʹ�ã�������Ҫʹ�����ϵ���������ʼ����  
-�����µ��������ֹͣ��������   cdrom --stop   ��ֹͣ�����󣬻���Ҫ��map --unhook��ȡ��map --hook��Ч����  
-�����µ��������ָ�������Ķ˿ڣ�   cdrom --add-io-ports=0x03F601F0    
-������ȱʡ�������˿ڣ�0x03F601F0, 0x03760170, 0x02F600F0, 0x03860180, 0x6F006B00, 0x77007300��  
-�ڳ�ʼ�������󣬿�����blocklist�ķ�ʽ�����������ݣ�  
-cat --hex (cd0)16+2   ������ʹ�õ�������С��2048��  
-���⣬iso9660�ļ�ϵͳ��������֧��Rock-Ridge��չ������֧��Joliet��չ���ڶ�ȡJoliet��չ�Ĺ����ǿ��ܻ�������⡣  
-���⣬���������chainloader�������ӹ�����������  
+map和memdisk的区别：  
+* map是GRUB4DOS内置的功能，而memdisk是一个外部的程序  
+* map可以直接映射磁盘上的文件，而memdisk必须要把文件装载到内存里。  
+* map可以把影像文件映射为第二只硬盘，而而memdisk只能映射为第一只硬盘。  
+* map有自动生成MBR的功能，而memdisk没有。因此memdisk只能使用磁盘影像，不能使用文件系统影像。  
+光驱相关 
+在GRUB4DOS中使用光驱 
+用以下的命令可以初始化光驱：   cdrom --init   初始化后，接着使用map --hook，那么就可以用(cd0),(cd1)等来访问光驱。  
+GRUB中支持的光驱设备是(cd)，它代表用可启动光盘启动GRUB时(光盘的制作方法在下一节介绍)，用于启动的光驱设备。该设备可直接使用，而不需要使用以上的命令来初始化。  
+用以下的命令可以停止化光驱：   cdrom --stop   在停止光驱后，还需要用map --unhook来取消map --hook的效果。  
+用以下的命令可以指定搜索的端口：   cdrom --add-io-ports=0x03F601F0    
+以下是缺省的搜索端口：0x03F601F0, 0x03760170, 0x02F600F0, 0x03860180, 0x6F006B00, 0x77007300。  
+在初始化光驱后，可以用blocklist的方式来访问其内容：  
+cat --hex (cd0)16+2   光驱中使用的扇区大小是2048。  
+另外，iso9660文件系统驱动程序支持Rock-Ridge扩展，但不支持Joliet扩展，在读取Joliet扩展的光盘是可能会出现问题。  
+另外，你可以以用chainloader命令来从光驱中启动：  
 chainloader (cd0) boot    
-һ�������Ĵӵ�һֻ�������������ӣ�  
+一个完整的从第一只光驱启动的例子：  
 title Boot From First CDROM cdrom --init map --hook chainloader (cd0) boot    
-����GRUB4DOS�������������� 
-��GRUB�У��������� stage2_eltorito �������������̣�  
+利用GRUB4DOS制作可启动光盘 
+在GRUB中，可以利用 stage2_eltorito 来制作启动光盘：  
 mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o grub.iso iso  
-stage2_eltorito��menu.lstӦ�÷��ڹ��̵�/boot/grubĿ¼�  
+stage2_eltorito和menu.lst应该放在光盘的/boot/grub目录里。  
 
  
 
-��GRUB4DOS�У��������� grldr �������������̡��������������֣�  
+在GRUB4DOS中，可以利用 grldr 来制作启动光盘。制作方法有两种：  
 mkisofs -R -b grldr -no-emul-boot -boot-load-seg 0x1000 -o bootable.iso iso_root  
 mkisofs -R -b grldr -no-emul-boot -boot-load-size 4 -o grldr.iso iso_root  
-grldr��menu.lstӦ�÷��ڹ��̵ĸ�Ŀ¼�  
-��һ�ַ������� BIOS��ϣ�����ܹ�װ������ GRLDR �ļ����ڴ档װ���ڴ��BIOS ��Ӧ����ȷ���ö�ջ��ʹ�ò����ڰѶ�ջ���õ� GRLDR �ĳ������ڣ���ɳ�ͻ��һ������£�BIOS ������һ������ף���Ϊ���������ö�ջָ��Ϊװ�����ʼ��ַ����Ҳ���ų����� BUGGY BIOS �Ŀ����ԡ�  
-��Щ BIOS ����ȫ���Ͽ������� CDROM �淶������ VirtualPC �ľ��ǵġ����� BIOS ֻ��װ����һ���� GRLDR �������ڴ棬���͵Ŀ���ֻװ����һ��������2048 �ֽڵĴ����������ڴ档�������ǵĴ����Ѿ�����Щ BUGGY BIOS ���˲�����ֻҪ��Щ BIOS �ܹ�������ȷ�Ķ�ջ�������ں�װ���ڴ��е� GRLDR �������ݲ�����ͻ�� OK �ˡ�  
-Ҳ����˵��������һ���������̵ķ�����Ӧ��û�ж�������ˡ����ַ������п�����Ӧ�����е� BIOS��  
-�ڶ��ַ���������ֻҪ�� BIOS װ��һ�� CDROM �������ڴ棨��ͬ�� 4 �� 512 �ֽڵ�С�����������ַ�������صģ�û�����ɻ�ʧ���ˡ�΢���� win2000 �������̾�����ô���ģ�isolinux �� stage2_eltorito Ҳ������ô���ġ�������ַ���ʧ���ˣ���ô win2000��isolinux �� stage2_eltorito Ӧ�ö���ʧ�ܵġ�  
-���ڵڶ��ַ��������ǲ���Ҫ -boot-info-table ���������������������������������˺�û����һ���ģ����ǵ��������뽫������������������ݵ����ݽṹ����  
-���ڵ�һ�ַ���Ҳһ��������Ҫ -boot-info-table ���������ͬʱҲ����������������������˺�û����һ���ģ����ǵ��������뽫������������������ݵ����ݽṹ����  
-������stage2_eltorito �Ϳ�����ȫ�� grldr �������ˡ�  
-�ű�֧�� 
-GRUB4DOS����ʵ���˼򵥵Ľű�֧�֡�Ŀǰʵ���� && �� || ���ֲ�����  
-command1 && command2   ֻ�е� command1 �ķ���ֵ����ʱ��command2 �ű�ִ��  
-command1 || command2   ֻ�е� command1 �ķ���ֵ�Ǽ�ʱ��command2 �ű�ִ��  
-Ŀǰ��֧�ֲ�������Ƕ��ʹ�á�  
-���ӣ�  
+grldr和menu.lst应该放在光盘的根目录里。  
+第一种方法告诉 BIOS，希望它能够装入整个 GRLDR 文件到内存。装入内存后，BIOS 还应该正确设置堆栈，使得不至于把堆栈设置到 GRLDR 的程序体内，造成冲突。一般情况下，BIOS 做到这一点很容易，因为它可以设置堆栈指针为装入的起始地址。但也不排除存在 BUGGY BIOS 的可能性。  
+有些 BIOS 不完全符合可启动的 CDROM 规范，比如 VirtualPC 的就是的。这类 BIOS 只是装入了一部分 GRLDR 扇区到内存，典型的可能只装入了一个扇区（2048 字节的大扇区）到内存。不过我们的代码已经替这些 BUGGY BIOS 打了补丁。只要这些 BIOS 能够设置正确的堆栈，不至于和装入内存中的 GRLDR 扇区数据产生冲突就 OK 了。  
+也就是说，上述第一种制作光盘的方法，应该没有多大问题了。这种方法很有可能适应于所有的 BIOS。  
+第二种方法本身就只要求 BIOS 装入一个 CDROM 扇区到内存（等同于 4 个 512 字节的小扇区）。这种方法是最保守的，没有理由会失败了。微软的 win2000 启动光盘就是这么做的，isolinux 和 stage2_eltorito 也都是这么做的。如果这种方法失败了，那么 win2000，isolinux 和 stage2_eltorito 应该都会失败的。  
+对于第二种方法，我们不需要 -boot-info-table 这个参数。但是允许你用这个参数（用了和没用是一样的，我们的引导代码将忽略由这个参数所传递的数据结构）。  
+对于第一种方法也一样，不需要 -boot-info-table 这个参数，同时也是允许你用这个参数（用了和没用是一样的，我们的引导代码将忽略由这个参数所传递的数据结构）。  
+这样，stage2_eltorito 就可以完全用 grldr 来代替了。  
+脚本支持 
+GRUB4DOS中有实现了简单的脚本支持。目前实现了 && 和 || 两种操作：  
+command1 && command2   只有当 command1 的返回值是真时，command2 才被执行  
+command1 || command2   只有当 command1 的返回值是假时，command2 才被执行  
+目前不支持操作符的嵌入使用。  
+例子：  
 is64bit && default 0 is64bit || default 1    
-���is64bit�����ֵ���棬��ôȱʡ�Ĳ˵�����0������ȱʡ�Ĳ˵�����1��  
+如果is64bit命令返回值是真，那么缺省的菜单项是0，否则，缺省的菜单项是1。  
 
 ps: 
-������һ��menu.lst�����ӡ�(��#��ʼ���У���ʾע�ͣ���ִ��) 
+下面是一个menu.lst的例子。(以#开始的行，表示注释，不执行) 
 
-# Ĭ���ӳ�ʱ��(��) 
+# 默认延迟时间(秒) 
 timeout 30 
 
-# ��һ��ΪĬ��ֵ 
+# 第一项为默认值 
 default 0 
 
-# ����ͼ�α����ļ� 
+# 设置图形背景文件 
 splashimage (hd0,0)/boot/grub/xp2008.gz 
 
-# ��������֧�ֵ������ļ� 
+# 设置中文支持的字体文件 
 fontfile (hd0,0)/boot/grub/fonts 
 
-title ʹ��map��������Ӳ���ϵ�����ɱ�����̾����ļ� 
+title 使用map启动本地硬盘上的瑞星杀毒软盘镜像文件 
 map (hd0,0)/boot/grub/rav.img (fd0) 
 map --hook 
 
@@ -227,104 +227,104 @@ map --hook
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-title ʹ��memdisk�������� Win98 ���̾����ļ� 
+title 使用memdisk启动本地 Win98 软盘镜像文件 
 kernel (hd0,0)/boot/grub/memdisk.gz 
 initrd (hd0,0)/boot/grub/win98.img 
 
-title ʹ��memdisk��������Ӳ���ϵ�����ɱ������ѹ�������ļ� 
+title 使用memdisk启动本地硬盘上的瑞星杀毒软盘压缩镜像文件 
 root (hd0,0) 
 kernel /boot/grub/memdisk.gz c=80 h=12 s=36 floppy 
 initrd /boot/rav.zip 
 
-title ������һ������(hd0,0)�ϵĲ���ϵͳ 
+title 启动第一主分区(hd0,0)上的操作系统 
 rootnoverify (hd0,0) 
 makeactive 
 chainloader +1 
 
-title �����ڶ�������(hd0,1)�ϵĲ���ϵͳ 
+title 启动第二主分区(hd0,1)上的操作系统 
 rootnoverify (hd0,1) 
 makeactive 
 chainloader +1 
 
-title ���� 
+title 重启 
 reboot 
 
-title �ػ� 
+title 关机 
 halt  
 
-�˲˵��ļ�������Ч������ͼ����ͼ2�� 
+此菜单文件的运行效果如下图。【图2】 
 
 
 
 
-�ο�������ӣ����ǾͿ��Ը����Լ���Ҫ�Բ˵������޸ġ� 
+参考这个例子，我们就可以根据自己需要对菜单进行修改。 
 
-���������������Ч��Դ�ľ����ļ����ļ���ΪXLY.IMG������ֻ��� 
-title ʹ��memdisk�������� Win98 ���̾����ļ� 
+比如从网上下载了效率源的镜像文件，文件名为XLY.IMG。我们只需把 
+title 使用memdisk启动本地 Win98 软盘镜像文件 
 kernel (hd0,0)/boot/grub/memdisk.gz 
 initrd (hd0,0)/boot/grub/win98.img 
 
-�ĳ� 
-title Ӳ�̼���޸����� Ч��Դ (memdisk) 
+改成 
+title 硬盘检测修复工具 效率源 (memdisk) 
 kernel (hd0,0)/boot/grub/memdisk.gz 
 initrd (hd0,0)/boot/grub/xly.img 
 
-���߸ĳ� 
-title Ӳ�̼���޸����� Ч��Դ (map) 
+或者改成 
+title 硬盘检测修复工具 效率源 (map) 
 map (hd0,0)/boot/grub/xly.img (fd0) 
 map --hook 
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-ͬʱ��xly.img�ļ����浽��һ��������һ����C:����boot\grubĿ¼�¡� 
-��ȻҲ���Ա��浽����·���� 
+同时把xly.img文件保存到第一主分区（一般是C:）的boot\grub目录下。 
+当然也可以保存到其它路径。 
 
-����xly.img�ļ����浽C:\boot�£���menu.lst�ļ���Ӧ��Ϊ: 
+比如xly.img文件保存到C:\boot下，则menu.lst文件相应改为: 
 map (hd0,0)/boot/xly.img (fd0) 
 
-����xly.img�ļ����浽D:\test�£���menu.lst�ļ���Ӧ��Ϊ: 
+又如xly.img文件保存到D:\test下，则menu.lst文件相应改为: 
 map (hd0,4)/test/xly.img (fd0) 
-(�ο������ע��d) 
+(参看下面的注意d) 
 
-����������ӿ��Կ������������̾��������ַ�ʽ������memdisk����map�� 
+从上面的例子可以看出，启动软盘镜象，有两种方式，即用memdisk或用map。 
 
-��memdiskʱ��img�ļ���ѹ������img�ļ���СΪ��1.44MB��2.88MB��׼����ʱ����Ҫָ��CHS������img�ļ���CHS��������winimage��á� 
+用memdisk时，img文件可压缩；在img文件大小为非1.44MB或2.88MB标准镜像时，需要指定CHS参数。img文件的CHS参数可用winimage获得。 
 
-�������еģ� 
-title ʹ��memdisk��������Ӳ���ϵ�����ɱ������ѹ�������ļ� 
+即例子中的： 
+title 使用memdisk启动本地硬盘上的瑞星杀毒软盘压缩镜像文件 
 root (hd0,0) 
 kernel /boot/grub/memdisk.gz c=80 h=12 s=36 floppy 
 initrd /boot/rav.zip 
 
-���⣬�˵��ļ��е��ļ�·���������·�����磺/boot/rav.zip�������·�����磺(hd0,0)/boot/grub/xly.img����ʾ�� 
+另外，菜单文件中的文件路径可用相对路径（如：/boot/rav.zip）或绝对路径（如：(hd0,0)/boot/grub/xly.img）表示。 
 
-map��ʽ������ӳ���Сû�����ƣ���Ҫ�����������š��Ľ���map --mem���޴����ơ� 
+map方式对软盘映像大小没有限制，但要求必须连续存放。改进的map --mem则无此限制。 
 
-���磺 
+比如： 
 map --mem /boot/xxx.ima (fd0) 
 map --hook 
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-ע�⣺ 
-a, �˵��ļ������õ�memdisk.gz�ļ�����������grub4dos�ķ��а��������׼�����ɴ�gnu grub�����������������grub�Ĺ��ߣ���һ��ghost�����˵�gghost���л�á� 
+注意： 
+a, 菜单文件中所用的memdisk.gz文件，不包括在grub4dos的发行包里，需自行准备。可从gnu grub软件包或从其它基于grub的工具（如一键ghost，本人的gghost）中获得。 
 
-b, �˵������õ������ļ���xp2008.gz�������ļ�����fonts�����������ļ��������־����ļ��ȣ����追�����ļ���ָ��·���� fontfile����ɵ���ʹ�ã�����splashimageһ��ʹ�á� 
+b, 菜单中所用的其它文件如xp2008.gz（背景文件）、fonts（中文字体文件）及各种镜像文件等，均需拷贝到文件中指定路径。 fontfile命令不可单独使用，需与splashimage一起使用。 
 
-c, �˵��ļ��е�����ȫ��ʹ��Сд�� 
+c, 菜单文件中的命令全部使用小写。 
 
-d, ��ѧ��ʹ�þ���·��ʱҪע��GRUB���豸������������ϵͳ�ĵ�һ��Ӳ����������ʾ��(hd0)�����ϵĵ�һ��������ʾΪ(hd0,0)��Ҳ����˵����Ӳ��,����(hdx,y)����ʽ����ʾ��x��y���Ǵ�0��ʼ�����ģ�x��ʾӲ�̺ţ�y��ʾ�����š� 
-
-
-
-����������ֻ�����ĸ������Ե�һӲ�̵��ĸ��������ֱ���(hd0,0)~(hd0,3)����ʾ���߼��������(hd0,4)��ʼ�㣬����һ�߼�������(hd0,4)���ڶ��߼�������(hd0,5)����ʾ���������ơ� 
-һ����ӵ�Ӳ�̶���һ�����������������߼����������C����(hd0,0)��D����(hd0,4)����ʾ�� ������(cd)��ʾ����һ������(fd0)��ʾ�� 
-
-���ҵ�Ӳ��������������������Ϊ�߼���������(hdx,y)�ķ�����ʾ����ͼ�� 
+d, 初学者使用绝对路径时要注意GRUB对设备的命名方法。系统的第一个硬盘驱动器表示成(hd0)，其上的第一个分区表示为(hd0,0)，也就是说对于硬盘,采用(hdx,y)的形式来表示，x、y都是从0开始计数的，x表示硬盘号，y表示分区号。 
 
 
 
-������������ʹ�õĲ˵�Ч��ͼ��menu.lst�ļ������ο�����ͼ3�� 
+由于主分区只能有四个，所以第一硬盘的四个主分区分别用(hd0,0)~(hd0,3)来表示；逻辑分区则从(hd0,4)开始算，即第一逻辑分区用(hd0,4)，第二逻辑分区用(hd0,5)来表示，依次类推。 
+一般机子的硬盘都是一个主分区，其余是逻辑分区。因此C盘用(hd0,0)，D盘用(hd0,4)来表示。 光盘用(cd)表示，第一软驱用(fd0)表示。 
+
+如我的硬盘有两个主分区，其余为逻辑分区。用(hdx,y)的方法表示如下图： 
+
+
+
+下面是我现在使用的菜单效果图及menu.lst文件，供参考。【图3】 
 
 
 
@@ -372,23 +372,23 @@ reboot
 title 8, Shutdown 
 halt 
 
-1.5 ���� 
+1.5 结言 
 
-Grub4dos����ǿ��Ĺ��ܣ�������ܵ�ֻ��grub4dos��һЩ������÷���������÷��������ջ����÷��Ļ����ϣ��Լ����������˽⡣ 
+Grub4dos具有强大的功能，上面介绍的只是grub4dos的一些最基本用法，更多的用法可在掌握基本用法的基础上，自己查阅资料了解。 
 
 
-2.1 Ӳ����Ӧ�� 
+2.1 硬盘上应用 
 
-Ӳ����Ӧ��grub������Ҫ���а�װ����װ/������ʽ��Ҫ��3�У���ͨ��Windows NT�������˵�����grub4dos��ͨ��DOS����grub��ͨ��mbr����grub�����ο�1.3 ��ΰ�װgrub4dos�� 
+硬盘上应用grub，首先要进行安装，安装/启动方式主要有3中，即通过Windows NT的启动菜单进入grub4dos；通过DOS启动grub；通过mbr启动grub。【参看1.3 如何安装grub4dos】 
 
-��װ��grub����Ҫ׼���˵��ļ�menu.lst�� 
+安装完grub后，需要准备菜单文件menu.lst。 
 
-2.1.1 �������̾��� 
+2.1.1 加载软盘镜像 
 
-����Windows�û�����grub�������̾�������õĹ���֮һ������windows2k/xp��������dos����˽��а���ϵͳ����/�ָ����ڵ�һЩdos�²�������Ϊ��ѧ�ߵ�һ�����⡣��ǰ���ǿ��ܾ���Ҫ���������̵Ȳ��ܽ���dos�����̵����Ծ����˺��Ѽ�ʱ����ظ��¹����ϵĹ��ߡ�grub�ĳ�����Ӧ�ã������������⡣���ǲ���������������Ľ��ʾ��ܽ���dos�����������ܼ�ʱ���¹��ߡ��������صĸ���ϵͳά�����ߣ��ܶ඼��img��ʽ��������ļ���ȡ��������΢�޸�menu.lst����ʹ�ã����ֹ���Ҳ�ܺ�г������ʹ�÷ǳ����㡣 
+对于Windows用户，用grub加载软盘镜象是最常用的功能之一。由于windows2k/xp已脱离了dos，因此进行包括系统备份/恢复在内的一些dos下操作，成为初学者的一个难题。以前我们可能就需要用启动光盘等才能进入dos，光盘的特性决定了很难及时方便地更新光盘上的工具。grub的出现与应用，解决了这个难题。我们不仅无需借助其它的介质就能进入dos环境，而且能及时更新工具。网上下载的各种系统维护工具，很多都是img形式，无需把文件提取出来，稍微修改menu.lst就能使用，各种工具也能和谐共处，使用非常方便。 
 
-��ΰ����ص�xxx.img����grub�����˵��أ� 
-��ֻҪ��xxx.img���浽C:\boot\grubĿ¼�£��༭menu.lst�������������ݾ����ˡ� 
+如何把下载的xxx.img加入grub启动菜单呢？ 
+你只要把xxx.img保存到C:\boot\grub目录下，编辑menu.lst，加入下面内容就行了。 
 
 title Boot from Floppy image XXX 
 
@@ -398,12 +398,12 @@ map --hook
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-ע�⣺ 
-a, �⼸�����ݲ��ܼ�����ǰ�棬��Ϊǰ����һЩ��ȫ����Ч�����á�  
-b, ����Ҫ�Ĺ��߶��������ַ�ʽ�ӽ�ȥ�� 
-c, Ҳ�����кܶ๤�ߣ����ӽ�menu�Ļ����Եú��ҡ�ƽʱ���õĿ���Ҳ��һ�������ߣ�����ֻ��ż��һ�á�����������������Բ�ȡ����ķ����������ѳ��õ�д��˵���ͬʱ�ڲ˵���дһ��ͨ������img�ļ������ݡ� 
+注意： 
+a, 这几行内容不能加在最前面，因为前面是一些对全局有效的设置。  
+b, 你需要的工具都可以这种方式加进去。 
+c, 也许你有很多工具，都加进menu的话，显得很乱。平时常用的可能也就一两个工具，不少只是偶尔一用。对于这种情况，可以采取下面的方法。即：把常用的写入菜单，同时在菜单中写一个通用启动img文件的内容。 
 
-���������: 
+比如上面的: 
 
 title Boot from Floppy image XXX 
 map --mem /boot/grub/xxx.img (fd0) 
@@ -411,30 +411,30 @@ map --hook
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-����������grub����˵���ѡ��Boot from Floppy image XXX���󣬰���e������༭״̬���ƶ���������޸�xxx.imgΪ��Ҫ�������ļ������س�������b���������ɡ���img�ļ�����������·���Ļ�����ĳ���Ӧ��·������ 
+可以在启动grub进入菜单后，选择“Boot from Floppy image XXX”后，按“e”进入编辑状态，移动方向键，修改xxx.img为需要启动的文件名，回车，按“b”启动即可。（img文件保存在其它路径的话，则改成相应的路径。） 
 
-2.1.2 ����WinPE 
+2.1.2 启动WinPE 
 
-��Щϵͳά��������dos�²�����̫���㣬�������ܽ��С�WinPE�ĳ��֣������Ǵ����˺ܶ෽�㡣 
+有些系统维护操作在dos下操作不太方便，甚至不能进行。WinPE的出现，给我们带来了很多方便。 
 
-�����Թ��ܺ����ġ��Ͼ� WinPE ��ë���޸İ�_1111 �桱Ϊ�������������grub����WinPE�� ��ISO���Ѵ��а�װ������������ܵ�����menu.lst�м���ͨ�õ�winpeѡ��� 
+下面以广受好评的“老九 WinPE 老毛桃修改版_1111 版”为例，介绍如何用grub启动WinPE。 （ISO中已带有安装程序，我这里介绍的是在menu.lst中加入通用的winpe选项。） 
 
-���裺 
+步骤： 
 
-1�� ���ء��Ͼ� WinPE ��ë���޸İ�_1111 �桱����ѹ��õ�BootCD.ISO�� 
+1， 下载“老九 WinPE 老毛桃修改版_1111 版”，解压后得到BootCD.ISO。 
 
-2, �����������UltraISO����ȡiso�е�WINPE.IS_��WINNT.XPE��WXPE\SETUPLDR.BIN������3���ļ�������C:\������SETUPLDR.BIN����Ϊldrxpe����Ҫ���ó���ģ������XPEMENU.INI�͡����ó���Ŀ¼һ�𿽱�����һ�̷��ĸ�Ŀ¼����ͼ4����ͼ5�� 
-
-
+2, 用虚拟光驱或UltraISO等提取iso中的WINPE.IS_，WINNT.XPE和WXPE\SETUPLDR.BIN，把这3个文件拷贝到C:\，并把SETUPLDR.BIN改名为ldrxpe。需要外置程序的，还需把XPEMENU.INI和“外置程序”目录一起拷贝到任一盘符的根目录。【图4】【图5】 
 
 
 
-3����menu.lst�м��� 
+
+
+3，在menu.lst中加入 
 
 title Micro Windows XPE (by LaoMaotao)  
 chainloader /ldrxpe 
 
-����grubʱѡ��Micro Windows XPE (by LaoMaotao)����������WinPE�ˡ�����������windows�����½���ϵͳά������װ�Ȳ�������ͼ6����ͼ7����ͼ8�� 
+启动grub时选择“Micro Windows XPE (by LaoMaotao)”就能启动WinPE了。这样就能在windows界面下进行系统维护、安装等操作。【图6】【图7】【图8】 
 
 
 
@@ -442,47 +442,47 @@ chainloader /ldrxpe
 
 
 
-2.1.3 ����ϵͳ 
+2.1.3 启动系统 
 
-���ڵ�һӲ��װ�˶�ϵͳ����Ӳ��װ�˶�ϵͳ�ģ���grub���Է���ضԸ�ϵͳ�������������� 
+对于单一硬盘装了多系统及多硬盘装了多系统的，用grub可以方便地对各系统进行启动管理。 
 
-������menu.lst�пɼ��������ѡ� 
+比如在menu.lst中可加入下面的选项： 
 
-title ������һӲ�̵�һ������(hd0,0)�ϵĲ���ϵͳ 
+title 启动第一硬盘第一主分区(hd0,0)上的操作系统 
 rootnoverify (hd0,0) 
 makeactive 
 chainloader +1 
 
-title ������һӲ�̵ڶ�������(hd0,1)�ϵĲ���ϵͳ 
+title 启动第一硬盘第二主分区(hd0,1)上的操作系统 
 rootnoverify (hd0,1) 
 makeactive 
 chainloader +1 
 
-title ����Windows NT/2000/XP/2003 
+title 启动Windows NT/2000/XP/2003 
 find --set-root /ntldr 
 chainloader /ntldr 
 
-title ����Microsoft Windows Vista 
+title 启动Microsoft Windows Vista 
 find --set-root /bootmgr 
 chainloader /bootmgr 
 
-title ����DOS/Windows 95/98/Me 
+title 启动DOS/Windows 95/98/Me 
 find --set-root /io.sys 
 chainloader /io.sys 
 
-2.2 �����ϵ�Ӧ�� 
+2.2 光盘上的应用 
 
-������������ڹ�����Ӧ��grub�ķ����� 
+下面介绍两种在光盘上应用grub的方法。 
 
-2.2.1 grub�����Ŀ��������� 
+2.2.1 grub引导的可启动光盘 
 
-��grldr��Ϊ���̵������ļ��������̣�����menu.lst��ͨ��menu�˵�ѡ��������Ŀ�� 
+以grldr作为光盘的启动文件引导光盘，加载menu.lst，通过menu菜单选择启动项目。 
 
-���裺 
+步骤： 
 
-1) ׼����Ҫ��img�ļ�����grldr��menu.lst��������Ҫ׼�����壬����ͼƬ��memdisk.gz���ļ����� 
+1) 准备必要的img文件，及grldr，menu.lst（根据需要准备字体，背景图片，memdisk.gz等文件）。 
 
-2) �༭menu.lst�����������ϵ�img�ļ��ĸ�ʽ���£� 
+2) 编辑menu.lst。引导光盘上的img文件的格式如下： 
 
  
 
@@ -492,49 +492,49 @@ map --hook
 chainloader (fd0)+1 
 rootnoverify (fd0) 
 
-�˵���Ҳ������Ӳ���ϵ�img�ļ������磺 
+菜单中也可引导硬盘上的img文件，比如： 
 
 title GreenGhost [Ghost v8.3/v11] (MEMDISK)  
 kernel (hd0,4)/boot/grub/memdisk.gz c=200 h=2 s=36 floppy 
 initrd (hd0,4)/boot/grub/gghost.img 
 
-3) ��֯�ļ���������E:\3333�½���grubcdĿ¼����menu.lst��������Ŀ¼�£�menu.lst�ļ����ڹ��̸�Ŀ¼�¡���grubcdĿ¼�½�boot\grubĿ¼���������img��������ļ���Ҳ���Ա��浽����·������menu.lst�е�ָ����·��Ҫһ�£���ע�⣺menu.lst�ļ������õ������ļ����ļ�����Ӳ������ʾ������Сд����д��Ҫ�ĳ�Сд����ͼ9�� 
+3) 组织文件。比如在E:\3333下建个grubcd目录，把menu.lst拷贝到此目录下，menu.lst文件将在光盘根目录下。在grubcd目录下建boot\grub目录，保存各种img，字体等文件（也可以保存到其它路径，与menu.lst中的指定的路径要一致）。注意：menu.lst文件中引用的所有文件的文件名在硬盘上显示的需是小写，大写的要改成小写。【图9】 
 
 
 
 
-4) ����ISO����UltraISO�½�һ��ISO�ļ�����E:\3333\grubcdĿ¼�µ������ļ�����iso�ļ���ִ�С��������̡��������������ļ�����ѡ��grldr�����grldr����Ϊgrldr.bin��grldr.bif�ȣ��ļ�����ִ�С��ļ����������ԡ���ѡ�ϡ�����Сд��ĸ��ѡ�����ISO�ļ�����ͼ10����ͼ11����ͼ12�� 
+4) 制作ISO。用UltraISO新建一个ISO文件，把E:\3333\grubcd目录下的所有文件加入iso文件；执行“启动光盘”－“加载引导文件”，选择grldr（需把grldr改名为grldr.bin或grldr.bif等）文件。再执行“文件”－“属性”，选上“允许小写字母”选项，保存ISO文件。【图10】【图11】【图12】 
 
 
 
 
 
 
-Ҳ��ʹ��mkisofs.exe��CDIMAGE.EXE�ȹ�����������iso��grldr����������� 
+也可使用mkisofs.exe或CDIMAGE.EXE等工具制作启动iso（grldr不需改名）。 
 
-��������CDIMAGE����iso���������ǣ� 
+比如我用CDIMAGE制作iso的批处理是： 
 cdimage -lgrubcd -t01/01/2007,00:00:00 -h -n -o -d -m -bgrldr grubcd grubcd.iso 
 
-5) ��nero�Ȱ������Ŀ�����ISO���̡��������Ŀ�����������ϲ���ͨ������̣�����CD-RW/DVD+RW���̡� 
+5) 用nero等把制作的可启动ISO刻盘。有条件的可先在虚拟机上测试通过后刻盘，或用CD-RW/DVD+RW刻盘。 
 
-2.2.2 BCDW����GRUB�Ŀ��������� 
+2.2.2 BCDW引导GRUB的可启动光盘 
 
-�˷�����BCDW�����������̣�ͨ��BCDWִ��grldr������menu.lst�˵��� 
+此法是用BCDW制作启动光盘，通过BCDW执行grldr来加载menu.lst菜单。 
 
-���裺 
+步骤： 
 
-1) ��������BCDW����������ѹ���ȡ�����ļ��� 
+1) 首先下载BCDW软件包，解压后获取所需文件。 
 
-2����֯�ļ���������E:\3333�½���bcdwcdĿ¼����Ŀ¼���ļ����ڹ��̸�Ŀ¼�£����潨boot\grubĿ¼��bcdwĿ¼������������bcdwĿ¼�µ�bcdw.bin��bcdw.ini��loader.bin������������bcdwcd\bcdwĿ¼�£���grldr������img��������ļ�������bcdwcd\boot\grubĿ¼��menu.lst�ļ��ı༭����������2.1�н��ܵ���ͬ�� 
+2）组织文件。比如在E:\3333下建个bcdwcd目录，此目录下文件将在光盘根目录下，下面建boot\grub目录和bcdw目录，把软件包中bcdw目录下的bcdw.bin，bcdw.ini和loader.bin拷贝到所建的bcdwcd\bcdw目录下；把grldr、各种img、字体等文件拷贝到bcdwcd\boot\grub目录。menu.lst文件的编辑方法与上面2.1中介绍的相同。 
 
-3) �༭bcdw.ini�ļ�����bcdw.ini���ҵ�[MenuItems]���֣����磺 
+3) 编辑bcdw.ini文件。打开bcdw.ini，找到[MenuItems]部分，比如： 
 
 [MenuItems] 
 C:\ ; Boot from drive C:  
 \I386\setupldr.bin ; Microsoft Windows XP Setup 
 
 
-����ľ���BCDW�����˵������ӡ������м���grub�����ɣ� 
+上面的就是BCDW启动菜单的例子。在其中加上grub等项，变成： 
 
 [MenuItems] 
 
@@ -545,14 +545,14 @@ C:\ ; Boot from drive C:
 C:\ ; Boot from drive C:  
 \I386\setupldr.bin ; Microsoft Windows XP Setup 
 
-4������ISO�ļ����¼ISO�ķ�����2.1�еĻ�����ͬ������ͬ��ֻ��������ISO�ļ�ʱ��Ҫ��loader.bin����bcdw.bin����ΪISO�������ļ�����ͼ13�� 
+4）制作ISO文件与刻录ISO的方法与2.1中的基本相同。所不同的只是在制作ISO文件时，要把loader.bin（或bcdw.bin）作为ISO的引导文件。【图13】 
 
 
 
 
-Ҳ��ʹ��mkisofs.exe��CDIMAGE.EXE�ȹ�����������iso�� 
+也可使用mkisofs.exe或CDIMAGE.EXE等工具制作启动iso。 
 
-��������CDIMAGE����iso���������ǣ� 
+比如我用CDIMAGE制作iso的批处理是： 
 cdimage -lbcdwcd -t01/01/2007,00:00:00 -h -n -d -o -m -bload.bin bcdwcd bcdwcd.iso 
  
 

@@ -1,25 +1,31 @@
-ÓÃÊ²Ã´ÃüÁî°ÑGB2312/GBK/GB18030±àÂëµÄÎÄµµ×ª»»Îªutf-8±àÂë£¿ÈçºÎ·´Ïò×ª»»£¿
+iconv è½¬ç æ–‡ä»¶å†…å®¹
+convmv è½¬ç æ–‡ä»¶å
+
+
+ç”¨ä»€ä¹ˆå‘½ä»¤æŠŠGB2312/GBK/GB18030ç¼–ç çš„æ–‡æ¡£è½¬æ¢ä¸ºutf-8ç¼–ç ï¼Ÿå¦‚ä½•åå‘è½¬æ¢ï¼Ÿ
  
-´ğ£ºgb2312/gbk/gb18030 to utf-8Ê¹ÓÃÈçÏÂÃüÁî½«±àÂëÎªgb18030µÄfile1×ª»¯Îª±àÂëÎªutf-8µÄfile2£º 
+ç­”ï¼šgb2312/gbk/gb18030 to utf-8ä½¿ç”¨å¦‚ä¸‹å‘½ä»¤å°†ç¼–ç ä¸ºgb18030çš„file1è½¬åŒ–ä¸ºç¼–ç ä¸ºutf-8çš„file2ï¼š 
  iconv -f gb18030 -t utf-8 file1 > file2
 
-ÓĞµÄÏµÍ³Ã»ÓĞgb18030×Ö·û¼¯µÄÖ§³Ö£¬Õâ¸öÊ±ºò¿ÉÒÔÓÃ£º 
+æœ‰çš„ç³»ç»Ÿæ²¡æœ‰gb18030å­—ç¬¦é›†çš„æ”¯æŒï¼Œè¿™ä¸ªæ—¶å€™å¯ä»¥ç”¨ï¼š 
  iconv -f gbk -t utf-8 file1 > file2
 
-»òÕß£º 
+æˆ–è€…ï¼š 
  iconv -f gb2312 -t utf-8 file1 > file2
 
 
  iconv -f gb2312 -t utf-8 file1 -o file2
 
-·´Ö®£¬¿ÉÒÔÕâÑù×ª»»£º 
+åä¹‹ï¼Œå¯ä»¥è¿™æ ·è½¬æ¢ï¼š 
  iconv -f utf-8 -t gb18030 file2 > file1
 
-»òÕß£º 
+æˆ–è€…ï¼š 
  iconv -f utf-8 -t gbk file2 > file1
 
-»òÕß£º 
+æˆ–è€…ï¼š 
  iconv -f utf-8 -t gb2312 file2 > file1
 
-¸üÏêÏ¸µÄÓÃ·¨Çëman iconv 
+æ›´è¯¦ç»†çš„ç”¨æ³•è¯·man iconv 
 
+iconv -f gb18030 -t utf-8 filename >  newfilename.utf8
+convmv -f gb2312 -t utf8 * --notest             //convmvä¸æ”¯æŒGB18030 

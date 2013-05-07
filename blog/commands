@@ -1,17 +1,17 @@
-ndisasm           ·´»ã±à
+ndisasm           åæ±‡ç¼–
 readelf
 strace
-nm                ²é¿´¿â°üº¬µÄÎÄ¼ş
-gzexec            Ñ¹ËõÖ´ĞĞÎÄ¼ş
-axel              ÃüÁîĞĞ¶àÏß³Ì¿É¶ÏµãĞø´«ÏÂÔØ¹¤¾ß
-gprof             ´òÓ¡³ö³ÌĞòÔËĞĞÖĞ¸÷¸öº¯ÊıÏûºÄµÄÊ±¼ä,¿ÉÒÔ°ïÖú³ÌĞòÔ±ÕÒ³öÖÚ¶àº¯ÊıÖĞ×îºÄÊ±µÄº¯Êı,²úÉú³ÌĞòÔËĞĞ¹ı³ÌÖĞµÄµ÷ÓÃ¹ØÏµ,
-                  °üÀ¨µ÷ÓÃ´ÎÊı,¿ÉÒÔ°ïÖú³ÌĞòÔ±·ÖÎö³ÌĞòµÄÔËĞĞÁ÷³Ì
+nm                æŸ¥çœ‹åº“åŒ…å«çš„æ–‡ä»¶
+gzexec            å‹ç¼©æ‰§è¡Œæ–‡ä»¶
+axel              å‘½ä»¤è¡Œå¤šçº¿ç¨‹å¯æ–­ç‚¹ç»­ä¼ ä¸‹è½½å·¥å…·
+gprof             æ‰“å°å‡ºç¨‹åºè¿è¡Œä¸­å„ä¸ªå‡½æ•°æ¶ˆè€—çš„æ—¶é—´,å¯ä»¥å¸®åŠ©ç¨‹åºå‘˜æ‰¾å‡ºä¼—å¤šå‡½æ•°ä¸­æœ€è€—æ—¶çš„å‡½æ•°,äº§ç”Ÿç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­çš„è°ƒç”¨å…³ç³»,
+                  åŒ…æ‹¬è°ƒç”¨æ¬¡æ•°,å¯ä»¥å¸®åŠ©ç¨‹åºå‘˜åˆ†æç¨‹åºçš„è¿è¡Œæµç¨‹
 
 danted            //apt-get install dante-server    #socks4, 5 proxy server
-alsamixer         µ÷½ÚÒôÁ¿
-scrot		      ½ØÆÁ
+alsamixer         è°ƒèŠ‚éŸ³é‡
+scrot		      æˆªå±
 sniffjoke         Anti-sniffing Framework, a sniffer evasion tool (Anti-IDS/IPS)
-dmidecode | grep "Product Name"      ²é¿´»úÆ÷ĞÍºÅ  
+dmidecode | grep "Product Name"      æŸ¥çœ‹æœºå™¨å‹å·  
 tsocks            Shell wrapper to use of the tsocks library to transparently allow an application to use a SOCKS proxy: tsocks firefox
 proxychains
 warden            FreeBSD. The jail management program.

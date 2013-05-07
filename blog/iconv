@@ -1,1 +1,0 @@
-iconv -f gb18030 -t utf-8 filename >  newfilename.utf8

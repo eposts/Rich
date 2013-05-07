@@ -1,1545 +1,1545 @@
-Ê²Ã´ÊÇºÃµÄ³ÌÐòÔ±£¿ÊÇ²»ÊÇ¶®µÃºÜ¶à¼¼ÊõÏ¸½Ú£¿»¹ÊÇ¶®µ×²ã±à³Ì£¿»¹ÊÇ±à³ÌËÙ¶È±È½Ï¿ì£¿
+ä»€ä¹ˆæ˜¯å¥½çš„ç¨‹åºå‘˜ï¼Ÿæ˜¯ä¸æ˜¯æ‡‚å¾—å¾ˆå¤šæŠ€æœ¯ç»†èŠ‚ï¼Ÿè¿˜æ˜¯æ‡‚åº•å±‚ç¼–ç¨‹ï¼Ÿè¿˜æ˜¯ç¼–ç¨‹é€Ÿåº¦æ¯”è¾ƒå¿«ï¼Ÿ
 
-¡¡¡¡ÎÒ¾õµÃ¶¼²»ÊÇ¡£¶ÔÓÚÒ»Ð©¼¼ÊõÏ¸½ÚÀ´ËµºÍµ×²ãµÄ¼¼Êõ£¬Ö»Òª¿´°ïÖú£¬²é×ÊÁÏ¾ÍÄÜÕÒµ½£¬¶ÔÓÚËÙ¶È¿ì£¬Ö»Òª±àµÃ¶àÒ²¾ÍÊìÄÜÉúÇÉÁË¡£
+ã€€ã€€æˆ‘è§‰å¾—éƒ½ä¸æ˜¯ã€‚å¯¹äºŽä¸€äº›æŠ€æœ¯ç»†èŠ‚æ¥è¯´å’Œåº•å±‚çš„æŠ€æœ¯ï¼Œåªè¦çœ‹å¸®åŠ©ï¼ŒæŸ¥èµ„æ–™å°±èƒ½æ‰¾åˆ°ï¼Œå¯¹äºŽé€Ÿåº¦å¿«ï¼Œåªè¦ç¼–å¾—å¤šä¹Ÿå°±ç†Ÿèƒ½ç”Ÿå·§äº†ã€‚
 
-¡¡¡¡ÎÒÈÏÎªºÃµÄ³ÌÐòÔ±Ó¦¸ÃÓÐÒÔÏÂ¼¸·½ÃæµÄËØÖÊ£º
+ã€€ã€€æˆ‘è®¤ä¸ºå¥½çš„ç¨‹åºå‘˜åº”è¯¥æœ‰ä»¥ä¸‹å‡ æ–¹é¢çš„ç´ è´¨ï¼š
 
-¡¡¡¡1¡¢ÓÐ×¨ÑÐ¾«Éñ£¬ÇÚÑ§ÉÆÎÊ¡¢¾ÙÒ»·´Èý¡£
+ã€€ã€€1ã€æœ‰ä¸“ç ”ç²¾ç¥žï¼Œå‹¤å­¦å–„é—®ã€ä¸¾ä¸€åä¸‰ã€‚
 
-¡¡¡¡2¡¢»ý¼«ÏòÉÏµÄÌ¬¶È£¬ÓÐ´´ÔìÐÔË¼Î¬¡£
+ã€€ã€€2ã€ç§¯æžå‘ä¸Šçš„æ€åº¦ï¼Œæœ‰åˆ›é€ æ€§æ€ç»´ã€‚
 
-¡¡¡¡3¡¢ÓëÈË»ý¼«½»Á÷¹µÍ¨µÄÄÜÁ¦£¬ÓÐÍÅ¶Ó¾«Éñ¡£
+ã€€ã€€3ã€ä¸Žäººç§¯æžäº¤æµæ²Ÿé€šçš„èƒ½åŠ›ï¼Œæœ‰å›¢é˜Ÿç²¾ç¥žã€‚
 
-¡¡¡¡4¡¢Ç«Ðé½÷É÷£¬½ä½¾½äÔï¡£
+ã€€ã€€4ã€è°¦è™šè°¨æ…Žï¼Œæˆ’éª„æˆ’ç‡¥ã€‚
 
-¡¡¡¡5¡¢Ð´³öµÄ´úÂëÖÊÁ¿¸ß¡£°üÀ¨£º´úÂëµÄÎÈ¶¨¡¢Ò×¶Á¡¢¹æ·¶¡¢Ò×Î¬»¤¡¢×¨Òµ¡£
+ã€€ã€€5ã€å†™å‡ºçš„ä»£ç è´¨é‡é«˜ã€‚åŒ…æ‹¬ï¼šä»£ç çš„ç¨³å®šã€æ˜“è¯»ã€è§„èŒƒã€æ˜“ç»´æŠ¤ã€ä¸“ä¸šã€‚
 
-¡¡¡¡ÕâÐ©¶¼ÊÇ³ÌÐòÔ±µÄÐÞÑø£¬ÕâÀïÎÒÏëÌ¸Ì¸¡°±à³ÌÐÞÑø¡±£¬Ò²¾ÍÊÇÉÏÊöÖÐµÄµÚ5µã¡£ÎÒ¾õµÃ£¬Èç¹ûÎÒÒªÁË½âÒ»¸ö×÷Õß£¬ÎÒ»á¿´ËûËùÐ´µÄÐ¡Ëµ£¬Èç¹ûÎÒÒªÁË½âÒ»¸ö»­¼Ò£¬ÎÒ»á¿´ËûËù»­µÄÍ¼»­£¬Èç¹ûÎÒÒªÁË½âÒ»¸ö¹¤ÈË£¬ÎÒ»á¿´ËûËù×ö³öÀ´µÄ²úÆ·£¬Í¬Ñù£¬Èç¹ûÎÒÒªÁË½âÒ»¸ö³ÌÐòÔ±£¬ÎÒÏëÊ×ÏÈÎÒ×îÏë¿´µÄ¾ÍÊÇËûµÄ³ÌÐò´úÂë£¬³ÌÐò´úÂë¿ÉÒÔ¿´³öÒ»¸ö³ÌÐòÔ±µÄËØÖÊºÍÐÞÑø£¬³ÌÐò¾ÍÏñÒ»¸ö×÷Æ·£¬ÓÐËØÖÊÓÐÐÞÑøµÄ³ÌÐòÔ±µÄ×÷Æ·±ØÈ»ÊÇÒ»Í¼¾«ÃÀµÄÍ¼»­£¬Ò»Ê×ÃÀÃîµÄ¸èÇú£¬Ò»±¾ÉÍÐÄÔÃÄ¿µÄÐ¡Ëµ¡£ÎÒ¿´¹ýÐí¶à³ÌÐò£¬Ã»ÓÐ×¢ÊÍ£¬Ã»ÓÐËõ½ø£¬ºúÂÒÃüÃûµÄ±äÁ¿Ãû£¬µÈµÈ£¬µÈµÈ£¬ÎÒ°ÑÕâÖÖÈËÍ³³ÆÎªÃ»ÓÐÐÞÑøµÄ³ÌÐò£¬ÕâÖÖ³ÌÐòÔ±£¬ÊÇÔÚ×ö´´ÔìÐÔµÄ¹¤×÷Âð£¿²»£¬ÍêÈ«¾ÍÊÇÔÚ¸ãÆÆ»µ£¬ËûÃÇÓëÆäËµÊÇÔÚ±à³Ì£¬»¹²»ÈçËµÊÇÔÚ¶ÔÔ´³ÌÐò½øÐÐ¡°¼ÓÃÜ¡±£¬ÕâÖÖ³ÌÐòÔ±£¬¼ûÒ»¸ö¾ÍÓ¦¸Ã¿ª³ýÒ»¸ö£¬ÒòÎªËû±àµÄ³ÌÐòËù´´ÔìµÄ¼ÛÖµ£¬Ô¶Ô¶Ð¡ÓÚÐèÒªÔÚÉÏÃæ½øÐÐÎ¬»¤µÄ¼ÛÖµ¡£³ÌÐòÔ±Ó¦¸ÃÓÐ³ÌÐòÔ±µÄÐÞÑø£¬ÄÇÅÂÔÙÀÛ£¬ÔÙÃ»Ê±¼ä£¬Ò²Òª¶Ô×Ô¼ºµÄ³ÌÐò¸ºÔð¡£ÎÒÄþ¿ÉÒªÄÇÖÖ¶¯×÷Âý£¬¼¼ÊõÒ»°ã£¬µ«ÓÐÁ¼ºÃµÄÐ´³ÌÐò·ç¸ñµÄ³ÌÐòÔ±£¬Ò²²»ÒªÄÇÖÖ¼¼ÊõÇ¿¡¢¶¯×÷¿ìµÄ¡°¸ãÆÆ»µ¡±µÄ³ÌÐòÔ±¡£ÓÐ¾ä»°½Ð¡°×ÖÈçÆäÈË¡±£¬ÎÒÏë´Ó³ÌÐòÉÏÒ²ÄÜ¿´³öÒ»¸ö³ÌÐòÔ±µÄÓÅÁÓ¡£ÒòÎª£¬³ÌÐòÊÇ³ÌÐòÔ±µÄ×÷Æ·£¬×÷Æ·µÄºÃ»µÖ±½Ø¹ØÏµµ½³ÌÐòÔ±µÄÉùÓþºÍËØÖÊ¡£¶ø¡°ÐÞÑø¡±ºÃµÄ³ÌÐòÔ±Ò»¶¨ÄÜ×ö³öºÃµÄ³ÌÐòºÍÈí¼þ¡£ÓÐ¸ö³ÉÓï½Ð¡°¶À¾ß½³ÐÄ¡±£¬ÒâË¼ÊÇ×öÊ²Ã´¶¼Òª×öµÃºÜ×¨Òµ£¬ºÜÓÃÐÄ£¬Èç¹ûÄãÒª×öÒ»¸ö¡°½³¡±£¬Ò²¾ÍÊÇÔìÒè¸ßÉîµÄÈË£¬ÄÇÃ´£¬´ÓÒ»¼þºÜ¼òµ¥µÄ×÷Æ·ÉÏ¾ÍÄÜ¿´³öÄãÓÐÃ»ÓÐ¡°½³¡±µÄÌØÐÔ£¬ÎÒ¾õµÃ×öÒ»¸ö³ÌÐòÔ±²»ÄÑ£¬µ«Òª×öÒ»¸ö¡°³ÌÐò½³¡±¾Í²»¼òµ¥ÁË¡£±à³ÌÐòºÜ¼òµ¥£¬µ«±à³öÓÐÖÊÁ¿µÄ³ÌÐò¾ÍÄÑÁË¡£
+ã€€ã€€è¿™äº›éƒ½æ˜¯ç¨‹åºå‘˜çš„ä¿®å…»ï¼Œè¿™é‡Œæˆ‘æƒ³è°ˆè°ˆâ€œç¼–ç¨‹ä¿®å…»â€ï¼Œä¹Ÿå°±æ˜¯ä¸Šè¿°ä¸­çš„ç¬¬5ç‚¹ã€‚æˆ‘è§‰å¾—ï¼Œå¦‚æžœæˆ‘è¦äº†è§£ä¸€ä¸ªä½œè€…ï¼Œæˆ‘ä¼šçœ‹ä»–æ‰€å†™çš„å°è¯´ï¼Œå¦‚æžœæˆ‘è¦äº†è§£ä¸€ä¸ªç”»å®¶ï¼Œæˆ‘ä¼šçœ‹ä»–æ‰€ç”»çš„å›¾ç”»ï¼Œå¦‚æžœæˆ‘è¦äº†è§£ä¸€ä¸ªå·¥äººï¼Œæˆ‘ä¼šçœ‹ä»–æ‰€åšå‡ºæ¥çš„äº§å“ï¼ŒåŒæ ·ï¼Œå¦‚æžœæˆ‘è¦äº†è§£ä¸€ä¸ªç¨‹åºå‘˜ï¼Œæˆ‘æƒ³é¦–å…ˆæˆ‘æœ€æƒ³çœ‹çš„å°±æ˜¯ä»–çš„ç¨‹åºä»£ç ï¼Œç¨‹åºä»£ç å¯ä»¥çœ‹å‡ºä¸€ä¸ªç¨‹åºå‘˜çš„ç´ è´¨å’Œä¿®å…»ï¼Œç¨‹åºå°±åƒä¸€ä¸ªä½œå“ï¼Œæœ‰ç´ è´¨æœ‰ä¿®å…»çš„ç¨‹åºå‘˜çš„ä½œå“å¿…ç„¶æ˜¯ä¸€å›¾ç²¾ç¾Žçš„å›¾ç”»ï¼Œä¸€é¦–ç¾Žå¦™çš„æ­Œæ›²ï¼Œä¸€æœ¬èµå¿ƒæ‚¦ç›®çš„å°è¯´ã€‚æˆ‘çœ‹è¿‡è®¸å¤šç¨‹åºï¼Œæ²¡æœ‰æ³¨é‡Šï¼Œæ²¡æœ‰ç¼©è¿›ï¼Œèƒ¡ä¹±å‘½åçš„å˜é‡åï¼Œç­‰ç­‰ï¼Œç­‰ç­‰ï¼Œæˆ‘æŠŠè¿™ç§äººç»Ÿç§°ä¸ºæ²¡æœ‰ä¿®å…»çš„ç¨‹åºï¼Œè¿™ç§ç¨‹åºå‘˜ï¼Œæ˜¯åœ¨åšåˆ›é€ æ€§çš„å·¥ä½œå—ï¼Ÿä¸ï¼Œå®Œå…¨å°±æ˜¯åœ¨æžç ´åï¼Œä»–ä»¬ä¸Žå…¶è¯´æ˜¯åœ¨ç¼–ç¨‹ï¼Œè¿˜ä¸å¦‚è¯´æ˜¯åœ¨å¯¹æºç¨‹åºè¿›è¡Œâ€œåŠ å¯†â€ï¼Œè¿™ç§ç¨‹åºå‘˜ï¼Œè§ä¸€ä¸ªå°±åº”è¯¥å¼€é™¤ä¸€ä¸ªï¼Œå› ä¸ºä»–ç¼–çš„ç¨‹åºæ‰€åˆ›é€ çš„ä»·å€¼ï¼Œè¿œè¿œå°äºŽéœ€è¦åœ¨ä¸Šé¢è¿›è¡Œç»´æŠ¤çš„ä»·å€¼ã€‚ç¨‹åºå‘˜åº”è¯¥æœ‰ç¨‹åºå‘˜çš„ä¿®å…»ï¼Œé‚£æ€•å†ç´¯ï¼Œå†æ²¡æ—¶é—´ï¼Œä¹Ÿè¦å¯¹è‡ªå·±çš„ç¨‹åºè´Ÿè´£ã€‚æˆ‘å®å¯è¦é‚£ç§åŠ¨ä½œæ…¢ï¼ŒæŠ€æœ¯ä¸€èˆ¬ï¼Œä½†æœ‰è‰¯å¥½çš„å†™ç¨‹åºé£Žæ ¼çš„ç¨‹åºå‘˜ï¼Œä¹Ÿä¸è¦é‚£ç§æŠ€æœ¯å¼ºã€åŠ¨ä½œå¿«çš„â€œæžç ´åâ€çš„ç¨‹åºå‘˜ã€‚æœ‰å¥è¯å«â€œå­—å¦‚å…¶äººâ€ï¼Œæˆ‘æƒ³ä»Žç¨‹åºä¸Šä¹Ÿèƒ½çœ‹å‡ºä¸€ä¸ªç¨‹åºå‘˜çš„ä¼˜åŠ£ã€‚å› ä¸ºï¼Œç¨‹åºæ˜¯ç¨‹åºå‘˜çš„ä½œå“ï¼Œä½œå“çš„å¥½åç›´æˆªå…³ç³»åˆ°ç¨‹åºå‘˜çš„å£°èª‰å’Œç´ è´¨ã€‚è€Œâ€œä¿®å…»â€å¥½çš„ç¨‹åºå‘˜ä¸€å®šèƒ½åšå‡ºå¥½çš„ç¨‹åºå’Œè½¯ä»¶ã€‚æœ‰ä¸ªæˆè¯­å«â€œç‹¬å…·åŒ å¿ƒâ€ï¼Œæ„æ€æ˜¯åšä»€ä¹ˆéƒ½è¦åšå¾—å¾ˆä¸“ä¸šï¼Œå¾ˆç”¨å¿ƒï¼Œå¦‚æžœä½ è¦åšä¸€ä¸ªâ€œåŒ â€ï¼Œä¹Ÿå°±æ˜¯é€ è¯£é«˜æ·±çš„äººï¼Œé‚£ä¹ˆï¼Œä»Žä¸€ä»¶å¾ˆç®€å•çš„ä½œå“ä¸Šå°±èƒ½çœ‹å‡ºä½ æœ‰æ²¡æœ‰â€œåŒ â€çš„ç‰¹æ€§ï¼Œæˆ‘è§‰å¾—åšä¸€ä¸ªç¨‹åºå‘˜ä¸éš¾ï¼Œä½†è¦åšä¸€ä¸ªâ€œç¨‹åºåŒ â€å°±ä¸ç®€å•äº†ã€‚ç¼–ç¨‹åºå¾ˆç®€å•ï¼Œä½†ç¼–å‡ºæœ‰è´¨é‡çš„ç¨‹åºå°±éš¾äº†ã€‚
 
-¡¡¡¡ÎÒÔÚÕâÀï²»ÌÖÂÛ¹ýÉîµÄ¼¼Êõ£¬ÎÒÖ»ÏëÔÚÒ»Ð©ÈÝÒ×ÈÃÈËºöÂÔµÄ¶«Î÷ÉÏËµÒ»Ëµ£¬ËäÈ»ÕâÐ©¶«Î÷¿ÉÄÜºÜÏ¸Î¢£¬µ«Èç¹ûÄã²»×¢ÒâÕâÐ©Ï¸Î¢Ö®´¦µÄ»°£¬ÄÇÃ´Ëû½«»á¼«´óµÄÓ°ÏìÄãµÄÕû¸öÈí¼þÖÊÁ¿£¬ÒÔ¼°Õû¸öÈí¼þ³ÌµÄÊµÊ©£¬ËùÎ½¡°Ç§ÀïÖ®µÌ£¬»ÙÓÚÒÏÑ¨¡±¡£¡°Ï¸Î¢Ö®´¦¼ûÕæ¹¦¡±£¬ÕæÕýÄÜÌåÏÖÒ»¸ö³ÌÐòµÄ¹¦µ×Ç¡Ç¡ÔÚÕâÐ©Ï¸Î¢Ö®´¦¡£
+ã€€ã€€æˆ‘åœ¨è¿™é‡Œä¸è®¨è®ºè¿‡æ·±çš„æŠ€æœ¯ï¼Œæˆ‘åªæƒ³åœ¨ä¸€äº›å®¹æ˜“è®©äººå¿½ç•¥çš„ä¸œè¥¿ä¸Šè¯´ä¸€è¯´ï¼Œè™½ç„¶è¿™äº›ä¸œè¥¿å¯èƒ½å¾ˆç»†å¾®ï¼Œä½†å¦‚æžœä½ ä¸æ³¨æ„è¿™äº›ç»†å¾®ä¹‹å¤„çš„è¯ï¼Œé‚£ä¹ˆä»–å°†ä¼šæžå¤§çš„å½±å“ä½ çš„æ•´ä¸ªè½¯ä»¶è´¨é‡ï¼Œä»¥åŠæ•´ä¸ªè½¯ä»¶ç¨‹çš„å®žæ–½ï¼Œæ‰€è°“â€œåƒé‡Œä¹‹å ¤ï¼Œæ¯äºŽèšç©´â€ã€‚â€œç»†å¾®ä¹‹å¤„è§çœŸåŠŸâ€ï¼ŒçœŸæ­£èƒ½ä½“çŽ°ä¸€ä¸ªç¨‹åºçš„åŠŸåº•æ°æ°åœ¨è¿™äº›ç»†å¾®ä¹‹å¤„ã€‚
 
-¡¡¡¡Õâ¾ÍÊÇ³ÌÐòÔ±µÄ¡ª¡ª±à³ÌÐÞÑø¡£ÎÒ×Ü½áÁËÔÚÓÃC/C++ÓïÑÔ£¨Ö÷ÒªÊÇCÓïÑÔ£©½øÐÐ³ÌÐòÐ´×÷ÉÏµÄÈýÊ®¶þ¸ö¡°ÐÞÑø¡±£¬Í¨¹ýÕâÐ©£¬Äã¿ÉÒÔÐ´³öÖÊÁ¿¸ßµÄ³ÌÐò£¬Í¬Ê±Ò²»áÈÃ¿´Äã³ÌÐòµÄÈË×Õ×Õ³ÆµÀ£¬ÄÇÐ©¿´¹ýÄã³ÌÐòµÄÈËÒ»¶¨»áËµ£º¡°Õâ¸öÈËµÄ±à³ÌÐÞÑø²»´í¡±¡£
+ã€€ã€€è¿™å°±æ˜¯ç¨‹åºå‘˜çš„â€”â€”ç¼–ç¨‹ä¿®å…»ã€‚æˆ‘æ€»ç»“äº†åœ¨ç”¨C/C++è¯­è¨€ï¼ˆä¸»è¦æ˜¯Cè¯­è¨€ï¼‰è¿›è¡Œç¨‹åºå†™ä½œä¸Šçš„ä¸‰åäºŒä¸ªâ€œä¿®å…»â€ï¼Œé€šè¿‡è¿™äº›ï¼Œä½ å¯ä»¥å†™å‡ºè´¨é‡é«˜çš„ç¨‹åºï¼ŒåŒæ—¶ä¹Ÿä¼šè®©çœ‹ä½ ç¨‹åºçš„äººæ¸æ¸ç§°é“ï¼Œé‚£äº›çœ‹è¿‡ä½ ç¨‹åºçš„äººä¸€å®šä¼šè¯´ï¼šâ€œè¿™ä¸ªäººçš„ç¼–ç¨‹ä¿®å…»ä¸é”™â€ã€‚
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-¡¡¡¡01¡¢°æÈ¨ºÍ°æ±¾
+ã€€ã€€01ã€ç‰ˆæƒå’Œç‰ˆæœ¬
 
-¡¡¡¡02¡¢Ëõ½ø¡¢¿Õ¸ñ¡¢»»ÐÐ¡¢¿ÕÐÐ¡¢¶ÔÆë
+ã€€ã€€02ã€ç¼©è¿›ã€ç©ºæ ¼ã€æ¢è¡Œã€ç©ºè¡Œã€å¯¹é½
 
-¡¡¡¡03¡¢³ÌÐò×¢ÊÍ
+ã€€ã€€03ã€ç¨‹åºæ³¨é‡Š
 
-¡¡¡¡04¡¢º¯ÊýµÄ[in][out]²ÎÊý
+ã€€ã€€04ã€å‡½æ•°çš„[in][out]å‚æ•°
 
-¡¡¡¡05¡¢¶ÔÏµÍ³µ÷ÓÃµÄ·µ»Ø½øÐÐÅÐ¶Ï
+ã€€ã€€05ã€å¯¹ç³»ç»Ÿè°ƒç”¨çš„è¿”å›žè¿›è¡Œåˆ¤æ–­
 
-¡¡¡¡06¡¢if Óï¾ä¶Ô³ö´íµÄ´¦Àí
+ã€€ã€€06ã€if è¯­å¥å¯¹å‡ºé”™çš„å¤„ç†
 
-¡¡¡¡07¡¢Í·ÎÄ¼þÖÐµÄ#ifndef
+ã€€ã€€07ã€å¤´æ–‡ä»¶ä¸­çš„#ifndef
 
-¡¡¡¡08¡¢ÔÚ¶ÑÉÏ·ÖÅäÄÚ´æ
+ã€€ã€€08ã€åœ¨å †ä¸Šåˆ†é…å†…å­˜
 
-¡¡¡¡09¡¢±äÁ¿µÄ³õÊ¼»¯
+ã€€ã€€09ã€å˜é‡çš„åˆå§‹åŒ–
 
-¡¡¡¡10¡¢hºÍcÎÄ¼þµÄÊ¹ÓÃ
+ã€€ã€€10ã€hå’Œcæ–‡ä»¶çš„ä½¿ç”¨
 
-¡¡¡¡11¡¢³ö´íÐÅÏ¢µÄ´¦Àí
+ã€€ã€€11ã€å‡ºé”™ä¿¡æ¯çš„å¤„ç†
 
-¡¡¡¡12¡¢³£ÓÃº¯ÊýºÍÑ­»·Óï¾äÖÐµÄ±»¼ÆËãÁ¿
+ã€€ã€€12ã€å¸¸ç”¨å‡½æ•°å’Œå¾ªçŽ¯è¯­å¥ä¸­çš„è¢«è®¡ç®—é‡
 
-¡¡¡¡13¡¢º¯ÊýÃûºÍ±äÁ¿ÃûµÄÃüÃû
+ã€€ã€€13ã€å‡½æ•°åå’Œå˜é‡åçš„å‘½å
 
-¡¡¡¡14¡¢º¯ÊýµÄ´«ÖµºÍ´«Ö¸Õë
+ã€€ã€€14ã€å‡½æ•°çš„ä¼ å€¼å’Œä¼ æŒ‡é’ˆ
 
-¡¡¡¡15¡¢ÐÞ¸Ä±ðÈË³ÌÐòµÄÐÞÑø
+ã€€ã€€15ã€ä¿®æ”¹åˆ«äººç¨‹åºçš„ä¿®å…»
 
-¡¡¡¡16¡¢°ÑÏàÍ¬»ò½üºõÏàÍ¬µÄ´úÂëÐÎ³Éº¯ÊýºÍºê
+ã€€ã€€16ã€æŠŠç›¸åŒæˆ–è¿‘ä¹Žç›¸åŒçš„ä»£ç å½¢æˆå‡½æ•°å’Œå®
 
-¡¡¡¡17¡¢±í´ïÊ½ÖÐµÄÀ¨ºÅ
+ã€€ã€€17ã€è¡¨è¾¾å¼ä¸­çš„æ‹¬å·
 
-¡¡¡¡18¡¢º¯Êý²ÎÊýÖÐµÄconst
+ã€€ã€€18ã€å‡½æ•°å‚æ•°ä¸­çš„const
 
-¡¡¡¡19¡¢º¯ÊýµÄ²ÎÊý¸öÊý
+ã€€ã€€19ã€å‡½æ•°çš„å‚æ•°ä¸ªæ•°
 
-¡¡¡¡20¡¢º¯ÊýµÄ·µ»ØÀàÐÍ£¬²»ÒªÊ¡ÂÔ
+ã€€ã€€20ã€å‡½æ•°çš„è¿”å›žç±»åž‹ï¼Œä¸è¦çœç•¥
 
-¡¡¡¡21¡¢gotoÓï¾äµÄÊ¹ÓÃ
+ã€€ã€€21ã€gotoè¯­å¥çš„ä½¿ç”¨
 
-¡¡¡¡22¡¢ºêµÄÊ¹ÓÃ
+ã€€ã€€22ã€å®çš„ä½¿ç”¨
 
-¡¡¡¡23¡¢staticµÄÊ¹ÓÃ
+ã€€ã€€23ã€staticçš„ä½¿ç”¨
 
-¡¡¡¡24¡¢º¯ÊýÖÐµÄ´úÂë³ß´ç
+ã€€ã€€24ã€å‡½æ•°ä¸­çš„ä»£ç å°ºå¯¸
 
-¡¡¡¡25¡¢typedefµÄÊ¹ÓÃ
+ã€€ã€€25ã€typedefçš„ä½¿ç”¨
 
-¡¡¡¡26¡¢Îª³£Á¿ÉùÃ÷ºê
+ã€€ã€€26ã€ä¸ºå¸¸é‡å£°æ˜Žå®
 
-¡¡¡¡27¡¢²»ÒªÎªºê¶¨Òå¼Ó·ÖºÅ
+ã€€ã€€27ã€ä¸è¦ä¸ºå®å®šä¹‰åŠ åˆ†å·
 
-¡¡¡¡28¡¢||ºÍ&&µÄÓï¾äÖ´ÐÐË³Ðò
+ã€€ã€€28ã€||å’Œ&&çš„è¯­å¥æ‰§è¡Œé¡ºåº
 
-¡¡¡¡29¡¢¾¡Á¿ÓÃfor¶ø²»ÊÇwhile×öÑ­»·
+ã€€ã€€29ã€å°½é‡ç”¨forè€Œä¸æ˜¯whileåšå¾ªçŽ¯
 
-¡¡¡¡30¡¢ÇësizeofÀàÐÍ¶ø²»ÊÇ±äÁ¿
+ã€€ã€€30ã€è¯·sizeofç±»åž‹è€Œä¸æ˜¯å˜é‡
 
-¡¡¡¡31¡¢²»ÒªºöÂÔWarning
+ã€€ã€€31ã€ä¸è¦å¿½ç•¥Warning
 
-¡¡¡¡32¡¢ÊéÐ´Debug°æºÍRelease°æµÄ³ÌÐò
+ã€€ã€€32ã€ä¹¦å†™Debugç‰ˆå’ŒReleaseç‰ˆçš„ç¨‹åº
 
-¡¡¡¡21¡¢gotoÓï¾¿ªÊ Ê¹¾¢
+ã€€ã€€21ã€gotoè¯­ç©¶î€© ä½¿åŠ²
 
-¡¡¡¡22¡¢ºêµÄÊ¹ÓÃ
+ã€€ã€€22ã€å®çš„ä½¿ç”¨
 
-¡¡¡¡23¡¢staticµÄÊ¹ÓÃ
+ã€€ã€€23ã€staticçš„ä½¿ç”¨
 
-¡¡¡¡24¡¢º¯ÊýÖÐµÄ´úÂë³ß´ç
+ã€€ã€€24ã€å‡½æ•°ä¸­çš„ä»£ç å°ºå¯¸
 
-¡¡¡¡25¡¢typedefµÄÊ¹ÓÃ
+ã€€ã€€25ã€typedefçš„ä½¿ç”¨
 
-¡¡¡¡26¡¢Îª³£Á¿ÉùÃ÷ºê
+ã€€ã€€26ã€ä¸ºå¸¸é‡å£°æ˜Žå®
 
-¡¡¡¡27¡¢²»ÒªÎªºê¶¨Òå¼Ó·ÖºÅ
+ã€€ã€€27ã€ä¸è¦ä¸ºå®å®šä¹‰åŠ åˆ†å·
 
-¡¡¡¡28¡¢||ºÍ&&µÄÓï¾äÖ´ÐÐË³Ðò
+ã€€ã€€28ã€||å’Œ&&çš„è¯­å¥æ‰§è¡Œé¡ºåº
 
-¡¡¡¡29¡¢¾¡Á¿ÓÃfor¶ø²»ÊÇwhile×öÑ­»·
+ã€€ã€€29ã€å°½é‡ç”¨forè€Œä¸æ˜¯whileåšå¾ªçŽ¯
 
-¡¡¡¡30¡¢ÇësizeofÀàÐÍ¶ø²»ÊÇ±äÁ¿
+ã€€ã€€30ã€è¯·sizeofç±»åž‹è€Œä¸æ˜¯å˜é‡
 
-¡¡¡¡31¡¢²»ÒªºöÂÔWarning
+ã€€ã€€31ã€ä¸è¦å¿½ç•¥Warning
 
-¡¡¡¡32¡¢ÊéÐ´Debug°æºÍRelease°æµÄ³ÌÐò
+ã€€ã€€32ã€ä¹¦å†™Debugç‰ˆå’ŒReleaseç‰ˆçš„ç¨‹åº
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-¡¡¡¡1¡¢°æÈ¨ºÍ°æ±¾
+ã€€ã€€1ã€ç‰ˆæƒå’Œç‰ˆæœ¬
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”â€”â€”
 
-¡¡¡¡ºÃµÄ³ÌÐòÔ±»á¸ø×Ô¼ºµÄÃ¿¸öº¯Êý£¬Ã¿¸öÎÄ¼þ£¬¶¼×¢ÉÏ°æÈ¨ºÍ°æ±¾¡£
+ã€€ã€€å¥½çš„ç¨‹åºå‘˜ä¼šç»™è‡ªå·±çš„æ¯ä¸ªå‡½æ•°ï¼Œæ¯ä¸ªæ–‡ä»¶ï¼Œéƒ½æ³¨ä¸Šç‰ˆæƒå’Œç‰ˆæœ¬ã€‚
 
-¡¡¡¡¶ÔÓÚC/C++µÄÎÄ¼þ£¬ÎÄ¼þÍ·Ó¦¸ÃÓÐÀàËÆÕâÑùµÄ×¢ÊÍ£º
+ã€€ã€€å¯¹äºŽC/C++çš„æ–‡ä»¶ï¼Œæ–‡ä»¶å¤´åº”è¯¥æœ‰ç±»ä¼¼è¿™æ ·çš„æ³¨é‡Šï¼š
 
-¡¡¡¡/************************************************************************
+ã€€ã€€/************************************************************************
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ÎÄ¼þÃû£ºnetwork.c
+      ã€€ã€€* æ–‡ä»¶åï¼šnetwork.c
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ÎÄ¼þÃèÊö£ºÍøÂçÍ¨Ñ¶º¯Êý¼¯
+      ã€€ã€€* æ–‡ä»¶æè¿°ï¼šç½‘ç»œé€šè®¯å‡½æ•°é›†
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ´´½¨ÈË£º Hao Chen, 2003Äê2ÔÂ3ÈÕ
+      ã€€ã€€* åˆ›å»ºäººï¼š Hao Chen, 2003å¹´2æœˆ3æ—¥
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* °æ±¾ºÅ£º1.0
+      ã€€ã€€* ç‰ˆæœ¬å·ï¼š1.0
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ÐÞ¸Ä¼ÇÂ¼£º
+      ã€€ã€€* ä¿®æ”¹è®°å½•ï¼š
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡************************************************************************/
+      ã€€ã€€************************************************************************/
 
-¡¡¡¡¶ø¶ÔÓÚº¯ÊýÀ´Ëµ£¬Ó¦¸ÃÒ²ÓÐÀàËÆÓÚÕâÑùµÄ×¢ÊÍ£º
+ã€€ã€€è€Œå¯¹äºŽå‡½æ•°æ¥è¯´ï¼Œåº”è¯¥ä¹Ÿæœ‰ç±»ä¼¼äºŽè¿™æ ·çš„æ³¨é‡Šï¼š
 
-¡¡¡¡/*================================================================
+ã€€ã€€/*================================================================
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* º¯ Êý Ãû£ºXXX
+      ã€€ã€€* å‡½ æ•° åï¼šXXX
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ²Î Êý£º
+      ã€€ã€€* å‚ æ•°ï¼š
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* type name [IN] : descripts
+      ã€€ã€€* type name [IN] : descripts
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ¹¦ÄÜÃèÊö:
+      ã€€ã€€* åŠŸèƒ½æè¿°:
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ..............
+      ã€€ã€€* ..............
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ·µ »Ø Öµ£º³É¹¦TRUE£¬Ê§°ÜFALSE
+      ã€€ã€€* è¿” å›ž å€¼ï¼šæˆåŠŸTRUEï¼Œå¤±è´¥FALSE
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* Å×³öÒì³££º
+      ã€€ã€€* æŠ›å‡ºå¼‚å¸¸ï¼š
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡* ×÷ Õß£ºChenHao 2003/4/2
+      ã€€ã€€* ä½œ è€…ï¼šChenHao 2003/4/2
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡*
+      ã€€ã€€*
 
-      ¡¡¡¡================================================================*/
+      ã€€ã€€================================================================*/
 
-¡¡¡¡ÕâÑùµÄÃèÊö¿ÉÒÔÈÃÈË¶ÔÒ»¸öº¯Êý£¬Ò»¸öÎÄ¼þÓÐÒ»¸ö×ÜÌåµÄÈÏÊ¶£¬¶Ô´úÂëµÄÒ×¶ÁÐÔºÍÒ×Î¬»¤ÐÔÓÐºÜ´óµÄºÃ´¦¡£ÕâÊÇºÃµÄ×÷Æ·²úÉúµÄ¿ªÊ¼¡£
+ã€€ã€€è¿™æ ·çš„æè¿°å¯ä»¥è®©äººå¯¹ä¸€ä¸ªå‡½æ•°ï¼Œä¸€ä¸ªæ–‡ä»¶æœ‰ä¸€ä¸ªæ€»ä½“çš„è®¤è¯†ï¼Œå¯¹ä»£ç çš„æ˜“è¯»æ€§å’Œæ˜“ç»´æŠ¤æ€§æœ‰å¾ˆå¤§çš„å¥½å¤„ã€‚è¿™æ˜¯å¥½çš„ä½œå“äº§ç”Ÿçš„å¼€å§‹ã€‚
 
-¡¡¡¡2¡¢Ëõ½ø¡¢¿Õ¸ñ¡¢»»ÐÐ¡¢¿ÕÐÐ¡¢¶ÔÆë
+ã€€ã€€2ã€ç¼©è¿›ã€ç©ºæ ¼ã€æ¢è¡Œã€ç©ºè¡Œã€å¯¹é½
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-¡¡¡¡i) Ëõ½øÓ¦¸ÃÊÇÃ¿¸ö³ÌÐò¶¼»á×öµÄ£¬Ö»ÒªÑ§³ÌÐò¹ý³ÌÐò¾ÍÓ¦¸ÃÖªµÀÕâ¸ö£¬µ«ÊÇÎÒÈÔÈ»¿´¹ý²»Ëõ½øµÄ³ÌÐò£¬»òÊÇÂÒËõ½øµÄ³ÌÐò£¬Èç¹ûÄãµÄ¹«Ë¾»¹ÓÐÐ´³ÌÐò²»Ëõ½øµÄ³ÌÐòÔ±£¬ÇëºÁ²»ÓÌÔ¥µÄ¿ª³ýËû°É£¬²¢ÒÔÆÆ»µÔ´Âë×ïÆðËßËû£¬»¹ÒªËûÅâ³¥¶Á¹ýËû³ÌÐòµÄÈËµÄ¾«ÉñËðÊ§·Ñ¡£Ëõ½ø£¬ÕâÊÇ²»³ÉÎÄ¹æ¾Ø£¬ÎÒÔÙÖØÌáÒ»ÏÂ°É£¬Ò»¸öËõ½øÒ»°ãÊÇÒ»¸öTAB¼ü»òÊÇ4¸ö¿Õ¸ñ¡££¨×îºÃÓÃTAB¼ü£©
+ã€€ã€€i) ç¼©è¿›åº”è¯¥æ˜¯æ¯ä¸ªç¨‹åºéƒ½ä¼šåšçš„ï¼Œåªè¦å­¦ç¨‹åºè¿‡ç¨‹åºå°±åº”è¯¥çŸ¥é“è¿™ä¸ªï¼Œä½†æ˜¯æˆ‘ä»ç„¶çœ‹è¿‡ä¸ç¼©è¿›çš„ç¨‹åºï¼Œæˆ–æ˜¯ä¹±ç¼©è¿›çš„ç¨‹åºï¼Œå¦‚æžœä½ çš„å…¬å¸è¿˜æœ‰å†™ç¨‹åºä¸ç¼©è¿›çš„ç¨‹åºå‘˜ï¼Œè¯·æ¯«ä¸çŠ¹è±«çš„å¼€é™¤ä»–å§ï¼Œå¹¶ä»¥ç ´åæºç ç½ªèµ·è¯‰ä»–ï¼Œè¿˜è¦ä»–èµ”å¿è¯»è¿‡ä»–ç¨‹åºçš„äººçš„ç²¾ç¥žæŸå¤±è´¹ã€‚ç¼©è¿›ï¼Œè¿™æ˜¯ä¸æˆæ–‡è§„çŸ©ï¼Œæˆ‘å†é‡æä¸€ä¸‹å§ï¼Œä¸€ä¸ªç¼©è¿›ä¸€èˆ¬æ˜¯ä¸€ä¸ªTABé”®æˆ–æ˜¯4ä¸ªç©ºæ ¼ã€‚ï¼ˆæœ€å¥½ç”¨TABé”®ï¼‰
 
-¡¡¡¡ii) ¿Õ¸ñ¡£¿Õ¸ñÄÜ¸ø³ÌÐò´úÀ´Ê²Ã´ËðÊ§Âð£¿Ã»ÓÐ£¬ÓÐÐ§µÄÀûÓÃ¿Õ¸ñ¿ÉÒÔÈÃÄãµÄ³ÌÐò¶Á½øÀ´¸ü¼ÓÉÍÐÄÔÃÄ¿¡£¶ø²»Ò»¶Ñ±í´ïÊ½¼·ÔÚÒ»Æð¡£¿´¿´ÏÂÃæµÄ´úÂë£º
+ã€€ã€€ii) ç©ºæ ¼ã€‚ç©ºæ ¼èƒ½ç»™ç¨‹åºä»£æ¥ä»€ä¹ˆæŸå¤±å—ï¼Ÿæ²¡æœ‰ï¼Œæœ‰æ•ˆçš„åˆ©ç”¨ç©ºæ ¼å¯ä»¥è®©ä½ çš„ç¨‹åºè¯»è¿›æ¥æ›´åŠ èµå¿ƒæ‚¦ç›®ã€‚è€Œä¸ä¸€å †è¡¨è¾¾å¼æŒ¤åœ¨ä¸€èµ·ã€‚çœ‹çœ‹ä¸‹é¢çš„ä»£ç ï¼š
 
-¡¡¡¡ha=(ha*128+*key++)%tabPtr->size;
+ã€€ã€€ha=(ha*128+*key++)%tabPtr->size;
 
-¡¡¡¡ha = ( ha * 128 + *key++ ) % tabPtr->size;
+ã€€ã€€ha = ( ha * 128 + *key++ ) % tabPtr->size;
 
-¡¡¡¡ÓÐ¿Õ¸ñºÍÃ»ÓÐ¿Õ¸ñµÄ¸Ð¾õ²»Ò»Ñù°É¡£Ò»°ãÀ´Ëµ£¬Óï¾äÖÐÒªÔÚ¸÷¸ö²Ù×÷·û¼ä¼Ó¿Õ¸ñ£¬º¯
+ã€€ã€€æœ‰ç©ºæ ¼å’Œæ²¡æœ‰ç©ºæ ¼çš„æ„Ÿè§‰ä¸ä¸€æ ·å§ã€‚ä¸€èˆ¬æ¥è¯´ï¼Œè¯­å¥ä¸­è¦åœ¨å„ä¸ªæ“ä½œç¬¦é—´åŠ ç©ºæ ¼ï¼Œå‡½
 
-¡¡¡¡Êýµ÷ÓÃÊ±£¬ÒªÒÔ¸÷¸ö²ÎÊý¼ä¼Ó¿Õ¸ñ¡£ÈçÏÂÃæÕâÖÖ¼Ó¿Õ¸ñµÄºÍ²»¼ÓµÄ£º
+ã€€ã€€æ•°è°ƒç”¨æ—¶ï¼Œè¦ä»¥å„ä¸ªå‚æ•°é—´åŠ ç©ºæ ¼ã€‚å¦‚ä¸‹é¢è¿™ç§åŠ ç©ºæ ¼çš„å’Œä¸åŠ çš„ï¼š
 
-¡¡¡¡if ((hProc=OpenProcess(PROCESS_ALL_ACCESS,FALSE,pid))==NULL){
+ã€€ã€€if ((hProc=OpenProcess(PROCESS_ALL_ACCESS,FALSE,pid))==NULL){
 
-    ¡¡¡¡}
+    ã€€ã€€}
 
-    ¡¡¡¡if ( ( hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid) ) == NULL ){
+    ã€€ã€€if ( ( hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid) ) == NULL ){
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡iii) »»ÐÐ¡£²»Òª°ÑÓï¾ä¶¼Ð´ÔÚÒ»ÐÐÉÏ£¬ÕâÑùºÜ²»ºÃ¡£Èç£º
+        ã€€ã€€iii) æ¢è¡Œã€‚ä¸è¦æŠŠè¯­å¥éƒ½å†™åœ¨ä¸€è¡Œä¸Šï¼Œè¿™æ ·å¾ˆä¸å¥½ã€‚å¦‚ï¼š
 
-        ¡¡¡¡for(i=0;i<len;i++) if((a[i]<'0'||a[i]>'9')&&(a[i]<'a'||a[i]>'z')) break;
+        ã€€ã€€for(i=0;i<len;i++) if((a[i]<'0'||a[i]>'9')&&(a[i]<'a'||a[i]>'z')) break;
 
-        ¡¡¡¡ÎÒ¿½£¬ÕâÖÖ¼´ÎÞ¿Õ¸ñ£¬ÓÖÎÞ»»ÐÐµÄ³ÌÐòÔÚÐ´Ê²Ã´°¡£¿¼ÓÉÏ¿Õ¸ñºÍ»»ÐÐ°É¡£
+        ã€€ã€€æˆ‘æ‹·ï¼Œè¿™ç§å³æ— ç©ºæ ¼ï¼Œåˆæ— æ¢è¡Œçš„ç¨‹åºåœ¨å†™ä»€ä¹ˆå•Šï¼ŸåŠ ä¸Šç©ºæ ¼å’Œæ¢è¡Œå§ã€‚
 
-        ¡¡¡¡for ( i=0; i<len; i++) {
+        ã€€ã€€for ( i=0; i<len; i++) {
 
-            ¡¡¡¡if ( ( a[i] < '0' || a[i] > '9' ) &&
+            ã€€ã€€if ( ( a[i] < '0' || a[i] > '9' ) &&
 
-                    ¡¡¡¡( a[i] < 'a' || a[i] > 'z' ) ) {
+                    ã€€ã€€( a[i] < 'a' || a[i] > 'z' ) ) {
 
-                ¡¡¡¡break;
+                ã€€ã€€break;
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-            ¡¡¡¡ºÃ¶àÁË°É£¿ÓÐÊ±ºò£¬º¯Êý²ÎÊý¶àµÄÊ±ºò£¬×îºÃÒ²»»ÐÐ£¬Èç£º
+            ã€€ã€€å¥½å¤šäº†å§ï¼Ÿæœ‰æ—¶å€™ï¼Œå‡½æ•°å‚æ•°å¤šçš„æ—¶å€™ï¼Œæœ€å¥½ä¹Ÿæ¢è¡Œï¼Œå¦‚ï¼š
 
-            ¡¡¡¡CreateProcess(
+            ã€€ã€€CreateProcess(
 
-                    ¡¡¡¡NULL,
+                    ã€€ã€€NULL,
 
-                    ¡¡¡¡cmdbuf,
+                    ã€€ã€€cmdbuf,
 
-                    ¡¡¡¡NULL,
+                    ã€€ã€€NULL,
 
-                    ¡¡¡¡NULL,
+                    ã€€ã€€NULL,
 
-                    ¡¡¡¡bInhH,
+                    ã€€ã€€bInhH,
 
-                    ¡¡¡¡dwCrtFlags,
+                    ã€€ã€€dwCrtFlags,
 
-                    ¡¡¡¡envbuf,
+                    ã€€ã€€envbuf,
 
-                    ¡¡¡¡NULL,
+                    ã€€ã€€NULL,
 
-                    ¡¡¡¡&siStartInfo,
+                    ã€€ã€€&siStartInfo,
 
-                    ¡¡¡¡&prInfo
+                    ã€€ã€€&prInfo
 
-            ¡¡¡¡);
+            ã€€ã€€);
 
-            ¡¡¡¡Ìõ¼þÓï¾äÒ²Ó¦¸ÃÔÚ±ØÒªÊ±»»ÐÐ£º
+            ã€€ã€€æ¡ä»¶è¯­å¥ä¹Ÿåº”è¯¥åœ¨å¿…è¦æ—¶æ¢è¡Œï¼š
 
-            ¡¡¡¡if ( ch >= '0' || ch <= '9' ||
+            ã€€ã€€if ( ch >= '0' || ch <= '9' ||
 
-                    ¡¡¡¡ch >= 'a' || ch <= 'z' ||
+                    ã€€ã€€ch >= 'a' || ch <= 'z' ||
 
-                    ¡¡¡¡ch >= 'A' || ch <= 'Z' )
+                    ã€€ã€€ch >= 'A' || ch <= 'Z' )
 
-            ¡¡¡¡iv) ¿ÕÐÐ¡£²»Òª²»¼Ó¿ÕÐÐ£¬¿ÕÐÐ¿ÉÒÔÇø·Ö²»Í¬µÄ³ÌÐò¿é£¬³ÌÐò¿é¼ä£¬×îºÃ¼ÓÉÏ¿ÕÐÐ¡£Èç£º
+            ã€€ã€€iv) ç©ºè¡Œã€‚ä¸è¦ä¸åŠ ç©ºè¡Œï¼Œç©ºè¡Œå¯ä»¥åŒºåˆ†ä¸åŒçš„ç¨‹åºå—ï¼Œç¨‹åºå—é—´ï¼Œæœ€å¥½åŠ ä¸Šç©ºè¡Œã€‚å¦‚ï¼š
 
-            ¡¡¡¡HANDLE hProcess;
+            ã€€ã€€HANDLE hProcess;
 
-            ¡¡¡¡PROCESS_T procInfo;
+            ã€€ã€€PROCESS_T procInfo;
 
-            ¡¡¡¡/* open the process handle */
+            ã€€ã€€/* open the process handle */
 
-¡¡¡¡if((hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)) == NULL)
+ã€€ã€€if((hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)) == NULL)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡return LSE_MISC_SYS;
+        ã€€ã€€return LSE_MISC_SYS;
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡memset(&procInfo, 0, sizeof(procInfo));
+        ã€€ã€€memset(&procInfo, 0, sizeof(procInfo));
 
-        ¡¡¡¡procInfo.idProc = pid;
+        ã€€ã€€procInfo.idProc = pid;
 
-        ¡¡¡¡procInfo.hdProc = hProcess;
+        ã€€ã€€procInfo.hdProc = hProcess;
 
-        ¡¡¡¡procInfo.misc |= MSCAVA_PROC;
+        ã€€ã€€procInfo.misc |= MSCAVA_PROC;
 
-        ¡¡¡¡return(0);
+        ã€€ã€€return(0);
 
-        ¡¡¡¡v) ¶ÔÆë¡£ÓÃTAB¼ü¶ÔÆëÄãµÄÒ»Ð©±äÁ¿µÄÉùÃ÷»ò×¢ÊÍ£¬Ò»Ñù»áÈÃÄãµÄ³ÌÐòºÃ¿´Ò»Ð©¡£Èç£º
+        ã€€ã€€v) å¯¹é½ã€‚ç”¨TABé”®å¯¹é½ä½ çš„ä¸€äº›å˜é‡çš„å£°æ˜Žæˆ–æ³¨é‡Šï¼Œä¸€æ ·ä¼šè®©ä½ çš„ç¨‹åºå¥½çœ‹ä¸€äº›ã€‚å¦‚ï¼š
 
-        ¡¡¡¡typedef struct _pt_man_t_ {
+        ã€€ã€€typedef struct _pt_man_t_ {
 
-            ¡¡¡¡int numProc; /* Number of processes */
+            ã€€ã€€int numProc; /* Number of processes */
 
-            ¡¡¡¡int maxProc; /* Max Number of processes */
+            ã€€ã€€int maxProc; /* Max Number of processes */
 
-            ¡¡¡¡int maxProc; /* Max Number of processes */
+            ã€€ã€€int maxProc; /* Max Number of processes */
 
-            ¡¡¡¡int numEvnt; /* Number of events */
+            ã€€ã€€int numEvnt; /* Number of events */
 
-            ¡¡¡¡int maxEvnt; /* Max Number of events */
+            ã€€ã€€int maxEvnt; /* Max Number of events */
 
-            ¡¡¡¡HANDLE* pHndEvnt; /* Array of events */
+            ã€€ã€€HANDLE* pHndEvnt; /* Array of events */
 
-            ¡¡¡¡DWORD timeout; /* Time out interval */
+            ã€€ã€€DWORD timeout; /* Time out interval */
 
-            ¡¡¡¡HANDLE hPipe; /* Namedpipe */
+            ã€€ã€€HANDLE hPipe; /* Namedpipe */
 
-            ¡¡¡¡TCHAR usr[MAXUSR];/* User name of the process */
+            ã€€ã€€TCHAR usr[MAXUSR];/* User name of the process */
 
-            ¡¡¡¡int numMsg; /* Number of Message */
+            ã€€ã€€int numMsg; /* Number of Message */
 
-            ¡¡¡¡int Msg[MAXMSG];/* Space for intro process communicate */
+            ã€€ã€€int Msg[MAXMSG];/* Space for intro process communicate */
 
-            ¡¡¡¡} PT_MAN_T;
+            ã€€ã€€} PT_MAN_T;
 
-            ¡¡¡¡ÔõÃ´Ñù£¿¸Ð¾õ²»´í°É¡£
+            ã€€ã€€æ€Žä¹ˆæ ·ï¼Ÿæ„Ÿè§‰ä¸é”™å§ã€‚
 
-            ¡¡¡¡ÕâÀïÖ÷Òª½²ÊöÁËÈç¹ûÐ´³öÈÃÈËÉÍÐÄÔÃÄ¿µÄ´úÂë£¬ºÃ¿´µÄ´úÂë»áÈÃÈËµÄÐÄÇéÓä¿ì£¬¶ÁÆð´úÂëÒ²¾Í²»ÀÛ£¬¹¤Õû¡¢Õû½àµÄ³ÌÐò´úÂë£¬Í¨³£¸üÈÃÈË»¶Ó­£¬Ò²¸üÈÃÈË³ÆµÀ¡£ÏÖÔÚµÄÓ²ÅÌ¿Õ¼äÕâÃ´´ó£¬²»ÒªÈÃÄãµÄ´úÂë¼·ÔÚÒ»Æð£¬ÕâÑùËüÃÇ»á±§Ô¹ÄãÅ°´ýËüÃÇµÄ¡£ºÃÁË£¬ÓÃ¡°Ëõ½ø¡¢¿Õ¸ñ¡¢»»ÐÐ¡¢¿ÕÐÐ¡¢¶ÔÆë¡±×°ÊÎÄãµÄ´úÂë°É£¬ÈÃËûÃÇ´ÓÃ»ÓÐÖÈÐòµÄÍÁ·ËÖÐ±ä³ÉÒ»ÅÅÅÅÕûÆëÓÐÖÈÐòµÄÕý¹æ²¿¶Ó°É¡£
+            ã€€ã€€è¿™é‡Œä¸»è¦è®²è¿°äº†å¦‚æžœå†™å‡ºè®©äººèµå¿ƒæ‚¦ç›®çš„ä»£ç ï¼Œå¥½çœ‹çš„ä»£ç ä¼šè®©äººçš„å¿ƒæƒ…æ„‰å¿«ï¼Œè¯»èµ·ä»£ç ä¹Ÿå°±ä¸ç´¯ï¼Œå·¥æ•´ã€æ•´æ´çš„ç¨‹åºä»£ç ï¼Œé€šå¸¸æ›´è®©äººæ¬¢è¿Žï¼Œä¹Ÿæ›´è®©äººç§°é“ã€‚çŽ°åœ¨çš„ç¡¬ç›˜ç©ºé—´è¿™ä¹ˆå¤§ï¼Œä¸è¦è®©ä½ çš„ä»£ç æŒ¤åœ¨ä¸€èµ·ï¼Œè¿™æ ·å®ƒä»¬ä¼šæŠ±æ€¨ä½ è™å¾…å®ƒä»¬çš„ã€‚å¥½äº†ï¼Œç”¨â€œç¼©è¿›ã€ç©ºæ ¼ã€æ¢è¡Œã€ç©ºè¡Œã€å¯¹é½â€è£…é¥°ä½ çš„ä»£ç å§ï¼Œè®©ä»–ä»¬ä»Žæ²¡æœ‰ç§©åºçš„åœŸåŒªä¸­å˜æˆä¸€æŽ’æŽ’æ•´é½æœ‰ç§©åºçš„æ­£è§„éƒ¨é˜Ÿå§ã€‚
 
-            ¡¡¡¡3¡¢³ÌÐò×¢ÊÍ
+            ã€€ã€€3ã€ç¨‹åºæ³¨é‡Š
 
-            ¡¡¡¡3¡¢³ÌÐò×¢ÊÍ
+            ã€€ã€€3ã€ç¨‹åºæ³¨é‡Š
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡Ñø³ÉÐ´³ÌÐò×¢ÊÍµÄÏ°¹ß£¬ÕâÊÇÃ¿¸ö³ÌÐòÔ±Ëù±ØÐëÒª×öµÄ¹¤×÷¡£ÎÒ¿´¹ýÄÇÖÖ¼¸Ç§ÐÐ£¬È´¾ÓÈ»Ã»ÓÐÒ»ÐÐ×¢ÊÍµÄ³ÌÐò¡£Õâ¾ÍÈçÍ¬ÔÚ¹«Â·ÉÏ¼Ý³µÈ´Ã»ÓÐÂ·±êÒ»Ñù¡£ÓÃ²»ÁË¶à¾Ã£¬Á¬×Ô¼º¶¼²»ÖªµÀ×Ô¼ºµÄÒâÍ¼ÁË£¬»¹Òª»¨ÉÏ¼¸±¶µÄÊ±¼ä²Å¿´Ã÷°×£¬ÕâÖÖÀË·Ñ±ðÈËºÍ×Ô¼ºµÄÊ±¼äµÄÈË£¬ÊÇ×îÎª¿É³ÜµÄÈË¡£
+            ã€€ã€€å…»æˆå†™ç¨‹åºæ³¨é‡Šçš„ä¹ æƒ¯ï¼Œè¿™æ˜¯æ¯ä¸ªç¨‹åºå‘˜æ‰€å¿…é¡»è¦åšçš„å·¥ä½œã€‚æˆ‘çœ‹è¿‡é‚£ç§å‡ åƒè¡Œï¼Œå´å±…ç„¶æ²¡æœ‰ä¸€è¡Œæ³¨é‡Šçš„ç¨‹åºã€‚è¿™å°±å¦‚åŒåœ¨å…¬è·¯ä¸Šé©¾è½¦å´æ²¡æœ‰è·¯æ ‡ä¸€æ ·ã€‚ç”¨ä¸äº†å¤šä¹…ï¼Œè¿žè‡ªå·±éƒ½ä¸çŸ¥é“è‡ªå·±çš„æ„å›¾äº†ï¼Œè¿˜è¦èŠ±ä¸Šå‡ å€çš„æ—¶é—´æ‰çœ‹æ˜Žç™½ï¼Œè¿™ç§æµªè´¹åˆ«äººå’Œè‡ªå·±çš„æ—¶é—´çš„äººï¼Œæ˜¯æœ€ä¸ºå¯è€»çš„äººã€‚
 
-            ¡¡¡¡ÊÇµÄ£¬ÄãÒ²Ðí»áËµ£¬Äã»áÐ´×¢ÊÍ£¬ÕæµÄÂð£¿×¢ÊÍµÄÊéÐ´Ò²ÄÜ¿´³öÒ»¸ö³ÌÐòÔ±µÄ¹¦µ×¡£Ò»°ãÀ´ËµÄãÐèÒªÖÁÉÙÐ´ÕâÐ©µØ·½µÄ×¢ÊÍ£ºÎÄ¼þµÄ×¢ÊÍ¡¢º¯ÊýµÄ×¢ÊÍ¡¢±äÁ¿µÄ×¢ÊÍ¡¢Ëã·¨µÄ×¢ÊÍ¡¢¹¦ÄÜ¿éµÄ³ÌÐò×¢ÊÍ¡£Ö÷Òª¾ÍÊÇ¼ÇÂ¼ÄãÕâ¶Î³ÌÐòÊÇ¸ÉÊ²Ã´µÄ£¿ÄãµÄÒâÍ¼ÊÇÊ²Ã´£¿ÄãÕâ¸ö±äÁ¿ÊÇÓÃÀ´×öÊ²Ã´µÄ£¿µÈµÈ¡£
+            ã€€ã€€æ˜¯çš„ï¼Œä½ ä¹Ÿè®¸ä¼šè¯´ï¼Œä½ ä¼šå†™æ³¨é‡Šï¼ŒçœŸçš„å—ï¼Ÿæ³¨é‡Šçš„ä¹¦å†™ä¹Ÿèƒ½çœ‹å‡ºä¸€ä¸ªç¨‹åºå‘˜çš„åŠŸåº•ã€‚ä¸€èˆ¬æ¥è¯´ä½ éœ€è¦è‡³å°‘å†™è¿™äº›åœ°æ–¹çš„æ³¨é‡Šï¼šæ–‡ä»¶çš„æ³¨é‡Šã€å‡½æ•°çš„æ³¨é‡Šã€å˜é‡çš„æ³¨é‡Šã€ç®—æ³•çš„æ³¨é‡Šã€åŠŸèƒ½å—çš„ç¨‹åºæ³¨é‡Šã€‚ä¸»è¦å°±æ˜¯è®°å½•ä½ è¿™æ®µç¨‹åºæ˜¯å¹²ä»€ä¹ˆçš„ï¼Ÿä½ çš„æ„å›¾æ˜¯ä»€ä¹ˆï¼Ÿä½ è¿™ä¸ªå˜é‡æ˜¯ç”¨æ¥åšä»€ä¹ˆçš„ï¼Ÿç­‰ç­‰ã€‚
 
-            ¡¡¡¡²»ÒªÒÔÎª×¢ÊÍºÃÐ´£¬ÓÐÒ»Ð©Ëã·¨ÊÇºÜÄÑËµ»òÐ´³öÀ´µÄ£¬Ö»ÄÜÒâ»á£¬ÎÒ³ÐÈÏÓÐÕâÖÖÇé¿öµÄÊ±ºò£¬µ«ÄãÒ²ÒªÐ´³öÀ´£¬ÕýºÃ¿ÉÒÔÑµÁ·Ò»ÏÂ×Ô¼ºµÄ±í´ïÄÜÁ¦¡£¶ø±í´ïÄÜÁ¦ÕýÊÇÄÇÖÖÃÆÍ·¸ã¼¼ÊõµÄ¼¼ÊõÈËÔ±×îÈ±µÄ£¬ÄãÓÐÔÙ¸ßµÄ¼¼Êõ£¬Èç¹ûÄã±í´ïÄÜÁ¦²»ÐÐ£¬ÄãµÄ¼¼Êõ½«²»ÄÜµÃµ½³ä·ÖµÄ·¢»Ó¡£ÒòÎª£¬ÕâÊÇÒ»¸öÍÅ¶ÓµÄÊ±´ú¡£
+            ã€€ã€€ä¸è¦ä»¥ä¸ºæ³¨é‡Šå¥½å†™ï¼Œæœ‰ä¸€äº›ç®—æ³•æ˜¯å¾ˆéš¾è¯´æˆ–å†™å‡ºæ¥çš„ï¼Œåªèƒ½æ„ä¼šï¼Œæˆ‘æ‰¿è®¤æœ‰è¿™ç§æƒ…å†µçš„æ—¶å€™ï¼Œä½†ä½ ä¹Ÿè¦å†™å‡ºæ¥ï¼Œæ­£å¥½å¯ä»¥è®­ç»ƒä¸€ä¸‹è‡ªå·±çš„è¡¨è¾¾èƒ½åŠ›ã€‚è€Œè¡¨è¾¾èƒ½åŠ›æ­£æ˜¯é‚£ç§é—·å¤´æžæŠ€æœ¯çš„æŠ€æœ¯äººå‘˜æœ€ç¼ºçš„ï¼Œä½ æœ‰å†é«˜çš„æŠ€æœ¯ï¼Œå¦‚æžœä½ è¡¨è¾¾èƒ½åŠ›ä¸è¡Œï¼Œä½ çš„æŠ€æœ¯å°†ä¸èƒ½å¾—åˆ°å……åˆ†çš„å‘æŒ¥ã€‚å› ä¸ºï¼Œè¿™æ˜¯ä¸€ä¸ªå›¢é˜Ÿçš„æ—¶ä»£ã€‚
 
-            ¡¡¡¡ºÃÁË£¬Ëµ¼¸¸ö×¢ÊÍµÄ¼¼ÊõÏ¸½Ú£º
+            ã€€ã€€å¥½äº†ï¼Œè¯´å‡ ä¸ªæ³¨é‡Šçš„æŠ€æœ¯ç»†èŠ‚ï¼š
 
-            ¡¡¡¡i) ¶ÔÓÚÐÐ×¢ÊÍ£¨¡°//¡±£©±È¿é×¢ÊÍ£¨¡°/* */¡±£©ÒªºÃµÄËµ·¨£¬ÎÒ²¢²»ÊÇºÜÍ¬Òâ¡£ÒòÎªÒ»
+            ã€€ã€€i) å¯¹äºŽè¡Œæ³¨é‡Šï¼ˆâ€œ//â€ï¼‰æ¯”å—æ³¨é‡Šï¼ˆâ€œ/* */â€ï¼‰è¦å¥½çš„è¯´æ³•ï¼Œæˆ‘å¹¶ä¸æ˜¯å¾ˆåŒæ„ã€‚å› ä¸ºä¸€
 
-            ¡¡¡¡Ð©ÀÏ°æ±¾µÄC±àÒëÆ÷²¢²»Ö§³ÖÐÐ×¢ÊÍ£¬ËùÒÔÎªÁËÄãµÄ³ÌÐòµÄÒÆÖ²ÐÔ£¬ÇëÄã»¹ÊÇ¾¡Á¿Ê¹ÓÃ¿é×¢ÊÍ¡£
+            ã€€ã€€äº›è€ç‰ˆæœ¬çš„Cç¼–è¯‘å™¨å¹¶ä¸æ”¯æŒè¡Œæ³¨é‡Šï¼Œæ‰€ä»¥ä¸ºäº†ä½ çš„ç¨‹åºçš„ç§»æ¤æ€§ï¼Œè¯·ä½ è¿˜æ˜¯å°½é‡ä½¿ç”¨å—æ³¨é‡Šã€‚
 
-            ¡¡¡¡ii) ÄãÒ²Ðí»áÎª¿é×¢ÊÍµÄ²»ÄÜÇ¶Ì×¶ø²»Ë¬£¬ÄÇÃ´Äã¿ÉÒÔÓÃÔ¤±àÒëÀ´Íê³ÉÕâ¸ö¹¦ÄÜ¡£Ê¹ÓÃ¡°#
+            ã€€ã€€ii) ä½ ä¹Ÿè®¸ä¼šä¸ºå—æ³¨é‡Šçš„ä¸èƒ½åµŒå¥—è€Œä¸çˆ½ï¼Œé‚£ä¹ˆä½ å¯ä»¥ç”¨é¢„ç¼–è¯‘æ¥å®Œæˆè¿™ä¸ªåŠŸèƒ½ã€‚ä½¿ç”¨â€œ#
 
-            ¡¡¡¡if 0¡±ºÍ¡°#endif¡±À¨ÆðÀ´µÄ´úÂë£¬½«²»±»±àÒë£¬¶øÇÒ»¹¿ÉÒÔÇ¶Ì×¡£
+            ã€€ã€€if 0â€å’Œâ€œ#endifâ€æ‹¬èµ·æ¥çš„ä»£ç ï¼Œå°†ä¸è¢«ç¼–è¯‘ï¼Œè€Œä¸”è¿˜å¯ä»¥åµŒå¥—ã€‚
 
-            ¡¡¡¡4¡¢º¯ÊýµÄ[in][out]²ÎÊý
+            ã€€ã€€4ã€å‡½æ•°çš„[in][out]å‚æ•°
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÎÒ¾­³£¿´µ½ÕâÑùµÄ³ÌÐò£º
+            ã€€ã€€æˆ‘ç»å¸¸çœ‹åˆ°è¿™æ ·çš„ç¨‹åºï¼š
 
-¡¡¡¡FuncName(char* str)
+ã€€ã€€FuncName(char* str)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡int len = strlen(str);
+        ã€€ã€€int len = strlen(str);
 
-        ¡¡¡¡.....
+        ã€€ã€€.....
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-            ¡¡¡¡char*
+            ã€€ã€€char*
 
-¡¡¡¡GetUserName(struct user* pUser)
+ã€€ã€€GetUserName(struct user* pUser)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡return pUser->name;
+        ã€€ã€€return pUser->name;
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡²»£¡Çë²»ÒªÕâÑù×ö¡£
+        ã€€ã€€ä¸ï¼è¯·ä¸è¦è¿™æ ·åšã€‚
 
-        ¡¡¡¡ÄãÓ¦¸ÃÏÈÅÐ¶ÏÒ»ÏÂ´«½øÀ´µÄÄÇ¸öÖ¸ÕëÊÇ²»ÊÇÎª¿Õ¡£Èç¹û´«½øÀ´µÄÖ¸ÕëÎª¿ÕµÄ»°£¬ÄÇÃ´£¬ÄãµÄÒ»¸ö´óµÄÏµÍ³¾Í»áÒòÎªÕâÒ»¸öÐ¡µÄº¯Êý¶ø±ÀÀ£¡£Ò»ÖÖ¸üºÃµÄ¼¼ÊõÊÇÊ¹ÓÃ¶ÏÑÔ£¨assert£©£¬ÕâÀïÎÒ¾Í²»¶àËµÕâÐ©¼¼ÊõÏ¸½ÚÁË¡£µ±È»£¬Èç¹ûÊÇÔÚC++ÖÐ£¬ÒýÓÃÒª±ÈÖ¸ÕëºÃµÃ¶à£¬µ«ÄãÒ²
-        ÐèÒª¶Ô¸÷¸ö²ÎÊý½øÐÐ¼ì²é¡£
+        ã€€ã€€ä½ åº”è¯¥å…ˆåˆ¤æ–­ä¸€ä¸‹ä¼ è¿›æ¥çš„é‚£ä¸ªæŒ‡é’ˆæ˜¯ä¸æ˜¯ä¸ºç©ºã€‚å¦‚æžœä¼ è¿›æ¥çš„æŒ‡é’ˆä¸ºç©ºçš„è¯ï¼Œé‚£ä¹ˆï¼Œä½ çš„ä¸€ä¸ªå¤§çš„ç³»ç»Ÿå°±ä¼šå› ä¸ºè¿™ä¸€ä¸ªå°çš„å‡½æ•°è€Œå´©æºƒã€‚ä¸€ç§æ›´å¥½çš„æŠ€æœ¯æ˜¯ä½¿ç”¨æ–­è¨€ï¼ˆassertï¼‰ï¼Œè¿™é‡Œæˆ‘å°±ä¸å¤šè¯´è¿™äº›æŠ€æœ¯ç»†èŠ‚äº†ã€‚å½“ç„¶ï¼Œå¦‚æžœæ˜¯åœ¨C++ä¸­ï¼Œå¼•ç”¨è¦æ¯”æŒ‡é’ˆå¥½å¾—å¤šï¼Œä½†ä½ ä¹Ÿ
+        éœ€è¦å¯¹å„ä¸ªå‚æ•°è¿›è¡Œæ£€æŸ¥ã€‚
 
-        ¡¡¡¡Ð´ÓÐ²ÎÊýµÄº¯ÊýÊ±£¬Ê×Òª¹¤×÷£¬¾ÍÊÇÒª¶Ô´«½øÀ´µÄËùÓÐ²ÎÊý½øÐÐºÏ·¨ÐÔ¼ì²é¡£¶ø¶ÔÓÚ´«³öµÄ²ÎÊýÒ²Ó¦¸Ã½øÐÐ¼ì²é£¬Õâ¸ö¶¯×÷µ±È»Ó¦¸ÃÔÚº¯ÊýµÄÍâ²¿£¬Ò²¾ÍÊÇËµ£¬µ÷ÓÃÍêÒ»¸öº¯Êýºó£¬Ó¦¸Ã¶ÔÆä´«³öµÄÖµ½øÐÐ¼ì²é¡£µ±È»£¬¼ì²é»áÀË·ÑÒ»µãÊ±¼ä£¬µ«ÎªÁËÕû¸öÏµÍ³²»ÖÁÓÚ³öÏÖ¡°·Ç·¨²Ù×÷¡±»òÊÇ¡°Core Dump¡±µÄÏµÍ³¼¶µÄ´íÎó£¬¶à»¨ÕâµãÊ±¼ä»¹ÊÇºÜÖµµÃµÄ¡£
+        ã€€ã€€å†™æœ‰å‚æ•°çš„å‡½æ•°æ—¶ï¼Œé¦–è¦å·¥ä½œï¼Œå°±æ˜¯è¦å¯¹ä¼ è¿›æ¥çš„æ‰€æœ‰å‚æ•°è¿›è¡Œåˆæ³•æ€§æ£€æŸ¥ã€‚è€Œå¯¹äºŽä¼ å‡ºçš„å‚æ•°ä¹Ÿåº”è¯¥è¿›è¡Œæ£€æŸ¥ï¼Œè¿™ä¸ªåŠ¨ä½œå½“ç„¶åº”è¯¥åœ¨å‡½æ•°çš„å¤–éƒ¨ï¼Œä¹Ÿå°±æ˜¯è¯´ï¼Œè°ƒç”¨å®Œä¸€ä¸ªå‡½æ•°åŽï¼Œåº”è¯¥å¯¹å…¶ä¼ å‡ºçš„å€¼è¿›è¡Œæ£€æŸ¥ã€‚å½“ç„¶ï¼Œæ£€æŸ¥ä¼šæµªè´¹ä¸€ç‚¹æ—¶é—´ï¼Œä½†ä¸ºäº†æ•´ä¸ªç³»ç»Ÿä¸è‡³äºŽå‡ºçŽ°â€œéžæ³•æ“ä½œâ€æˆ–æ˜¯â€œCore Dumpâ€çš„ç³»ç»Ÿçº§çš„é”™è¯¯ï¼Œå¤šèŠ±è¿™ç‚¹æ—¶é—´è¿˜æ˜¯å¾ˆå€¼å¾—çš„ã€‚
 
-        ¡¡¡¡5¡¢¶ÔÏµÍ³µ÷ÓÃµÄ·µ»Ø½øÐÐÅÐ¶Ï
+        ã€€ã€€5ã€å¯¹ç³»ç»Ÿè°ƒç”¨çš„è¿”å›žè¿›è¡Œåˆ¤æ–­
 
-        ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-        ¡¡¡¡¼ÌÐøÉÏÒ»Ìõ£¬¶ÔÓÚÒ»Ð©ÏµÍ³µ÷ÓÃ£¬±ÈÈç´ò¿ªÎÄ¼þ£¬ÎÒ¾­³£¿´µ½£¬Ðí¶à³ÌÐòÔ±¶Ôfopen·µ»ØµÄÖ¸Õë²»×öÈÎºÎÅÐ¶Ï£¬¾ÍÖ±½ÓÊ¹ÓÃÁË¡£È»ºó·¢ÏÖÎÄ¼þµÄÄÚÈÝÔõÃ´Ò²¶Á³ö²»£¬»òÊÇÔõÃ´Ò²Ð´²»½øÈ¥¡£»¹ÊÇÅÐ¶ÏÒ»ÏÂ°É£º
+        ã€€ã€€ç»§ç»­ä¸Šä¸€æ¡ï¼Œå¯¹äºŽä¸€äº›ç³»ç»Ÿè°ƒç”¨ï¼Œæ¯”å¦‚æ‰“å¼€æ–‡ä»¶ï¼Œæˆ‘ç»å¸¸çœ‹åˆ°ï¼Œè®¸å¤šç¨‹åºå‘˜å¯¹fopenè¿”å›žçš„æŒ‡é’ˆä¸åšä»»ä½•åˆ¤æ–­ï¼Œå°±ç›´æŽ¥ä½¿ç”¨äº†ã€‚ç„¶åŽå‘çŽ°æ–‡ä»¶çš„å†…å®¹æ€Žä¹ˆä¹Ÿè¯»å‡ºä¸ï¼Œæˆ–æ˜¯æ€Žä¹ˆä¹Ÿå†™ä¸è¿›åŽ»ã€‚è¿˜æ˜¯åˆ¤æ–­ä¸€ä¸‹å§ï¼š
 
-        ¡¡¡¡fp = fopen("log.txt", "a");
+        ã€€ã€€fp = fopen("log.txt", "a");
 
-        ¡¡¡¡if ( fp == NULL ){
+        ã€€ã€€if ( fp == NULL ){
 
-            ¡¡¡¡printf("Error: open file error\n");
+            ã€€ã€€printf("Error: open file error\n");
 
-            ¡¡¡¡return FALSE;
+            ã€€ã€€return FALSE;
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-            ¡¡¡¡ÆäËü»¹ÓÐÐí¶àÀ²£¬±ÈÈç£ºsocket·µ»ØµÄsocketºÅ£¬malloc·µ»ØµÄÄÚ´æ¡£Çë¶ÔÕâÐ©ÏµÍ³µ÷ÓÃ·µ»ØµÄ¶«Î÷½øÐÐÅÐ¶Ï¡£
+            ã€€ã€€å…¶å®ƒè¿˜æœ‰è®¸å¤šå•¦ï¼Œæ¯”å¦‚ï¼šsocketè¿”å›žçš„socketå·ï¼Œmallocè¿”å›žçš„å†…å­˜ã€‚è¯·å¯¹è¿™äº›ç³»ç»Ÿè°ƒç”¨è¿”å›žçš„ä¸œè¥¿è¿›è¡Œåˆ¤æ–­ã€‚
 
-            ¡¡¡¡6¡¢if Óï¾ä¶Ô³ö´íµÄ´¦Àí
+            ã€€ã€€6ã€if è¯­å¥å¯¹å‡ºé”™çš„å¤„ç†
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÎÒ¿´¼ûÄãËµÁË£¬ÕâÓÐÊ²Ã´ºÃËµµÄ¡£»¹ÊÇÏÈ¿´Ò»¶Î³ÌÐò´úÂë°É¡£
+            ã€€ã€€æˆ‘çœ‹è§ä½ è¯´äº†ï¼Œè¿™æœ‰ä»€ä¹ˆå¥½è¯´çš„ã€‚è¿˜æ˜¯å…ˆçœ‹ä¸€æ®µç¨‹åºä»£ç å§ã€‚
 
-            ¡¡¡¡if ( ch >= '0' && ch <= '9' ){
+            ã€€ã€€if ( ch >= '0' && ch <= '9' ){
 
-                ¡¡¡¡/* Õý³£´¦Àí´úÂë */
+                ã€€ã€€/* æ­£å¸¸å¤„ç†ä»£ç  */
 
-                    ¡¡¡¡}else{
+                    ã€€ã€€}else{
 
-                        ¡¡¡¡/* Êä³ö´íÎóÐÅÏ¢ */
+                        ã€€ã€€/* è¾“å‡ºé”™è¯¯ä¿¡æ¯ */
 
-                            ¡¡¡¡printf("error ......\n");
+                            ã€€ã€€printf("error ......\n");
 
-                        ¡¡¡¡return ( FALSE );
+                        ã€€ã€€return ( FALSE );
 
-                        ¡¡¡¡}
+                        ã€€ã€€}
 
-                        ¡¡¡¡ÕâÖÖ½á¹¹ºÜ²»ºÃ£¬ÌØ±ðÊÇÈç¹û¡°Õý³£´¦Àí´úÂë¡±ºÜ³¤Ê±£¬¶ÔÓÚÕâÖÖÇé¿ö£¬×îºÃ²»ÒªÓÃelse
+                        ã€€ã€€è¿™ç§ç»“æž„å¾ˆä¸å¥½ï¼Œç‰¹åˆ«æ˜¯å¦‚æžœâ€œæ­£å¸¸å¤„ç†ä»£ç â€å¾ˆé•¿æ—¶ï¼Œå¯¹äºŽè¿™ç§æƒ…å†µï¼Œæœ€å¥½ä¸è¦ç”¨else
 
-                        ¡¡¡¡¡£ÏÈÅÐ¶Ï´íÎó£¬Èç£º
+                        ã€€ã€€ã€‚å…ˆåˆ¤æ–­é”™è¯¯ï¼Œå¦‚ï¼š
 
-                        ¡¡¡¡if ( ch < '0' || ch > '9' ){
+                        ã€€ã€€if ( ch < '0' || ch > '9' ){
 
-                            ¡¡¡¡/* Êä³ö´íÎóÐÅÏ¢ */
+                            ã€€ã€€/* è¾“å‡ºé”™è¯¯ä¿¡æ¯ */
 
-                                ¡¡¡¡printf("error ......\n");
+                                ã€€ã€€printf("error ......\n");
 
-                            ¡¡¡¡return ( FALSE );
+                            ã€€ã€€return ( FALSE );
 
-                            ¡¡¡¡}
+                            ã€€ã€€}
 
-                            ¡¡¡¡/* Õý³£´¦Àí´úÂë */
+                            ã€€ã€€/* æ­£å¸¸å¤„ç†ä»£ç  */
 
-                            ¡¡¡¡......
+                            ã€€ã€€......
 
-                            ¡¡¡¡ÕâÑùµÄ½á¹¹£¬²»ÊÇºÜÇå³þÂð£¿Í»³öÁË´íÎóµÄÌõ¼þ£¬ÈÃ±ðÈËÔÚÊ¹ÓÃÄãµÄº¯ÊýµÄÊ±ºò£¬µÚÒ»ÑÛ¾ÍÄÜ¿´µ½²»ºÏ·¨µÄÌõ¼þ£¬ÓÚÊÇ¾Í»á¸üÏÂÒâÊ¶µÄ±ÜÃâ¡£
+                            ã€€ã€€è¿™æ ·çš„ç»“æž„ï¼Œä¸æ˜¯å¾ˆæ¸…æ¥šå—ï¼Ÿçªå‡ºäº†é”™è¯¯çš„æ¡ä»¶ï¼Œè®©åˆ«äººåœ¨ä½¿ç”¨ä½ çš„å‡½æ•°çš„æ—¶å€™ï¼Œç¬¬ä¸€çœ¼å°±èƒ½çœ‹åˆ°ä¸åˆæ³•çš„æ¡ä»¶ï¼ŒäºŽæ˜¯å°±ä¼šæ›´ä¸‹æ„è¯†çš„é¿å…ã€‚
 
-                            ¡¡¡¡7¡¢Í·ÎÄ¼þÖÐµÄ#ifndef
+                            ã€€ã€€7ã€å¤´æ–‡ä»¶ä¸­çš„#ifndef
 
-                            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+                            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-                            ¡¡¡¡Ç§Íò²»ÒªºöÂÔÁËÍ·¼þµÄÖÐµÄ#ifndef£¬ÕâÊÇÒ»¸öºÜ¹Ø¼üµÄ¶«Î÷¡£±ÈÈçÄãÓÐÁ½¸öCÎÄ¼þ£¬ÕâÁ½¸öCÎÄ¼þ¶¼includeÁËÍ¬Ò»¸öÍ·ÎÄ¼þ¡£¶ø±àÒëÊ±£¬ÕâÁ½¸öCÎÄ¼þÒªÒ»Í¬±àÒë³ÉÒ»¸ö¿ÉÔËÐÐÎÄ¼þ£¬ÓÚÊÇÎÊÌâÀ´ÁË£¬´óÁ¿µÄÉùÃ÷³åÍ»¡£
+                            ã€€ã€€åƒä¸‡ä¸è¦å¿½ç•¥äº†å¤´ä»¶çš„ä¸­çš„#ifndefï¼Œè¿™æ˜¯ä¸€ä¸ªå¾ˆå…³é”®çš„ä¸œè¥¿ã€‚æ¯”å¦‚ä½ æœ‰ä¸¤ä¸ªCæ–‡ä»¶ï¼Œè¿™ä¸¤ä¸ªCæ–‡ä»¶éƒ½includeäº†åŒä¸€ä¸ªå¤´æ–‡ä»¶ã€‚è€Œç¼–è¯‘æ—¶ï¼Œè¿™ä¸¤ä¸ªCæ–‡ä»¶è¦ä¸€åŒç¼–è¯‘æˆä¸€ä¸ªå¯è¿è¡Œæ–‡ä»¶ï¼ŒäºŽæ˜¯é—®é¢˜æ¥äº†ï¼Œå¤§é‡çš„å£°æ˜Žå†²çªã€‚
 
-                            ¡¡¡¡»¹ÊÇ°ÑÍ·ÎÄ¼þµÄÄÚÈÝ¶¼·ÅÔÚ#ifndefºÍ#endifÖÐ°É¡£²»¹ÜÄãµÄÍ·ÎÄ¼þ»á²»»á±»¶à¸öÎÄ¼þÒýÓÃ¹ÜÄãµÄÍ·ÎÄ¼þ»á²»»á±»¶à¸öÎÄ¼þÒýÓÃ
+                            ã€€ã€€è¿˜æ˜¯æŠŠå¤´æ–‡ä»¶çš„å†…å®¹éƒ½æ”¾åœ¨#ifndefå’Œ#endifä¸­å§ã€‚ä¸ç®¡ä½ çš„å¤´æ–‡ä»¶ä¼šä¸ä¼šè¢«å¤šä¸ªæ–‡ä»¶å¼•ç”¨ç®¡ä½ çš„å¤´æ–‡ä»¶ä¼šä¸ä¼šè¢«å¤šä¸ªæ–‡ä»¶å¼•ç”¨
 
-                            ¡¡¡¡£¬Äã¶¼Òª¼ÓÉÏÕâ¸ö¡£Ò»°ã¸ñÊ½ÊÇÕâÑùµÄ£º
+                            ã€€ã€€ï¼Œä½ éƒ½è¦åŠ ä¸Šè¿™ä¸ªã€‚ä¸€èˆ¬æ ¼å¼æ˜¯è¿™æ ·çš„ï¼š
 
-                            ¡¡¡¡#ifndef <±êÊ¶>
+                            ã€€ã€€#ifndef <æ ‡è¯†>
 
-                            ¡¡¡¡#define <±êÊ¶>
+                            ã€€ã€€#define <æ ‡è¯†>
 
-                            ¡¡¡¡......
+                            ã€€ã€€......
 
-                            ¡¡¡¡......
+                            ã€€ã€€......
 
-                            ¡¡¡¡#endif
+                            ã€€ã€€#endif
 
-                            ¡¡¡¡<±êÊ¶>ÔÚÀíÂÛÉÏÀ´Ëµ¿ÉÒÔÊÇ×ÔÓÉÃüÃûµÄ£¬µ«Ã¿¸öÍ·ÎÄ¼þµÄÕâ¸ö¡°±êÊ¶¡±¶¼Ó¦¸ÃÊÇÎ¨Ò»µÄ¡£
+                            ã€€ã€€<æ ‡è¯†>åœ¨ç†è®ºä¸Šæ¥è¯´å¯ä»¥æ˜¯è‡ªç”±å‘½åçš„ï¼Œä½†æ¯ä¸ªå¤´æ–‡ä»¶çš„è¿™ä¸ªâ€œæ ‡è¯†â€éƒ½åº”è¯¥æ˜¯å”¯ä¸€çš„ã€‚
 
-                            ¡¡¡¡±êÊ¶µÄÃüÃû¹æÔòÒ»°ãÊÇÍ·ÎÄ¼þÃûÈ«´óÐ´£¬Ç°ºó¼ÓÏÂ»®Ïß£¬²¢°ÑÎÄ¼þÃûÖÐµÄ¡°.¡±Ò²±ä³ÉÏÂ»®Ïß£¬Èç£ºstdio.h
+                            ã€€ã€€æ ‡è¯†çš„å‘½åè§„åˆ™ä¸€èˆ¬æ˜¯å¤´æ–‡ä»¶åå…¨å¤§å†™ï¼Œå‰åŽåŠ ä¸‹åˆ’çº¿ï¼Œå¹¶æŠŠæ–‡ä»¶åä¸­çš„â€œ.â€ä¹Ÿå˜æˆä¸‹åˆ’çº¿ï¼Œå¦‚ï¼šstdio.h
 
-                            ¡¡¡¡#ifndef _STDIO_H_
+                            ã€€ã€€#ifndef _STDIO_H_
 
-                            ¡¡¡¡#define _STDIO_H_
+                            ã€€ã€€#define _STDIO_H_
 
-                            ¡¡¡¡......
+                            ã€€ã€€......
 
-                            ¡¡¡¡#endif
+                            ã€€ã€€#endif
 
-                            ¡¡¡¡£¨BTW£ºÔ¤±àÒëÓÐ¶àºÜÓÐÓÃµÄ¹¦ÄÜ¡£Äã»áÓÃÔ¤±àÒëÂð£¿£©
+                            ã€€ã€€ï¼ˆBTWï¼šé¢„ç¼–è¯‘æœ‰å¤šå¾ˆæœ‰ç”¨çš„åŠŸèƒ½ã€‚ä½ ä¼šç”¨é¢„ç¼–è¯‘å—ï¼Ÿï¼‰
 
-                            ¡¡¡¡£¨BTW£ºÔ¤±àÒëÓÐ¶àºÜÓÐÓÃµÄ¹¦ÄÜ¡£Äã»áÓÃÔ¤±àÒëÂð£¿£©
+                            ã€€ã€€ï¼ˆBTWï¼šé¢„ç¼–è¯‘æœ‰å¤šå¾ˆæœ‰ç”¨çš„åŠŸèƒ½ã€‚ä½ ä¼šç”¨é¢„ç¼–è¯‘å—ï¼Ÿï¼‰
 
-                            ¡¡¡¡8¡¢ÔÚ¶ÑÉÏ·ÖÅäÄÚ´æ
+                            ã€€ã€€8ã€åœ¨å †ä¸Šåˆ†é…å†…å­˜
 
-                            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+                            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-                            ¡¡¡¡¿ÉÄÜÐí¶àÈË¶ÔÄÚ´æ·ÖÅäÉÏµÄ¡°Õ» stack¡±ºÍ¡°¶Ñ heap¡±»¹²»ÊÇºÜÃ÷°×¡£°üÀ¨Ò»Ð©¿Æ°à³öÉí
-                            µÄÈËÒ²²»Ã÷°×ÕâÁ½¸ö¸ÅÄî¡£ÎÒ²»Ïë¹ý¶àµÄËµÕâÁ½¸ö¶«Î÷¡£¼òµ¥µÄÀ´½²£¬stackÉÏ·ÖÅäµÄÄÚ´æÏµÍ³×Ô¶¯ÊÍ·Å£¬heapÉÏ·ÖÅäµÄÄÚ´æ£¬ÏµÍ³²»ÊÍ·Å£¬ÄÄÅÂ³ÌÐòÍË³ö£¬ÄÇÒ»¿éÄÚ´æ»¹ÊÇÔÚÄÇÀï
+                            ã€€ã€€å¯èƒ½è®¸å¤šäººå¯¹å†…å­˜åˆ†é…ä¸Šçš„â€œæ ˆ stackâ€å’Œâ€œå † heapâ€è¿˜ä¸æ˜¯å¾ˆæ˜Žç™½ã€‚åŒ…æ‹¬ä¸€äº›ç§‘ç­å‡ºèº«
+                            çš„äººä¹Ÿä¸æ˜Žç™½è¿™ä¸¤ä¸ªæ¦‚å¿µã€‚æˆ‘ä¸æƒ³è¿‡å¤šçš„è¯´è¿™ä¸¤ä¸ªä¸œè¥¿ã€‚ç®€å•çš„æ¥è®²ï¼Œstackä¸Šåˆ†é…çš„å†…å­˜ç³»ç»Ÿè‡ªåŠ¨é‡Šæ”¾ï¼Œheapä¸Šåˆ†é…çš„å†…å­˜ï¼Œç³»ç»Ÿä¸é‡Šæ”¾ï¼Œå“ªæ€•ç¨‹åºé€€å‡ºï¼Œé‚£ä¸€å—å†…å­˜è¿˜æ˜¯åœ¨é‚£é‡Œ
 
-                            ¡¡¡¡¡£stackÒ»°ãÊÇ¾²Ì¬·ÖÅäÄÚ´æ£¬heapÉÏÒ»°ãÊÇ¶¯Ì¬·ÖÅäÄÚ´æ¡£
+                            ã€€ã€€ã€‚stackä¸€èˆ¬æ˜¯é™æ€åˆ†é…å†…å­˜ï¼Œheapä¸Šä¸€èˆ¬æ˜¯åŠ¨æ€åˆ†é…å†…å­˜ã€‚
 
-                            ¡¡¡¡ÓÉmallocÏµÍ³º¯Êý·ÖÅäµÄÄÚ´æ¾ÍÊÇ´Ó¶ÑÉÏ·ÖÅäÄÚ´æ¡£´Ó¶ÑÉÏ·ÖÅäµÄÄÚ´æÒ»¶¨Òª×Ô¼ºÊÍ·Å¡£ÓÃfreeÊÍ·Å£¬²»È»¾ÍÊÇÊõÓï¡ª¡ª¡°ÄÚ´æÐ¹Â¶¡±£¨»òÊÇ¡°ÄÚ´æÂ©¶´¡±£©¡ª¡ª Memory Leak¡£ÓÚÊÇ£¬ÏµÍ³µÄ¿É·ÖÅäÄÚ´æ»áËæmallocÔ½À´Ô½ÉÙ£¬Ö±µ½ÏµÍ³±ÀÀ£¡£»¹ÊÇÀ´¿´¿´¡°Õ»ÄÚ´æ¡±ºÍ
-                            ¡°¶ÑÄÚ´æ¡±µÄ²î±ð°É¡£
+                            ã€€ã€€ç”±mallocç³»ç»Ÿå‡½æ•°åˆ†é…çš„å†…å­˜å°±æ˜¯ä»Žå †ä¸Šåˆ†é…å†…å­˜ã€‚ä»Žå †ä¸Šåˆ†é…çš„å†…å­˜ä¸€å®šè¦è‡ªå·±é‡Šæ”¾ã€‚ç”¨freeé‡Šæ”¾ï¼Œä¸ç„¶å°±æ˜¯æœ¯è¯­â€”â€”â€œå†…å­˜æ³„éœ²â€ï¼ˆæˆ–æ˜¯â€œå†…å­˜æ¼æ´žâ€ï¼‰â€”â€” Memory Leakã€‚äºŽæ˜¯ï¼Œç³»ç»Ÿçš„å¯åˆ†é…å†…å­˜ä¼šéšmallocè¶Šæ¥è¶Šå°‘ï¼Œç›´åˆ°ç³»ç»Ÿå´©æºƒã€‚è¿˜æ˜¯æ¥çœ‹çœ‹â€œæ ˆå†…å­˜â€å’Œ
+                            â€œå †å†…å­˜â€çš„å·®åˆ«å§ã€‚
 
-                            ¡¡¡¡Õ»ÄÚ´æ·ÖÅä
+                            ã€€ã€€æ ˆå†…å­˜åˆ†é…
 
-                            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª
+                            ã€€ã€€â€”â€”â€”â€”â€”
 
-                            ¡¡¡¡char*
+                            ã€€ã€€char*
 
-¡¡¡¡AllocStrFromStack()
+ã€€ã€€AllocStrFromStack()
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡char pstr[100];
+        ã€€ã€€char pstr[100];
 
-        ¡¡¡¡return pstr;
+        ã€€ã€€return pstr;
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡¶ÑÄÚ´æ·ÖÅä
+        ã€€ã€€å †å†…å­˜åˆ†é…
 
-        ¡¡¡¡¡ª¡ª¡ª¡ª¡ª
+        ã€€ã€€â€”â€”â€”â€”â€”
 
-        ¡¡¡¡char*
+        ã€€ã€€char*
 
-¡¡¡¡AllocStrFromHeap(int len)
+ã€€ã€€AllocStrFromHeap(int len)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡char *pstr;
+        ã€€ã€€char *pstr;
 
-        ¡¡¡¡if ( len <= 0 ) return NULL;
+        ã€€ã€€if ( len <= 0 ) return NULL;
 
-        ¡¡¡¡return ( char* ) malloc( len );
+        ã€€ã€€return ( char* ) malloc( len );
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡¶ÔÓÚµÚÒ»¸öº¯Êý£¬ÄÇ¿épstrµÄÄÚ´æÔÚº¯Êý·µ»ØÊ±¾Í±»ÏµÍ³ÊÍ·ÅÁË¡£ÓÚÊÇËù·µ»ØµÄchar*Ê²Ã´Ò²Ã»ÓÐ¡£¶ø¶ÔÓÚµÚ¶þ¸öº¯Êý£¬ÊÇ´Ó¶ÑÉÏ·ÖÅäÄÚ´æ£¬ËùÒÔÄÄÅÂÊÇ³ÌÐòÍË³öÊ±£¬Ò²²»ÊÍ·Å£¬ËùÒÔµÚ¶þ¸öº¯ÊýµÄ·µ»ØµÄÄÚ´æÃ»ÓÐÎÊÌâ£¬¿ÉÒÔ±»Ê¹ÓÃ¡£µ«Ò»¶¨Òªµ÷ÓÃfreeÊÍ·Å£¬²»È»¾ÍÊÇMemory Leak£¡
+        ã€€ã€€å¯¹äºŽç¬¬ä¸€ä¸ªå‡½æ•°ï¼Œé‚£å—pstrçš„å†…å­˜åœ¨å‡½æ•°è¿”å›žæ—¶å°±è¢«ç³»ç»Ÿé‡Šæ”¾äº†ã€‚äºŽæ˜¯æ‰€è¿”å›žçš„char*ä»€ä¹ˆä¹Ÿæ²¡æœ‰ã€‚è€Œå¯¹äºŽç¬¬äºŒä¸ªå‡½æ•°ï¼Œæ˜¯ä»Žå †ä¸Šåˆ†é…å†…å­˜ï¼Œæ‰€ä»¥å“ªæ€•æ˜¯ç¨‹åºé€€å‡ºæ—¶ï¼Œä¹Ÿä¸é‡Šæ”¾ï¼Œæ‰€ä»¥ç¬¬äºŒä¸ªå‡½æ•°çš„è¿”å›žçš„å†…å­˜æ²¡æœ‰é—®é¢˜ï¼Œå¯ä»¥è¢«ä½¿ç”¨ã€‚ä½†ä¸€å®šè¦è°ƒç”¨freeé‡Šæ”¾ï¼Œä¸ç„¶å°±æ˜¯Memory Leakï¼
 
-        ¡¡¡¡ÔÚ¶ÑÉÏ·ÖÅäÄÚ´æºÜÈÝÒ×Ôì³ÉÄÚ´æÐ¹Â©£¬ÕâÊÇC/C++µÄ×î´óµÄ¡°¿ËÐÇ¡±£¬Èç¹ûÄãµÄ³ÌÐòÒªÎÈ¶¨£¬ÄÇÃ´¾Í²»Òª³öÏÖMemory Leak¡£ËùÒÔ£¬ÎÒ»¹ÊÇÒªÔÚÕâÀïÇ§¶£ßÌÍòÖö¸¶£¬ÔÚÊ¹ÓÃmallocÏµÍ³
+        ã€€ã€€åœ¨å †ä¸Šåˆ†é…å†…å­˜å¾ˆå®¹æ˜“é€ æˆå†…å­˜æ³„æ¼ï¼Œè¿™æ˜¯C/C++çš„æœ€å¤§çš„â€œå…‹æ˜Ÿâ€ï¼Œå¦‚æžœä½ çš„ç¨‹åºè¦ç¨³å®šï¼Œé‚£ä¹ˆå°±ä¸è¦å‡ºçŽ°Memory Leakã€‚æ‰€ä»¥ï¼Œæˆ‘è¿˜æ˜¯è¦åœ¨è¿™é‡Œåƒå®å’›ä¸‡å˜±ä»˜ï¼Œåœ¨ä½¿ç”¨mallocç³»ç»Ÿ
 
-        ¡¡¡¡òÖö¸¶£¬ÔÚÊ¹Ó?allocÏµÍ³º¯Êý£¨°üÀ¨calloc£¬realloc£©Ê±Ç§ÍòÒªÐ¡ÐÄ¡£
+        ã€€ã€€è›‘é¾ˆå®îƒ¯è°‘è¤‚?allocç³»ç»Ÿå‡½æ•°ï¼ˆåŒ…æ‹¬callocï¼Œreallocï¼‰æ—¶åƒä¸‡è¦å°å¿ƒã€‚
 
-        ¡¡¡¡¼ÇµÃÓÐÒ»¸öUNIXÉÏµÄ·þÎñÓ¦ÓÃ³ÌÐò£¬´óÔ¼ÓÐ¼¸°ÙµÄCÎÄ¼þ±àÒë¶ø³É£¬ÔËÐÐ²âÊÔÁ¼ºÃ£¬µÈÊ¹ÓÃÊ±£¬Ã¿¸ôÈý¸öÔÂÏµÍ³¾ÍÊÇdownÒ»´Î£¬¸ãµÃÐí¶àÈË½¹Í·ÀÃ¶î£¬²é²»³öÎÊÌâËùÔÚ¡£Ö»ºÃ£¬Ã¿¸ôÁ½¸öÔÂÈË¹¤ÊÖ¶¯ÖØÆôÏµÍ³Ò»´Î¡£³öÏÖÕâÖÖÎÊÌâ¾ÍÊÇMemery LeakÔÚ×ö¹ÖÁË£¬ÔÚC/C++ÖÐÕâÖÖÎÊÌâ×ÜÊÇ»á·¢Éú£¬ËùÒÔÄãÒ»¶¨ÒªÐ¡ÐÄ¡£Ò»¸öRationalµÄ¼ì²â¹¤×÷¡ª¡ªPurify£¬¿ÉÒÔ°ïÄã²âÊÔÄãµÄ³ÌÐòÓÐÃ»ÓÐÄÚ´æÐ¹Â©¡£
+        ã€€ã€€è®°å¾—æœ‰ä¸€ä¸ªUNIXä¸Šçš„æœåŠ¡åº”ç”¨ç¨‹åºï¼Œå¤§çº¦æœ‰å‡ ç™¾çš„Cæ–‡ä»¶ç¼–è¯‘è€Œæˆï¼Œè¿è¡Œæµ‹è¯•è‰¯å¥½ï¼Œç­‰ä½¿ç”¨æ—¶ï¼Œæ¯éš”ä¸‰ä¸ªæœˆç³»ç»Ÿå°±æ˜¯downä¸€æ¬¡ï¼Œæžå¾—è®¸å¤šäººç„¦å¤´çƒ‚é¢ï¼ŒæŸ¥ä¸å‡ºé—®é¢˜æ‰€åœ¨ã€‚åªå¥½ï¼Œæ¯éš”ä¸¤ä¸ªæœˆäººå·¥æ‰‹åŠ¨é‡å¯ç³»ç»Ÿä¸€æ¬¡ã€‚å‡ºçŽ°è¿™ç§é—®é¢˜å°±æ˜¯Memery Leakåœ¨åšæ€ªäº†ï¼Œåœ¨C/C++ä¸­è¿™ç§é—®é¢˜æ€»æ˜¯ä¼šå‘ç”Ÿï¼Œæ‰€ä»¥ä½ ä¸€å®šè¦å°å¿ƒã€‚ä¸€ä¸ªRationalçš„æ£€æµ‹å·¥ä½œâ€”â€”Purifyï¼Œå¯ä»¥å¸®ä½ æµ‹è¯•ä½ çš„ç¨‹åºæœ‰æ²¡æœ‰å†…å­˜æ³„æ¼ã€‚
 
-        ¡¡¡¡ÎÒ±£Ö¤£¬×ö¹ýÐí¶àC/C++µÄ¹¤³ÌµÄ³ÌÐòÔ±£¬¶¼»á¶Ômalloc»òÊÇnewÓÐÐ©¸ÐÃ°¡£µ±ÄãÊ²Ã´Ê±ºòÔÚÊ¹ÓÃmallocºÍnewÊ±£¬ÓÐÒ»ÖÖÇá¶ÈµÄ½ôÕÅºÍ»Ì¿ÖµÄ¸Ð¾õÊ±£¬Äã¾Í¾ß±¸ÁËÕâ·½ÃæµÄÐÞÑøÁË¡£
+        ã€€ã€€æˆ‘ä¿è¯ï¼Œåšè¿‡è®¸å¤šC/C++çš„å·¥ç¨‹çš„ç¨‹åºå‘˜ï¼Œéƒ½ä¼šå¯¹mallocæˆ–æ˜¯newæœ‰äº›æ„Ÿå†’ã€‚å½“ä½ ä»€ä¹ˆæ—¶å€™åœ¨ä½¿ç”¨mallocå’Œnewæ—¶ï¼Œæœ‰ä¸€ç§è½»åº¦çš„ç´§å¼ å’Œæƒ¶æçš„æ„Ÿè§‰æ—¶ï¼Œä½ å°±å…·å¤‡äº†è¿™æ–¹é¢çš„ä¿®å…»äº†ã€‚
 
-        ¡¡¡¡¶ÔÓÚmallocºÍfreeµÄ²Ù×÷ÓÐÒÔÏÂ¹æÔò£º
+        ã€€ã€€å¯¹äºŽmallocå’Œfreeçš„æ“ä½œæœ‰ä»¥ä¸‹è§„åˆ™ï¼š
 
-        ¡¡¡¡1) Åä¶ÔÊ¹ÓÃ£¬ÓÐÒ»¸ömalloc£¬¾ÍÓ¦¸ÃÓÐÒ»¸öfree¡££¨C++ÖÐ¶ÔÓ¦ÎªnewºÍdelete£©
+        ã€€ã€€1) é…å¯¹ä½¿ç”¨ï¼Œæœ‰ä¸€ä¸ªmallocï¼Œå°±åº”è¯¥æœ‰ä¸€ä¸ªfreeã€‚ï¼ˆC++ä¸­å¯¹åº”ä¸ºnewå’Œdeleteï¼‰
 
-        ¡¡¡¡2) ¾¡Á¿ÔÚÍ¬Ò»²ãÉÏÊ¹ÓÃ£¬²»ÒªÏñÉÏÃæÄÇÖÖ£¬mallocÔÚº¯ÊýÖÐ£¬¶øfreeÔÚº¯ÊýÍâ¡£×îºÃÔÚÍ¬Ò»µ÷ÓÃ²ãÉÏÊ¹ÓÃÕâÁ½¸öº¯Êý¡£
+        ã€€ã€€2) å°½é‡åœ¨åŒä¸€å±‚ä¸Šä½¿ç”¨ï¼Œä¸è¦åƒä¸Šé¢é‚£ç§ï¼Œmallocåœ¨å‡½æ•°ä¸­ï¼Œè€Œfreeåœ¨å‡½æ•°å¤–ã€‚æœ€å¥½åœ¨åŒä¸€è°ƒç”¨å±‚ä¸Šä½¿ç”¨è¿™ä¸¤ä¸ªå‡½æ•°ã€‚
 
-        ¡¡¡¡3) malloc·ÖÅäµÄÄÚ´æÒ»¶¨Òª³õÊ¼»¯¡£freeºóµÄÖ¸ÕëÒ»¶¨ÒªÉèÖÃÎªNULL¡£
+        ã€€ã€€3) mallocåˆ†é…çš„å†…å­˜ä¸€å®šè¦åˆå§‹åŒ–ã€‚freeåŽçš„æŒ‡é’ˆä¸€å®šè¦è®¾ç½®ä¸ºNULLã€‚
 
-        ¡¡¡¡×¢£ºËäÈ»ÏÖÔÚµÄ²Ù×÷ÏµÍ³£¨Èç£ºUNIXºÍWin2k/NT£©¶¼ÓÐ½ø³ÌÄÚ´æ¸ú×Ù»úÖÆ£¬Ò²¾ÍÊÇÈç¹ûÄãÓÐÃ»ÓÐÊÍ·ÅµÄÄÚ´æ£¬²Ù×÷ÏµÍ³»á°ïÄãÊÍ·Å¡£µ«²Ù×÷ÏµÍ³ÒÀÈ»²»»áÊÍ·ÅÄã³ÌÐòÖÐËùÓÐ²úÉúÁËMemory LeakµÄÄÚ´æ£¬ËùÒÔ£¬×îºÃ»¹ÊÇÄã×Ô¼ºÀ´×öÕâ¸ö¹¤×÷¡££¨ÓÐµÄÊ±ºò²»Öª²»¾õ¾Í³öÏÖMemory LeakÁË£¬¶øÇÒÔÚ¼¸°ÙÍòÐÐµÄ´úÂëÖÐÕÒÎÞÒìÓÚº£µ×ÀÌÕë£¬RationalÓÐÒ»¸ö¹¤¾ß½ÐPurifyòÐÐµÄ´úÂëÖÐÕÒÎÞÒìÓÚº£µ×ÀÌÕë£?ationalÓÐÒ»¸ö¹¤¾ß½ÐPurify£¬¿ÉÄÜºÜºÃµÄ°ïÄã¼ì²é³ÌÐòÖÐµÄMemory Leak£©
+        ã€€ã€€æ³¨ï¼šè™½ç„¶çŽ°åœ¨çš„æ“ä½œç³»ç»Ÿï¼ˆå¦‚ï¼šUNIXå’ŒWin2k/NTï¼‰éƒ½æœ‰è¿›ç¨‹å†…å­˜è·Ÿè¸ªæœºåˆ¶ï¼Œä¹Ÿå°±æ˜¯å¦‚æžœä½ æœ‰æ²¡æœ‰é‡Šæ”¾çš„å†…å­˜ï¼Œæ“ä½œç³»ç»Ÿä¼šå¸®ä½ é‡Šæ”¾ã€‚ä½†æ“ä½œç³»ç»Ÿä¾ç„¶ä¸ä¼šé‡Šæ”¾ä½ ç¨‹åºä¸­æ‰€æœ‰äº§ç”Ÿäº†Memory Leakçš„å†…å­˜ï¼Œæ‰€ä»¥ï¼Œæœ€å¥½è¿˜æ˜¯ä½ è‡ªå·±æ¥åšè¿™ä¸ªå·¥ä½œã€‚ï¼ˆæœ‰çš„æ—¶å€™ä¸çŸ¥ä¸è§‰å°±å‡ºçŽ°Memory Leakäº†ï¼Œè€Œä¸”åœ¨å‡ ç™¾ä¸‡è¡Œçš„ä»£ç ä¸­æ‰¾æ— å¼‚äºŽæµ·åº•æžé’ˆï¼ŒRationalæœ‰ä¸€ä¸ªå·¥å…·å«Purifyè›æ¢°æ‹‡îŒ‘èƒ«å§“æ¤…æŠŸç…Šè¯¤ï¼•æ¡Œé™¶è€„?ationalæœ‰ä¸€ä¸ªå·¥å…·å«Purifyï¼Œå¯èƒ½å¾ˆå¥½çš„å¸®ä½ æ£€æŸ¥ç¨‹åºä¸­çš„Memory Leakï¼‰
 
-        ¡¡¡¡9¡¢±äÁ¿µÄ³õÊ¼»¯
+        ã€€ã€€9ã€å˜é‡çš„åˆå§‹åŒ–
 
-        ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”
 
-        ¡¡¡¡½ÓÉÏÒ»Ìõ£¬±äÁ¿Ò»¶¨Òª±»³õÊ¼»¯ÔÙÊ¹ÓÃ¡£C/C++±àÒëÆ÷ÔÚÕâ¸ö·½Ãæ²»»áÏñJAVAÒ»Ñù°ïÄã³õÊ¼»¯£¬ÕâÒ»ÇÐ¶¼ÐèÒªÄã×Ô¼ºÀ´£¬Èç¹ûÄãÊ¹ÓÃÁËÃ»ÓÐ³õÊ¼»¯µÄ±äÁ¿£¬½á¹ûÎ´Öª¡£ºÃµÄ³ÌÐòÔ±´ÓÀ´¶¼»áÔÚÊ¹ÓÃ±äÁ¿Ç°³õÊ¼»¯±äÁ¿µÄ¡£Èç£º
+        ã€€ã€€æŽ¥ä¸Šä¸€æ¡ï¼Œå˜é‡ä¸€å®šè¦è¢«åˆå§‹åŒ–å†ä½¿ç”¨ã€‚C/C++ç¼–è¯‘å™¨åœ¨è¿™ä¸ªæ–¹é¢ä¸ä¼šåƒJAVAä¸€æ ·å¸®ä½ åˆå§‹åŒ–ï¼Œè¿™ä¸€åˆ‡éƒ½éœ€è¦ä½ è‡ªå·±æ¥ï¼Œå¦‚æžœä½ ä½¿ç”¨äº†æ²¡æœ‰åˆå§‹åŒ–çš„å˜é‡ï¼Œç»“æžœæœªçŸ¥ã€‚å¥½çš„ç¨‹åºå‘˜ä»Žæ¥éƒ½ä¼šåœ¨ä½¿ç”¨å˜é‡å‰åˆå§‹åŒ–å˜é‡çš„ã€‚å¦‚ï¼š
 
-        ¡¡¡¡1) ¶Ômalloc·ÖÅäµÄÄÚ´æ½øÐÐmemsetÇåÁã²Ù×÷¡££¨¿ÉÒÔÊ¹ÓÃcalloc·ÖÅäÒ»¿éÈ«ÁãµÄÄÚ´æ
-        2) ¶ÔÒ»Ð©Õ»ÉÏ·ÖÅäµÄstruct»òÊý×é½øÐÐ³õÊ¼»¯¡££¨×îºÃÒ²ÊÇÇåÁã£©
-        ²»¹ý»°ÓÖËµ»ØÀ´ÁË£¬³õÊ¼»¯Ò²»áÔì³ÉÏµÍ³ÔËÐÐÊ±¼äÓÐÒ»¶¨µÄ¿ªÏú£¬ËùÒÔ£¬Ò²²»Òª¶ÔËùÓÐµÄ±äÁ¿×ö³õÊ¼»¯£¬Õâ¸öÒ²Ã»ÓÐÒâÒå¡£ºÃµÄ³ÌÐòÔ±ÖªµÀÄÄÐ©±äÁ¿ÐèÒª³õÊ¼»¯£¬ÄÄÐ©Ôò²»ÐèÒª¡£
+        ã€€ã€€1) å¯¹mallocåˆ†é…çš„å†…å­˜è¿›è¡Œmemsetæ¸…é›¶æ“ä½œã€‚ï¼ˆå¯ä»¥ä½¿ç”¨callocåˆ†é…ä¸€å—å…¨é›¶çš„å†…å­˜
+        2) å¯¹ä¸€äº›æ ˆä¸Šåˆ†é…çš„structæˆ–æ•°ç»„è¿›è¡Œåˆå§‹åŒ–ã€‚ï¼ˆæœ€å¥½ä¹Ÿæ˜¯æ¸…é›¶ï¼‰
+        ä¸è¿‡è¯åˆè¯´å›žæ¥äº†ï¼Œåˆå§‹åŒ–ä¹Ÿä¼šé€ æˆç³»ç»Ÿè¿è¡Œæ—¶é—´æœ‰ä¸€å®šçš„å¼€é”€ï¼Œæ‰€ä»¥ï¼Œä¹Ÿä¸è¦å¯¹æ‰€æœ‰çš„å˜é‡åšåˆå§‹åŒ–ï¼Œè¿™ä¸ªä¹Ÿæ²¡æœ‰æ„ä¹‰ã€‚å¥½çš„ç¨‹åºå‘˜çŸ¥é“å“ªäº›å˜é‡éœ€è¦åˆå§‹åŒ–ï¼Œå“ªäº›åˆ™ä¸éœ€è¦ã€‚
 
-        ¡¡¡¡Èç£ºÒÔÏÂÕâÖÖÇé¿ö£¬Ôò²»ÐèÒª¡£
+        ã€€ã€€å¦‚ï¼šä»¥ä¸‹è¿™ç§æƒ…å†µï¼Œåˆ™ä¸éœ€è¦ã€‚
 
-        ¡¡¡¡char *pstr; /* Ò»¸ö×Ö·û´® */
+        ã€€ã€€char *pstr; /* ä¸€ä¸ªå­—ç¬¦ä¸² */
 
-        ¡¡¡¡pstr = ( char* ) malloc( 50 );
+        ã€€ã€€pstr = ( char* ) malloc( 50 );
 
-        ¡¡¡¡if ( pstr == NULL ) exit(0);
+        ã€€ã€€if ( pstr == NULL ) exit(0);
 
-        ¡¡¡¡strcpy( pstr, "Hello Wrold" );
+        ã€€ã€€strcpy( pstr, "Hello Wrold" );
 
-        ¡¡¡¡strcpy( pstr, "Hello Wrold" );
+        ã€€ã€€strcpy( pstr, "Hello Wrold" );
 
-        ¡¡¡¡µ«Èç¹ûÊÇÏÂÃæÒ»ÖÖÇé¿ö£¬×îºÃ½øÐÐÄÚ´æ³õÊ¼»¯¡££¨Ö¸ÕëÊÇÒ»¸öÎ£ÏÕµÄ¶«Î÷£¬Ò»¶¨Òª³õÊ¼»¯£©
+        ã€€ã€€ä½†å¦‚æžœæ˜¯ä¸‹é¢ä¸€ç§æƒ…å†µï¼Œæœ€å¥½è¿›è¡Œå†…å­˜åˆå§‹åŒ–ã€‚ï¼ˆæŒ‡é’ˆæ˜¯ä¸€ä¸ªå±é™©çš„ä¸œè¥¿ï¼Œä¸€å®šè¦åˆå§‹åŒ–ï¼‰
 
-        ¡¡¡¡char **pstr; /* Ò»¸ö×Ö·û´®Êý×é */
+        ã€€ã€€char **pstr; /* ä¸€ä¸ªå­—ç¬¦ä¸²æ•°ç»„ */
 
-        ¡¡¡¡pstr = ( char** ) malloc( 50 );
+        ã€€ã€€pstr = ( char** ) malloc( 50 );
 
-        ¡¡¡¡if ( pstr == NULL ) exit(0);
+        ã€€ã€€if ( pstr == NULL ) exit(0);
 
-        ¡¡¡¡/* ÈÃÊý×éÖÐµÄÖ¸Õë¶¼Ö¸ÏòNULL */
+        ã€€ã€€/* è®©æ•°ç»„ä¸­çš„æŒ‡é’ˆéƒ½æŒ‡å‘NULL */
 
-        ¡¡¡¡memset( pstr, 0, 50*sizeof(char*) );
+        ã€€ã€€memset( pstr, 0, 50*sizeof(char*) );
 
-        ¡¡¡¡¶ø¶ÔÓÚÈ«¾Ö±äÁ¿£¬ºÍ¾²Ì¬±äÁ¿£¬Ò»¶¨ÒªÉùÃ÷Ê±¾Í³õÊ¼»¯¡£ÒòÎªÄã²»ÖªµÀËüµÚÒ»´Î»áÔÚÄÄÀï±»Ê¹ÓÃ¡£ËùÒÔÊ¹ÓÃÇ°³õÊ¼ÕâÐ©±äÁ¿ÊÇ±È½Ï²»ÏÖÊµµÄ£¬Ò»¶¨ÒªÔÚÉùÃ÷Ê±¾Í³õÊ¼»¯ËüÃÇ¡£Èç£º
+        ã€€ã€€è€Œå¯¹äºŽå…¨å±€å˜é‡ï¼Œå’Œé™æ€å˜é‡ï¼Œä¸€å®šè¦å£°æ˜Žæ—¶å°±åˆå§‹åŒ–ã€‚å› ä¸ºä½ ä¸çŸ¥é“å®ƒç¬¬ä¸€æ¬¡ä¼šåœ¨å“ªé‡Œè¢«ä½¿ç”¨ã€‚æ‰€ä»¥ä½¿ç”¨å‰åˆå§‹è¿™äº›å˜é‡æ˜¯æ¯”è¾ƒä¸çŽ°å®žçš„ï¼Œä¸€å®šè¦åœ¨å£°æ˜Žæ—¶å°±åˆå§‹åŒ–å®ƒä»¬ã€‚å¦‚ï¼š
 
-        ¡¡¡¡Links *plnk = NULL; /* ¶ÔÓÚÈ«¾Ö±äÁ¿plnk³õÊ¼»¯ÎªNULL */
+        ã€€ã€€Links *plnk = NULL; /* å¯¹äºŽå…¨å±€å˜é‡plnkåˆå§‹åŒ–ä¸ºNULL */
 
-        ¡¡¡¡10¡¢hºÍcÎÄ¼þµÄÊ¹ÓÃ
+        ã€€ã€€10ã€hå’Œcæ–‡ä»¶çš„ä½¿ç”¨
 
-        ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-        ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+        ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-        ¡¡¡¡HÎÄ¼þºÍCÎÄ¼þÔõÃ´ÓÃÄØ£¿Ò»°ãÀ´Ëµ£¬HÎÄ¼þÖÐÊÇdeclare£¨ÉùÃ÷£©£¬CÎÄ¼þÖÐÊÇdefine£¨¶¨Òå£©¡£ÒòÎªCÎÄ¼þÒª±àÒë³É¿âÎÄ¼þ£¨WindowsÏÂÊÇ.obj/.lib£¬UNIXÏÂÊÇ.o/.a£©£¬Èç¹û±ðÈËÒªÊ¹ÓÃÄãµÄº¯Êý£¬ÄÇÃ´¾ÍÒªÒýÓÃÄãµÄHÎÄ¼þ£¬ËùÒÔ£¬HÎÄ¼þÖÐÒ»°ãÊÇ±äÁ¿¡¢ºê¶¨Òå¡¢Ã¶¾Ù¡¢½á¹¹ºÍº¯Êý½Ó¿ÚµÄÉùÃ÷£¬¾ÍÏñÒ»¸ö½Ó¿ÚËµÃ÷ÎÄ¼þÒ»Ñù¡£¶øCÎÄ¼þÔòÊÇÊµÏÖÏ¸½Ú¡£
+        ã€€ã€€Hæ–‡ä»¶å’ŒCæ–‡ä»¶æ€Žä¹ˆç”¨å‘¢ï¼Ÿä¸€èˆ¬æ¥è¯´ï¼ŒHæ–‡ä»¶ä¸­æ˜¯declareï¼ˆå£°æ˜Žï¼‰ï¼ŒCæ–‡ä»¶ä¸­æ˜¯defineï¼ˆå®šä¹‰ï¼‰ã€‚å› ä¸ºCæ–‡ä»¶è¦ç¼–è¯‘æˆåº“æ–‡ä»¶ï¼ˆWindowsä¸‹æ˜¯.obj/.libï¼ŒUNIXä¸‹æ˜¯.o/.aï¼‰ï¼Œå¦‚æžœåˆ«äººè¦ä½¿ç”¨ä½ çš„å‡½æ•°ï¼Œé‚£ä¹ˆå°±è¦å¼•ç”¨ä½ çš„Hæ–‡ä»¶ï¼Œæ‰€ä»¥ï¼ŒHæ–‡ä»¶ä¸­ä¸€èˆ¬æ˜¯å˜é‡ã€å®å®šä¹‰ã€æžšä¸¾ã€ç»“æž„å’Œå‡½æ•°æŽ¥å£çš„å£°æ˜Žï¼Œå°±åƒä¸€ä¸ªæŽ¥å£è¯´æ˜Žæ–‡ä»¶ä¸€æ ·ã€‚è€ŒCæ–‡ä»¶åˆ™æ˜¯å®žçŽ°ç»†èŠ‚ã€‚
 
-        ¡¡¡¡HÎÄ¼þºÍCÎÄ¼þ×î´óµÄÓÃ´¦¾ÍÊÇÉùÃ÷ºÍÊµÏÖ·Ö¿ª¡£Õâ¸öÌØÐÔÓ¦¸ÃÊÇ¹«ÈÏµÄÁË£¬µ«ÎÒÈÔÈ»¿´µ½ÓÐÐ©ÈËÏ²»¶°Ñº¯ÊýÐ´ÔÚHÎÄ¼þÖÐ£¬ÕâÖÖÏ°¹ßºÜ²»ºÃ¡££¨Èç¹ûÊÇC++»°£¬¶ÔÓÚÆäÄ£°åº¯Êý£¬ÔÚVCÖÐÖ»ÓÐ°ÑÊµÏÖºÍÉùÃ÷¶¼Ð´ÔÚÒ»¸öÎÄ¼þÖÐ£¬ÒòÎªVC²»Ö§³Öexport¹Ø¼ü×Ö£©¡£¶øÇÒ£¬Èç¹ûÔÚHÎÄ¼þÖÐÐ´ÉÏº¯ÊýµÄÊµÏÖ£¬Äã»¹µÃÔÚmakefileÖÐ°ÑÍ·ÎÄ¼þµÄÒÀÀµ¹ØÏµÒ²¼ÓÉÏÈ¥£¬Õâ¸ö¾Í»áÈÃÄãµÄmakefileºÜ²»¹æ·¶¡£
+        ã€€ã€€Hæ–‡ä»¶å’ŒCæ–‡ä»¶æœ€å¤§çš„ç”¨å¤„å°±æ˜¯å£°æ˜Žå’Œå®žçŽ°åˆ†å¼€ã€‚è¿™ä¸ªç‰¹æ€§åº”è¯¥æ˜¯å…¬è®¤çš„äº†ï¼Œä½†æˆ‘ä»ç„¶çœ‹åˆ°æœ‰äº›äººå–œæ¬¢æŠŠå‡½æ•°å†™åœ¨Hæ–‡ä»¶ä¸­ï¼Œè¿™ç§ä¹ æƒ¯å¾ˆä¸å¥½ã€‚ï¼ˆå¦‚æžœæ˜¯C++è¯ï¼Œå¯¹äºŽå…¶æ¨¡æ¿å‡½æ•°ï¼Œåœ¨VCä¸­åªæœ‰æŠŠå®žçŽ°å’Œå£°æ˜Žéƒ½å†™åœ¨ä¸€ä¸ªæ–‡ä»¶ä¸­ï¼Œå› ä¸ºVCä¸æ”¯æŒexportå…³é”®å­—ï¼‰ã€‚è€Œä¸”ï¼Œå¦‚æžœåœ¨Hæ–‡ä»¶ä¸­å†™ä¸Šå‡½æ•°çš„å®žçŽ°ï¼Œä½ è¿˜å¾—åœ¨makefileä¸­æŠŠå¤´æ–‡ä»¶çš„ä¾èµ–å…³ç³»ä¹ŸåŠ ä¸ŠåŽ»ï¼Œè¿™ä¸ªå°±ä¼šè®©ä½ çš„makefileå¾ˆä¸è§„èŒƒã€‚
 
-        ¡¡¡¡×îºó£¬ÓÐÒ»¸ö×îÐèÒª×¢ÒâµÄµØ·½¾ÍÊÇ£º´ø³õÊ¼»¯µÄÈ«¾Ö±äÁ¿²»Òª·ÅÔÚHÎÄ¼þÖÐ£¡
+        ã€€ã€€æœ€åŽï¼Œæœ‰ä¸€ä¸ªæœ€éœ€è¦æ³¨æ„çš„åœ°æ–¹å°±æ˜¯ï¼šå¸¦åˆå§‹åŒ–çš„å…¨å±€å˜é‡ä¸è¦æ”¾åœ¨Hæ–‡ä»¶ä¸­ï¼
 
-        ¡¡¡¡ÀýÈçÓÐÒ»¸ö´¦Àí´íÎóÐÅÏ¢µÄ½á¹¹£º
+        ã€€ã€€ä¾‹å¦‚æœ‰ä¸€ä¸ªå¤„ç†é”™è¯¯ä¿¡æ¯çš„ç»“æž„ï¼š
 
-        ¡¡¡¡char* errmsg[] = {
+        ã€€ã€€char* errmsg[] = {
 
-            ¡¡¡¡/* 0 */ "No error",
+            ã€€ã€€/* 0 */ "No error",
 
-            ¡¡¡¡/* 1 */ "Open file error",
+            ã€€ã€€/* 1 */ "Open file error",
 
-            ¡¡¡¡/* 2 */ "Failed in sending/receiving a message",
+            ã€€ã€€/* 2 */ "Failed in sending/receiving a message",
 
-            ¡¡¡¡/* 3 */ "Bad arguments",
+            ã€€ã€€/* 3 */ "Bad arguments",
 
-            ¡¡¡¡/* 4 */ "Memeroy is not enough",
+            ã€€ã€€/* 4 */ "Memeroy is not enough",
 
-            ¡¡¡¡/* 5 */ "Service is down; try later",
+            ã€€ã€€/* 5 */ "Service is down; try later",
 
-            ¡¡¡¡/* 6 */ "Unknow information",
+            ã€€ã€€/* 6 */ "Unknow information",
 
-            ¡¡¡¡/* 7 */ "A socket operation has failed",
+            ã€€ã€€/* 7 */ "A socket operation has failed",
 
-            ¡¡¡¡/* 8 */ "Permission denied",
+            ã€€ã€€/* 8 */ "Permission denied",
 
-            ¡¡¡¡/* 9 */ "Bad configuration file format",
+            ã€€ã€€/* 9 */ "Bad configuration file format",
 
-            ¡¡¡¡/* 10 */ "Communication time out",
+            ã€€ã€€/* 10 */ "Communication time out",
 
-            ¡¡¡¡......
+            ã€€ã€€......
 
-                ¡¡¡¡......
+                ã€€ã€€......
 
-                ¡¡¡¡};
+                ã€€ã€€};
 
-¡¡¡¡Çë²»Òª°ÑÕâ¸ö¶«Î÷·ÅÔÚÍ·ÎÄ¼þÖÐ£¬ÒòÎªÈç¹ûÄãµÄÕâ¸öÍ·ÎÄ¼þ±»5¸öº¯Êý¿â£¨.lib»òÊÇ.a£©ËùÓÃµ½£¬ÓÚÊÇËû¾Í±»Á´½ÓÔÚÕâ5¸ö.lib»ò.aÖÐ£¬¶øÈç¹ûÄãµÄÒ»¸ö³ÌÐòÓÃµ½ÁËÕâ5¸öº¯Êý¿âÖÐµÄº¯Êý£¬²¢ÇÒÕâÐ©º¯Êý¶¼ÓÃµ½ÁËÕâ¸ö³ö´íÐÅÏ¢Êý×é¡£ÄÇÃ´Õâ·ÝÐÅÏ¢½«ÓÐ5¸ö¸±±¾´æÔÚÓÚÄãµÄÖ´ÐÐÎÄ¼þÖÐ¡£Èç¹ûÄãµÄÕâ¸öerrmsgºÜ´óµÄ»°£¬¶øÇÒÄãÓÃµ½µÄº¯Êý¿â¸ü¶àµÄ»°£¬ÄãµÄÖ´ÐÐÎÄ¼þÒ²»á±äµÃºÜ´ó¡£
+ã€€ã€€è¯·ä¸è¦æŠŠè¿™ä¸ªä¸œè¥¿æ”¾åœ¨å¤´æ–‡ä»¶ä¸­ï¼Œå› ä¸ºå¦‚æžœä½ çš„è¿™ä¸ªå¤´æ–‡ä»¶è¢«5ä¸ªå‡½æ•°åº“ï¼ˆ.libæˆ–æ˜¯.aï¼‰æ‰€ç”¨åˆ°ï¼ŒäºŽæ˜¯ä»–å°±è¢«é“¾æŽ¥åœ¨è¿™5ä¸ª.libæˆ–.aä¸­ï¼Œè€Œå¦‚æžœä½ çš„ä¸€ä¸ªç¨‹åºç”¨åˆ°äº†è¿™5ä¸ªå‡½æ•°åº“ä¸­çš„å‡½æ•°ï¼Œå¹¶ä¸”è¿™äº›å‡½æ•°éƒ½ç”¨åˆ°äº†è¿™ä¸ªå‡ºé”™ä¿¡æ¯æ•°ç»„ã€‚é‚£ä¹ˆè¿™ä»½ä¿¡æ¯å°†æœ‰5ä¸ªå‰¯æœ¬å­˜åœ¨äºŽä½ çš„æ‰§è¡Œæ–‡ä»¶ä¸­ã€‚å¦‚æžœä½ çš„è¿™ä¸ªerrmsgå¾ˆå¤§çš„è¯ï¼Œè€Œä¸”ä½ ç”¨åˆ°çš„å‡½æ•°åº“æ›´å¤šçš„è¯ï¼Œä½ çš„æ‰§è¡Œæ–‡ä»¶ä¹Ÿä¼šå˜å¾—å¾ˆå¤§ã€‚
 
-¡¡¡¡ÕýÈ·µÄÐ´·¨Ó¦¸Ã°ÑËüÐ´µ½CÎÄ¼þÖÐ£¬È»ºóÔÚ¸÷¸öÐèÒªÓÃµ½errmsgµÄCÎÄ¼þÍ·ÉÏ¼ÓÉÏ externchar* errmsg[]; µÄÍâ²¿ÉùÃ÷£¬ÈÃ±àÒëÆ÷ÔÚÁ´½ÓÊ±²ÅÈ¥¹ÜËû£¬ÕâÑùÒ»À´£¬¾ÍÖ»»áÓÐÒ»¸öerrmsg´æÔÚÓÚÖ´ÐÐÎÄ¼þÖÐ£¬¶øÇÒ£¬ÕâÑù×öºÜÀûÓÚ·â×°¡£
+ã€€ã€€æ­£ç¡®çš„å†™æ³•åº”è¯¥æŠŠå®ƒå†™åˆ°Cæ–‡ä»¶ä¸­ï¼Œç„¶åŽåœ¨å„ä¸ªéœ€è¦ç”¨åˆ°errmsgçš„Cæ–‡ä»¶å¤´ä¸ŠåŠ ä¸Š externchar* errmsg[]; çš„å¤–éƒ¨å£°æ˜Žï¼Œè®©ç¼–è¯‘å™¨åœ¨é“¾æŽ¥æ—¶æ‰åŽ»ç®¡ä»–ï¼Œè¿™æ ·ä¸€æ¥ï¼Œå°±åªä¼šæœ‰ä¸€ä¸ªerrmsgå­˜åœ¨äºŽæ‰§è¡Œæ–‡ä»¶ä¸­ï¼Œè€Œä¸”ï¼Œè¿™æ ·åšå¾ˆåˆ©äºŽå°è£…ã€‚
 
-¡¡¡¡ÎÒÔøÓöµ½¹ýµÄ×î·è¿ñµÄÊÂ£¬¾ÍÊÇÔÚÎÒµÄÄ¿±êÎÄ¼þÖÐ£¬Õâ¸öerrmsgÒ»¹²ÓÐ112¸ö¸±±¾£¬Ö´ÐÐÎÄ¼þÓÐ8M×óÓÒ¡£µ±ÎÒ°Ñerrmsg·Åµ½CÎÄ¼þÖÐ£¬²¢ÎªÒ»Ç§¶à¸öCÎÄ¼þ¼ÓÉÏÁËexternµÄÉùÃ÷ºó£¬ËùÓÐµÄº¯Êý¿âÎÄ¼þ³ß´ç¶¼ÏÂ½µÁË20%×óÓÒ£¬¶øÎÒµÄÖ´ÐÐÎÄ¼þÖ»ÓÐ5MÁË¡£Ò»ÏÂ×ÓÉÙÁË3M°¡¡£
+ã€€ã€€æˆ‘æ›¾é‡åˆ°è¿‡çš„æœ€ç–¯ç‹‚çš„äº‹ï¼Œå°±æ˜¯åœ¨æˆ‘çš„ç›®æ ‡æ–‡ä»¶ä¸­ï¼Œè¿™ä¸ªerrmsgä¸€å…±æœ‰112ä¸ªå‰¯æœ¬ï¼Œæ‰§è¡Œæ–‡ä»¶æœ‰8Må·¦å³ã€‚å½“æˆ‘æŠŠerrmsgæ”¾åˆ°Cæ–‡ä»¶ä¸­ï¼Œå¹¶ä¸ºä¸€åƒå¤šä¸ªCæ–‡ä»¶åŠ ä¸Šäº†externçš„å£°æ˜ŽåŽï¼Œæ‰€æœ‰çš„å‡½æ•°åº“æ–‡ä»¶å°ºå¯¸éƒ½ä¸‹é™äº†20%å·¦å³ï¼Œè€Œæˆ‘çš„æ‰§è¡Œæ–‡ä»¶åªæœ‰5Mäº†ã€‚ä¸€ä¸‹å­å°‘äº†3Må•Šã€‚
 
-¡¡¡¡£Û ±¸×¢ £Ý
+ã€€ã€€ï¼» å¤‡æ³¨ ï¼½
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”
 
-¡¡¡¡ÓÐÅóÓÑ¶ÔÎÒËµ£¬Õâ¸öÖ»ÊÇÒ»¸öÌØÀý£¬ÒòÎª£¬Èç¹ûerrmsgÔÚÖ´ÐÐÎÄ¼þÖÐ´æÔÚ¶à¸ö¸±±¾Ê±£¬¿ÉÒÔ¼Ó¿ì³ÌÐòÔËÐÐËÙ¶È£¬ÀíÓÉÊÇerrmsgµÄ¶à¸ö¸´±¾»áÈÃÏµÍ³µÄÄÚ´æ»»Ò³½µµÍ£¬´ïµ½Ð§ÂÊÌáÉý
+ã€€ã€€æœ‰æœ‹å‹å¯¹æˆ‘è¯´ï¼Œè¿™ä¸ªåªæ˜¯ä¸€ä¸ªç‰¹ä¾‹ï¼Œå› ä¸ºï¼Œå¦‚æžœerrmsgåœ¨æ‰§è¡Œæ–‡ä»¶ä¸­å­˜åœ¨å¤šä¸ªå‰¯æœ¬æ—¶ï¼Œå¯ä»¥åŠ å¿«ç¨‹åºè¿è¡Œé€Ÿåº¦ï¼Œç†ç”±æ˜¯errmsgçš„å¤šä¸ªå¤æœ¬ä¼šè®©ç³»ç»Ÿçš„å†…å­˜æ¢é¡µé™ä½Žï¼Œè¾¾åˆ°æ•ˆçŽ‡æå‡
 
-¡¡¡¡¡£ÏñÎÒÃÇÕâÀïËùËµµÄerrmsgÖ»ÓÐÒ»·Ý£¬µ±Ä³º¯ÊýÒªÓÃerrmsgÊ±£¬Èç¹ûÄÚ´æ¸ôµÃ±È½ÏÔ¶£¬»á²úÉú»»Ò³£¬·´¶øÐ§ÂÊ²»¸ß¡£
+ã€€ã€€ã€‚åƒæˆ‘ä»¬è¿™é‡Œæ‰€è¯´çš„errmsgåªæœ‰ä¸€ä»½ï¼Œå½“æŸå‡½æ•°è¦ç”¨errmsgæ—¶ï¼Œå¦‚æžœå†…å­˜éš”å¾—æ¯”è¾ƒè¿œï¼Œä¼šäº§ç”Ÿæ¢é¡µï¼Œåè€Œæ•ˆçŽ‡ä¸é«˜ã€‚
 
-¡¡¡¡Éú¸±±¾µ¼ÖÂÖ´ÐÐÎÄ¼þ³ß´ç±ä´ó£¬²»½öÔö¼ÓÁËÏµÍ³×°ÔØÊ±¼ä£¬Ò²»áÈÃÒ»¸ö³ÌÐòÔÚÄÚ´æÖÐÕ¼¸ü
+ã€€ã€€ç”Ÿå‰¯æœ¬å¯¼è‡´æ‰§è¡Œæ–‡ä»¶å°ºå¯¸å˜å¤§ï¼Œä¸ä»…å¢žåŠ äº†ç³»ç»Ÿè£…è½½æ—¶é—´ï¼Œä¹Ÿä¼šè®©ä¸€ä¸ªç¨‹åºåœ¨å†…å­˜ä¸­å æ›´
 
-¡¡¡¡¶àµÄÒ³Ãæ¡£¶ø¶ÔÓÚerrmsgÕâÑùÊý¾Ý£¬Ò»°ãÀ´Ëµ£¬ÔÚÏµÍ³ÔËÐÐÊ±²»»á¾­³£ÓÃµ½£¬ËùÒÔ»¹ÊÇ²úÉúµÄÄÚ´æ»»Ò³Ò²¾Í²»ËãÆµ·±¡£È¨ºâÖ®ÏÂ£¬»¹ÊÇÖ»ÓÐÒ»·ÝerrmsgµÄÐ§ÂÊ¸ß¡£¼´±ãÊÇÏñlogmsgÕâÑùÆµ·±Ê¹ÓÃµÄµÄÊý¾Ý£¬²Ù×÷ÏµÍ³µÄÄÚ´æµ÷¶ÈËã·¨»áÈÃÕâÑùµÄÆµ·±Ê¹ÓÃµÄÒ³Ãæ³£×¤ÓÚÄÚ´æ£¬ËùÒÔÒ²¾Í²»»á³öÏÖÄÚ´æ»»Ò³ÎÊÌâÁË¡£
+ã€€ã€€å¤šçš„é¡µé¢ã€‚è€Œå¯¹äºŽerrmsgè¿™æ ·æ•°æ®ï¼Œä¸€èˆ¬æ¥è¯´ï¼Œåœ¨ç³»ç»Ÿè¿è¡Œæ—¶ä¸ä¼šç»å¸¸ç”¨åˆ°ï¼Œæ‰€ä»¥è¿˜æ˜¯äº§ç”Ÿçš„å†…å­˜æ¢é¡µä¹Ÿå°±ä¸ç®—é¢‘ç¹ã€‚æƒè¡¡ä¹‹ä¸‹ï¼Œè¿˜æ˜¯åªæœ‰ä¸€ä»½errmsgçš„æ•ˆçŽ‡é«˜ã€‚å³ä¾¿æ˜¯åƒlogmsgè¿™æ ·é¢‘ç¹ä½¿ç”¨çš„çš„æ•°æ®ï¼Œæ“ä½œç³»ç»Ÿçš„å†…å­˜è°ƒåº¦ç®—æ³•ä¼šè®©è¿™æ ·çš„é¢‘ç¹ä½¿ç”¨çš„é¡µé¢å¸¸é©»äºŽå†…å­˜ï¼Œæ‰€ä»¥ä¹Ÿå°±ä¸ä¼šå‡ºçŽ°å†…å­˜æ¢é¡µé—®é¢˜äº†ã€‚
 
-¡¡¡¡11¡¢³ö´íÐÅÏ¢µÄ´¦Àí
+ã€€ã€€11ã€å‡ºé”™ä¿¡æ¯çš„å¤„ç†
 
-¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-¡¡¡¡Äã»á´¦Àí³ö´íÐÅÏ¢Âð£¿Å¶£¬Ëü²¢²»ÊÇ¼òµ¥µÄÊä³ö¡£¿´ÏÂÃæµÄÊ¾Àý£º
+ã€€ã€€ä½ ä¼šå¤„ç†å‡ºé”™ä¿¡æ¯å—ï¼Ÿå“¦ï¼Œå®ƒå¹¶ä¸æ˜¯ç®€å•çš„è¾“å‡ºã€‚çœ‹ä¸‹é¢çš„ç¤ºä¾‹ï¼š
 
-¡¡¡¡if ( p == NULL ){
+ã€€ã€€if ( p == NULL ){
 
-    ¡¡¡¡printf ( "ERR: The pointer is NULL\n" );
+    ã€€ã€€printf ( "ERR: The pointer is NULL\n" );
 
-    ¡¡¡¡}
+    ã€€ã€€}
 
-    ¡¡¡¡¸æ±ðÑ§ÉúÊ±´úµÄ±à³Ì°É¡£ÕâÖÖ±à³ÌºÜ²»ÀûÓÚÎ¬»¤ºÍ¹ÜÀí£¬³ö´íÐÅÏ¢»òÊÇÌáÊ¾ÐÅÏ¢£¬Ó¦¸ÃÍ³Ò»´¦Àí£¬¶ø²»ÊÇÏñÉÏÃæÕâÑù£¬Ð´³ÉÒ»¸ö¡°Ó²±àÂë¡±¡£µÚ10Ìõ¶ÔÕâ·½ÃæµÄ´¦Àí×öÁËÒ»²¿·ÖËµÃ÷¡£Èç¹ûÒª¹ÜÀí´íÎóÐÅÏ¢£¬ÄÇ¾ÍÒªÓÐÒÔÏÂµÄ´¦Àí£º
+    ã€€ã€€å‘Šåˆ«å­¦ç”Ÿæ—¶ä»£çš„ç¼–ç¨‹å§ã€‚è¿™ç§ç¼–ç¨‹å¾ˆä¸åˆ©äºŽç»´æŠ¤å’Œç®¡ç†ï¼Œå‡ºé”™ä¿¡æ¯æˆ–æ˜¯æç¤ºä¿¡æ¯ï¼Œåº”è¯¥ç»Ÿä¸€å¤„ç†ï¼Œè€Œä¸æ˜¯åƒä¸Šé¢è¿™æ ·ï¼Œå†™æˆä¸€ä¸ªâ€œç¡¬ç¼–ç â€ã€‚ç¬¬10æ¡å¯¹è¿™æ–¹é¢çš„å¤„ç†åšäº†ä¸€éƒ¨åˆ†è¯´æ˜Žã€‚å¦‚æžœè¦ç®¡ç†é”™è¯¯ä¿¡æ¯ï¼Œé‚£å°±è¦æœ‰ä»¥ä¸‹çš„å¤„ç†ï¼š
 
-    ¡¡¡¡/* ÉùÃ÷³ö´í´úÂë */
+    ã€€ã€€/* å£°æ˜Žå‡ºé”™ä»£ç  */
 
-    ¡¡¡¡#define ERR_NO_ERROR 0 /* No error */
+    ã€€ã€€#define ERR_NO_ERROR 0 /* No error */
 
-    ¡¡¡¡#define ERR_OPEN_FILE 1 /* Open file error */
+    ã€€ã€€#define ERR_OPEN_FILE 1 /* Open file error */
 
-    ¡¡¡¡#define ERR_SEND_MESG 2 /* sending a message error */
+    ã€€ã€€#define ERR_SEND_MESG 2 /* sending a message error */
 
-    ¡¡¡¡#define ERR_BAD_ARGS 3 /* Bad arguments */
+    ã€€ã€€#define ERR_BAD_ARGS 3 /* Bad arguments */
 
-    ¡¡¡¡#define ERR_MEM_NONE 4 /* Memeroy is not enough */
+    ã€€ã€€#define ERR_MEM_NONE 4 /* Memeroy is not enough */
 
-    ¡¡¡¡#define ERR_SERV_DOWN 5 /* Service down try later */
+    ã€€ã€€#define ERR_SERV_DOWN 5 /* Service down try later */
 
-    ¡¡¡¡#define ERR_UNKNOW_INFO 6 /* Unknow information */
+    ã€€ã€€#define ERR_UNKNOW_INFO 6 /* Unknow information */
 
-    ¡¡¡¡#define ERR_SOCKET_ERR 7 /* Socket operation failed */
+    ã€€ã€€#define ERR_SOCKET_ERR 7 /* Socket operation failed */
 
-    ¡¡¡¡#define ERR_PERMISSION 8 /* Permission denied */
+    ã€€ã€€#define ERR_PERMISSION 8 /* Permission denied */
 
-    ¡¡¡¡#define ERR_BAD_FORMAT 9 /* Bad configuration file */
+    ã€€ã€€#define ERR_BAD_FORMAT 9 /* Bad configuration file */
 
-    ¡¡¡¡#define ERR_TIME_OUT 10 /* Communication time out */
+    ã€€ã€€#define ERR_TIME_OUT 10 /* Communication time out */
 
-    ¡¡¡¡/* ÉùÃ÷³ö´íÐÅÏ¢ */
+    ã€€ã€€/* å£°æ˜Žå‡ºé”™ä¿¡æ¯ */
 
-    ¡¡¡¡char* errmsg[] = {
+    ã€€ã€€char* errmsg[] = {
 
-        ¡¡¡¡/* 0 */ "No error",
+        ã€€ã€€/* 0 */ "No error",
 
-        ¡¡¡¡/* 1 */ "Open file error",
+        ã€€ã€€/* 1 */ "Open file error",
 
-        ¡¡¡¡/* 2 */ "Failed in sending/receiving a message",
+        ã€€ã€€/* 2 */ "Failed in sending/receiving a message",
 
-        ¡¡¡¡/* 3 */ "Bad arguments",
+        ã€€ã€€/* 3 */ "Bad arguments",
 
-        ¡¡¡¡/* 4 */ "Memeroy is not enough",
+        ã€€ã€€/* 4 */ "Memeroy is not enough",
 
-        ¡¡¡¡/* 5 */ "Service is down; try later",
+        ã€€ã€€/* 5 */ "Service is down; try later",
 
-        ¡¡¡¡/* 6 */ "Unknow information",
+        ã€€ã€€/* 6 */ "Unknow information",
 
-        ¡¡¡¡/* 7 */ "A socket operation has failed",
+        ã€€ã€€/* 7 */ "A socket operation has failed",
 
-        ¡¡¡¡/* 8 */ "Permission denied",
+        ã€€ã€€/* 8 */ "Permission denied",
 
-        ¡¡¡¡/* 9 */ "Bad configuration file format",
+        ã€€ã€€/* 9 */ "Bad configuration file format",
 
-        ¡¡¡¡/* 10 */ "Communication time out",
+        ã€€ã€€/* 10 */ "Communication time out",
 
-        ¡¡¡¡/* 10 */ "Communication time out",
+        ã€€ã€€/* 10 */ "Communication time out",
 
-        ¡¡¡¡};
+        ã€€ã€€};
 
-¡¡¡¡/* ÉùÃ÷´íÎó´úÂëÈ«¾Ö±äÁ¿ */
+ã€€ã€€/* å£°æ˜Žé”™è¯¯ä»£ç å…¨å±€å˜é‡ */
 
-¡¡¡¡long errno = 0;
+ã€€ã€€long errno = 0;
 
-¡¡¡¡/* ´òÓ¡³ö´íÐÅÏ¢º¯Êý */
+ã€€ã€€/* æ‰“å°å‡ºé”™ä¿¡æ¯å‡½æ•° */
 
-¡¡¡¡void perror( char* info)
+ã€€ã€€void perror( char* info)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡if ( info ){
+        ã€€ã€€if ( info ){
 
-            ¡¡¡¡printf("%s: %s\n", info, errmsg[errno] );
+            ã€€ã€€printf("%s: %s\n", info, errmsg[errno] );
 
-            ¡¡¡¡return;
+            ã€€ã€€return;
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-        ¡¡¡¡printf("Error: %s\n", errmsg[errno] );
+        ã€€ã€€printf("Error: %s\n", errmsg[errno] );
 
-        ¡¡¡¡}
+        ã€€ã€€}
 
-        ¡¡¡¡Õâ¸ö»ù±¾ÉÏÊÇANSIµÄ´íÎó´¦ÀíÊµÏÖÏ¸½ÚÁË£¬ÓÚÊÇµ±Äã³ÌÐòÖÐÓÐ´íÎóÊ±Äã¾Í¿ÉÒÔÕâÑù´¦Àí£º
+        ã€€ã€€è¿™ä¸ªåŸºæœ¬ä¸Šæ˜¯ANSIçš„é”™è¯¯å¤„ç†å®žçŽ°ç»†èŠ‚äº†ï¼ŒäºŽæ˜¯å½“ä½ ç¨‹åºä¸­æœ‰é”™è¯¯æ—¶ä½ å°±å¯ä»¥è¿™æ ·å¤„ç†ï¼š
 
-¡¡¡¡bool CheckPermission( char* userName )
+ã€€ã€€bool CheckPermission( char* userName )
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡if ( strcpy(userName, "root") != 0 ){
+        ã€€ã€€if ( strcpy(userName, "root") != 0 ){
 
-            ¡¡¡¡errno = ERR_PERMISSION_DENIED;
+            ã€€ã€€errno = ERR_PERMISSION_DENIED;
 
-            ¡¡¡¡return (FALSE);
+            ã€€ã€€return (FALSE);
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-        ¡¡¡¡...
+        ã€€ã€€...
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-¡¡¡¡main()
+ã€€ã€€main()
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡...
+        ã€€ã€€...
 
-            ¡¡¡¡if (! CheckPermission( username ) ){
+            ã€€ã€€if (! CheckPermission( username ) ){
 
-                ¡¡¡¡perror("main()");
+                ã€€ã€€perror("main()");
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-        ¡¡¡¡...
+        ã€€ã€€...
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-            ¡¡¡¡Ò»¸ö¼´ÓÐ¹²ÐÔ£¬Ò²ÓÐ¸öÐÔµÄ´íÎóÐÅÏ¢´¦Àí£¬ÕâÑù×öÓÐÀûÍ¬ÖÖ´íÎó³öÒ»ÑùµÄÐÅÏ¢£¬Í³Ò»ÓÃ»§½çÃæ£¬¶ø²»»áÒòÎªÎÄ¼þ´ò¿ªÊ§°Ü£¬A³ÌÐòÔ±³öÒ»¸öÐÅÏ¢£¬B³ÌÐòÔ±ÓÖ³öÒ»¸öÐÅÏ¢¡£¶øÇÒÕâÑù×ö£¬·Ç³£ÈÝÒ×Î¬»¤¡£´úÂëÒ²Ò×¶Á¡£
+            ã€€ã€€ä¸€ä¸ªå³æœ‰å…±æ€§ï¼Œä¹Ÿæœ‰ä¸ªæ€§çš„é”™è¯¯ä¿¡æ¯å¤„ç†ï¼Œè¿™æ ·åšæœ‰åˆ©åŒç§é”™è¯¯å‡ºä¸€æ ·çš„ä¿¡æ¯ï¼Œç»Ÿä¸€ç”¨æˆ·ç•Œé¢ï¼Œè€Œä¸ä¼šå› ä¸ºæ–‡ä»¶æ‰“å¼€å¤±è´¥ï¼ŒAç¨‹åºå‘˜å‡ºä¸€ä¸ªä¿¡æ¯ï¼ŒBç¨‹åºå‘˜åˆå‡ºä¸€ä¸ªä¿¡æ¯ã€‚è€Œä¸”è¿™æ ·åšï¼Œéžå¸¸å®¹æ˜“ç»´æŠ¤ã€‚ä»£ç ä¹Ÿæ˜“è¯»ã€‚
 
-            ¡¡¡¡µ±È»£¬Îï¼«±Ø·´£¬Ò²Ã»ÓÐ±ØÒª°ÑËùÓÐµÄÊä³ö¶¼·Åµ½errmsgÖÐ£¬³éÈ¡±È½ÏÖØÒªµÄ³ö´íÐÅÏ¢»òÊÇÌáÊ¾ÐÅÏ¢ÊÇÆä¹Ø¼ü£¬µ«¼´Ê¹ÕâÑù£¬ÕâÒ²°üÀ¨ÁË´ó¶àÊýµÄÐÅÏ¢¡£
+            ã€€ã€€å½“ç„¶ï¼Œç‰©æžå¿…åï¼Œä¹Ÿæ²¡æœ‰å¿…è¦æŠŠæ‰€æœ‰çš„è¾“å‡ºéƒ½æ”¾åˆ°errmsgä¸­ï¼ŒæŠ½å–æ¯”è¾ƒé‡è¦çš„å‡ºé”™ä¿¡æ¯æˆ–æ˜¯æç¤ºä¿¡æ¯æ˜¯å…¶å…³é”®ï¼Œä½†å³ä½¿è¿™æ ·ï¼Œè¿™ä¹ŸåŒ…æ‹¬äº†å¤§å¤šæ•°çš„ä¿¡æ¯ã€‚
 
-            ¡¡¡¡12¡¢³£ÓÃº¯ÊýºÍÑ­»·Óï¾äÖÐµÄ±»¼ÆËãÁ¿
+            ã€€ã€€12ã€å¸¸ç”¨å‡½æ•°å’Œå¾ªçŽ¯è¯­å¥ä¸­çš„è¢«è®¡ç®—é‡
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡¿´Ò»ÏÂÏÂÃæÕâ¸öÀý×Ó£º
+            ã€€ã€€çœ‹ä¸€ä¸‹ä¸‹é¢è¿™ä¸ªä¾‹å­ï¼š
 
-            ¡¡¡¡for( i=0; i<1000; i++ ){
+            ã€€ã€€for( i=0; i<1000; i++ ){
 
-                ¡¡¡¡GetLocalHostName( hostname );
+                ã€€ã€€GetLocalHostName( hostname );
 
-                ¡¡¡¡...
+                ã€€ã€€...
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-                    ¡¡¡¡GetLocalHostNameµÄÒâË¼ÊÇÈ¡µÃµ±Ç°¼ÆËã»úÃû£¬ÔÚÑ­»·ÌåÖÐ£¬Ëü»á±»µ÷ÓÃ1000´Î°¡¡£ÕâÊÇ¶àÃ´µÄÃ»ÓÐÐ§ÂÊµÄÊÂ°¡¡£Ó¦¸Ã°ÑÕâ¸öº¯ÊýÄÃµ½Ñ­»·ÌåÍâ£¬ÕâÑùÖ»µ÷ÓÃÒ»´Î£¬Ð§ÂÊµÃµ½ÁËºÜ´óµÄÌá¸ß¡£ËäÈ»£¬ÎÒÃÇµÄ±àÒëÆ÷»á½øÐÐÓÅ»¯£¬»á°ÑÑ­»·ÌåÄÚµÄ²»±äµÄ¶«Î÷ÄÃµ½Ñ­»·ÍâÃæ£¬µ«ÊÇ£¬ÄãÏàÐÅËùÓÐ±àÒëÆ÷»áÖªµÀÄÄÐ©ÊÇ²»±äµÄÂð£¿ÎÒ¾õµÃ±àÒëÆ÷²»¿É*¡£×îºÃ»¹ÊÇ×Ô¼º¶¯ÊÖ°É¡£
+                    ã€€ã€€GetLocalHostNameçš„æ„æ€æ˜¯å–å¾—å½“å‰è®¡ç®—æœºåï¼Œåœ¨å¾ªçŽ¯ä½“ä¸­ï¼Œå®ƒä¼šè¢«è°ƒç”¨1000æ¬¡å•Šã€‚è¿™æ˜¯å¤šä¹ˆçš„æ²¡æœ‰æ•ˆçŽ‡çš„äº‹å•Šã€‚åº”è¯¥æŠŠè¿™ä¸ªå‡½æ•°æ‹¿åˆ°å¾ªçŽ¯ä½“å¤–ï¼Œè¿™æ ·åªè°ƒç”¨ä¸€æ¬¡ï¼Œæ•ˆçŽ‡å¾—åˆ°äº†å¾ˆå¤§çš„æé«˜ã€‚è™½ç„¶ï¼Œæˆ‘ä»¬çš„ç¼–è¯‘å™¨ä¼šè¿›è¡Œä¼˜åŒ–ï¼Œä¼šæŠŠå¾ªçŽ¯ä½“å†…çš„ä¸å˜çš„ä¸œè¥¿æ‹¿åˆ°å¾ªçŽ¯å¤–é¢ï¼Œä½†æ˜¯ï¼Œä½ ç›¸ä¿¡æ‰€æœ‰ç¼–è¯‘å™¨ä¼šçŸ¥é“å“ªäº›æ˜¯ä¸å˜çš„å—ï¼Ÿæˆ‘è§‰å¾—ç¼–è¯‘å™¨ä¸å¯*ã€‚æœ€å¥½è¿˜æ˜¯è‡ªå·±åŠ¨æ‰‹å§ã€‚
 
-                    ¡¡¡¡Í¬Ñù£¬¶ÔÓÚ³£ÓÃº¯ÊýÖÐµÄ²»±äÁ¿£¬Èç£º
+                    ã€€ã€€åŒæ ·ï¼Œå¯¹äºŽå¸¸ç”¨å‡½æ•°ä¸­çš„ä¸å˜é‡ï¼Œå¦‚ï¼š
 
-¡¡¡¡GetLocalHostName(char* name)
+ã€€ã€€GetLocalHostName(char* name)
 
-    ¡¡¡¡{
+    ã€€ã€€{
 
-        ¡¡¡¡{
+        ã€€ã€€{
 
-            ¡¡¡¡char funcName[] = "GetLocalHostName";
+            ã€€ã€€char funcName[] = "GetLocalHostName";
 
-            ¡¡¡¡sys_log( "%s begin......", funcName );
+            ã€€ã€€sys_log( "%s begin......", funcName );
 
-            ¡¡¡¡...
+            ã€€ã€€...
 
-                ¡¡¡¡sys_log( "%s end......", funcName );
+                ã€€ã€€sys_log( "%s end......", funcName );
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-        ¡¡¡¡Èç¹ûÕâÊÇÒ»¸ö¾­³£µ÷ÓÃµÄº¯Êý£¬Ã¿´Îµ÷ÓÃÊ±¶¼Òª¶ÔfuncName½øÐÐ·ÖÅäÄÚ´æ£¬Õâ¸ö¿ªÏúºÜ´ó°¡¡£°ÑÕâ¸ö±äÁ¿ÉùÃ÷³Éstatic°É£¬µ±º¯ÊýÔÙ´Î±»µ÷ÓÃÊ±£¬¾Í»áÊ¡È¥ÁË·ÖÅäÄÚ´æµÄ¿ªÏú£¬Ö´ÐÐÐ§ÂÊÒ²ºÜºÃ¡£
+        ã€€ã€€å¦‚æžœè¿™æ˜¯ä¸€ä¸ªç»å¸¸è°ƒç”¨çš„å‡½æ•°ï¼Œæ¯æ¬¡è°ƒç”¨æ—¶éƒ½è¦å¯¹funcNameè¿›è¡Œåˆ†é…å†…å­˜ï¼Œè¿™ä¸ªå¼€é”€å¾ˆå¤§å•Šã€‚æŠŠè¿™ä¸ªå˜é‡å£°æ˜Žæˆstaticå§ï¼Œå½“å‡½æ•°å†æ¬¡è¢«è°ƒç”¨æ—¶ï¼Œå°±ä¼šçœåŽ»äº†åˆ†é…å†…å­˜çš„å¼€é”€ï¼Œæ‰§è¡Œæ•ˆçŽ‡ä¹Ÿå¾ˆå¥½ã€‚
 
-            ¡¡¡¡13¡¢º¯ÊýÃûºÍ±äÁ¿ÃûµÄÃüÃû
+            ã€€ã€€13ã€å‡½æ•°åå’Œå˜é‡åçš„å‘½å
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÎÒ¿´µ½Ðí¶à³ÌÐò¶Ô±äÁ¿ÃûºÍº¯ÊýÃûµÄÈ¡ÃûºÜ²ÝÂÊ£¬ÌØ±ðÊÇ±äÁ¿Ãû£¬Ê²Ã´a,b,c,aa,bb,cc£¬
+            ã€€ã€€æˆ‘çœ‹åˆ°è®¸å¤šç¨‹åºå¯¹å˜é‡åå’Œå‡½æ•°åçš„å–åå¾ˆè‰çŽ‡ï¼Œç‰¹åˆ«æ˜¯å˜é‡åï¼Œä»€ä¹ˆa,b,c,aa,bb,ccï¼Œ
 
-            ¡¡¡¡»¹ÓÐÊ²Ã´flag1,flag2, cnt1, cnt2£¬ÕâÍ¬ÑùÊÇÒ»ÖÖÃ»ÓÐ¡°ÐÞÑø¡±µÄÐÐÎª¡£¼´±ã¼ÓÉÏºÃµÄ×¢
+            ã€€ã€€è¿˜æœ‰ä»€ä¹ˆflag1,flag2, cnt1, cnt2ï¼Œè¿™åŒæ ·æ˜¯ä¸€ç§æ²¡æœ‰â€œä¿®å…»â€çš„è¡Œä¸ºã€‚å³ä¾¿åŠ ä¸Šå¥½çš„æ³¨
 
-            ¡¡¡¡ÊÍ¡£ºÃµÄ±äÁ¿Ãû»òÊÇº¯ÊýÃû£¬ÎÒÈÏÎªÓ¦¸ÃÓÐÒÔÏÂµÄ¹æÔò£º
+            ã€€ã€€é‡Šã€‚å¥½çš„å˜é‡åæˆ–æ˜¯å‡½æ•°åï¼Œæˆ‘è®¤ä¸ºåº”è¯¥æœ‰ä»¥ä¸‹çš„è§„åˆ™ï¼š
 
-            ¡¡¡¡1) Ö±¹Û²¢ÇÒ¿ÉÒÔÆ´¶Á£¬¿ÉÍûÎÄÖªÒâ£¬²»±Ø¡°½âÂë¡±¡£
+            ã€€ã€€1) ç›´è§‚å¹¶ä¸”å¯ä»¥æ‹¼è¯»ï¼Œå¯æœ›æ–‡çŸ¥æ„ï¼Œä¸å¿…â€œè§£ç â€ã€‚
 
-            ¡¡¡¡2) Ãû×ÖµÄ³¤¶ÈÓ¦¸Ã¼´Òª×î¶ÌµÄ³¤¶È£¬Ò²ÒªÄÜ×î´óÏÞ¶ÈµÄ±í´ïÆäº¬Òå¡£
+            ã€€ã€€2) åå­—çš„é•¿åº¦åº”è¯¥å³è¦æœ€çŸ­çš„é•¿åº¦ï¼Œä¹Ÿè¦èƒ½æœ€å¤§é™åº¦çš„è¡¨è¾¾å…¶å«ä¹‰ã€‚
 
-            ¡¡¡¡3) ²»ÒªÈ«²¿´óÐ´£¬Ò²²»ÒªÈ«²¿Ð¡Ð´£¬Ó¦¸Ã´óÐ¡Ð´¶¼ÓÐ£¬Èç£ºGetLocalHostName »òÊÇ
+            ã€€ã€€3) ä¸è¦å…¨éƒ¨å¤§å†™ï¼Œä¹Ÿä¸è¦å…¨éƒ¨å°å†™ï¼Œåº”è¯¥å¤§å°å†™éƒ½æœ‰ï¼Œå¦‚ï¼šGetLocalHostName æˆ–æ˜¯
 
-            ¡¡¡¡UserAccount¡£
+            ã€€ã€€UserAccountã€‚
 
-            ¡¡¡¡4) ¿ÉÒÔ¼òÐ´£¬µ«¼òÐ´µÃÒªÈÃÈËÃ÷°×£¬Èç£ºErrorCode -> ErrCode,
+            ã€€ã€€4) å¯ä»¥ç®€å†™ï¼Œä½†ç®€å†™å¾—è¦è®©äººæ˜Žç™½ï¼Œå¦‚ï¼šErrorCode -> ErrCode,
 
-            ¡¡¡¡ServerListener -> ServLisner£¬UserAccount -> UsrAcct µÈ¡£
+            ã€€ã€€ServerListener -> ServLisnerï¼ŒUserAccount -> UsrAcct ç­‰ã€‚
 
-                ¡¡¡¡5) ÎªÁË±ÜÃâÈ«¾Öº¯ÊýºÍ±äÁ¿Ãû×Ö³åÍ»£¬¿ÉÒÔ¼ÓÉÏÒ»Ð©Ç°×º£¬Ò»°ãÒÔÄ£¿é¼ò³Æ×öÎªÇ°×º
+                ã€€ã€€5) ä¸ºäº†é¿å…å…¨å±€å‡½æ•°å’Œå˜é‡åå­—å†²çªï¼Œå¯ä»¥åŠ ä¸Šä¸€äº›å‰ç¼€ï¼Œä¸€èˆ¬ä»¥æ¨¡å—ç®€ç§°åšä¸ºå‰ç¼€
 
-                ¡¡¡¡¡£
+                ã€€ã€€ã€‚
 
-                ¡¡¡¡6) È«¾Ö±äÁ¿Í³Ò»¼ÓÒ»¸öÇ°×º»òÊÇºó×º£¬ÈÃÈËÒ»¿´µ½Õâ¸ö±äÁ¿¾ÍÖªµÀÊÇÈ«¾ÖµÄ¡£
+                ã€€ã€€6) å…¨å±€å˜é‡ç»Ÿä¸€åŠ ä¸€ä¸ªå‰ç¼€æˆ–æ˜¯åŽç¼€ï¼Œè®©äººä¸€çœ‹åˆ°è¿™ä¸ªå˜é‡å°±çŸ¥é“æ˜¯å…¨å±€çš„ã€‚
 
-                ¡¡¡¡7) ÓÃÐÙÑÀÀûÃüÃû·¨ÃüÃûº¯Êý²ÎÊý£¬¾Ö²¿±äÁ¿¡£µ«»¹ÊÇÒª¼á³Ö¡°ÍûÎÄÉúÒâ¡±µÄÔ­Ôò¡£
+                ã€€ã€€7) ç”¨åŒˆç‰™åˆ©å‘½åæ³•å‘½åå‡½æ•°å‚æ•°ï¼Œå±€éƒ¨å˜é‡ã€‚ä½†è¿˜æ˜¯è¦åšæŒâ€œæœ›æ–‡ç”Ÿæ„â€çš„åŽŸåˆ™ã€‚
 
-                ¡¡¡¡8) Óë±ê×¼¿â£¨Èç£ºSTL£©»ò¿ª·¢¿â£¨Èç£ºMFC£©µÄÃüÃû·ç¸ñ±£³ÖÒ»ÖÂ¡£
+                ã€€ã€€8) ä¸Žæ ‡å‡†åº“ï¼ˆå¦‚ï¼šSTLï¼‰æˆ–å¼€å‘åº“ï¼ˆå¦‚ï¼šMFCï¼‰çš„å‘½åé£Žæ ¼ä¿æŒä¸€è‡´ã€‚
 
-                ¡¡¡¡14¡¢º¯ÊýµÄ´«ÖµºÍ´«Ö¸Õë
+                ã€€ã€€14ã€å‡½æ•°çš„ä¼ å€¼å’Œä¼ æŒ‡é’ˆ
 
-                ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+                ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-                ¡¡¡¡Ïòº¯Êý´«²ÎÊýÊ±£¬Ò»°ã¶øÑÔ£¬´«Èë·ÇconstµÄÖ¸ÕëÊ±£¬¾Í±íÊ¾£¬ÔÚº¯ÊýÖÐÒªÐÞ¸ÄÕâ¸öÖ¸Õë°ÑÖ¸ÄÚ´æÖÐµÄÊý¾Ý¡£Èç¹ûÊÇ´«Öµ£¬ÄÇÃ´ÎÞÂÛÔÚº¯ÊýÄÚ²¿ÔõÃ´ÐÞ¸ÄÕâ¸öÖµ£¬Ò²Ó°Ïì²»µ½´«¹ýÀ´µÄÖµ£¬ÒòÎª´«ÖµÊÇÖ»ÄÚ´æ¿½±´¡£
+                ã€€ã€€å‘å‡½æ•°ä¼ å‚æ•°æ—¶ï¼Œä¸€èˆ¬è€Œè¨€ï¼Œä¼ å…¥éžconstçš„æŒ‡é’ˆæ—¶ï¼Œå°±è¡¨ç¤ºï¼Œåœ¨å‡½æ•°ä¸­è¦ä¿®æ”¹è¿™ä¸ªæŒ‡é’ˆæŠŠæŒ‡å†…å­˜ä¸­çš„æ•°æ®ã€‚å¦‚æžœæ˜¯ä¼ å€¼ï¼Œé‚£ä¹ˆæ— è®ºåœ¨å‡½æ•°å†…éƒ¨æ€Žä¹ˆä¿®æ”¹è¿™ä¸ªå€¼ï¼Œä¹Ÿå½±å“ä¸åˆ°ä¼ è¿‡æ¥çš„å€¼ï¼Œå› ä¸ºä¼ å€¼æ˜¯åªå†…å­˜æ‹·è´ã€‚
 
-                ¡¡¡¡Ê²Ã´£¿ÄãËµÕâ¸öÌØÐÔÄãÃ÷°×ÁË£¬ºÃ°É£¬ÈÃÎÒÃÇ¿´¿´ÏÂÃæµÄÕâ¸öÀý³Ì£º
+                ã€€ã€€ä»€ä¹ˆï¼Ÿä½ è¯´è¿™ä¸ªç‰¹æ€§ä½ æ˜Žç™½äº†ï¼Œå¥½å§ï¼Œè®©æˆ‘ä»¬çœ‹çœ‹ä¸‹é¢çš„è¿™ä¸ªä¾‹ç¨‹ï¼š
 
-                ¡¡¡¡void
+                ã€€ã€€void
 
-                ¡¡¡¡void
+                ã€€ã€€void
 
-                ¡¡¡¡GetVersion(char* pStr)
+                ã€€ã€€GetVersion(char* pStr)
 
-                ¡¡¡¡{
+                ã€€ã€€{
 
-                    ¡¡¡¡pStr = malloc(10);
+                    ã€€ã€€pStr = malloc(10);
 
-                    ¡¡¡¡strcpy ( pStr, "2.0" );
+                    ã€€ã€€strcpy ( pStr, "2.0" );
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡main()
+        ã€€ã€€main()
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡char* ver = NULL;
+                ã€€ã€€char* ver = NULL;
 
-                ¡¡¡¡GetVersion ( ver );
+                ã€€ã€€GetVersion ( ver );
 
-                ¡¡¡¡...
+                ã€€ã€€...
 
-                    ¡¡¡¡...
+                    ã€€ã€€...
 
-                    ¡¡¡¡free ( ver );
+                    ã€€ã€€free ( ver );
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-        ¡¡¡¡ÎÒ±£Ö¤£¬ÀàËÆÕâÑùµÄÎÊÌâÊÇÒ»¸öÐÂÊÖ×îÈÝÒ×·¸µÄ´íÎó¡£³ÌÐòÖÐÍýÍ¼Í¨¹ýº¯ÊýGetVersion¸øÖ¸Õëver·ÖÅä¿Õ¼ä£¬µ«ÕâÖÖ·½·¨¸ù±¾Ã»ÓÐÊ²Ã´×÷ÓÃ£¬Ô­Òò¾ÍÊÇ¡ª¡ªÕâÊÇ´«Öµ£¬²»ÊÇ´«Ö¸Õë¡£
+        ã€€ã€€æˆ‘ä¿è¯ï¼Œç±»ä¼¼è¿™æ ·çš„é—®é¢˜æ˜¯ä¸€ä¸ªæ–°æ‰‹æœ€å®¹æ˜“çŠ¯çš„é”™è¯¯ã€‚ç¨‹åºä¸­å¦„å›¾é€šè¿‡å‡½æ•°GetVersionç»™æŒ‡é’ˆveråˆ†é…ç©ºé—´ï¼Œä½†è¿™ç§æ–¹æ³•æ ¹æœ¬æ²¡æœ‰ä»€ä¹ˆä½œç”¨ï¼ŒåŽŸå› å°±æ˜¯â€”â€”è¿™æ˜¯ä¼ å€¼ï¼Œä¸æ˜¯ä¼ æŒ‡é’ˆã€‚
 
-            ¡¡¡¡Äã»òÐí»áºÍÎÒÕùÂÛ£¬ÎÒ·ÖÃ÷´«µÄÊ±Ö¸Õë°¡£¿ÔÙ×ÐÏ¸¿´¿´£¬ÆäÊµ£¬Äã´«µÄÊÇÖ¸ÕëÆäÊµÊÇÔÚ´«Öµ¡£
+            ã€€ã€€ä½ æˆ–è®¸ä¼šå’Œæˆ‘äº‰è®ºï¼Œæˆ‘åˆ†æ˜Žä¼ çš„æ—¶æŒ‡é’ˆå•Šï¼Ÿå†ä»”ç»†çœ‹çœ‹ï¼Œå…¶å®žï¼Œä½ ä¼ çš„æ˜¯æŒ‡é’ˆå…¶å®žæ˜¯åœ¨ä¼ å€¼ã€‚
 
-            ¡¡¡¡15¡¢ÐÞ¸Ä±ðÈË³ÌÐòµÄÐÞÑø
+            ã€€ã€€15ã€ä¿®æ”¹åˆ«äººç¨‹åºçš„ä¿®å…»
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡µ±ÄãÎ¬»¤±ðÈËµÄ³ÌÐòÊ±£¬Çë²»Òª·Ç³£Ö÷¹ÛÒÜ¶ÏµÄ°ÑÒÑÓÐµÄ³ÌÐòÉ¾³ý»òÊÇÐÞ¸Ä¡£ÎÒ¾­³£¿´µ½ÓÐµÄ³ÌÐòÔ±Ö±½ÓÔÚ±ðÈËµÄ³ÌÐòÉÏÐÞ¸Ä±í´ïÊ½»òÊÇÓï¾ä¡£ÐÞ¸Ä±ðÈËµÄ³ÌÐòÊ±£¬Çë²»ÒªÉ¾³ý±ðÈËµÄ³ÌÐò£¬Èç¹ûÄã¾õµÃ±ðÈËµÄ³ÌÐòÓÐËù²»Í×£¬Çë×¢ÊÍµô£¬È»ºóÌí¼Ó×Ô¼ºµÄ´¦Àí³ÌÐò£¬±Ø¾¹£¬Äã²»¿ÉÄÜ100%µÄÖªµÀ±ðÈËµÄÒâÍ¼£¬ËùÒÔÎªÁË¿ÉÒÔ»Ö¸´£¬Çë²»ÒÀÀµÓÚCVS»òÊÇSourceSafeÕâÖÖ°æ±¾¿ØÖÆÈí¼þ£¬»¹ÊÇÒªÔÚÔ´ÂëÉÏ¸ø±ðÈË¿´µ½ÄãÐÞ¸Ä³ÌÐòµÄÒâÍ¼ºÍ²½Öè¡£ÕâÊÇ³ÌÐòÎ¬»¤Ê±£¬Ò»¸öÓÐÐÞÑøµÄ³ÌÐòÔ±ËùÓ¦¸Ã×öµÄ¡£
+            ã€€ã€€å½“ä½ ç»´æŠ¤åˆ«äººçš„ç¨‹åºæ—¶ï¼Œè¯·ä¸è¦éžå¸¸ä¸»è§‚è‡†æ–­çš„æŠŠå·²æœ‰çš„ç¨‹åºåˆ é™¤æˆ–æ˜¯ä¿®æ”¹ã€‚æˆ‘ç»å¸¸çœ‹åˆ°æœ‰çš„ç¨‹åºå‘˜ç›´æŽ¥åœ¨åˆ«äººçš„ç¨‹åºä¸Šä¿®æ”¹è¡¨è¾¾å¼æˆ–æ˜¯è¯­å¥ã€‚ä¿®æ”¹åˆ«äººçš„ç¨‹åºæ—¶ï¼Œè¯·ä¸è¦åˆ é™¤åˆ«äººçš„ç¨‹åºï¼Œå¦‚æžœä½ è§‰å¾—åˆ«äººçš„ç¨‹åºæœ‰æ‰€ä¸å¦¥ï¼Œè¯·æ³¨é‡ŠæŽ‰ï¼Œç„¶åŽæ·»åŠ è‡ªå·±çš„å¤„ç†ç¨‹åºï¼Œå¿…ç«Ÿï¼Œä½ ä¸å¯èƒ½100%çš„çŸ¥é“åˆ«äººçš„æ„å›¾ï¼Œæ‰€ä»¥ä¸ºäº†å¯ä»¥æ¢å¤ï¼Œè¯·ä¸ä¾èµ–äºŽCVSæˆ–æ˜¯SourceSafeè¿™ç§ç‰ˆæœ¬æŽ§åˆ¶è½¯ä»¶ï¼Œè¿˜æ˜¯è¦åœ¨æºç ä¸Šç»™åˆ«äººçœ‹åˆ°ä½ ä¿®æ”¹ç¨‹åºçš„æ„å›¾å’Œæ­¥éª¤ã€‚è¿™æ˜¯ç¨‹åºç»´æŠ¤æ—¶ï¼Œä¸€ä¸ªæœ‰ä¿®å…»çš„ç¨‹åºå‘˜æ‰€åº”è¯¥åšçš„ã€‚
 
-            ¡¡¡¡ÈçÏÂËùÊ¾£¬Õâ¾ÍÊÇÒ»ÖÖ±È½ÏºÃµÄÐÞ¸Ä·½·¨£º
+            ã€€ã€€å¦‚ä¸‹æ‰€ç¤ºï¼Œè¿™å°±æ˜¯ä¸€ç§æ¯”è¾ƒå¥½çš„ä¿®æ”¹æ–¹æ³•ï¼š
 
-            ¡¡¡¡/*
+            ã€€ã€€/*
 
-                   ¡¡¡¡* ----- commented by haoel 2003/04/12 ------
+                   ã€€ã€€* ----- commented by haoel 2003/04/12 ------
 
-                   ¡¡¡¡*
+                   ã€€ã€€*
 
-                   ¡¡¡¡* char* p = ( char* ) malloc( 10 );
+                   ã€€ã€€* char* p = ( char* ) malloc( 10 );
 
-                   ¡¡¡¡* memset( p, 0, 10 );
+                   ã€€ã€€* memset( p, 0, 10 );
 
-                   ¡¡¡¡*/
+                   ã€€ã€€*/
 
-            ¡¡¡¡/* ------ Added by haoel 2003/04/12 ----- */
+            ã€€ã€€/* ------ Added by haoel 2003/04/12 ----- */
 
-            ¡¡¡¡char* p = ( char* )calloc( 10, sizeof char );
+            ã€€ã€€char* p = ( char* )calloc( 10, sizeof char );
 
-        ¡¡¡¡/* ---------------------------------------- */
+        ã€€ã€€/* ---------------------------------------- */
 
-            ¡¡¡¡* char* p = ¿ªÊ¼Ê¹¾¢) malloc( 10 );
+            ã€€ã€€* char* p = å¼€å§‹ä½¿åŠ²) malloc( 10 );
 
-        ¡¡¡¡* memset( p, 0, 10 );
+        ã€€ã€€* memset( p, 0, 10 );
 
-        ¡¡¡¡*/
+        ã€€ã€€*/
 
-            ¡¡¡¡/* ------ Added by haoel 2003/04/12 ----- */
+            ã€€ã€€/* ------ Added by haoel 2003/04/12 ----- */
 
-            ¡¡¡¡char* p = ( char* )calloc( 10, sizeof char );
+            ã€€ã€€char* p = ( char* )calloc( 10, sizeof char );
 
-        ¡¡¡¡/* ---------------------------------------- */
+        ã€€ã€€/* ---------------------------------------- */
 
-            ¡¡¡¡...
+            ã€€ã€€...
 
-            ¡¡¡¡µ±È»£¬ÕâÖÖ·½·¨ÊÇÔÚÈí¼þÎ¬»¤Ê±Ê¹ÓÃµÄ£¬ÕâÑùµÄ·½·¨£¬¿ÉÒÔÈÃÔÙÎ¬»¤µÄÈËºÜÈÝÒ×ÖªµÀÒÔÇ°µÄ´úÂë¸ü¸ÄµÄ¶¯×÷ºÍÒâÍ¼£¬¶øÇÒÕâÒ²ÊÇ¶ÔÔ­×÷ÕßµÄÒ»ÖÖ×ð¾´¡£
+            ã€€ã€€å½“ç„¶ï¼Œè¿™ç§æ–¹æ³•æ˜¯åœ¨è½¯ä»¶ç»´æŠ¤æ—¶ä½¿ç”¨çš„ï¼Œè¿™æ ·çš„æ–¹æ³•ï¼Œå¯ä»¥è®©å†ç»´æŠ¤çš„äººå¾ˆå®¹æ˜“çŸ¥é“ä»¥å‰çš„ä»£ç æ›´æ”¹çš„åŠ¨ä½œå’Œæ„å›¾ï¼Œè€Œä¸”è¿™ä¹Ÿæ˜¯å¯¹åŽŸä½œè€…çš„ä¸€ç§å°Šæ•¬ã€‚
 
-            ¡¡¡¡ÒÔ¡°×¢ÊÍ ¡ª Ìí¼Ó¡±·½Ê½ÐÞ¸Ä±ðÈËµÄ³ÌÐò£¬ÒªºÃÓÚÖ±½ÓÉ¾³ý±ðÈËµÄ³ÌÐò¡£
+            ã€€ã€€ä»¥â€œæ³¨é‡Š â€” æ·»åŠ â€æ–¹å¼ä¿®æ”¹åˆ«äººçš„ç¨‹åºï¼Œè¦å¥½äºŽç›´æŽ¥åˆ é™¤åˆ«äººçš„ç¨‹åºã€‚
 
-            ¡¡¡¡--
+            ã€€ã€€--
 
-            ¡¡¡¡16¡¢°ÑÏàÍ¬»ò½üºõÏàÍ¬µÄ´úÂëÐÎ³Éº¯ÊýºÍºê
+            ã€€ã€€16ã€æŠŠç›¸åŒæˆ–è¿‘ä¹Žç›¸åŒçš„ä»£ç å½¢æˆå‡½æ•°å’Œå®
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÓÐÈËËµ£¬×îºÃµÄ³ÌÐòÔ±£¬¾ÍÊÇ×îÏ²»¶¡°ÍµÀÁ¡±µÄ³ÌÐò£¬ÆäÖÐ²»ÎÞµÀÀí¡£
+            ã€€ã€€æœ‰äººè¯´ï¼Œæœ€å¥½çš„ç¨‹åºå‘˜ï¼Œå°±æ˜¯æœ€å–œæ¬¢â€œå·æ‡’â€çš„ç¨‹åºï¼Œå…¶ä¸­ä¸æ— é“ç†ã€‚
 
-            ¡¡¡¡Èç¹ûÄãÓÐÒ»Ð©³ÌÐòµÄ´úÂëÆ¬¶ÎºÜÏàËÆ£¬»òÖ±½Ó¾ÍÊÇÒ»ÑùµÄ£¬Çë°ÑËûÃÇ·ÅÔÚÒ»¸öº¯ÊýÖÐ¡£¶øÈç¹ûÕâ¶Î´úÂë²»¶à£¬¶øÇÒ»á±»¾­³£Ê¹ÓÃ£¬Äã»¹Ïë±ÜÃâº¯Êýµ÷ÓÃµÄ¿ªÏú£¬ÄÇÃ´¾Í°ÑËûÐ´³Éºê°É¡£
+            ã€€ã€€å¦‚æžœä½ æœ‰ä¸€äº›ç¨‹åºçš„ä»£ç ç‰‡æ®µå¾ˆç›¸ä¼¼ï¼Œæˆ–ç›´æŽ¥å°±æ˜¯ä¸€æ ·çš„ï¼Œè¯·æŠŠä»–ä»¬æ”¾åœ¨ä¸€ä¸ªå‡½æ•°ä¸­ã€‚è€Œå¦‚æžœè¿™æ®µä»£ç ä¸å¤šï¼Œè€Œä¸”ä¼šè¢«ç»å¸¸ä½¿ç”¨ï¼Œä½ è¿˜æƒ³é¿å…å‡½æ•°è°ƒç”¨çš„å¼€é”€ï¼Œé‚£ä¹ˆå°±æŠŠä»–å†™æˆå®å§ã€‚
 
-            ¡¡¡¡Ç§Íò²»ÒªÈÃÍ¬Ò»·Ý´úÂë»òÊÇ¹¦ÄÜÏàËÆµÄ´úÂëÔÚ¶à¸öµØ·½´æÔÚ£¬²»È»Èç¹û¹¦ÄÜÒ»±ä£¬Äã¾ÍÒªÐÞ¸ÄºÃ¼¸´¦µØ·½£¬ÕâÖÖ»á¸øÎ¬»¤´øÀ´¾Þ´óµÄÂé·³£¬ËùÒÔ£¬×öµ½¡°Ò»¸Ä°Ù¸Ä¡±£¬»¹ÊÇÒªÐÎ³Éº¯Êý»òÊÇºê¡£
+            ã€€ã€€åƒä¸‡ä¸è¦è®©åŒä¸€ä»½ä»£ç æˆ–æ˜¯åŠŸèƒ½ç›¸ä¼¼çš„ä»£ç åœ¨å¤šä¸ªåœ°æ–¹å­˜åœ¨ï¼Œä¸ç„¶å¦‚æžœåŠŸèƒ½ä¸€å˜ï¼Œä½ å°±è¦ä¿®æ”¹å¥½å‡ å¤„åœ°æ–¹ï¼Œè¿™ç§ä¼šç»™ç»´æŠ¤å¸¦æ¥å·¨å¤§çš„éº»çƒ¦ï¼Œæ‰€ä»¥ï¼Œåšåˆ°â€œä¸€æ”¹ç™¾æ”¹â€ï¼Œè¿˜æ˜¯è¦å½¢æˆå‡½æ•°æˆ–æ˜¯å®ã€‚
 
-            ¡¡¡¡17¡¢±í´ïÊ½ÖÐµÄÀ¨ºÅ
+            ã€€ã€€17ã€è¡¨è¾¾å¼ä¸­çš„æ‹¬å·
 
-            ¡¡¡¡17¡¢±í´ïÊ½ÖÐµÄÀ¨ºÅ
+            ã€€ã€€17ã€è¡¨è¾¾å¼ä¸­çš„æ‹¬å·
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡Èç¹ûÒ»¸ö±È½Ï¸´ÔÓµÄ±í´ïÊ½ÖÐ£¬Äã²¢²»ÊÇºÜÇå³þ¸÷¸ö²Ù×÷·ûµÄÓÇÏÈ¼¶£¬¼´Ê¹ÊÇÄãºÜÇå³þÓÅÏÈ¼¶£¬Ò²Çë¼ÓÉÏÀ¨ºÅ£¬²»È»£¬±ðÈË»òÊÇ×Ô¼ºÏÂÒ»´Î¶Á³ÌÐòÊ±£¬Ò»²»Ð¡ÐÄ¾Í¿´×ßÑÛÀí½â´íÁË£¬ÎªÁË±ÜÃâÕâÖÖ¡°Îó½â¡±£¬»¹ÓÐÈÃ×Ô¼ºµÄ³ÌÐò¸üÎªÇåäÀ£¬»¹ÊÇ¼ÓÉÏÀ¨ºÅ°É¡£
+            ã€€ã€€å¦‚æžœä¸€ä¸ªæ¯”è¾ƒå¤æ‚çš„è¡¨è¾¾å¼ä¸­ï¼Œä½ å¹¶ä¸æ˜¯å¾ˆæ¸…æ¥šå„ä¸ªæ“ä½œç¬¦çš„å¿§å…ˆçº§ï¼Œå³ä½¿æ˜¯ä½ å¾ˆæ¸…æ¥šä¼˜å…ˆçº§ï¼Œä¹Ÿè¯·åŠ ä¸Šæ‹¬å·ï¼Œä¸ç„¶ï¼Œåˆ«äººæˆ–æ˜¯è‡ªå·±ä¸‹ä¸€æ¬¡è¯»ç¨‹åºæ—¶ï¼Œä¸€ä¸å°å¿ƒå°±çœ‹èµ°çœ¼ç†è§£é”™äº†ï¼Œä¸ºäº†é¿å…è¿™ç§â€œè¯¯è§£â€ï¼Œè¿˜æœ‰è®©è‡ªå·±çš„ç¨‹åºæ›´ä¸ºæ¸…æ·…ï¼Œè¿˜æ˜¯åŠ ä¸Šæ‹¬å·å§ã€‚
 
-            ¡¡¡¡±ÈÈç£¬¶ÔÒ»¸ö½á¹¹µÄ³ÉÔ±È¡µØÖ·£º
+            ã€€ã€€æ¯”å¦‚ï¼Œå¯¹ä¸€ä¸ªç»“æž„çš„æˆå‘˜å–åœ°å€ï¼š
 
-            ¡¡¡¡GetUserAge( &( UserInfo->age ) );
+            ã€€ã€€GetUserAge( &( UserInfo->age ) );
 
-        ¡¡¡¡ËäÈ»£¬&UserInfo->ageÖÐ£¬->²Ù×÷·ûµÄÓÅÏÈ¼¶×î¸ß£¬µ«¼ÓÉÏÒ»¸öÀ¨ºÅ£¬»áÈÃÈËÒ»ÑÛ¾Í¿´Ã÷°×ÄãµÄ´úÂëÊÇÊ²Ã´ÒâË¼¡£
+        ã€€ã€€è™½ç„¶ï¼Œ&UserInfo->ageä¸­ï¼Œ->æ“ä½œç¬¦çš„ä¼˜å…ˆçº§æœ€é«˜ï¼Œä½†åŠ ä¸Šä¸€ä¸ªæ‹¬å·ï¼Œä¼šè®©äººä¸€çœ¼å°±çœ‹æ˜Žç™½ä½ çš„ä»£ç æ˜¯ä»€ä¹ˆæ„æ€ã€‚
 
-            ¡¡¡¡ÔÙ±ÈÈç£¬Ò»¸öºÜ³¤µÄÌõ¼þÅÐ¶Ï£º
+            ã€€ã€€å†æ¯”å¦‚ï¼Œä¸€ä¸ªå¾ˆé•¿çš„æ¡ä»¶åˆ¤æ–­ï¼š
 
-            ¡¡¡¡if ( ( ch[0] >= '0' || ch[0] <= '9' ) &&
+            ã€€ã€€if ( ( ch[0] >= '0' || ch[0] <= '9' ) &&
 
-                    ¡¡¡¡( ch[1] >= 'a' || ch[1] <= 'z' ) &&
+                    ã€€ã€€( ch[1] >= 'a' || ch[1] <= 'z' ) &&
 
-                    ¡¡¡¡( ch[2] >= 'A' || ch[2] <= 'Z' ) )
+                    ã€€ã€€( ch[2] >= 'A' || ch[2] <= 'Z' ) )
 
-            ¡¡¡¡À¨ºÅ£¬ÔÙ¼ÓÉÏ¿Õ¸ñºÍ»»ÐÐ£¬ÄãµÄ´úÂëÊÇ²»ÊÇºÜÈÝÒ×¶Á¶®ÁË£¿
+            ã€€ã€€æ‹¬å·ï¼Œå†åŠ ä¸Šç©ºæ ¼å’Œæ¢è¡Œï¼Œä½ çš„ä»£ç æ˜¯ä¸æ˜¯å¾ˆå®¹æ˜“è¯»æ‡‚äº†ï¼Ÿ
 
-            ¡¡¡¡18¡¢º¯Êý²ÎÊýÖÐµÄconst
+            ã€€ã€€18ã€å‡½æ•°å‚æ•°ä¸­çš„const
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡¶ÔÓÚÒ»Ð©º¯ÊýÖÐµÄÖ¸Õë²ÎÊý£¬Èç¹ûÔÚº¯ÊýÖÐÖ»¶Á£¬Çë½«ÆäÓÃconstÐÞÊÎ£¬ÕâÑù£¬±ðÈËÒ»¶Áµ½ÄãµÄº¯Êý½Ó¿ÚÊ±£¬¾Í»áÖªµÀÄãµÄÒâÍ¼ÊÇÕâ¸ö²ÎÊýÊÇ[in]£¬Èç¹ûÃ»ÓÐconstÊ±£¬²ÎÊý±íÊ¾[in/out]£¬×¢Òâº¯Êý½Ó¿ÚÖÐµÄconstÊ¹ÓÃ£¬ÀûÓÚ³ÌÐòµÄÎ¬»¤ºÍ±ÜÃâ·¸Ò»Ð©´íÎó¡£
+            ã€€ã€€å¯¹äºŽä¸€äº›å‡½æ•°ä¸­çš„æŒ‡é’ˆå‚æ•°ï¼Œå¦‚æžœåœ¨å‡½æ•°ä¸­åªè¯»ï¼Œè¯·å°†å…¶ç”¨constä¿®é¥°ï¼Œè¿™æ ·ï¼Œåˆ«äººä¸€è¯»åˆ°ä½ çš„å‡½æ•°æŽ¥å£æ—¶ï¼Œå°±ä¼šçŸ¥é“ä½ çš„æ„å›¾æ˜¯è¿™ä¸ªå‚æ•°æ˜¯[in]ï¼Œå¦‚æžœæ²¡æœ‰constæ—¶ï¼Œå‚æ•°è¡¨ç¤º[in/out]ï¼Œæ³¨æ„å‡½æ•°æŽ¥å£ä¸­çš„constä½¿ç”¨ï¼Œåˆ©äºŽç¨‹åºçš„ç»´æŠ¤å’Œé¿å…çŠ¯ä¸€äº›é”™è¯¯ã€‚
 
-            ¡¡¡¡ËäÈ»£¬constÐÞÊÎµÄÖ¸Õë£¬Èç£ºconst char* p£¬ÔÚCÖÐÒ»µãÓÃÒ²Ã»ÓÐ£¬ÒòÎª²»¹ÜÄãµÄÉùÃ÷ÊÇ²»ÊÇconst£¬Ö¸ÕëµÄÄÚÈÝÕÕÑùÄÜ¸Ä£¬ÒòÎª±àÒëÆ÷»áÇ¿ÖÆ×ª»»£¬µ«ÊÇ¼ÓÉÏÕâÑùÒ»¸öËµÃ÷£¬ÓÐÀûÓÚ³ÌÐòµÄÔÄ¶ÁºÍ±àÒë¡£ÒòÎªÔÚCÖÐ£¬ÐÞ¸ÄÒ»¸öconstÖ¸ÕëËùÖ¸ÏòµÄÄÚ´æÊ±£¬»á±¨Ò»¸öWarning¡£Õâ»áÒýÆð³ÌÐòÔ±µÄ×¢Òâ¡£
+            ã€€ã€€è™½ç„¶ï¼Œconstä¿®é¥°çš„æŒ‡é’ˆï¼Œå¦‚ï¼šconst char* pï¼Œåœ¨Cä¸­ä¸€ç‚¹ç”¨ä¹Ÿæ²¡æœ‰ï¼Œå› ä¸ºä¸ç®¡ä½ çš„å£°æ˜Žæ˜¯ä¸æ˜¯constï¼ŒæŒ‡é’ˆçš„å†…å®¹ç…§æ ·èƒ½æ”¹ï¼Œå› ä¸ºç¼–è¯‘å™¨ä¼šå¼ºåˆ¶è½¬æ¢ï¼Œä½†æ˜¯åŠ ä¸Šè¿™æ ·ä¸€ä¸ªè¯´æ˜Žï¼Œæœ‰åˆ©äºŽç¨‹åºçš„é˜…è¯»å’Œç¼–è¯‘ã€‚å› ä¸ºåœ¨Cä¸­ï¼Œä¿®æ”¹ä¸€ä¸ªconstæŒ‡é’ˆæ‰€æŒ‡å‘çš„å†…å­˜æ—¶ï¼Œä¼šæŠ¥ä¸€ä¸ªWarningã€‚è¿™ä¼šå¼•èµ·ç¨‹åºå‘˜çš„æ³¨æ„ã€‚
 
-            ¡¡¡¡C++ÖÐ¶Ôconst¶¨ÒåµÄ¾ÍºÜÑÏ¸ñÁË£¬ËùÒÔC++ÖÐÒª¶à¶àµÄÊ¹ÓÃconst£¬constµÄ³ÉÔ±º¯Êý£¬constµÄ±äÁ¿£¬ÕâÑù»á¶ÔÈÃÄãµÄ´úÂëºÍÄãµÄ³ÌÐò¸ü¼ÓÍêÕûºÍÒ×¶Á¡££¨¹ØÓÚC++µÄconstÎÒ¾Í²»¶àËµÁË£©
+            ã€€ã€€C++ä¸­å¯¹constå®šä¹‰çš„å°±å¾ˆä¸¥æ ¼äº†ï¼Œæ‰€ä»¥C++ä¸­è¦å¤šå¤šçš„ä½¿ç”¨constï¼Œconstçš„æˆå‘˜å‡½æ•°ï¼Œconstçš„å˜é‡ï¼Œè¿™æ ·ä¼šå¯¹è®©ä½ çš„ä»£ç å’Œä½ çš„ç¨‹åºæ›´åŠ å®Œæ•´å’Œæ˜“è¯»ã€‚ï¼ˆå…³äºŽC++çš„constæˆ‘å°±ä¸å¤šè¯´äº†ï¼‰
 
-            ¡¡¡¡19¡¢º¯ÊýµÄ²ÎÊý¸öÊý£¨¶àÁËÇëÓÃ½á¹¹£©
+            ã€€ã€€19ã€å‡½æ•°çš„å‚æ•°ä¸ªæ•°ï¼ˆå¤šäº†è¯·ç”¨ç»“æž„ï¼‰
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡º¯ÊýµÄ²ÎÊý¸öÊý×îºÃ²»ÒªÌ«¶à£¬Ò»°ãÀ´Ëµ6¸ö×óÓÒ¾Í¿ÉÒÔÁË£¬ÖÚ¶àµÄº¯Êý²ÎÊý»áÈÃ¶Á´úÂëµÄÈËÒ»ÑÛ¿´ÉÏÈ¥¾ÍºÜÍ·»è£¬¶øÇÒÒ²²»ÀûÓÚÎ¬»¤¡£Èç¹û²ÎÊýÖÚ¶à£¬»¹ÇëÊ¹ÓÃ½á¹¹À´´«µÝ²ÎÊý¡£ÕâÑù×öÓÐÀûÓÚÊý¾ÝµÄ·â×°ºÍ³ÌÐòµÄ¼ò½àÐÔ¡£Ò²ÀûÓÚÊ¹ÓÃº¯ÊýµÄÈË£¬ÒòÎªÈç¹ûÄãµÄº¯Êý¸öÊýºÜ¶à£¬±ÈÈç12¸ö£¬µ÷ÓÃÕßºÜÈÝÒ×¸ã´í²ÎÊýµÄË³ÐòºÍ¸öÊý£¬¶øÊ¹ÓÃ½á¹¹structÀ´´«µÝ²ÎÊý£¬¾Í¿ÉÒÔ²»¹Ü²ÎÊýµÄË³Ðò¡£¶øÇÒ£¬º¯ÊýºÜÈÝÒ×±»ÐÞ¸Ä£¬Èç¹ûÐèÒª¸øº¯ÊýÔö¼Ó²ÎÊý£¬²»ÐèÒª¸ü¸Äº¯Êý½Ó¿Ú£¬Ö»Ðè¸ü¸Ä½á¹¹ÌåºÍº¯ÊýÄÚ²¿´¦Àí£¬¶ø¶ÔÓÚµ÷ÓÃº¯ÊýµÄ³ÌÐòÀ´Ëµ£¬Õâ¸ö¶¯×÷ÊÇÍ¸Ã÷µÄ¡£
+            ã€€ã€€å‡½æ•°çš„å‚æ•°ä¸ªæ•°æœ€å¥½ä¸è¦å¤ªå¤šï¼Œä¸€èˆ¬æ¥è¯´6ä¸ªå·¦å³å°±å¯ä»¥äº†ï¼Œä¼—å¤šçš„å‡½æ•°å‚æ•°ä¼šè®©è¯»ä»£ç çš„äººä¸€çœ¼çœ‹ä¸ŠåŽ»å°±å¾ˆå¤´æ˜ï¼Œè€Œä¸”ä¹Ÿä¸åˆ©äºŽç»´æŠ¤ã€‚å¦‚æžœå‚æ•°ä¼—å¤šï¼Œè¿˜è¯·ä½¿ç”¨ç»“æž„æ¥ä¼ é€’å‚æ•°ã€‚è¿™æ ·åšæœ‰åˆ©äºŽæ•°æ®çš„å°è£…å’Œç¨‹åºçš„ç®€æ´æ€§ã€‚ä¹Ÿåˆ©äºŽä½¿ç”¨å‡½æ•°çš„äººï¼Œå› ä¸ºå¦‚æžœä½ çš„å‡½æ•°ä¸ªæ•°å¾ˆå¤šï¼Œæ¯”å¦‚12ä¸ªï¼Œè°ƒç”¨è€…å¾ˆå®¹æ˜“æžé”™å‚æ•°çš„é¡ºåºå’Œä¸ªæ•°ï¼Œè€Œä½¿ç”¨ç»“æž„structæ¥ä¼ é€’å‚æ•°ï¼Œå°±å¯ä»¥ä¸ç®¡å‚æ•°çš„é¡ºåºã€‚è€Œä¸”ï¼Œå‡½æ•°å¾ˆå®¹æ˜“è¢«ä¿®æ”¹ï¼Œå¦‚æžœéœ€è¦ç»™å‡½æ•°å¢žåŠ å‚æ•°ï¼Œä¸éœ€è¦æ›´æ”¹å‡½æ•°æŽ¥å£ï¼Œåªéœ€æ›´æ”¹ç»“æž„ä½“å’Œå‡½æ•°å†…éƒ¨å¤„ç†ï¼Œè€Œå¯¹äºŽè°ƒç”¨å‡½æ•°çš„ç¨‹åºæ¥è¯´ï¼Œè¿™ä¸ªåŠ¨ä½œæ˜¯é€æ˜Žçš„ã€‚
 
-            ¡¡¡¡20¡¢º¯ÊýµÄ·µ»ØÀàÐÍ£¬²»ÒªÊ¡ÂÔ
+            ã€€ã€€20ã€å‡½æ•°çš„è¿”å›žç±»åž‹ï¼Œä¸è¦çœç•¥
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÎÒ¿´µ½ºÜ¶à³ÌÐòÐ´º¯ÊýÊ±£¬ÔÚº¯ÊýµÄ·µ»ØÀàÐÍ·½Ãæ²»Ì«×¢Òâ¡£Èç¹ûÒ»¸öº¯ÊýÃ»ÓÐ·µ»ØÖµ£¬Ò²ÇëÔÚº¯ÊýÇ°Ãæ¼ÓÉÏvoidµÄÐÞÊÎ¡£¶øÓÐµÄ³ÌÐòÔ±ÍµÀÁ£¬ÔÚ·µ»ØintµÄº¯ÊýÔòÊ²Ã´²»ÐÞÊÎ£¨ÒòÎªÈç¹û²»ÐÞÊÎ£¬ÔòÄ¬ÈÏ·µ»Øint£©£¬ÕâÖÖÏ°¹ßºÜ²»ºÃ£¬»¹ÊÇÎªÁËÔ­´úÂëµÄÒ×¶ÁÐÔ£¬¼ÓÉÏint°É¡£ËùÒÔº¯ÊýµÄ·µ»ØÖµÀàÐÍ£¬Çë²»ÒªÊ¡ÂÔ¡£
+            ã€€ã€€æˆ‘çœ‹åˆ°å¾ˆå¤šç¨‹åºå†™å‡½æ•°æ—¶ï¼Œåœ¨å‡½æ•°çš„è¿”å›žç±»åž‹æ–¹é¢ä¸å¤ªæ³¨æ„ã€‚å¦‚æžœä¸€ä¸ªå‡½æ•°æ²¡æœ‰è¿”å›žå€¼ï¼Œä¹Ÿè¯·åœ¨å‡½æ•°å‰é¢åŠ ä¸Švoidçš„ä¿®é¥°ã€‚è€Œæœ‰çš„ç¨‹åºå‘˜å·æ‡’ï¼Œåœ¨è¿”å›žintçš„å‡½æ•°åˆ™ä»€ä¹ˆä¸ä¿®é¥°ï¼ˆå› ä¸ºå¦‚æžœä¸ä¿®é¥°ï¼Œåˆ™é»˜è®¤è¿”å›žintï¼‰ï¼Œè¿™ç§ä¹ æƒ¯å¾ˆä¸å¥½ï¼Œè¿˜æ˜¯ä¸ºäº†åŽŸä»£ç çš„æ˜“è¯»æ€§ï¼ŒåŠ ä¸Šintå§ã€‚æ‰€ä»¥å‡½æ•°çš„è¿”å›žå€¼ç±»åž‹ï¼Œè¯·ä¸è¦çœç•¥ã€‚
 
-            ¡¡¡¡ÁíÍâ£¬¶ÔÓÚvoidµÄº¯Êý£¬ÎÒÃÇÍùÍù»áÍüÁËreturn£¬ÓÉÓÚÄ³Ð©C/C++µÄ±àÒëÆ÷±È½ÏÃô¸Ð£¬»á±¨Ò»Ð©¾¯¸æ£¬ËùÒÔ¼´Ê¹ÊÇvoidµÄº¯Êý£¬ÎÒÃÇÔÚÄÚ²¿×îºÃÒ²Òª¼ÓÉÏreturnµÄÓï¾ä£¬ÕâÓÐÖúÓÚ´úÂëµÄ±àÒë¡£
+            ã€€ã€€å¦å¤–ï¼Œå¯¹äºŽvoidçš„å‡½æ•°ï¼Œæˆ‘ä»¬å¾€å¾€ä¼šå¿˜äº†returnï¼Œç”±äºŽæŸäº›C/C++çš„ç¼–è¯‘å™¨æ¯”è¾ƒæ•æ„Ÿï¼Œä¼šæŠ¥ä¸€äº›è­¦å‘Šï¼Œæ‰€ä»¥å³ä½¿æ˜¯voidçš„å‡½æ•°ï¼Œæˆ‘ä»¬åœ¨å†…éƒ¨æœ€å¥½ä¹Ÿè¦åŠ ä¸Šreturnçš„è¯­å¥ï¼Œè¿™æœ‰åŠ©äºŽä»£ç çš„ç¼–è¯‘ã€‚
 
-            ¡¡¡¡21¡¢gotoÓï¾äµÄÊ¹ÓÃ
+            ã€€ã€€21ã€gotoè¯­å¥çš„ä½¿ç”¨
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡NÄêÇ°£¬Èí¼þ¿ª·¢µÄÒ»´ú×ÚÊ¦¡ª¡ªµÏ½ÜË¹ÌØÀ­(Dijkstra)Ëµ¹ý£º¡°goto statment is
-            harmful !!¡±£¬²¢½¨ÒéÈ¡ÏûgotoÓï¾ä¡£ÒòÎªgotoÓï¾ä²»ÀûÓÚ³ÌÐò´úÂëµÄÎ¬»¤ÐÔ¡£
+            ã€€ã€€Nå¹´å‰ï¼Œè½¯ä»¶å¼€å‘çš„ä¸€ä»£å®—å¸ˆâ€”â€”è¿ªæ°æ–¯ç‰¹æ‹‰(Dijkstra)è¯´è¿‡ï¼šâ€œgoto statment is
+            harmful !!â€ï¼Œå¹¶å»ºè®®å–æ¶ˆgotoè¯­å¥ã€‚å› ä¸ºgotoè¯­å¥ä¸åˆ©äºŽç¨‹åºä»£ç çš„ç»´æŠ¤æ€§ã€‚
 
-            ¡¡¡¡ÕâÀïÎÒÒ²Ç¿ÁÒ½¨Òé²»ÒªÊ¹ÓÃgotoÓï¾ä£¬³ý·ÇÏÂÃæµÄÕâÖÖÇé¿ö£º
+            ã€€ã€€è¿™é‡Œæˆ‘ä¹Ÿå¼ºçƒˆå»ºè®®ä¸è¦ä½¿ç”¨gotoè¯­å¥ï¼Œé™¤éžä¸‹é¢çš„è¿™ç§æƒ…å†µï¼š
 
-            ¡¡¡¡#define FREE(p) if(p) { \
+            ã€€ã€€#define FREE(p) if(p) { \
 
-                ¡¡¡¡free(p); \
+                ã€€ã€€free(p); \
 
-                    ¡¡¡¡p = NULL; \
+                    ã€€ã€€p = NULL; \
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡main()
+        ã€€ã€€main()
 
-            ¡¡¡¡main()
+            ã€€ã€€main()
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡char *fname=NULL, *lname=NULL, *mname=NULL;
+                ã€€ã€€char *fname=NULL, *lname=NULL, *mname=NULL;
 
-                ¡¡¡¡fname = ( char* ) calloc ( 20, sizeof(char) );
+                ã€€ã€€fname = ( char* ) calloc ( 20, sizeof(char) );
 
-                ¡¡¡¡if ( fname == NULL ){
+                ã€€ã€€if ( fname == NULL ){
 
-                    ¡¡¡¡goto ErrHandle;
+                    ã€€ã€€goto ErrHandle;
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-                ¡¡¡¡lname = ( char* ) calloc ( 20, sizeof(char) );
+                ã€€ã€€lname = ( char* ) calloc ( 20, sizeof(char) );
 
-                ¡¡¡¡if ( lname == NULL ){
+                ã€€ã€€if ( lname == NULL ){
 
-                    ¡¡¡¡goto ErrHandle;
+                    ã€€ã€€goto ErrHandle;
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-                ¡¡¡¡mname = ( char* ) calloc ( 20, sizeof(char) );
+                ã€€ã€€mname = ( char* ) calloc ( 20, sizeof(char) );
 
-                ¡¡¡¡if ( mname == NULL ){
+                ã€€ã€€if ( mname == NULL ){
 
-                    ¡¡¡¡goto ErrHandle;
+                    ã€€ã€€goto ErrHandle;
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-                ¡¡¡¡......
+                ã€€ã€€......
 
-                    ¡¡¡¡ErrHandle:
+                    ã€€ã€€ErrHandle:
 
-                    ¡¡¡¡ErrHandle:
+                    ã€€ã€€ErrHandle:
 
-                    ¡¡¡¡FREE(fname);
+                    ã€€ã€€FREE(fname);
 
-                ¡¡¡¡FREE(lname);
+                ã€€ã€€FREE(lname);
 
-                ¡¡¡¡FREE(mname);
+                ã€€ã€€FREE(mname);
 
-                ¡¡¡¡ReportError(ERR_NO_MEMOEY);
+                ã€€ã€€ReportError(ERR_NO_MEMOEY);
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-        ¡¡¡¡Ò²Ö»ÓÐÔÚÕâÖÖÇé¿öÏÂ£¬gotoÓï¾ä»áÈÃÄãµÄ³ÌÐò¸üÒ×¶Á£¬¸üÈÝÒ×Î¬»¤¡££¨ÔÚÓÃÇ¶CÀ´¶ÔÊý¾Ý¿âÉèÖÃÓÎ±ê²Ù×÷Ê±£¬»òÊÇ¶ÔÊý¾Ý¿â½¨Á¢Á´½ÓÊ±£¬Ò²»áÓöµ½ÕâÖÖ½á¹¹£©
+        ã€€ã€€ä¹Ÿåªæœ‰åœ¨è¿™ç§æƒ…å†µä¸‹ï¼Œgotoè¯­å¥ä¼šè®©ä½ çš„ç¨‹åºæ›´æ˜“è¯»ï¼Œæ›´å®¹æ˜“ç»´æŠ¤ã€‚ï¼ˆåœ¨ç”¨åµŒCæ¥å¯¹æ•°æ®åº“è®¾ç½®æ¸¸æ ‡æ“ä½œæ—¶ï¼Œæˆ–æ˜¯å¯¹æ•°æ®åº“å»ºç«‹é“¾æŽ¥æ—¶ï¼Œä¹Ÿä¼šé‡åˆ°è¿™ç§ç»“æž„ï¼‰
 
-            ¡¡¡¡22¡¢ºêµÄÊ¹ÓÃ
+            ã€€ã€€22ã€å®çš„ä½¿ç”¨
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ºÜ¶à³ÌÐòÔ±²»ÖªµÀCÖÐµÄ¡°ºê¡±µ½µ×ÊÇÊ²Ã´ÒâË¼£¿ÌØ±ðÊÇµ±ºêÓÐ²ÎÊýµÄÊ±ºò£¬¾­³£°ÑºêºÍº¯Êý»ìÏý¡£ÎÒÏëÔÚÕâÀïÎÒ»¹ÊÇÏÈ½²½²¡°ºê¡±£¬ºêÖ»ÊÇÒ»ÖÖ¶¨Òå£¬Ëû¶¨ÒåÁËÒ»¸öÓï¾ä¿é£¬µ±³ÌÐò±àÒëÊ±£¬±àÒëÆ÷Ê×ÏÈÒªÖ´ÐÐÒ»¸ö¡°Ìæ»»¡±Ô´³ÌÐòµÄ¶¯×÷£¬°ÑºêÒýÓÃµÄµØ·½Ìæ»»³Éºê¶¨ÒåµÄÓï¾ä¿é£¬¾ÍÏñÎÄ±¾ÎÄ¼þÌæ»»Ò»Ñù¡£Õâ¸ö¶¯×÷ÊõÓï½Ð¡°ºêµÄÕ¹¿ª¡±
+            ã€€ã€€å¾ˆå¤šç¨‹åºå‘˜ä¸çŸ¥é“Cä¸­çš„â€œå®â€åˆ°åº•æ˜¯ä»€ä¹ˆæ„æ€ï¼Ÿç‰¹åˆ«æ˜¯å½“å®æœ‰å‚æ•°çš„æ—¶å€™ï¼Œç»å¸¸æŠŠå®å’Œå‡½æ•°æ··æ·†ã€‚æˆ‘æƒ³åœ¨è¿™é‡Œæˆ‘è¿˜æ˜¯å…ˆè®²è®²â€œå®â€ï¼Œå®åªæ˜¯ä¸€ç§å®šä¹‰ï¼Œä»–å®šä¹‰äº†ä¸€ä¸ªè¯­å¥å—ï¼Œå½“ç¨‹åºç¼–è¯‘æ—¶ï¼Œç¼–è¯‘å™¨é¦–å…ˆè¦æ‰§è¡Œä¸€ä¸ªâ€œæ›¿æ¢â€æºç¨‹åºçš„åŠ¨ä½œï¼ŒæŠŠå®å¼•ç”¨çš„åœ°æ–¹æ›¿æ¢æˆå®å®šä¹‰çš„è¯­å¥å—ï¼Œå°±åƒæ–‡æœ¬æ–‡ä»¶æ›¿æ¢ä¸€æ ·ã€‚è¿™ä¸ªåŠ¨ä½œæœ¯è¯­å«â€œå®çš„å±•å¼€â€
 
-            ¡¡¡¡Ê¹ÓÃºêÊÇ±È½Ï¡°Î£ÏÕ¡±µÄ£¬ÒòÎªÄã²»ÖªµÀºêÕ¹¿ªºó»áÊÇÊ²Ã´Ò»¸öÑù×Ó¡£ÀýÈçÏÂÃæÕâ¸öºê£º
+            ã€€ã€€ä½¿ç”¨å®æ˜¯æ¯”è¾ƒâ€œå±é™©â€çš„ï¼Œå› ä¸ºä½ ä¸çŸ¥é“å®å±•å¼€åŽä¼šæ˜¯ä»€ä¹ˆä¸€ä¸ªæ ·å­ã€‚ä¾‹å¦‚ä¸‹é¢è¿™ä¸ªå®ï¼š
 
-            ¡¡¡¡#define MAX(a, b) a>b?a:b
+            ã€€ã€€#define MAX(a, b) a>b?a:b
 
-            ¡¡¡¡µ±ÎÒÃÇÕâÑùÊ¹ÓÃºêÊ±£¬Ã»ÓÐÊ²Ã´ÎÊÌâ£º MAX( num1, num2 ); ÒòÎªºêÕ¹¿ªºó±ä³É
+            ã€€ã€€å½“æˆ‘ä»¬è¿™æ ·ä½¿ç”¨å®æ—¶ï¼Œæ²¡æœ‰ä»€ä¹ˆé—®é¢˜ï¼š MAX( num1, num2 ); å› ä¸ºå®å±•å¼€åŽå˜æˆ
 
-            ¡¡¡¡num1>num2?num1:num2£»¡£ µ«ÊÇ£¬Èç¹ûÊÇÕâÑùµ÷ÓÃµÄ£¬MAX( 17+32, 25+21 ); ÄØ£¬±àÒëÊ±³öÏÖ´íÎó£¬Ô­ÒòÊÇ£¬ºêÕ¹¿ªºó±ä³É£º17+32>25+21?17+32:25+21£¬ÍÛ£¬ÕâÊÇÊ²Ã´°¡£¿
+            ã€€ã€€num1>num2?num1:num2ï¼›ã€‚ ä½†æ˜¯ï¼Œå¦‚æžœæ˜¯è¿™æ ·è°ƒç”¨çš„ï¼ŒMAX( 17+32, 25+21 ); å‘¢ï¼Œç¼–è¯‘æ—¶å‡ºçŽ°é”™è¯¯ï¼ŒåŽŸå› æ˜¯ï¼Œå®å±•å¼€åŽå˜æˆï¼š17+32>25+21?17+32:25+21ï¼Œå“‡ï¼Œè¿™æ˜¯ä»€ä¹ˆå•Šï¼Ÿ
 
-            ¡¡¡¡ËùÒÔ£¬ºêÔÚÊ¹ÓÃÊ±£¬²ÎÊýÒ»¶¨Òª¼ÓÉÏÀ¨ºÅ£¬ÉÏÊöµÄÄÇ¸öÀý×Ó¸Ä³ÉÈçÏÂËùÊ¾¾ÍÄÜ½â¾öÎÊÌâÁË
+            ã€€ã€€æ‰€ä»¥ï¼Œå®åœ¨ä½¿ç”¨æ—¶ï¼Œå‚æ•°ä¸€å®šè¦åŠ ä¸Šæ‹¬å·ï¼Œä¸Šè¿°çš„é‚£ä¸ªä¾‹å­æ”¹æˆå¦‚ä¸‹æ‰€ç¤ºå°±èƒ½è§£å†³é—®é¢˜äº†
 
-            ¡¡¡¡¡£
+            ã€€ã€€ã€‚
 
-            ¡¡¡¡#define MAX( (a), (b) ) (a)>(b)?(a):(b)
+            ã€€ã€€#define MAX( (a), (b) ) (a)>(b)?(a):(b)
 
-            ¡¡¡¡¼´Ê¹ÊÇÕâÑù£¬Ò²²»Õâ¸öºêÒ²»¹ÊÇÓÐBug£¬ÒòÎªÈç¹ûÎÒÕâÑùµ÷ÓÃ MAX(i++, j++); £¬ ¾­¹ýÕâ¸öºêÒÔºó£¬iºÍj¶¼±»ÀÛ¼ÓÁËÁ½´Î£¬Õâ¾ø²»ÊÇÎÒÃÇÏëÒªµÄ¡£
+            ã€€ã€€å³ä½¿æ˜¯è¿™æ ·ï¼Œä¹Ÿä¸è¿™ä¸ªå®ä¹Ÿè¿˜æ˜¯æœ‰Bugï¼Œå› ä¸ºå¦‚æžœæˆ‘è¿™æ ·è°ƒç”¨ MAX(i++, j++); ï¼Œ ç»è¿‡è¿™ä¸ªå®ä»¥åŽï¼Œiå’Œjéƒ½è¢«ç´¯åŠ äº†ä¸¤æ¬¡ï¼Œè¿™ç»ä¸æ˜¯æˆ‘ä»¬æƒ³è¦çš„ã€‚
 
-            ¡¡¡¡ËùÒÔ£¬ÔÚºêµÄÊ¹ÓÃÉÏ»¹ÊÇÒª½÷É÷¿¼ÂÇ£¬ÒòÎªºêÕ¹¿ªÊÇµÄ½á¹ûÊÇºÜÄÑÈÃÈËÔ¤ÁÏµÄ¡£¶øÇÒËäÈ»£¬ºêµÄÖ´ÐÐºÜ¿ì£¨ÒòÎªÃ»ÓÐº¯Êýµ÷ÓÃµÄ¿ªÏú£©£¬µ«ºê»áÈÃÔ´´úÂëÅìÕÇ£¬Ê¹Ä¿±êÎÄ¼þ³ß´ç±ä´ó£¬£¨Èç£ºÒ»¸ö50ÐÐµÄºê£¬³ÌÐòÖÐÓÐ1000¸öµØ·½ÓÃµ½£¬ºêÕ¹¿ªºó»áºÜ²»µÃÁË£©£¬Ïà·´²»ÄÜÈÃ³ÌÐòÖ´ÐÐµÃ¸ü¿ì£¨ÒòÎªÖ´ÐÐÎÄ¼þ±ä´ó£¬ÔËÐÐÊ±ÏµÍ³»»Ò³Æµ·±£©¡£
+            ã€€ã€€æ‰€ä»¥ï¼Œåœ¨å®çš„ä½¿ç”¨ä¸Šè¿˜æ˜¯è¦è°¨æ…Žè€ƒè™‘ï¼Œå› ä¸ºå®å±•å¼€æ˜¯çš„ç»“æžœæ˜¯å¾ˆéš¾è®©äººé¢„æ–™çš„ã€‚è€Œä¸”è™½ç„¶ï¼Œå®çš„æ‰§è¡Œå¾ˆå¿«ï¼ˆå› ä¸ºæ²¡æœ‰å‡½æ•°è°ƒç”¨çš„å¼€é”€ï¼‰ï¼Œä½†å®ä¼šè®©æºä»£ç æ¾Žæ¶¨ï¼Œä½¿ç›®æ ‡æ–‡ä»¶å°ºå¯¸å˜å¤§ï¼Œï¼ˆå¦‚ï¼šä¸€ä¸ª50è¡Œçš„å®ï¼Œç¨‹åºä¸­æœ‰1000ä¸ªåœ°æ–¹ç”¨åˆ°ï¼Œå®å±•å¼€åŽä¼šå¾ˆä¸å¾—äº†ï¼‰ï¼Œç›¸åä¸èƒ½è®©ç¨‹åºæ‰§è¡Œå¾—æ›´å¿«ï¼ˆå› ä¸ºæ‰§è¡Œæ–‡ä»¶å˜å¤§ï¼Œè¿è¡Œæ—¶ç³»ç»Ÿæ¢é¡µé¢‘ç¹ï¼‰ã€‚
 
-            ¡¡¡¡Òò´Ë£¬ÔÚ¾ö¶¨ÊÇÓÃº¯Êý£¬»¹ÊÇÓÃºêÊ±µÃÒªÐ¡ÐÄ¡£
+            ã€€ã€€å› æ­¤ï¼Œåœ¨å†³å®šæ˜¯ç”¨å‡½æ•°ï¼Œè¿˜æ˜¯ç”¨å®æ—¶å¾—è¦å°å¿ƒã€‚
 
-            ¡¡¡¡--
+            ã€€ã€€--
 
 
 
-            ¡¡¡¡--
+            ã€€ã€€--
 
-            ¡¡¡¡23¡¢staticµÄÊ¹ÓÃ
+            ã€€ã€€23ã€staticçš„ä½¿ç”¨
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡static¹Ø¼ü×Ö£¬±íÊ¾ÁË¡°¾²Ì¬¡±£¬Ò»°ãÀ´Ëµ£¬Ëû»á±»¾­³£ÓÃÓÚ±äÁ¿ºÍº¯Êý¡£Ò»¸östaticµÄ
+            ã€€ã€€staticå…³é”®å­—ï¼Œè¡¨ç¤ºäº†â€œé™æ€â€ï¼Œä¸€èˆ¬æ¥è¯´ï¼Œä»–ä¼šè¢«ç»å¸¸ç”¨äºŽå˜é‡å’Œå‡½æ•°ã€‚ä¸€ä¸ªstaticçš„
 
-            ¡¡¡¡±äÁ¿£¬ÆäÊµ¾ÍÊÇÈ«¾Ö±äÁ¿£¬Ö»²»¹ýËûÊÇÓÐ×÷ÓÃÓòµÄÈ«¾Ö±äÁ¿¡£±ÈÈçÒ»¸öº¯ÊýÖÐµÄstatic±äÁ¿£º
+            ã€€ã€€å˜é‡ï¼Œå…¶å®žå°±æ˜¯å…¨å±€å˜é‡ï¼Œåªä¸è¿‡ä»–æ˜¯æœ‰ä½œç”¨åŸŸçš„å…¨å±€å˜é‡ã€‚æ¯”å¦‚ä¸€ä¸ªå‡½æ•°ä¸­çš„staticå˜é‡ï¼š
 
-            ¡¡¡¡char*
+            ã€€ã€€char*
 
-            ¡¡¡¡getConsumerName()
+            ã€€ã€€getConsumerName()
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡static int cnt = 0;
+                ã€€ã€€static int cnt = 0;
 
-                ¡¡¡¡....
+                ã€€ã€€....
 
-                    ¡¡¡¡cnt++;
+                    ã€€ã€€cnt++;
 
-                ¡¡¡¡....
+                ã€€ã€€....
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡cnt±äÁ¿µÄÖµ»á¸úËæ×Åº¯ÊýµÄµ÷ÓÃ´Î¶øµÝÔö£¬º¯ÊýÍË³öºó£¬cntµÄÖµ»¹´æÔÚ£¬Ö»ÊÇcntÖ»ÄÜÔÚº¯ÊýÖÐ²ÅÄÜ±»·ÃÎÊ¡£¶øcntµÄÄÚ´æÒ²Ö»»áÔÚº¯ÊýµÚÒ»´Î±»µ÷ÓÃÊ±²Å»á±»·ÖÅäºÍ³õÊ¼»¯£¬ÒÔºóÃ¿´Î½øÈëº¯Êý£¬¶¼²»Îªstatic·ÖÅäÁË£¬¶øÖ±½ÓÊ¹ÓÃÉÏÒ»´ÎµÄÖµ¡£
+        ã€€ã€€cntå˜é‡çš„å€¼ä¼šè·Ÿéšç€å‡½æ•°çš„è°ƒç”¨æ¬¡è€Œé€’å¢žï¼Œå‡½æ•°é€€å‡ºåŽï¼Œcntçš„å€¼è¿˜å­˜åœ¨ï¼Œåªæ˜¯cntåªèƒ½åœ¨å‡½æ•°ä¸­æ‰èƒ½è¢«è®¿é—®ã€‚è€Œcntçš„å†…å­˜ä¹Ÿåªä¼šåœ¨å‡½æ•°ç¬¬ä¸€æ¬¡è¢«è°ƒç”¨æ—¶æ‰ä¼šè¢«åˆ†é…å’Œåˆå§‹åŒ–ï¼Œä»¥åŽæ¯æ¬¡è¿›å…¥å‡½æ•°ï¼Œéƒ½ä¸ä¸ºstaticåˆ†é…äº†ï¼Œè€Œç›´æŽ¥ä½¿ç”¨ä¸Šä¸€æ¬¡çš„å€¼ã€‚
 
-            ¡¡¡¡¶ÔÓÚÒ»Ð©±»¾­³£µ÷ÓÃµÄº¯ÊýÄÚµÄ³£Á¿£¬×îºÃÒ²ÉùÃ÷³Éstatic£¨²Î¼ûµÚ12Ìõ£©
+            ã€€ã€€å¯¹äºŽä¸€äº›è¢«ç»å¸¸è°ƒç”¨çš„å‡½æ•°å†…çš„å¸¸é‡ï¼Œæœ€å¥½ä¹Ÿå£°æ˜Žæˆstaticï¼ˆå‚è§ç¬¬12æ¡ï¼‰
 
-            ¡¡¡¡µ«staticµÄ×î¶àµÄÓÃ´¦È´²»ÔÚÕâÀï£¬Æä×î´óµÄ×÷ÓÃµÄ¿ØÖÆ·ÃÎÊ£¬ÔÚCÖÐÈç¹ûÒ»¸öº¯Êý»òÊÇÒ»¸öÈ«¾Ö±äÁ¿±»ÉùÃ÷Îªstatic£¬ÄÇÃ´£¬Õâ¸öº¯ÊýºÍÕâ¸öÈ«¾Ö±äÁ¿£¬½«Ö»ÄÜÔÚÕâ¸öCÎÄ¼þÖÐ±»·ÃÎÊ£¬Èç¹û±ðµÄCÎÄ¼þÖÐµ÷ÓÃÕâ¸öCÎÄ¼þÖÐµÄº¯Êý£¬»òÊÇÊ¹ÓÃÆäÖÐµÄÈ«¾Ö£¨ÓÃextern¹Ø¼ü×Ö£©£¬½«»á·¢ÉúÁ´½ÓÊ±´íÎó¡£Õâ¸öÌØÐÔ¿ÉÒÔÓÃÓÚÊý¾ÝºÍ³ÌÐò±£ÃÜ¡£
+            ã€€ã€€ä½†staticçš„æœ€å¤šçš„ç”¨å¤„å´ä¸åœ¨è¿™é‡Œï¼Œå…¶æœ€å¤§çš„ä½œç”¨çš„æŽ§åˆ¶è®¿é—®ï¼Œåœ¨Cä¸­å¦‚æžœä¸€ä¸ªå‡½æ•°æˆ–æ˜¯ä¸€ä¸ªå…¨å±€å˜é‡è¢«å£°æ˜Žä¸ºstaticï¼Œé‚£ä¹ˆï¼Œè¿™ä¸ªå‡½æ•°å’Œè¿™ä¸ªå…¨å±€å˜é‡ï¼Œå°†åªèƒ½åœ¨è¿™ä¸ªCæ–‡ä»¶ä¸­è¢«è®¿é—®ï¼Œå¦‚æžœåˆ«çš„Cæ–‡ä»¶ä¸­è°ƒç”¨è¿™ä¸ªCæ–‡ä»¶ä¸­çš„å‡½æ•°ï¼Œæˆ–æ˜¯ä½¿ç”¨å…¶ä¸­çš„å…¨å±€ï¼ˆç”¨externå…³é”®å­—ï¼‰ï¼Œå°†ä¼šå‘ç”Ÿé“¾æŽ¥æ—¶é”™è¯¯ã€‚è¿™ä¸ªç‰¹æ€§å¯ä»¥ç”¨äºŽæ•°æ®å’Œç¨‹åºä¿å¯†ã€‚
 
-            ¡¡¡¡24¡¢º¯ÊýÖÐµÄ´úÂë³ß´ç
+            ã€€ã€€24ã€å‡½æ•°ä¸­çš„ä»£ç å°ºå¯¸
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡Ò»¸öº¯ÊýÍê³ÉÒ»¸ö¾ßÌåµÄ¹¦ÄÜ£¬Ò»°ãÀ´Ëµ£¬Ò»¸öº¯ÊýÖÐµÄ´úÂë×îºÃ²»Òª³¬¹ý600ÐÐ×óÓÒ£¬Ô½ÉÙÔ½ºÃ£¬×îºÃµÄº¯ÊýÒ»°ãÔÚ100ÐÐÒÔÄÚ£¬300ÐÐ×óÓÒµÄËïº¯Êý¾Í²î²»¶àÁË¡£ÓÐÖ¤¾Ý±íÃ÷£¬Ò»¸öº¯ÊýÖÐµÄ´úÂëÈç¹û³¬¹ý500ÐÐ£¬¾Í»áÓÐºÍ±ðµÄº¯ÊýÏàÍ¬»òÊÇÏà½üµÄ´úÂë£¬Ò²¾ÍÊÇËµ£¬¾Í¿ÉÒÔÔÙÐ´ÁíÒ»¸öº¯Êý¡£
+            ã€€ã€€ä¸€ä¸ªå‡½æ•°å®Œæˆä¸€ä¸ªå…·ä½“çš„åŠŸèƒ½ï¼Œä¸€èˆ¬æ¥è¯´ï¼Œä¸€ä¸ªå‡½æ•°ä¸­çš„ä»£ç æœ€å¥½ä¸è¦è¶…è¿‡600è¡Œå·¦å³ï¼Œè¶Šå°‘è¶Šå¥½ï¼Œæœ€å¥½çš„å‡½æ•°ä¸€èˆ¬åœ¨100è¡Œä»¥å†…ï¼Œ300è¡Œå·¦å³çš„å­™å‡½æ•°å°±å·®ä¸å¤šäº†ã€‚æœ‰è¯æ®è¡¨æ˜Žï¼Œä¸€ä¸ªå‡½æ•°ä¸­çš„ä»£ç å¦‚æžœè¶…è¿‡500è¡Œï¼Œå°±ä¼šæœ‰å’Œåˆ«çš„å‡½æ•°ç›¸åŒæˆ–æ˜¯ç›¸è¿‘çš„ä»£ç ï¼Œä¹Ÿå°±æ˜¯è¯´ï¼Œå°±å¯ä»¥å†å†™å¦ä¸€ä¸ªå‡½æ•°ã€‚
 
-            ¡¡¡¡ÁíÍâ£¬º¯ÊýÒ»°ãÊÇÍê³ÉÒ»¸öÌØ¶¨µÄ¹¦ÄÜ£¬Ç§Íò¼É»äÔÚÒ»¸öº¯ÊýÖÐ×öÐí¶à¼þ²»Í¬µÄÊÂ¡£º¯ÊýµÄ¹¦ÄÜÔ½µ¥Ò»Ô½ºÃ£¬Ò»·½ÃæÓÐÀûÓÚº¯ÊýµÄÒ×¶ÁÐÔ£¬ÁíÒ»·½Ãæ¸üÓÐÀûÓÚ´úÂëµÄÎ¬»¤ºÍÖØÓÃ£¬¹¦ÄÜÔ½µ¥Ò»±íÊ¾Õâ¸öº¯Êý¾ÍÔ½¿ÉÄÜ¸ø¸ü¶àµÄ³ÌÐòÌá¹©·þÎñ£¬Ò²¾ÍÊÇËµ¹²ÐÔ¾ÍÔ½¶à¡£
+            ã€€ã€€å¦å¤–ï¼Œå‡½æ•°ä¸€èˆ¬æ˜¯å®Œæˆä¸€ä¸ªç‰¹å®šçš„åŠŸèƒ½ï¼Œåƒä¸‡å¿Œè®³åœ¨ä¸€ä¸ªå‡½æ•°ä¸­åšè®¸å¤šä»¶ä¸åŒçš„äº‹ã€‚å‡½æ•°çš„åŠŸèƒ½è¶Šå•ä¸€è¶Šå¥½ï¼Œä¸€æ–¹é¢æœ‰åˆ©äºŽå‡½æ•°çš„æ˜“è¯»æ€§ï¼Œå¦ä¸€æ–¹é¢æ›´æœ‰åˆ©äºŽä»£ç çš„ç»´æŠ¤å’Œé‡ç”¨ï¼ŒåŠŸèƒ½è¶Šå•ä¸€è¡¨ç¤ºè¿™ä¸ªå‡½æ•°å°±è¶Šå¯èƒ½ç»™æ›´å¤šçš„ç¨‹åºæä¾›æœåŠ¡ï¼Œä¹Ÿå°±æ˜¯è¯´å…±æ€§å°±è¶Šå¤šã€‚
 
-            ¡¡¡¡ËäÈ»º¯ÊýµÄµ÷ÓÃ»áÓÐÒ»¶¨µÄ¿ªÏú£¬µ«±ÈÆðÈí¼þºóÆÚÎ¬»¤À´Ëµ£¬Ôö¼ÓÒ»Ð©ÔËÐÐÊ±µÄ¿ªÏú¶ø»»À´¸üºÃµÄ¿ÉÎ¬»¤ÐÔºÍ´úÂëÖØÓÃÐÔ£¬ÊÇºÜÖµµÃµÄÒ»¼þÊÂ¡£
+            ã€€ã€€è™½ç„¶å‡½æ•°çš„è°ƒç”¨ä¼šæœ‰ä¸€å®šçš„å¼€é”€ï¼Œä½†æ¯”èµ·è½¯ä»¶åŽæœŸç»´æŠ¤æ¥è¯´ï¼Œå¢žåŠ ä¸€äº›è¿è¡Œæ—¶çš„å¼€é”€è€Œæ¢æ¥æ›´å¥½çš„å¯ç»´æŠ¤æ€§å’Œä»£ç é‡ç”¨æ€§ï¼Œæ˜¯å¾ˆå€¼å¾—çš„ä¸€ä»¶äº‹ã€‚
 
-            ¡¡¡¡25¡¢typedefµÄÊ¹ÓÃ
+            ã€€ã€€25ã€typedefçš„ä½¿ç”¨
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡typedefÊÇÒ»¸ö¸øÀàÐÍÆð±ðÃûµÄ¹Ø¼ü×Ö¡£²»ÒªÐ¡¿´ÁËËü£¬Ëü¶ÔÓÚÄã´úÂëµÄÎ¬»¤»áÓÐºÜºÃµÄ×÷ÓÃ¡£±ÈÈçCÖÐÃ»ÓÐbool£¬ÓÚÊÇÔÚÒ»¸öÈí¼þÖÐ£¬Ò»Ð©³ÌÐòÔ±Ê¹ÓÃint£¬Ò»Ð©³ÌÐòÔ±Ê¹ÓÃshort£¬»á±È½Ï»ìÂÒ£¬×îºÃ¾ÍÊÇÓÃÒ»¸ötypedefÀ´¶¨Òå£¬Èç£º
+            ã€€ã€€typedefæ˜¯ä¸€ä¸ªç»™ç±»åž‹èµ·åˆ«åçš„å…³é”®å­—ã€‚ä¸è¦å°çœ‹äº†å®ƒï¼Œå®ƒå¯¹äºŽä½ ä»£ç çš„ç»´æŠ¤ä¼šæœ‰å¾ˆå¥½çš„ä½œç”¨ã€‚æ¯”å¦‚Cä¸­æ²¡æœ‰boolï¼ŒäºŽæ˜¯åœ¨ä¸€ä¸ªè½¯ä»¶ä¸­ï¼Œä¸€äº›ç¨‹åºå‘˜ä½¿ç”¨intï¼Œä¸€äº›ç¨‹åºå‘˜ä½¿ç”¨shortï¼Œä¼šæ¯”è¾ƒæ··ä¹±ï¼Œæœ€å¥½å°±æ˜¯ç”¨ä¸€ä¸ªtypedefæ¥å®šä¹‰ï¼Œå¦‚ï¼š
 
-            ¡¡¡¡typedef char bool;
+            ã€€ã€€typedef char bool;
 
-        ¡¡¡¡Ò»°ãÀ´Ëµ£¬Ò»¸öCµÄ¹¤³ÌÖÐÒ»¶¨Òª×öÒ»Ð©Õâ·½ÃæµÄ¹¤×÷£¬ÒòÎªÄã»áÉæ¼°µ½¿çÆ½Ì¨£¬²»Í¬µÄÆ½Ì¨»áÓÐ²»Í¬µÄ×Ö³¤£¬ËùÒÔÀûÓÃÔ¤±àÒëºÍtypedef¿ÉÒÔÈÃÄã×îÓÐÐ§µÄÎ¬»¤ÄãµÄ´úÂë£¬ÈçÏÂËùÊ¾
+        ã€€ã€€ä¸€èˆ¬æ¥è¯´ï¼Œä¸€ä¸ªCçš„å·¥ç¨‹ä¸­ä¸€å®šè¦åšä¸€äº›è¿™æ–¹é¢çš„å·¥ä½œï¼Œå› ä¸ºä½ ä¼šæ¶‰åŠåˆ°è·¨å¹³å°ï¼Œä¸åŒçš„å¹³å°ä¼šæœ‰ä¸åŒçš„å­—é•¿ï¼Œæ‰€ä»¥åˆ©ç”¨é¢„ç¼–è¯‘å’Œtypedefå¯ä»¥è®©ä½ æœ€æœ‰æ•ˆçš„ç»´æŠ¤ä½ çš„ä»£ç ï¼Œå¦‚ä¸‹æ‰€ç¤º
 
-            ¡¡¡¡£º
+            ã€€ã€€ï¼š
 
-            ¡¡¡¡#ifdef SOLARIS2_5
+            ã€€ã€€#ifdef SOLARIS2_5
 
-            ¡¡¡¡typedef boolean_t BOOL_T;
+            ã€€ã€€typedef boolean_t BOOL_T;
 
-        ¡¡¡¡#else
+        ã€€ã€€#else
 
-            ¡¡¡¡#else
+            ã€€ã€€#else
 
-            ¡¡¡¡typedef int BOOL_T;
+            ã€€ã€€typedef int BOOL_T;
 
-        ¡¡¡¡#endif
+        ã€€ã€€#endif
 
-            ¡¡¡¡typedef short INT16_T;
+            ã€€ã€€typedef short INT16_T;
 
-        ¡¡¡¡typedef unsigned short UINT16_T;
+        ã€€ã€€typedef unsigned short UINT16_T;
 
-        ¡¡¡¡typedef int INT32_T;
+        ã€€ã€€typedef int INT32_T;
 
-        ¡¡¡¡typedef unsigned int UINT32_T;
+        ã€€ã€€typedef unsigned int UINT32_T;
 
-        ¡¡¡¡#ifdef WIN32
+        ã€€ã€€#ifdef WIN32
 
-            ¡¡¡¡typedef _int64 INT64_T;
+            ã€€ã€€typedef _int64 INT64_T;
 
-        ¡¡¡¡#else
+        ã€€ã€€#else
 
-            ¡¡¡¡typedef long long INT64_T;
+            ã€€ã€€typedef long long INT64_T;
 
-        ¡¡¡¡#endif
+        ã€€ã€€#endif
 
-            ¡¡¡¡typedef float FLOAT32_T;
+            ã€€ã€€typedef float FLOAT32_T;
 
-        ¡¡¡¡typedef char* STRING_T;
+        ã€€ã€€typedef char* STRING_T;
 
-        ¡¡¡¡typedef unsigned char BYTE_T;
+        ã€€ã€€typedef unsigned char BYTE_T;
 
-        ¡¡¡¡typedef time_t TIME_T;
+        ã€€ã€€typedef time_t TIME_T;
 
-        ¡¡¡¡typedef INT32_T PID_T;
+        ã€€ã€€typedef INT32_T PID_T;
 
-        ¡¡¡¡Ê¹ÓÃtypedefµÄÆäËü¹æ·¶ÊÇ£¬ÔÚ½á¹¹ºÍº¯ÊýÖ¸ÕëÊ±£¬Ò²×îºÃÓÃtypedef£¬ÕâÒ²ÓÐÀûÓÚ³ÌÐòµÄÒ×¶ÁºÍ¿ÉÎ¬»¤ÐÔ¡£Èç£º
+        ã€€ã€€ä½¿ç”¨typedefçš„å…¶å®ƒè§„èŒƒæ˜¯ï¼Œåœ¨ç»“æž„å’Œå‡½æ•°æŒ‡é’ˆæ—¶ï¼Œä¹Ÿæœ€å¥½ç”¨typedefï¼Œè¿™ä¹Ÿæœ‰åˆ©äºŽç¨‹åºçš„æ˜“è¯»å’Œå¯ç»´æŠ¤æ€§ã€‚å¦‚ï¼š
 
-            ¡¡¡¡typedef struct _hostinfo {
+            ã€€ã€€typedef struct _hostinfo {
 
-                ¡¡¡¡HOSTID_T host;
+                ã€€ã€€HOSTID_T host;
 
-                ¡¡¡¡INT32_T hostId;
+                ã€€ã€€INT32_T hostId;
 
-                ¡¡¡¡STRING_T hostType;
+                ã€€ã€€STRING_T hostType;
 
-                ¡¡¡¡STRING_T hostModel;
+                ã€€ã€€STRING_T hostModel;
 
-                ¡¡¡¡FLOAT32_T cpuFactor;
+                ã€€ã€€FLOAT32_T cpuFactor;
 
-                ¡¡¡¡INT32_T numCPUs;
+                ã€€ã€€INT32_T numCPUs;
 
-                ¡¡¡¡INT32_T nDisks;
+                ã€€ã€€INT32_T nDisks;
 
-                ¡¡¡¡INT32_T memory;
+                ã€€ã€€INT32_T memory;
 
-                ¡¡¡¡INT32_T swap;
+                ã€€ã€€INT32_T swap;
 
-                ¡¡¡¡} HostInfo;
+                ã€€ã€€} HostInfo;
 
-        ¡¡¡¡typedef INT32_T (*RsrcReqHandler)(
+        ã€€ã€€typedef INT32_T (*RsrcReqHandler)(
 
-                ¡¡¡¡void *info,
+                ã€€ã€€void *info,
 
-                ¡¡¡¡JobArray *jobs,
+                ã€€ã€€JobArray *jobs,
 
-                ¡¡¡¡AllocInfo *allocInfo,
+                ã€€ã€€AllocInfo *allocInfo,
 
-                ¡¡¡¡AllocList *allocList);
+                ã€€ã€€AllocList *allocList);
 
-        ¡¡¡¡C++ÖÐÕâÑùÒ²ÊÇºÜÈÃÈËÒ×¶ÁµÄ£º
+        ã€€ã€€C++ä¸­è¿™æ ·ä¹Ÿæ˜¯å¾ˆè®©äººæ˜“è¯»çš„ï¼š
 
-            ¡¡¡¡typedef CArray<HostInfo, HostInfo&> HostInfoArray;
+            ã€€ã€€typedef CArray<HostInfo, HostInfo&> HostInfoArray;
 
-        ¡¡¡¡ÓÚÊÇ£¬µ±ÎÒÃÇÓÃÆä¶¨Òå±äÁ¿Ê±£¬»áÏÔµÃÊ®·ÖÒ×¶Á¡£Èç£º
+        ã€€ã€€äºŽæ˜¯ï¼Œå½“æˆ‘ä»¬ç”¨å…¶å®šä¹‰å˜é‡æ—¶ï¼Œä¼šæ˜¾å¾—ååˆ†æ˜“è¯»ã€‚å¦‚ï¼š
 
-            ¡¡¡¡HostInfo* phinfo;
+            ã€€ã€€HostInfo* phinfo;
 
-        ¡¡¡¡RsrcReqHandler* pRsrcHand;
+        ã€€ã€€RsrcReqHandler* pRsrcHand;
 
-        ¡¡¡¡ÕâÖÖ·½Ê½µÄÒ×¶ÁÐÔ£¬ÔÚº¯ÊýµÄ²ÎÊýÖÐÊ®·ÖÃ÷ÏÔ¡£
+        ã€€ã€€è¿™ç§æ–¹å¼çš„æ˜“è¯»æ€§ï¼Œåœ¨å‡½æ•°çš„å‚æ•°ä¸­ååˆ†æ˜Žæ˜¾ã€‚
 
-            ¡¡¡¡¹Ø¼üÊÇÔÚ³ÌÐòÖÖÊ¹ÓÃtypedefºó£¬¼¸ºõËùÓÐµÄ³ÌÐòÖÐµÄÀàÐÍÉùÃ÷¶¼ÏÔµÃÄÇÃ´¼ò½àºÍÇåäÀ£¬¶øÇÒÒ×ÓÚÎ¬»¤£¬Õâ²ÅÊÇtypedefµÄ¹Ø¼ü¡£
+            ã€€ã€€å…³é”®æ˜¯åœ¨ç¨‹åºç§ä½¿ç”¨typedefåŽï¼Œå‡ ä¹Žæ‰€æœ‰çš„ç¨‹åºä¸­çš„ç±»åž‹å£°æ˜Žéƒ½æ˜¾å¾—é‚£ä¹ˆç®€æ´å’Œæ¸…æ·…ï¼Œè€Œä¸”æ˜“äºŽç»´æŠ¤ï¼Œè¿™æ‰æ˜¯typedefçš„å…³é”®ã€‚
 
-            ¡¡¡¡26¡¢Îª³£Á¿ÉùÃ÷ºê
+            ã€€ã€€26ã€ä¸ºå¸¸é‡å£°æ˜Žå®
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡×îºÃ²»ÒªÔÚ³ÌÐòÖÐ³öÏÖÊý×ÖÊ½µÄ¡°Ó²±àÂë¡±£¬Èç£º
+            ã€€ã€€æœ€å¥½ä¸è¦åœ¨ç¨‹åºä¸­å‡ºçŽ°æ•°å­—å¼çš„â€œç¡¬ç¼–ç â€ï¼Œå¦‚ï¼š
 
-            ¡¡¡¡int user[120];
+            ã€€ã€€int user[120];
 
-        ¡¡¡¡ÎªÕâ¸ö120ÉùÃ÷Ò»¸öºê°É¡£ÎªËùÓÐ³öÏÖÔÚ³ÌÐòÖÐµÄÕâÑùµÄ³£Á¿¶¼ÉùÃ÷Ò»¸ö
+        ã€€ã€€ä¸ºè¿™ä¸ª120å£°æ˜Žä¸€ä¸ªå®å§ã€‚ä¸ºæ‰€æœ‰å‡ºçŽ°åœ¨ç¨‹åºä¸­çš„è¿™æ ·çš„å¸¸é‡éƒ½å£°æ˜Žä¸€ä¸ª
 
-            ¡¡¡¡ºê°É¡£±ÈÈçTimeOutµÄÊ±¼ä£¬×î´óµÄÓÃ»§ÊýÁ¿£¬»¹ÓÐÆäËü£¬Ö»ÒªÊÇ³£Á¿¾ÍÓ¦¸ÃÉùÃ÷³Éºê¡£Èç¹û£¬Í»È»ÔÚ³ÌÐòÖÐ³öÏÖÏÂÃæÒ»¶Î´úÂë£¬
+            ã€€ã€€å®å§ã€‚æ¯”å¦‚TimeOutçš„æ—¶é—´ï¼Œæœ€å¤§çš„ç”¨æˆ·æ•°é‡ï¼Œè¿˜æœ‰å…¶å®ƒï¼Œåªè¦æ˜¯å¸¸é‡å°±åº”è¯¥å£°æ˜Žæˆå®ã€‚å¦‚æžœï¼Œçªç„¶åœ¨ç¨‹åºä¸­å‡ºçŽ°ä¸‹é¢ä¸€æ®µä»£ç ï¼Œ
 
-            ¡¡¡¡for ( i=0; i<120; i++){
+            ã€€ã€€for ( i=0; i<120; i++){
 
-                ¡¡¡¡....
+                ã€€ã€€....
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡120ÊÇÊ²Ã´£¿ÎªÊ²Ã´»áÊÇ120£¿ÕâÖÖ¡°Ó²±àÂë¡±²»½öÈÃ³ÌÐòºÜ¶Á£¬¶øÇÒÒ²ÈÃ³ÌÐòºÜ²»ºÃÎ¬»¤£¬Èç¹ûÒª¸Ä±äÕâ¸öÊý×Ö£¬µÃÍ¬Ê±¶ÔËùÓÐ³ÌÐòÖÐÕâ¸ö120¶¼Òª×öÐÞ¸Ä£¬Õâ¶ÔÐÞ¸Ä³ÌÐòµÄÈËÀ´ËµÊÇÒ»¸öºÜ´óµÄÍ´¿à¡£ËùÒÔ»¹ÊÇ°Ñ³£Á¿ÉùÃ÷³Éºê£¬ÕâÑù£¬Ò»¸Ä°Ù¸Ä£¬¶øÇÒÒ²ºÜÀûÓÚ³ÌÐòÔÄ¶Á
+        ã€€ã€€120æ˜¯ä»€ä¹ˆï¼Ÿä¸ºä»€ä¹ˆä¼šæ˜¯120ï¼Ÿè¿™ç§â€œç¡¬ç¼–ç â€ä¸ä»…è®©ç¨‹åºå¾ˆè¯»ï¼Œè€Œä¸”ä¹Ÿè®©ç¨‹åºå¾ˆä¸å¥½ç»´æŠ¤ï¼Œå¦‚æžœè¦æ”¹å˜è¿™ä¸ªæ•°å­—ï¼Œå¾—åŒæ—¶å¯¹æ‰€æœ‰ç¨‹åºä¸­è¿™ä¸ª120éƒ½è¦åšä¿®æ”¹ï¼Œè¿™å¯¹ä¿®æ”¹ç¨‹åºçš„äººæ¥è¯´æ˜¯ä¸€ä¸ªå¾ˆå¤§çš„ç—›è‹¦ã€‚æ‰€ä»¥è¿˜æ˜¯æŠŠå¸¸é‡å£°æ˜Žæˆå®ï¼Œè¿™æ ·ï¼Œä¸€æ”¹ç™¾æ”¹ï¼Œè€Œä¸”ä¹Ÿå¾ˆåˆ©äºŽç¨‹åºé˜…è¯»
 
-            ¡¡¡¡¡£
+            ã€€ã€€ã€‚
 
-            ¡¡¡¡#define MAX_USR_CNT 120
+            ã€€ã€€#define MAX_USR_CNT 120
 
-            ¡¡¡¡for ( i=0; i<MAX_USER_CNT; i++){
+            ã€€ã€€for ( i=0; i<MAX_USER_CNT; i++){
 
-                ¡¡¡¡....
+                ã€€ã€€....
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡ÕâÑù¾ÍºÜÈÝÒ×ÁË½âÕâ¶Î³ÌÐòµÄÒâÍ¼ÁË¡£
+        ã€€ã€€è¿™æ ·å°±å¾ˆå®¹æ˜“äº†è§£è¿™æ®µç¨‹åºçš„æ„å›¾äº†ã€‚
 
-            ¡¡¡¡ÓÐµÄ³ÌÐòÔ±Ï²»¶ÎªÕâÖÖ±äÁ¿ÉùÃ÷È«¾Ö±äÁ¿£¬ÆäÊµ£¬È«¾Ö±äÁ¿Ó¦¸Ã¾¡Á¿µÄÉÙÓÃ£¬È«¾Ö±äÁ¿²»ÀûÓÚ·â×°£¬Ò²²»ÀûÓÚÎ¬»¤£¬¶øÇÒ¶Ô³ÌÐòÖ´ÐÐ¿Õ¼äÓÐÒ»¶¨µÄ¿ªÏú£¬Ò»²»Ð¡ÐÄ¾ÍÔì³ÉÏµÍ³»»Ò³£¬Ôì³É³ÌÐòÖ´ÐÐËÙ¶ÈÐ§ÂÊµÈÎÊÌâ¡£ËùÒÔÉùÃ÷³Éºê£¬¼´¿ÉÒÔÃâÈ¥È«¾Ö±äÁ¿µÄ¿ªÏú£¬Ò²»áÓÐËÙ£¬Ôì³É³ÌÐòÖ´ÐÐËÙ¶ÈÐ§ÂÊµÈÎÊÌâ¡£ËùÒÔÉùÃ÷³Éºê£¬¼´¿ÉÒÔÃâÈ¥È«¾Ö±äÁ¿µÄ¿ªÏú£¬Ò²»áÓÐËÙ¶ÈÉÏµÄÓÅÊÆ¡£
+            ã€€ã€€æœ‰çš„ç¨‹åºå‘˜å–œæ¬¢ä¸ºè¿™ç§å˜é‡å£°æ˜Žå…¨å±€å˜é‡ï¼Œå…¶å®žï¼Œå…¨å±€å˜é‡åº”è¯¥å°½é‡çš„å°‘ç”¨ï¼Œå…¨å±€å˜é‡ä¸åˆ©äºŽå°è£…ï¼Œä¹Ÿä¸åˆ©äºŽç»´æŠ¤ï¼Œè€Œä¸”å¯¹ç¨‹åºæ‰§è¡Œç©ºé—´æœ‰ä¸€å®šçš„å¼€é”€ï¼Œä¸€ä¸å°å¿ƒå°±é€ æˆç³»ç»Ÿæ¢é¡µï¼Œé€ æˆç¨‹åºæ‰§è¡Œé€Ÿåº¦æ•ˆçŽ‡ç­‰é—®é¢˜ã€‚æ‰€ä»¥å£°æ˜Žæˆå®ï¼Œå³å¯ä»¥å…åŽ»å…¨å±€å˜é‡çš„å¼€é”€ï¼Œä¹Ÿä¼šæœ‰é€Ÿï¼Œé€ æˆç¨‹åºæ‰§è¡Œé€Ÿåº¦æ•ˆçŽ‡ç­‰é—®é¢˜ã€‚æ‰€ä»¥å£°æ˜Žæˆå®ï¼Œå³å¯ä»¥å…åŽ»å…¨å±€å˜é‡çš„å¼€é”€ï¼Œä¹Ÿä¼šæœ‰é€Ÿåº¦ä¸Šçš„ä¼˜åŠ¿ã€‚
 
-            ¡¡¡¡27¡¢²»ÒªÎªºê¶¨Òå¼Ó·ÖºÅ
+            ã€€ã€€27ã€ä¸è¦ä¸ºå®å®šä¹‰åŠ åˆ†å·
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡ÓÐÐí¶à³ÌÐòÔ±²»ÖªµÀÔÚºê¶¨ÒåÊ±ÊÇ·ñÒª¼Ó·ÖºÅ£¬ÓÐÊ±£¬ËûÃÇÒÔÎªºêÊÇÒ»ÌõÓï¾ä£¬Ó¦¸ÃÒª¼Ó·ÖºÅ£¬Õâ¾Í´íÁË¡£µ±ÄãÖªµÀÁËºêµÄÔ­Àí£¬Äã»áÔÞÍ¬ÎÒÎª»áÃ´²»ÒªÎªºê¶¨Òå¼Ó·ÖºÅµÄ¡£¿´Ò»¸öÀý×Ó£º
+            ã€€ã€€æœ‰è®¸å¤šç¨‹åºå‘˜ä¸çŸ¥é“åœ¨å®å®šä¹‰æ—¶æ˜¯å¦è¦åŠ åˆ†å·ï¼Œæœ‰æ—¶ï¼Œä»–ä»¬ä»¥ä¸ºå®æ˜¯ä¸€æ¡è¯­å¥ï¼Œåº”è¯¥è¦åŠ åˆ†å·ï¼Œè¿™å°±é”™äº†ã€‚å½“ä½ çŸ¥é“äº†å®çš„åŽŸç†ï¼Œä½ ä¼šèµžåŒæˆ‘ä¸ºä¼šä¹ˆä¸è¦ä¸ºå®å®šä¹‰åŠ åˆ†å·çš„ã€‚çœ‹ä¸€ä¸ªä¾‹å­ï¼š
 
-            ¡¡¡¡#define MAXNUM 1024;
+            ã€€ã€€#define MAXNUM 1024;
 
-        ¡¡¡¡ÕâÊÇÒ»¸öÓÐ·ÖºÅµÄºê£¬Èç¹ûÎÒÃÇÕâÑùÊ¹ÓÃ£º
+        ã€€ã€€è¿™æ˜¯ä¸€ä¸ªæœ‰åˆ†å·çš„å®ï¼Œå¦‚æžœæˆ‘ä»¬è¿™æ ·ä½¿ç”¨ï¼š
 
-            ¡¡¡¡half = MAXNUM/2;
+            ã€€ã€€half = MAXNUM/2;
 
-        ¡¡¡¡if ( num < MAXNUM )
+        ã€€ã€€if ( num < MAXNUM )
 
-            ¡¡¡¡µÈµÈ£¬¶¼»áÔì³É³ÌÐòµÄ±àÒë´íÎó£¬ÒòÎª£¬µ±ºêÕ¹¿ªºó£¬Ëû»áÊÇÕâ¸öÑù×ÓµÄ£º
+            ã€€ã€€ç­‰ç­‰ï¼Œéƒ½ä¼šé€ æˆç¨‹åºçš„ç¼–è¯‘é”™è¯¯ï¼Œå› ä¸ºï¼Œå½“å®å±•å¼€åŽï¼Œä»–ä¼šæ˜¯è¿™ä¸ªæ ·å­çš„ï¼š
 
-            ¡¡¡¡half = 1024;/2;
+            ã€€ã€€half = 1024;/2;
 
-        ¡¡¡¡if ( num < 1024; )
+        ã€€ã€€if ( num < 1024; )
 
-            ¡¡¡¡ÊÇµÄ£¬·ÖºÅÒ²±»Õ¹½øÈ¥ÁË£¬ËùÒÔÔì³ÉÁË³ÌÐòµÄ´íÎó¡£ÇëÏàÐÅÎÒ£¬ÓÐÊ±ºò£¬Ò»¸ö·ÖºÅ»áÈÃÄãµÄ³ÌÐò³öÏÖ³É°Ù¸ö´íÎó¡£ËùÒÔ»¹ÊÇ²»ÒªÎªºê¼Ó×îºóÒ»¸ö·ÖºÅ£¬ÄÄÅÂÊÇÕâÑù£º
+            ã€€ã€€æ˜¯çš„ï¼Œåˆ†å·ä¹Ÿè¢«å±•è¿›åŽ»äº†ï¼Œæ‰€ä»¥é€ æˆäº†ç¨‹åºçš„é”™è¯¯ã€‚è¯·ç›¸ä¿¡æˆ‘ï¼Œæœ‰æ—¶å€™ï¼Œä¸€ä¸ªåˆ†å·ä¼šè®©ä½ çš„ç¨‹åºå‡ºçŽ°æˆç™¾ä¸ªé”™è¯¯ã€‚æ‰€ä»¥è¿˜æ˜¯ä¸è¦ä¸ºå®åŠ æœ€åŽä¸€ä¸ªåˆ†å·ï¼Œå“ªæ€•æ˜¯è¿™æ ·ï¼š
 
-            ¡¡¡¡#define LINE "================================="
+            ã€€ã€€#define LINE "================================="
 
-            ¡¡¡¡#define PRINT_LINE printf(LINE)
+            ã€€ã€€#define PRINT_LINE printf(LINE)
 
-            ¡¡¡¡#define PRINT_NLINE(n) while ( n-- >0 ) { PRINT_LINE; }
+            ã€€ã€€#define PRINT_NLINE(n) while ( n-- >0 ) { PRINT_LINE; }
 
-        ¡¡¡¡¶¼²»ÒªÔÚ×îºó¼ÓÉÏ·ÖºÅ£¬µ±ÎÒÃÇÔÚ³ÌÐòÖÐÊ¹ÓÃÊ±£¬ÎªÖ®¼ÓÉÏ·ÖºÅ£¬
+        ã€€ã€€éƒ½ä¸è¦åœ¨æœ€åŽåŠ ä¸Šåˆ†å·ï¼Œå½“æˆ‘ä»¬åœ¨ç¨‹åºä¸­ä½¿ç”¨æ—¶ï¼Œä¸ºä¹‹åŠ ä¸Šåˆ†å·ï¼Œ
 
-            ¡¡¡¡main()
+            ã€€ã€€main()
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡char *p = LINE;
+                ã€€ã€€char *p = LINE;
 
-                ¡¡¡¡PRINT_LINE;
+                ã€€ã€€PRINT_LINE;
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-        ¡¡¡¡ÕâÒ»µã·Ç³£·ûºÏÏ°¹ß£¬¶øÇÒ£¬Èç¹ûÍü¼ÓÁË·ÖºÅ£¬±àÒëÆ÷¸ø³öµÄ´íÎóÌáÊ¾£¬Ò²»áÈÃÎÒÃÇºÜÈÝÒ×¿´¶®µÄ¡£
+        ã€€ã€€è¿™ä¸€ç‚¹éžå¸¸ç¬¦åˆä¹ æƒ¯ï¼Œè€Œä¸”ï¼Œå¦‚æžœå¿˜åŠ äº†åˆ†å·ï¼Œç¼–è¯‘å™¨ç»™å‡ºçš„é”™è¯¯æç¤ºï¼Œä¹Ÿä¼šè®©æˆ‘ä»¬å¾ˆå®¹æ˜“çœ‹æ‡‚çš„ã€‚
 
-            ¡¡¡¡--
+            ã€€ã€€--
 
-            ¡¡¡¡¿ªÊ¼Ê¹¾¢
+            ã€€ã€€å¼€å§‹ä½¿åŠ²
 
-            ¡¡¡¡#define PRINT_NLINE(n) while ( n-- >0 ) { PRINT_LINE; }
+            ã€€ã€€#define PRINT_NLINE(n) while ( n-- >0 ) { PRINT_LINE; }
 
-        ¡¡¡¡¶¼²»ÒªÔÚ×îºó¼ÓÉÏ·ÖºÅ£¬µ±ÎÒÃÇÔÚ³ÌÐòÖÐÊ¹ÓÃÊ±£¬ÎªÖ®¼ÓÉÏ·ÖºÅ£¬
+        ã€€ã€€éƒ½ä¸è¦åœ¨æœ€åŽåŠ ä¸Šåˆ†å·ï¼Œå½“æˆ‘ä»¬åœ¨ç¨‹åºä¸­ä½¿ç”¨æ—¶ï¼Œä¸ºä¹‹åŠ ä¸Šåˆ†å·ï¼Œ
 
-            ¡¡¡¡main()
+            ã€€ã€€main()
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡char *p = LINE;
+                ã€€ã€€char *p = LINE;
 
-                ¡¡¡¡PRINT_LINE;
+                ã€€ã€€PRINT_LINE;
 
-                ¡¡¡¡}
+                ã€€ã€€}
 
-        ¡¡¡¡ÕâÒ»µã·Ç³£·ûºÏÏ°¹ß£¬¶øÇÒ£¬Èç¹ûÍü¼ÓÁË·ÖºÅ£¬±àÒëÆ÷¸ø³öµÄ´íÎóÌáÊ¾£¬Ò²»áÈÃÎÒÃÇºÜÈÝÒ×¿´¶®µÄ¡£
+        ã€€ã€€è¿™ä¸€ç‚¹éžå¸¸ç¬¦åˆä¹ æƒ¯ï¼Œè€Œä¸”ï¼Œå¦‚æžœå¿˜åŠ äº†åˆ†å·ï¼Œç¼–è¯‘å™¨ç»™å‡ºçš„é”™è¯¯æç¤ºï¼Œä¹Ÿä¼šè®©æˆ‘ä»¬å¾ˆå®¹æ˜“çœ‹æ‡‚çš„ã€‚
 
-            ¡¡¡¡--
+            ã€€ã€€--
 
-            ¡¡¡¡28¡¢||ºÍ&&µÄÓï¾äÖ´ÐÐË³Ðò
+            ã€€ã€€28ã€||å’Œ&&çš„è¯­å¥æ‰§è¡Œé¡ºåº
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡Ìõ¼þÓï¾äÖÐµÄÕâÁ½¸ö¡°Óë¡±ºÍ¡°»ò¡±²Ù×÷·ûÒ»¶¨ÒªÐ¡ÐÄ£¬ËüÃÇµÄ±íÏÖ¿ÉÄÜºÍÄãÏëÏñµÄ²»Ò»
+            ã€€ã€€æ¡ä»¶è¯­å¥ä¸­çš„è¿™ä¸¤ä¸ªâ€œä¸Žâ€å’Œâ€œæˆ–â€æ“ä½œç¬¦ä¸€å®šè¦å°å¿ƒï¼Œå®ƒä»¬çš„è¡¨çŽ°å¯èƒ½å’Œä½ æƒ³åƒçš„ä¸ä¸€
 
-            ¡¡¡¡Ñù£¬ÕâÀïÌõ¼þÓï¾äÖÐµÄÓÐÐ©ÐÐÎªÐèÒªºÍËµÒ»ÏÂ£º
+            ã€€ã€€æ ·ï¼Œè¿™é‡Œæ¡ä»¶è¯­å¥ä¸­çš„æœ‰äº›è¡Œä¸ºéœ€è¦å’Œè¯´ä¸€ä¸‹ï¼š
 
-            ¡¡¡¡express1 || express2
+            ã€€ã€€express1 || express2
 
-            ¡¡¡¡ÏÈÖ´ÐÐ±í´ïÊ½express1Èç¹ûÎª¡°Õæ¡±£¬express2½«²»±»Ö´ÐÐ£¬express2½öÔÚexpress1
+            ã€€ã€€å…ˆæ‰§è¡Œè¡¨è¾¾å¼express1å¦‚æžœä¸ºâ€œçœŸâ€ï¼Œexpress2å°†ä¸è¢«æ‰§è¡Œï¼Œexpress2ä»…åœ¨express1
 
-            ¡¡¡¡Îª¡°¼Ù¡±Ê±²Å±»Ö´ÐÐ¡£ÒòÎªµÚÒ»¸ö±í´ïÊ½ÎªÕæÁË£¬Õû¸ö±í´ïÊ½¶¼ÎªÕæ£¬ËùÒÔÃ»ÓÐ±ØÒªÔÙÈ¥Ö´ÐÐµÚ¶þ¸ö±í´ïÊ½ÁË¡£
+            ã€€ã€€ä¸ºâ€œå‡â€æ—¶æ‰è¢«æ‰§è¡Œã€‚å› ä¸ºç¬¬ä¸€ä¸ªè¡¨è¾¾å¼ä¸ºçœŸäº†ï¼Œæ•´ä¸ªè¡¨è¾¾å¼éƒ½ä¸ºçœŸï¼Œæ‰€ä»¥æ²¡æœ‰å¿…è¦å†åŽ»æ‰§è¡Œç¬¬äºŒä¸ªè¡¨è¾¾å¼äº†ã€‚
 
-            ¡¡¡¡express1 && express2
+            ã€€ã€€express1 && express2
 
-            ¡¡¡¡ÏÈÖ´ÐÐ±í´ïÊ½express1Èç¹ûÎª¡°¼Ù¡±£¬express2½«²»±»Ö´ÐÐ£¬express2½öÔÚexpress1
+            ã€€ã€€å…ˆæ‰§è¡Œè¡¨è¾¾å¼express1å¦‚æžœä¸ºâ€œå‡â€ï¼Œexpress2å°†ä¸è¢«æ‰§è¡Œï¼Œexpress2ä»…åœ¨express1
 
-            ¡¡¡¡Îª¡°Õæ¡±Ê±²Å±»Ö´ÐÐ¡£ÒòÎªµÚÒ»¸ö±í´ïÊ½Îª¼ÙÁË£¬Õû¸ö±í´ïÊ½¶¼Îª¼ÙÁË£¬ËùÒÔÃ»ÓÐ±ØÒªÔÙÈ¥Ö´ÐÐµÚ¶þ¸ö±í´ïÊ½ÁË¡£ÓÚÊÇ£¬Ëû²¢²»ÊÇÄãËùÏëÏñµÄËùÓÐµÄ±í´ïÊ½¶¼»áÈ¥Ö´ÐÐ£¬ÕâµãÒ»¶¨ÒªÃ÷°×£¬²»È»ÄãµÄ³ÌÐò»á³öÏÖÒ»Ð©ÄªÃ÷µÄÔËÐÐÊ±´íÎó¡£
+            ã€€ã€€ä¸ºâ€œçœŸâ€æ—¶æ‰è¢«æ‰§è¡Œã€‚å› ä¸ºç¬¬ä¸€ä¸ªè¡¨è¾¾å¼ä¸ºå‡äº†ï¼Œæ•´ä¸ªè¡¨è¾¾å¼éƒ½ä¸ºå‡äº†ï¼Œæ‰€ä»¥æ²¡æœ‰å¿…è¦å†åŽ»æ‰§è¡Œç¬¬äºŒä¸ªè¡¨è¾¾å¼äº†ã€‚äºŽæ˜¯ï¼Œä»–å¹¶ä¸æ˜¯ä½ æ‰€æƒ³åƒçš„æ‰€æœ‰çš„è¡¨è¾¾å¼éƒ½ä¼šåŽ»æ‰§è¡Œï¼Œè¿™ç‚¹ä¸€å®šè¦æ˜Žç™½ï¼Œä¸ç„¶ä½ çš„ç¨‹åºä¼šå‡ºçŽ°ä¸€äº›èŽ«æ˜Žçš„è¿è¡Œæ—¶é”™è¯¯ã€‚
 
-            ¡¡¡¡ÀýÈç£¬ÏÂÃæµÄ³ÌÐò£º
+            ã€€ã€€ä¾‹å¦‚ï¼Œä¸‹é¢çš„ç¨‹åºï¼š
 
-            ¡¡¡¡if ( sum > 100 &&
+            ã€€ã€€if ( sum > 100 &&
 
-                    ¡¡¡¡( ( fp=fopen( filename,"a" ) ) != NULL ) {
+                    ã€€ã€€( ( fp=fopen( filename,"a" ) ) != NULL ) {
 
-                    ¡¡¡¡fprintf(fp, "Warring: it beyond one hundred\n");
+                    ã€€ã€€fprintf(fp, "Warring: it beyond one hundred\n");
 
-                    ¡¡¡¡......
+                    ã€€ã€€......
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-                    ¡¡¡¡fprintf( fp, " sum is %id \n", sum );
+                    ã€€ã€€fprintf( fp, " sum is %id \n", sum );
 
-                    ¡¡¡¡fclose( fp );
+                    ã€€ã€€fclose( fp );
 
-                    ¡¡¡¡±¾À´µÄÒâÍ¼ÊÇ£¬Èç¹ûsum > 100 £¬ÏòÎÄ¼þÖÐÐ´Ò»Ìõ³ö´íÐÅÏ¢£¬ÎªÁË·½±ã£¬°ÑÁ½¸öÌõ¼þÅÐ¶ÏÐ´ÔÚÒ»Æð£¬ÓÚÊÇ£¬Èç¹ûsum<=100Ê±£¬´ò¿ªÎÄ¼þµÄ²Ù×÷½«²»»á×ö£¬×îºó£¬fprintfºÍfclose¾Í»á·¢ÏÖÎ´ÖªµÄ½á¹û¡£
+                    ã€€ã€€æœ¬æ¥çš„æ„å›¾æ˜¯ï¼Œå¦‚æžœsum > 100 ï¼Œå‘æ–‡ä»¶ä¸­å†™ä¸€æ¡å‡ºé”™ä¿¡æ¯ï¼Œä¸ºäº†æ–¹ä¾¿ï¼ŒæŠŠä¸¤ä¸ªæ¡ä»¶åˆ¤æ–­å†™åœ¨ä¸€èµ·ï¼ŒäºŽæ˜¯ï¼Œå¦‚æžœsum<=100æ—¶ï¼Œæ‰“å¼€æ–‡ä»¶çš„æ“ä½œå°†ä¸ä¼šåšï¼Œæœ€åŽï¼Œfprintfå’Œfcloseå°±ä¼šå‘çŽ°æœªçŸ¥çš„ç»“æžœã€‚
 
-                    ¡¡¡¡ÔÙ±ÈÈç£¬Èç¹ûÎÒÏëÅÐ¶ÏÒ»¸ö×Ö·ûÊÇ²»ÊÇÓÐÄÚÈÝ£¬ÎÒµÃÅÐ¶ÏÕâ¸ö×Ö·û´®Ö¸ÕëÊÇ²»Îª¿Õ£¨NULL£©²¢ÇÒÆäÄÚÈÝ²»ÄÜÎª¿Õ£¨Empty£©£¬Ò»¸öÊÇ¿ÕÖ¸Õë£¬Ò»¸öÊÇ¿ÕÄÚÈÝ¡£ÎÒÒ²Ðí»áÕâÑùÐ´£º
+                    ã€€ã€€å†æ¯”å¦‚ï¼Œå¦‚æžœæˆ‘æƒ³åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦æ˜¯ä¸æ˜¯æœ‰å†…å®¹ï¼Œæˆ‘å¾—åˆ¤æ–­è¿™ä¸ªå­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯ä¸ä¸ºç©ºï¼ˆNULLï¼‰å¹¶ä¸”å…¶å†…å®¹ä¸èƒ½ä¸ºç©ºï¼ˆEmptyï¼‰ï¼Œä¸€ä¸ªæ˜¯ç©ºæŒ‡é’ˆï¼Œä¸€ä¸ªæ˜¯ç©ºå†…å®¹ã€‚æˆ‘ä¹Ÿè®¸ä¼šè¿™æ ·å†™ï¼š
 
-                    ¡¡¡¡if ( ( p != NULL ) && ( strlen(p) != 0 ))
+                    ã€€ã€€if ( ( p != NULL ) && ( strlen(p) != 0 ))
 
-                    ¡¡¡¡ÓÚÊÇ£¬Èç¹ûpÎªNULL£¬ÄÇÃ´strlen(p)¾Í²»»á±»Ö´ÐÐ£¬ÓÚÊÇ£¬strlenÒ²¾Í²»»áÒòÎªÒ»¸ö¿ÕÖ¸Õë¶ø¡°·Ç·¨²Ù×÷¡±»òÊÇÒ»¸ö¡°Core Dump¡±ÁË¡£
+                    ã€€ã€€äºŽæ˜¯ï¼Œå¦‚æžœpä¸ºNULLï¼Œé‚£ä¹ˆstrlen(p)å°±ä¸ä¼šè¢«æ‰§è¡Œï¼ŒäºŽæ˜¯ï¼Œstrlenä¹Ÿå°±ä¸ä¼šå› ä¸ºä¸€ä¸ªç©ºæŒ‡é’ˆè€Œâ€œéžæ³•æ“ä½œâ€æˆ–æ˜¯ä¸€ä¸ªâ€œCore Dumpâ€äº†ã€‚
 
-                    ¡¡¡¡¼Ç×¡Ò»µã£¬Ìõ¼þÓï¾äÖÐ£¬²¢·ÇËùÓÐµÄÓï¾ä¶¼»áÖ´ÐÐ£¬µ±ÄãµÄÌõ¼þÓï¾ä·Ç³£¶àÊ±£¬ÕâµãÒªÓÈÆä×¢Òâ¡£
+                    ã€€ã€€è®°ä½ä¸€ç‚¹ï¼Œæ¡ä»¶è¯­å¥ä¸­ï¼Œå¹¶éžæ‰€æœ‰çš„è¯­å¥éƒ½ä¼šæ‰§è¡Œï¼Œå½“ä½ çš„æ¡ä»¶è¯­å¥éžå¸¸å¤šæ—¶ï¼Œè¿™ç‚¹è¦å°¤å…¶æ³¨æ„ã€‚
 
-                    ¡¡¡¡29¡¢¾¡Á¿ÓÃfor¶ø²»ÊÇwhile×öÑ­»·
+                    ã€€ã€€29ã€å°½é‡ç”¨forè€Œä¸æ˜¯whileåšå¾ªçŽ¯
 
-                    ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+                    ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-                    ¡¡¡¡»ù±¾ÉÏÀ´Ëµ£¬for¿ÉÒÔÍê³ÉwhileµÄ¹¦ÄÜ£¬ÎÒÊÇ½¨Òé¾¡Á¿Ê¹ÓÃforÓï¾ä£¬¶ø²»ÒªÊ¹ÓÃwhileÓï¾ä£¬ÌØ±ðÊÇµ±Ñ­»·ÌåºÜ´óÊ±£¬forµÄÓÅµãÒ»ÏÂ¾ÍÌåÏÖ³öÀ´ÁË¡£
+                    ã€€ã€€åŸºæœ¬ä¸Šæ¥è¯´ï¼Œforå¯ä»¥å®Œæˆwhileçš„åŠŸèƒ½ï¼Œæˆ‘æ˜¯å»ºè®®å°½é‡ä½¿ç”¨forè¯­å¥ï¼Œè€Œä¸è¦ä½¿ç”¨whileè¯­å¥ï¼Œç‰¹åˆ«æ˜¯å½“å¾ªçŽ¯ä½“å¾ˆå¤§æ—¶ï¼Œforçš„ä¼˜ç‚¹ä¸€ä¸‹å°±ä½“çŽ°å‡ºæ¥äº†ã€‚
 
-                    ¡¡¡¡ÒòÎªÔÚforÖÐ£¬Ñ­»·µÄ³õÊ¼¡¢½áÊøÌõ¼þ¡¢Ñ­»·µÄÍÆ½ø£¬¶¼ÔÚÒ»Æð£¬Ò»ÑÛ¿´ÉÏÈ¥¾ÍÖªµÀÕâÊÇÒ»¸öÊ²Ã´ÑùµÄÑ­»·¡£¸Õ³öÑ§Ð£µÄ³ÌÐòÒ»°ã¶ÔÓÚÁ´½ÓÏ²»¶ÕâÑùÀ´£º
+                    ã€€ã€€å› ä¸ºåœ¨forä¸­ï¼Œå¾ªçŽ¯çš„åˆå§‹ã€ç»“æŸæ¡ä»¶ã€å¾ªçŽ¯çš„æŽ¨è¿›ï¼Œéƒ½åœ¨ä¸€èµ·ï¼Œä¸€çœ¼çœ‹ä¸ŠåŽ»å°±çŸ¥é“è¿™æ˜¯ä¸€ä¸ªä»€ä¹ˆæ ·çš„å¾ªçŽ¯ã€‚åˆšå‡ºå­¦æ ¡çš„ç¨‹åºä¸€èˆ¬å¯¹äºŽé“¾æŽ¥å–œæ¬¢è¿™æ ·æ¥ï¼š
 
-                    ¡¡¡¡p = pHead;
+                    ã€€ã€€p = pHead;
 
-        ¡¡¡¡p = pHead;
+        ã€€ã€€p = pHead;
 
-        ¡¡¡¡while ( p ){
+        ã€€ã€€while ( p ){
 
-            ¡¡¡¡...
+            ã€€ã€€...
 
-                ¡¡¡¡...
+                ã€€ã€€...
 
-                ¡¡¡¡p = p->next;
+                ã€€ã€€p = p->next;
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-        ¡¡¡¡µ±whileµÄÓï¾ä¿é±ä´óºó£¬ÄãµÄ³ÌÐò½«ºÜÄÑ¶Á£¬ÓÃfor¾ÍºÃµÃ¶à£º
+        ã€€ã€€å½“whileçš„è¯­å¥å—å˜å¤§åŽï¼Œä½ çš„ç¨‹åºå°†å¾ˆéš¾è¯»ï¼Œç”¨forå°±å¥½å¾—å¤šï¼š
 
-            ¡¡¡¡for ( p=pHead; p; p=p->next ){
+            ã€€ã€€for ( p=pHead; p; p=p->next ){
 
-                ¡¡¡¡..
+                ã€€ã€€..
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡Ò»ÑÛ¾ÍÖªµÀÕâ¸öÑ­»·µÄ¿ªÊ¼Ìõ¼þ£¬½áÊøÌõ¼þ£¬ºÍÑ­»·µÄÍÆ½ø¡£´óÔ¼¾ÍÄÜÃ÷°×Õâ¸öÑ­»·Òª×ö¸öÊ²Ã´ÊÂ£¿¶øÇÒ£¬³ÌÐòÎ¬»¤½øÀ´ºÜÈÝÒ×£¬²»±ØÏñwhileÒ»Ñù£¬ÔÚÒ»¸ö±à¼­Æ÷ÖÐÉÏÉÏÏÂÏÂµÄµ·ÌÚ¡£
+        ã€€ã€€ä¸€çœ¼å°±çŸ¥é“è¿™ä¸ªå¾ªçŽ¯çš„å¼€å§‹æ¡ä»¶ï¼Œç»“æŸæ¡ä»¶ï¼Œå’Œå¾ªçŽ¯çš„æŽ¨è¿›ã€‚å¤§çº¦å°±èƒ½æ˜Žç™½è¿™ä¸ªå¾ªçŽ¯è¦åšä¸ªä»€ä¹ˆäº‹ï¼Ÿè€Œä¸”ï¼Œç¨‹åºç»´æŠ¤è¿›æ¥å¾ˆå®¹æ˜“ï¼Œä¸å¿…åƒwhileä¸€æ ·ï¼Œåœ¨ä¸€ä¸ªç¼–è¾‘å™¨ä¸­ä¸Šä¸Šä¸‹ä¸‹çš„æ£è…¾ã€‚
 
-            ¡¡¡¡30¡¢ÇësizeofÀàÐÍ¶ø²»ÊÇ±äÁ¿
+            ã€€ã€€30ã€è¯·sizeofç±»åž‹è€Œä¸æ˜¯å˜é‡
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡Ðí¶à³ÌÐòÔ±ÔÚÊ¹ÓÃsizeofÖÐ£¬Ï²»¶sizeof±äÁ¿Ãû£¬ÀýÈç£º
+            ã€€ã€€è®¸å¤šç¨‹åºå‘˜åœ¨ä½¿ç”¨sizeofä¸­ï¼Œå–œæ¬¢sizeofå˜é‡åï¼Œä¾‹å¦‚ï¼š
 
-            ¡¡¡¡int score[100];
+            ã€€ã€€int score[100];
 
-        ¡¡¡¡char filename[20];
+        ã€€ã€€char filename[20];
 
-        ¡¡¡¡struct UserInfo usr[100];
+        ã€€ã€€struct UserInfo usr[100];
 
-        ¡¡¡¡ÔÚsizeofÕâÈý¸öµÄ±äÁ¿ÃûÊ±£¬¶¼»á·µ»ØÕýÈ·µÄ½á¹û£¬ÓÚÊÇÐí¶à³ÌÐòÔ±¾Í¿ªÊ¼sizeof±äÁ¿Ãû
+        ã€€ã€€åœ¨sizeofè¿™ä¸‰ä¸ªçš„å˜é‡åæ—¶ï¼Œéƒ½ä¼šè¿”å›žæ­£ç¡®çš„ç»“æžœï¼ŒäºŽæ˜¯è®¸å¤šç¨‹åºå‘˜å°±å¼€å§‹sizeofå˜é‡å
 
-            ¡¡¡¡¡£Õâ¸öÏ°¹ßºÜËäÈ»Ã»ÓÐÊ²Ã´²»ºÃ£¬µ«ÎÒ»¹ÊÇ½¨ÒésizeofÀàÐÍ¡£
+            ã€€ã€€ã€‚è¿™ä¸ªä¹ æƒ¯å¾ˆè™½ç„¶æ²¡æœ‰ä»€ä¹ˆä¸å¥½ï¼Œä½†æˆ‘è¿˜æ˜¯å»ºè®®sizeofç±»åž‹ã€‚
 
-            ¡¡¡¡ÎÒ¿´µ½¹ýÕâ¸öµÄ³ÌÐò£º
+            ã€€ã€€æˆ‘çœ‹åˆ°è¿‡è¿™ä¸ªçš„ç¨‹åºï¼š
 
-            ¡¡¡¡pScore = (int*) malloc( SUBJECT_CNT );
+            ã€€ã€€pScore = (int*) malloc( SUBJECT_CNT );
 
-        ¡¡¡¡memset( pScore, 0, sizeof(pScore) );
+        ã€€ã€€memset( pScore, 0, sizeof(pScore) );
 
-        ¡¡¡¡...
+        ã€€ã€€...
 
-            ¡¡¡¡´ËÊ±£¬sizeof(pScore)·µ»ØµÄ¾ÍÊÇ4£¨Ö¸ÕëµÄ³¤¶È£©£¬²»»áÊÇÕû¸öÊý×é£¬ÓÚÊÇ£¬memset¾Í²»ÄÜ¶ÔÕâ¿éÄÚ´æ½øÐÐ³õÊ¼»¯¡£ÎªÁË³ÌÐòµÄÒ×¶ÁºÍÒ×Î¬»¤£¬ÎÒÇ¿ÁÒ½¨ÒéÊ¹ÓÃÀàÐÍ¶ø²»ÊÇ±äÁ¿£¬
+            ã€€ã€€æ­¤æ—¶ï¼Œsizeof(pScore)è¿”å›žçš„å°±æ˜¯4ï¼ˆæŒ‡é’ˆçš„é•¿åº¦ï¼‰ï¼Œä¸ä¼šæ˜¯æ•´ä¸ªæ•°ç»„ï¼ŒäºŽæ˜¯ï¼Œmemsetå°±ä¸èƒ½å¯¹è¿™å—å†…å­˜è¿›è¡Œåˆå§‹åŒ–ã€‚ä¸ºäº†ç¨‹åºçš„æ˜“è¯»å’Œæ˜“ç»´æŠ¤ï¼Œæˆ‘å¼ºçƒˆå»ºè®®ä½¿ç”¨ç±»åž‹è€Œä¸æ˜¯å˜é‡ï¼Œ
 
-            ¡¡¡¡Èç£º
+            ã€€ã€€å¦‚ï¼š
 
-            ¡¡¡¡¶ÔÓÚscore£º sizeof(int) * 100 /* 100¸öint */
+            ã€€ã€€å¯¹äºŽscoreï¼š sizeof(int) * 100 /* 100ä¸ªint */
 
-            ¡¡¡¡¶ÔÓÚfilename£º sizeof(char) * 20 /* 20¸öchar */
+            ã€€ã€€å¯¹äºŽfilenameï¼š sizeof(char) * 20 /* 20ä¸ªchar */
 
-            ¡¡¡¡¶ÔÓÚusr£º sizeof(struct UserInfo) * 100 /* 100¸öUserInfo */
+            ã€€ã€€å¯¹äºŽusrï¼š sizeof(struct UserInfo) * 100 /* 100ä¸ªUserInfo */
 
-            ¡¡¡¡ÕâÑùµÄ´úÂëÊÇ²»ÊÇºÜÒ×¶Á£¿Ò»ÑÛ¿´ÉÏÈ¥¾ÍÖªµÀÊ²Ã´ÒâË¼ÁË¡£
+            ã€€ã€€è¿™æ ·çš„ä»£ç æ˜¯ä¸æ˜¯å¾ˆæ˜“è¯»ï¼Ÿä¸€çœ¼çœ‹ä¸ŠåŽ»å°±çŸ¥é“ä»€ä¹ˆæ„æ€äº†ã€‚
 
-            ¡¡¡¡ÁíÍâÒ»µã£¬sizeofÒ»°ãÓÃÓÚ·ÖÅäÄÚ´æ£¬Õâ¸öÌØÐÔÌØ±ðÔÚ¶àÎ¬Êý×éÊ±£¬¾ÍÄÜÌåÏÖ³öÆäÓÅµãÁË
+            ã€€ã€€å¦å¤–ä¸€ç‚¹ï¼Œsizeofä¸€èˆ¬ç”¨äºŽåˆ†é…å†…å­˜ï¼Œè¿™ä¸ªç‰¹æ€§ç‰¹åˆ«åœ¨å¤šç»´æ•°ç»„æ—¶ï¼Œå°±èƒ½ä½“çŽ°å‡ºå…¶ä¼˜ç‚¹äº†
 
-            ¡¡¡¡¡£Èç£¬¸øÒ»¸ö×Ö·û´®Êý×é·ÖÅäÄÚ´æ£¬
+            ã€€ã€€ã€‚å¦‚ï¼Œç»™ä¸€ä¸ªå­—ç¬¦ä¸²æ•°ç»„åˆ†é…å†…å­˜ï¼Œ
 
-            ¡¡¡¡/*
+            ã€€ã€€/*
 
-                   ¡¡¡¡* ·ÖÅäÒ»¸öÓÐ20¸ö×Ö·û´®£¬
+                   ã€€ã€€* åˆ†é…ä¸€ä¸ªæœ‰20ä¸ªå­—ç¬¦ä¸²ï¼Œ
 
-                   ¡¡¡¡* Ã¿¸ö×Ö·û´®³¤100µÄÄÚ´æ
+                   ã€€ã€€* æ¯ä¸ªå­—ç¬¦ä¸²é•¿100çš„å†…å­˜
 
-                   ¡¡¡¡*/
+                   ã€€ã€€*/
 
-            ¡¡¡¡char* *p;
+            ã€€ã€€char* *p;
 
-        ¡¡¡¡/*
+        ã€€ã€€/*
 
-               ¡¡¡¡* ´íÎóµÄ·ÖÅä·½·¨
+               ã€€ã€€* é”™è¯¯çš„åˆ†é…æ–¹æ³•
 
-               ¡¡¡¡*/
+               ã€€ã€€*/
 
-            ¡¡¡¡p = (char**)calloc( 20*100, sizeof(char) );
+            ã€€ã€€p = (char**)calloc( 20*100, sizeof(char) );
 
-        ¡¡¡¡/*
+        ã€€ã€€/*
 
-               ¡¡¡¡* ÕýÈ·µÄ·ÖÅä·½·¨
+               ã€€ã€€* æ­£ç¡®çš„åˆ†é…æ–¹æ³•
 
-               ¡¡¡¡* ÕýÈ·µÄ·ÖÅä·½·¨
+               ã€€ã€€* æ­£ç¡®çš„åˆ†é…æ–¹æ³•
 
-               ¡¡¡¡*/
+               ã€€ã€€*/
 
-            ¡¡¡¡p = (char**) calloc ( 20, sizeof(char*) );
+            ã€€ã€€p = (char**) calloc ( 20, sizeof(char*) );
 
-        ¡¡¡¡for ( i=0; i<20; i++){
+        ã€€ã€€for ( i=0; i<20; i++){
 
-            ¡¡¡¡/*p = (char*) calloc ( 100, sizeof(char) );*/
+            ã€€ã€€/*p = (char*) calloc ( 100, sizeof(char) );*/
 
-                ¡¡¡¡p[i] = (char*) calloc ( 100, sizeof(char) );
+                ã€€ã€€p[i] = (char*) calloc ( 100, sizeof(char) );
 
-            ¡¡¡¡}
+            ã€€ã€€}
 
-        ¡¡¡¡£¨×¢£ºÉÏÊöÓï¾ä±»×¢ÊÍµôµÄÊÇÔ­À´µÄ£¬ÊÇ´íÎóµÄ£¬ÓÉdasherestÅóÓÑÖ¸Õý£¬Ð»Ð»£©
+        ã€€ã€€ï¼ˆæ³¨ï¼šä¸Šè¿°è¯­å¥è¢«æ³¨é‡ŠæŽ‰çš„æ˜¯åŽŸæ¥çš„ï¼Œæ˜¯é”™è¯¯çš„ï¼Œç”±dasherestæœ‹å‹æŒ‡æ­£ï¼Œè°¢è°¢ï¼‰
 
-            ¡¡¡¡ÎªÁË´úÂëµÄÒ×¶Á£¬Ê¡È¥ÁËÒ»Ð©ÅÐ¶Ï£¬Çë×¢ÒâÕâÁ½ÖÖ·ÖÅäµÄ·½·¨£¬ÓÐ±¾ÖÊÉÏµÄ²î±ð¡£
+            ã€€ã€€ä¸ºäº†ä»£ç çš„æ˜“è¯»ï¼ŒçœåŽ»äº†ä¸€äº›åˆ¤æ–­ï¼Œè¯·æ³¨æ„è¿™ä¸¤ç§åˆ†é…çš„æ–¹æ³•ï¼Œæœ‰æœ¬è´¨ä¸Šçš„å·®åˆ«ã€‚
 
-            ¡¡¡¡31¡¢²»ÒªºöÂÔWarning
+            ã€€ã€€31ã€ä¸è¦å¿½ç•¥Warning
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡¶ÔÓÚÒ»Ð©±àÒëÊ±µÄ¾¯¸æÐÅÏ¢£¬Çë²»ÒªºöÊÓËüÃÇ¡£ËäÈ»£¬ÕâÐ©Warning²»»á·Á°­Ä¿±ê´úÂëµÄÉú³É£¬µ«Õâ²¢²»ÒâÎ¶×ÅÄãµÄ³ÌÐò¾ÍÊÇºÃµÄ¡£±Ø¾¹£¬²¢²»ÊÇ±àÒë³É¹¦µÄ³ÌÐò²ÅÊÇÕýÈ·µÄ£¬±àÒë³É¹¦Ö»ÊÇÍòÀï³¤Õ÷µÄµÚÒ»²½£¬ºóÃæ»¹ÓÐ´ó·ç´óÀËÔÚµÈ×ÅÄã¡£´Ó±àÒë³ÌÐò¿ªÊ¼£¬²»µ«Òª¸ÄÕýÃ¿¸öerror£¬»¹ÒªÐÞÕýÃ¿¸öwarning¡£ÕâÊÇÒ»¸öÓÐÐÞÑøµÄ³ÌÐòÔ±¸Ã×öµÄÊÂ¡£
+            ã€€ã€€å¯¹äºŽä¸€äº›ç¼–è¯‘æ—¶çš„è­¦å‘Šä¿¡æ¯ï¼Œè¯·ä¸è¦å¿½è§†å®ƒä»¬ã€‚è™½ç„¶ï¼Œè¿™äº›Warningä¸ä¼šå¦¨ç¢ç›®æ ‡ä»£ç çš„ç”Ÿæˆï¼Œä½†è¿™å¹¶ä¸æ„å‘³ç€ä½ çš„ç¨‹åºå°±æ˜¯å¥½çš„ã€‚å¿…ç«Ÿï¼Œå¹¶ä¸æ˜¯ç¼–è¯‘æˆåŠŸçš„ç¨‹åºæ‰æ˜¯æ­£ç¡®çš„ï¼Œç¼–è¯‘æˆåŠŸåªæ˜¯ä¸‡é‡Œé•¿å¾çš„ç¬¬ä¸€æ­¥ï¼ŒåŽé¢è¿˜æœ‰å¤§é£Žå¤§æµªåœ¨ç­‰ç€ä½ ã€‚ä»Žç¼–è¯‘ç¨‹åºå¼€å§‹ï¼Œä¸ä½†è¦æ”¹æ­£æ¯ä¸ªerrorï¼Œè¿˜è¦ä¿®æ­£æ¯ä¸ªwarningã€‚è¿™æ˜¯ä¸€ä¸ªæœ‰ä¿®å…»çš„ç¨‹åºå‘˜è¯¥åšçš„äº‹ã€‚
 
-            ¡¡¡¡Ò»°ãÀ´Ëµ£¬Ò»ÃæµÄÒ»Ð©¾¯¸æÐÅÏ¢ÊÇ³£¼ûµÄ£º
+            ã€€ã€€ä¸€èˆ¬æ¥è¯´ï¼Œä¸€é¢çš„ä¸€äº›è­¦å‘Šä¿¡æ¯æ˜¯å¸¸è§çš„ï¼š
 
-            ¡¡¡¡1£©ÉùÃ÷ÁËÎ´Ê¹ÓÃµÄ±äÁ¿¡££¨ËäÈ»±àÒëÆ÷²»»á±àÒëÕâÖÖ±äÁ¿£¬µ«»¹ÊÇ°ÑËü´ÓÔ´³ÌÐòÖÐ×¢
+            ã€€ã€€1ï¼‰å£°æ˜Žäº†æœªä½¿ç”¨çš„å˜é‡ã€‚ï¼ˆè™½ç„¶ç¼–è¯‘å™¨ä¸ä¼šç¼–è¯‘è¿™ç§å˜é‡ï¼Œä½†è¿˜æ˜¯æŠŠå®ƒä»Žæºç¨‹åºä¸­æ³¨
 
-            ¡¡¡¡ÊÍ»òÊÇÉ¾³ý°É£©
+            ã€€ã€€é‡Šæˆ–æ˜¯åˆ é™¤å§ï¼‰
 
-            ¡¡¡¡2£©Ê¹ÓÃÁËÒþ»ÞÉùÃ÷µÄº¯Êý¡££¨Ò²ÐíÕâ¸öº¯ÊýÔÚ±ðµÄCÎÄ¼þÖÐ£¬±àÒëÊ±»á³öÏÖÕâÖÖ¾¯¸æ
+            ã€€ã€€2ï¼‰ä½¿ç”¨äº†éšæ™¦å£°æ˜Žçš„å‡½æ•°ã€‚ï¼ˆä¹Ÿè®¸è¿™ä¸ªå‡½æ•°åœ¨åˆ«çš„Cæ–‡ä»¶ä¸­ï¼Œç¼–è¯‘æ—¶ä¼šå‡ºçŽ°è¿™ç§è­¦å‘Š
 
-            ¡¡¡¡£¬ÄãÓ¦¸ÃÕâÊ¹ÓÃÖ®Ç°Ê¹ÓÃextern¹Ø¼ü×ÖÉùÃ÷Õâ¸öº¯Êý£©
+            ã€€ã€€ï¼Œä½ åº”è¯¥è¿™ä½¿ç”¨ä¹‹å‰ä½¿ç”¨externå…³é”®å­—å£°æ˜Žè¿™ä¸ªå‡½æ•°ï¼‰
 
-            ¡¡¡¡3£©Ã»ÓÐ×ª»»Ò»¸öÖ¸Õë¡££¨ÀýÈçmalloc·µ»ØµÄÖ¸ÕëÊÇvoidµÄ£¬ÄãÃ»ÓÐ°ÑÖ®×ª³ÉÄãÊµ¼ÊÀàÐÍ¶ø±¨¾¯£¬»¹ÊÇÊÖ¶¯µÄÔÚÖ®Ç°Ã÷ÏÔµÄ×ª»»Ò»ÏÂ°É£©
+            ã€€ã€€3ï¼‰æ²¡æœ‰è½¬æ¢ä¸€ä¸ªæŒ‡é’ˆã€‚ï¼ˆä¾‹å¦‚mallocè¿”å›žçš„æŒ‡é’ˆæ˜¯voidçš„ï¼Œä½ æ²¡æœ‰æŠŠä¹‹è½¬æˆä½ å®žé™…ç±»åž‹è€ŒæŠ¥è­¦ï¼Œè¿˜æ˜¯æ‰‹åŠ¨çš„åœ¨ä¹‹å‰æ˜Žæ˜¾çš„è½¬æ¢ä¸€ä¸‹å§ï¼‰
 
-            ¡¡¡¡4£©ÀàÐÍÏòÏÂ×ª»»¡££¨ÀýÈç£ºfloat f = 2.0; ÕâÖÖÓï¾äÊÇ»á±¨¾¯¸æµÄ£¬±àÒë»á¸æËßÄã
+            ã€€ã€€4ï¼‰ç±»åž‹å‘ä¸‹è½¬æ¢ã€‚ï¼ˆä¾‹å¦‚ï¼šfloat f = 2.0; è¿™ç§è¯­å¥æ˜¯ä¼šæŠ¥è­¦å‘Šçš„ï¼Œç¼–è¯‘ä¼šå‘Šè¯‰ä½ 
 
-            ¡¡¡¡ÕýÊÔÍ¼°ÑÒ»¸ödouble×ª³Éfloat£¬ÄãÕýÔÚÑË¸îÒ»¸ö±äÁ¿£¬ÄãÕæµÄÒªÕâÑù×öÂð£¿»¹ÊÇÔÚ2.0ºóÃæ¼Ó¸öf°É£¬²»È»£¬2.0¾ÍÊÇÒ»¸ödouble£¬¶ø²»ÊÇfloatÁË£©²»¹ÜÔõÃ´Ëµ£¬±àÒëÆ÷µÄWarning²»ÒªÐ¡ÊÓ£¬×îºÃ²»ÒªºöÂÔ£¬Ò»¸ö³ÌÐò¶¼×öµÃ³öÀ´£¬ºÎ¿ö¼¸¸öÐ¡Ð¡µÄWarningÄØ£¿
+            ã€€ã€€æ­£è¯•å›¾æŠŠä¸€ä¸ªdoubleè½¬æˆfloatï¼Œä½ æ­£åœ¨é˜‰å‰²ä¸€ä¸ªå˜é‡ï¼Œä½ çœŸçš„è¦è¿™æ ·åšå—ï¼Ÿè¿˜æ˜¯åœ¨2.0åŽé¢åŠ ä¸ªfå§ï¼Œä¸ç„¶ï¼Œ2.0å°±æ˜¯ä¸€ä¸ªdoubleï¼Œè€Œä¸æ˜¯floatäº†ï¼‰ä¸ç®¡æ€Žä¹ˆè¯´ï¼Œç¼–è¯‘å™¨çš„Warningä¸è¦å°è§†ï¼Œæœ€å¥½ä¸è¦å¿½ç•¥ï¼Œä¸€ä¸ªç¨‹åºéƒ½åšå¾—å‡ºæ¥ï¼Œä½•å†µå‡ ä¸ªå°å°çš„Warningå‘¢ï¼Ÿ
 
-            ¡¡¡¡32¡¢ÊéÐ´Debug°æºÍRelease°æµÄ³ÌÐò
+            ã€€ã€€32ã€ä¹¦å†™Debugç‰ˆå’ŒReleaseç‰ˆçš„ç¨‹åº
 
-            ¡¡¡¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            ã€€ã€€â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
-            ¡¡¡¡³ÌÐòÔÚ¿ª·¢¹ý³ÌÖÐ±ØÈ»ÓÐÐí¶à³ÌÐòÔ±¼ÓµÄµ÷ÊÔÐÅÏ¢¡£ÎÒ¼û¹ýÐí¶àÏîÄ¿×é£¬µ±³ÌÐò¿ª·¢½áÊøÊ±£¬·¢¶¯ÈºÖÚÉ¾³ý³ÌÐòÖÐµÄµ÷ÊÔÐÅÏ¢£¬ºÎ±ØÄØ£¿ÎªÊ²Ã´²»ÏñVC++ÄÇÑù½¨Á¢Á½¸ö°æ±¾µÄÄ¿±ê´úÂë£¿Ò»¸öÊÇdebug°æ±¾µÄ£¬Ò»¸öÊÇRelease°æµÄ¡£ÄÇÐ©µ÷ÊÔÐÅÏ¢ÊÇÄÇÃ´µÄ±¦¹ó£¬ÔÚÈÕºóµÄÎ¬»¤¹ý³ÌÖÐÒ²ÊÇºÜ±¦¹óµÄ¶«Î÷£¬ÔõÃ´ÄÜËµÉ¾³ý¾ÍÉ¾³ýÄØ£¿
+            ã€€ã€€ç¨‹åºåœ¨å¼€å‘è¿‡ç¨‹ä¸­å¿…ç„¶æœ‰è®¸å¤šç¨‹åºå‘˜åŠ çš„è°ƒè¯•ä¿¡æ¯ã€‚æˆ‘è§è¿‡è®¸å¤šé¡¹ç›®ç»„ï¼Œå½“ç¨‹åºå¼€å‘ç»“æŸæ—¶ï¼Œå‘åŠ¨ç¾¤ä¼—åˆ é™¤ç¨‹åºä¸­çš„è°ƒè¯•ä¿¡æ¯ï¼Œä½•å¿…å‘¢ï¼Ÿä¸ºä»€ä¹ˆä¸åƒVC++é‚£æ ·å»ºç«‹ä¸¤ä¸ªç‰ˆæœ¬çš„ç›®æ ‡ä»£ç ï¼Ÿä¸€ä¸ªæ˜¯debugç‰ˆæœ¬çš„ï¼Œä¸€ä¸ªæ˜¯Releaseç‰ˆçš„ã€‚é‚£äº›è°ƒè¯•ä¿¡æ¯æ˜¯é‚£ä¹ˆçš„å®è´µï¼Œåœ¨æ—¥åŽçš„ç»´æŠ¤è¿‡ç¨‹ä¸­ä¹Ÿæ˜¯å¾ˆå®è´µçš„ä¸œè¥¿ï¼Œæ€Žä¹ˆèƒ½è¯´åˆ é™¤å°±åˆ é™¤å‘¢ï¼Ÿ
 
-            ¡¡¡¡ÀûÓÃÔ¤±àÒë¼¼Êõ°É£¬ÈçÏÂËùÊ¾ÉùÃ÷µ÷ÊÔº¯Êý£º
+            ã€€ã€€åˆ©ç”¨é¢„ç¼–è¯‘æŠ€æœ¯å§ï¼Œå¦‚ä¸‹æ‰€ç¤ºå£°æ˜Žè°ƒè¯•å‡½æ•°ï¼š
 
-            ¡¡¡¡#ifdef DEBUG
+            ã€€ã€€#ifdef DEBUG
 
-            ¡¡¡¡void TRACE(char* fmt, ...)
+            ã€€ã€€void TRACE(char* fmt, ...)
 
-            ¡¡¡¡{
+            ã€€ã€€{
 
-                ¡¡¡¡......
+                ã€€ã€€......
 
-                    ¡¡¡¡}
+                    ã€€ã€€}
 
-        ¡¡¡¡#else
+        ã€€ã€€#else
 
-            ¡¡¡¡#define TRACE(char* fmt, ...)
+            ã€€ã€€#define TRACE(char* fmt, ...)
 
-            ¡¡¡¡#endif
+            ã€€ã€€#endif
 
-            ¡¡¡¡ÓÚÊÇ£¬ÈÃËùÓÐµÄ³ÌÐò¶¼ÓÃTRACEÊä³öµ÷ÊÔÐÅÏ¢£¬Ö»ÐèÒªÔÚÔÚ±àÒëÊ±¼ÓÉÏÒ»¸ö²ÎÊý¡°-DDEBUG¡±£¬Èç£º
+            ã€€ã€€äºŽæ˜¯ï¼Œè®©æ‰€æœ‰çš„ç¨‹åºéƒ½ç”¨TRACEè¾“å‡ºè°ƒè¯•ä¿¡æ¯ï¼Œåªéœ€è¦åœ¨åœ¨ç¼–è¯‘æ—¶åŠ ä¸Šä¸€ä¸ªå‚æ•°â€œ-DDEBUGâ€ï¼Œå¦‚ï¼š
 
-            ¡¡¡¡cc -DDEBUG -o target target.c
+            ã€€ã€€cc -DDEBUG -o target target.c
 
-            ¡¡¡¡ÓÚÊÇ£¬Ô¤±àÒëÆ÷·¢ÏÖDEBUG±äÁ¿±»¶¨ÒåÁË£¬¾Í»áÊ¹ÓÃTRACEº¯Êý¡£¶øÈç¹ûÒª·¢²¼¸øÓÃ»§ÁË£¬ÄÇÃ´Ö»ÐèÒª°ÑÈ¡Ïû¡°-DDEBUG¡±µÄ²ÎÊý£¬ÓÚÊÇËùÓÐÓÃµ½TRACEºê£¬Õâ¸öºêÊ²Ã´¶¼Ã»ÓÐ£¬ËùÒÔÔ´³ÌÐòÖÐµÄËùÓÐTRACEÓïÑÔÈ«²¿±»Ìæ»»³ÉÁË¿Õ¡£Ò»¾ÙÁ½µÃ£¬Ò»¼ýË«µñ£¬ºÎÀÖ¶ø²»ÎªÄØ£¿Ë³±ãÌáÒ»ÏÂ£¬Á½¸öºÜÓÐÓÃµÄÏµÍ³ºê£¬Ò»¸öÊÇ¡°__FILE__¡±£¬Ò»¸öÊÇ¡°__LINE__¡±£¬·Ö±ð±íÊ¾£¬ËùÔÚµÄÔ´ÎÄ¼þºÍÐÐºÅ£¬µ±Äãµ÷ÊÔÐÅÏ¢»òÊÇÊä³ö´íÎóÊ±£¬¿ÉÒÔÊ¹ÓÃÕâÁ½¸öºê£¬ÈÃÄãÒ»ÑÛ
+            ã€€ã€€äºŽæ˜¯ï¼Œé¢„ç¼–è¯‘å™¨å‘çŽ°DEBUGå˜é‡è¢«å®šä¹‰äº†ï¼Œå°±ä¼šä½¿ç”¨TRACEå‡½æ•°ã€‚è€Œå¦‚æžœè¦å‘å¸ƒç»™ç”¨æˆ·äº†ï¼Œé‚£ä¹ˆåªéœ€è¦æŠŠå–æ¶ˆâ€œ-DDEBUGâ€çš„å‚æ•°ï¼ŒäºŽæ˜¯æ‰€æœ‰ç”¨åˆ°TRACEå®ï¼Œè¿™ä¸ªå®ä»€ä¹ˆéƒ½æ²¡æœ‰ï¼Œæ‰€ä»¥æºç¨‹åºä¸­çš„æ‰€æœ‰TRACEè¯­è¨€å…¨éƒ¨è¢«æ›¿æ¢æˆäº†ç©ºã€‚ä¸€ä¸¾ä¸¤å¾—ï¼Œä¸€ç®­åŒé›•ï¼Œä½•ä¹è€Œä¸ä¸ºå‘¢ï¼Ÿé¡ºä¾¿æä¸€ä¸‹ï¼Œä¸¤ä¸ªå¾ˆæœ‰ç”¨çš„ç³»ç»Ÿå®ï¼Œä¸€ä¸ªæ˜¯â€œ__FILE__â€ï¼Œä¸€ä¸ªæ˜¯â€œ__LINE__â€ï¼Œåˆ†åˆ«è¡¨ç¤ºï¼Œæ‰€åœ¨çš„æºæ–‡ä»¶å’Œè¡Œå·ï¼Œå½“ä½ è°ƒè¯•ä¿¡æ¯æˆ–æ˜¯è¾“å‡ºé”™è¯¯æ—¶ï¼Œå¯ä»¥ä½¿ç”¨è¿™ä¸¤ä¸ªå®ï¼Œè®©ä½ ä¸€çœ¼
 
-            ¡¡¡¡¾ÍÄÜ¿´³öÄãµÄ´íÎó£¬³öÏÖÔÚÄÄ¸öÎÄ¼þµÄµÚ¼¸ÐÐÖÐ¡£Õâ¶ÔÓÚÓÃC/C++×öµÄ´ó¹¤³Ì·Ç³£µÄ¹ÜÓÃ¡£
+            ã€€ã€€å°±èƒ½çœ‹å‡ºä½ çš„é”™è¯¯ï¼Œå‡ºçŽ°åœ¨å“ªä¸ªæ–‡ä»¶çš„ç¬¬å‡ è¡Œä¸­ã€‚è¿™å¯¹äºŽç”¨C/C++åšçš„å¤§å·¥ç¨‹éžå¸¸çš„ç®¡ç”¨ã€‚
 
-            ¡¡¡¡×ÛÉÏËùÊö32Ìõ£¬¶¼ÊÇÎªÁËÈý´óÄ¿µÄ¡ª¡ª
+            ã€€ã€€ç»¼ä¸Šæ‰€è¿°32æ¡ï¼Œéƒ½æ˜¯ä¸ºäº†ä¸‰å¤§ç›®çš„â€”â€”
 
-            ¡¡¡¡2¡¢³ÌÐò´úÂëµÄ¿ÉÎ¬»¤ÐÔ£¬
+            ã€€ã€€2ã€ç¨‹åºä»£ç çš„å¯ç»´æŠ¤æ€§ï¼Œ
 
-            ¡¡¡¡3¡¢³ÌÐò´úÂëµÄÎÈ¶¨¿É*ÐÔ¡£
+            ã€€ã€€3ã€ç¨‹åºä»£ç çš„ç¨³å®šå¯*æ€§ã€‚
 
-            ¡¡¡¡µÄÏ¸Ð¡µÄÎÊÌâ£¬±à³Ì¸ßÊÖ²»½ö¼¼ÊõÒªÇ¿£¬»ù´¡ÒªºÃ£¬¶øÇÒ×îÖØÒªµÄÊÇÒªÓÐ¡°ÐÞÑø¡±£¡
+            ã€€ã€€çš„ç»†å°çš„é—®é¢˜ï¼Œç¼–ç¨‹é«˜æ‰‹ä¸ä»…æŠ€æœ¯è¦å¼ºï¼ŒåŸºç¡€è¦å¥½ï¼Œè€Œä¸”æœ€é‡è¦çš„æ˜¯è¦æœ‰â€œä¿®å…»â€ï¼
 
-            ¡¡¡¡Èí¼þµÄÎ¬»¤ÓÐ´óÁ¿µÄ¹¤×÷Á¿»¨ÔÚ´úÂëµÄÎ¬»¤ÉÏ£¬Èí¼þµÄUpgrade£¬Ò²ÓÐ´óÁ¿µÄ¹¤×÷»¨ÔÚ´úÂë
+            ã€€ã€€è½¯ä»¶çš„ç»´æŠ¤æœ‰å¤§é‡çš„å·¥ä½œé‡èŠ±åœ¨ä»£ç çš„ç»´æŠ¤ä¸Šï¼Œè½¯ä»¶çš„Upgradeï¼Œä¹Ÿæœ‰å¤§é‡çš„å·¥ä½œèŠ±åœ¨ä»£ç 
 
-            ¡¡¡¡µÄ×éÖ¯ÉÏ£¬ËùÒÔºÃµÄ´úÂë£¬ÇåäÀµÄ£¬Ò×¶ÁµÄ´úÂë£¬½«¸ø´ó´ó¼õÉÙÈí¼þµÄÎ¬»¤ºÍÉý¼¶³É±¾¡£
+            ã€€ã€€çš„ç»„ç»‡ä¸Šï¼Œæ‰€ä»¥å¥½çš„ä»£ç ï¼Œæ¸…æ·…çš„ï¼Œæ˜“è¯»çš„ä»£ç ï¼Œå°†ç»™å¤§å¤§å‡å°‘è½¯ä»¶çš„ç»´æŠ¤å’Œå‡çº§æˆæœ¬ã€‚

@@ -1,9 +1,9 @@
-����Щ����£����ǲ�ϣ���Լ���shell�ű�������ʱ�̱��жϣ�����˵����д��shell��
-����Ϊĳһ�û���Ĭ��shell��ʹ��һ�û�����ϵͳ��ֻ����ĳһ����������ݿⱸ�ݣ� ��
-�ǿɲ�ϣ���û�ʹ��ctrl+C֮�����뵽shell״̬�������ǲ�ϣ���������顣����õ����ź�
-������
+在有些情况下，我们不希望自己的shell脚本在运行时刻被中断，比如说我们写得shell脚
+本设为某一用户的默认shell，使这一用户进入系统后只能作某一项工作，如数据库备份， 我
+们可不希望用户使用ctrl+C之类便进入到shell状态，做我们不希望做的事情。这便用到了信号
+处理。
 
-kill -l�����г�ϵͳ���ź����ƣ����£�
+kill -l可以列出系统的信号名称，如下：
 zj@zj:~/Script/test$ kill -l
 1) SIGHUP    2) SIGINT    3) SIGQUIT    4) SIGILL
 5) SIGTRAP    6) SIGABRT    7) SIGBUS    8) SIGFPE
@@ -23,12 +23,12 @@ zj@zj:~/Script/test$ kill -l
 63) SIGRTMAX-1    64) SIGRTMAX   
 
 
-ͨ��������Ҫ���Ե��ź����ĸ�������HUP, INT, QUIT, TSTP��Ҳ�����ź�1, 2, 3, 24
-ʹ��������������ʹ��Щ�ж��źű����ԣ�
-trap "" 1 2 3 24 �� trap "" HUP INT QUIT TSTP
-�� trap ��1 2 3 24 �� trap HUP INT QUIT TSTPʹ��ظ�Ĭ��ֵ��
-��stty -a�����г��ж��ź�����̵Ķ�Ӧ���ֱ�ִ����������������
-tail -f /etc/passwd, Ȼ�����ü����жϣ��������������Ĭ�Ϻͺ��ԣ����кβ�ͬ��
+通常我们需要忽略的信号有四个，即：HUP, INT, QUIT, TSTP，也就是信号1, 2, 3, 24
+使用这样的语句可以使这些中断信号被忽略：
+trap "" 1 2 3 24 或 trap "" HUP INT QUIT TSTP
+用 trap ：1 2 3 24 或 trap HUP INT QUIT TSTP使其回复默认值。
+用stty -a可以列出中断信号与键盘的对应，分别执行上面的命令后，运行
+tail -f /etc/passwd, 然后尝试用键盘中断，试试两种情况（默认和忽略）下有何不同。
 
 zj@zj:~/Script/test$ stty -a
 speed 38400 baud; rows 24; columns 80; line = 0;
@@ -43,10 +43,10 @@ isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
 echoctl echoke
 
 
-������������ǿ�������shell����trap���������Լ����źŴ������򣬾�����c����
-signalһ����
+更方便的是我们可以用在shell中用trap定义我们自己的信号处理程序，就象在c中用
+signal一样，
 
-�磺trap ��echo 'GO Away'�� INT
+如：trap “echo 'GO Away'” INT
 
 eg:
 
@@ -68,28 +68,28 @@ trap "bash $0 && kill $$" QUIT
 ##!trap "bash $0 && kill $$"  1
 done
 echo haha
-��
+（
  
 
-����ϵͳ����:
+常用系统变量:
 
-$0           ��ǰshell���������
+$0           当前shell程序的名字
 
-$1 ~ $9   �������ϵĵ�һ���ھŸ�����
+$1 ~ $9   命令行上的第一到第九个参数
 
-$#           �������ϵĲ�������
+$#           命令行上的参数个数
 
-$*           �������ϵ����в���
+$*           命令行上的所有参数
 
-$@         �ֱ���˫���������������ϵ����в���
+$@         分别用双引号引用命令行上的所有参数
 
-$$           ��ǰ���̵Ľ��̱�ʶ��(PID)
+$$           当前进程的进程标识号(PID)
 
-$?           ��һ��������˳�״̬
+$?           上一条命令的退出状态
 
-$!            ���һ����̨���̵Ľ��̱�ʶ��
-ϵͳ����ֻ�����ò����޸�! 
-��
+$!            最后一个后台进程的进程标识号
+系统变量只能引用不能修改! 
+）
 
 
 
@@ -111,73 +111,73 @@ trap.sh
 hello 2
 Quit
 
-����^/�Ϳ���reboot������^_^��֪��linux�����ǲ���trap��ĳ���ź��˾�����...��Ȼ������,����ű�̫east��.��ʱ��ӻ����˿���^_^
+这样^/就可以reboot程序了^_^不知道linux重启是不是trap到某个信号了就这样...当然是类似,这个脚本太east了.有时间加机会了看看^_^
 
-����
+附：
 
-Linux�źż�� ��
-1) SIGHUP ���ź����û��ն�����(�����������)����ʱ����, ͨ�������ն˵Ŀ��ƽ��̽���ʱ, ֪ͨͬһsession�ڵĸ�����ҵ, ��ʱ����������ն˲��ٹ���. ����
-2) SIGINT ������ֹ(interrupt)�ź�, ���û�����INTR�ַ�(ͨ����Ctrl-C)ʱ���� ����
-3) SIGQUIT ��SIGINT����, ����QUIT�ַ�(ͨ����Ctrl-/)������. ���������յ�SIGQUIT�˳�ʱ�����core�ļ�, �����������������һ����������ź�. ����
-4) SIGILL ִ���˷Ƿ�ָ��. ͨ������Ϊ��ִ���ļ��������ִ���, ������ͼִ�����ݶ�. ��ջ���ʱҲ�п��ܲ�������ź�. ����
-5) SIGTRAP �ɶϵ�ָ�������trapָ�����. ��debuggerʹ��. ����
-6) SIGABRT �����Լ����ִ��󲢵���abortʱ����. ����
-7) SIGIOT ��PDP-11����iotָ�����, �����������Ϻ�SIGABRTһ��. ����
-8) SIGBUS �Ƿ���ַ, �����ڴ��ַ����(alignment)����. eg: ����һ���ĸ��ֳ�������, �����ַ����4�ı���. ����
-9) SIGFPE �ڷ��������������������ʱ����. �������������������, ���������������Ϊ0���������е������Ĵ���. ����
-10) SIGKILL ���������������������. ���źŲ��ܱ�����, �����ͺ���. ����
-11) SIGUSR1 �����û�ʹ�� ����
-12) SIGSEGV ��ͼ����δ������Լ����ڴ�, ����ͼ��û��дȨ�޵��ڴ��ַд����. ����
-13) SIGUSR2 �����û�ʹ�� ����
-14) SIGPIPE Broken pipe ����
-15) SIGALRM ʱ�Ӷ�ʱ�ź�, �������ʵ�ʵ�ʱ���ʱ��ʱ��. alarm����ʹ�ø��ź�. ����
-16) SIGTERM �������(terminate)�ź�, ��SIGKILL��ͬ���Ǹ��źſ��Ա������ʹ���. ͨ������Ҫ������Լ������˳�. shell����killȱʡ��������ź�. ����
-17) SIGCHLD �ӽ��̽���ʱ, �����̻��յ�����ź�. ����
-18) SIGCONT ��һ��ֹͣ(stopped)�Ľ��̼���ִ��. ���źŲ��ܱ�����. ������һ��handler���ó�������stopped״̬��Ϊ����ִ��ʱ����ض��Ĺ���. ����, ������ʾ��ʾ�� ����
-19) SIGSTOP ֹͣ(stopped)���̵�ִ��. ע������terminate�Լ�interrupt������: �ý��̻�δ����, ֻ����ִͣ��. ���źŲ��ܱ�����, ���������. ����
-20) SIGTSTP ֹͣ���̵�����, �����źſ��Ա������ͺ���. �û�����SUSP�ַ�ʱ(ͨ����Ctrl-Z)��������ź� ����
-21) SIGTTIN ����̨��ҵҪ���û��ն˶�����ʱ, ����ҵ�е����н��̻��յ�SIGTTIN�ź�. ȱʡʱ��Щ���̻�ִֹͣ��. ����
-22) SIGTTOU ������SIGTTIN, ����д�ն�(���޸��ն�ģʽ)ʱ�յ�. ����
-23) SIGURG �н������ݻ�out-of-band���ݵ���socketʱ����. ����
-24) SIGXCPU ����CPUʱ����Դ����. ������ƿ�����getrlimit/setrlimit����ȡ/�ı� ����
-25) SIGXFSZ �����ļ���С��Դ����. ����
-26) SIGVTALRM ����ʱ���ź�. ������SIGALRM, ���Ǽ�����Ǹý���ռ�õ�CPUʱ��. ����
-27) SIGPROF ������SIGALRM/SIGVTALRM, �������ý����õ�CPUʱ���Լ�ϵͳ���õ�ʱ��. ����
-28) SIGWINCH ���ڴ�С�ı�ʱ����. ����
-29) SIGIO �ļ�������׼������, ���Կ�ʼ��������/�������. ����
+Linux信号简介 　
+1) SIGHUP 本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一session内的各个作业, 这时它们与控制终端不再关联. 　　
+2) SIGINT 程序终止(interrupt)信号, 在用户键入INTR字符(通常是Ctrl-C)时发出 　　
+3) SIGQUIT 和SIGINT类似, 但由QUIT字符(通常是Ctrl-/)来控制. 进程在因收到SIGQUIT退出时会产生core文件, 在这个意义上类似于一个程序错误信号. 　　
+4) SIGILL 执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号. 　　
+5) SIGTRAP 由断点指令或其它trap指令产生. 由debugger使用. 　　
+6) SIGABRT 程序自己发现错误并调用abort时产生. 　　
+7) SIGIOT 在PDP-11上由iot指令产生, 在其它机器上和SIGABRT一样. 　　
+8) SIGBUS 非法地址, 包括内存地址对齐(alignment)出错. eg: 访问一个四个字长的整数, 但其地址不是4的倍数. 　　
+9) SIGFPE 在发生致命的算术运算错误时发出. 不仅包括浮点运算错误, 还包括溢出及除数为0等其它所有的算术的错误. 　　
+10) SIGKILL 用来立即结束程序的运行. 本信号不能被阻塞, 处理和忽略. 　　
+11) SIGUSR1 留给用户使用 　　
+12) SIGSEGV 试图访问未分配给自己的内存, 或试图往没有写权限的内存地址写数据. 　　
+13) SIGUSR2 留给用户使用 　　
+14) SIGPIPE Broken pipe 　　
+15) SIGALRM 时钟定时信号, 计算的是实际的时间或时钟时间. alarm函数使用该信号. 　　
+16) SIGTERM 程序结束(terminate)信号, 与SIGKILL不同的是该信号可以被阻塞和处理. 通常用来要求程序自己正常退出. shell命令kill缺省产生这个信号. 　　
+17) SIGCHLD 子进程结束时, 父进程会收到这个信号. 　　
+18) SIGCONT 让一个停止(stopped)的进程继续执行. 本信号不能被阻塞. 可以用一个handler来让程序在由stopped状态变为继续执行时完成特定的工作. 例如, 重新显示提示符 　　
+19) SIGSTOP 停止(stopped)进程的执行. 注意它和terminate以及interrupt的区别: 该进程还未结束, 只是暂停执行. 本信号不能被阻塞, 处理或忽略. 　　
+20) SIGTSTP 停止进程的运行, 但该信号可以被处理和忽略. 用户键入SUSP字符时(通常是Ctrl-Z)发出这个信号 　　
+21) SIGTTIN 当后台作业要从用户终端读数据时, 该作业中的所有进程会收到SIGTTIN信号. 缺省时这些进程会停止执行. 　　
+22) SIGTTOU 类似于SIGTTIN, 但在写终端(或修改终端模式)时收到. 　　
+23) SIGURG 有紧急数据或out-of-band数据到达socket时产生. 　　
+24) SIGXCPU 超过CPU时间资源限制. 这个限制可以由getrlimit/setrlimit来读取/改变 　　
+25) SIGXFSZ 超过文件大小资源限制. 　　
+26) SIGVTALRM 虚拟时钟信号. 类似于SIGALRM, 但是计算的是该进程占用的CPU时间. 　　
+27) SIGPROF 类似于SIGALRM/SIGVTALRM, 但包括该进程用的CPU时间以及系统调用的时间. 　　
+28) SIGWINCH 窗口大小改变时发出. 　　
+29) SIGIO 文件描述符准备就绪, 可以开始进行输入/输出操作. 　　
 30) SIGPWR Power failure
 
-trap��������ָ���ڽ��յ��źź�Ҫ��ȡ���� �������ǽ��ڱ���������������ϸ�����źš�trap�����һ�ֳ�����;���ڽű������ж�ʱ���������������ʷ�ϣ�shell�����������������źţ��� �µĽű�����Ӧ��ʹ���źŵ����֣����Ǳ�������#include�������������signal.hͷ�ļ��У���ʹ���ź���ʱ��Ҫʡ��SIGǰ׺����������� ����ʾ������������trap -l���鿴�źű�ż�����������ơ�
+trap命令用于指定在接收到信号后将要采取的行 动，我们将在本书后面的内容中详细介绍信号。trap命令的一种常见用途是在脚本程序被中断时完成清理工作。历史上，shell总是用数字来代表信号，而 新的脚本程序应该使用信号的名字，它们保存在用#include命令包含进来的signal.h头文件中，在使用信号名时需要省略SIG前缀。你可以在命 令提示符下输入命令trap -l来查看信号编号及其关联的名称。
 
-������Щ����Ϥ�źŵ�������˵�����źš���ָ��Щ���첽���͵�һ��������¼���Ĭ������£�����ͨ������ֹһ����������С�
+对于那些不熟悉信号的人们来说，“信号”是指那些被异步发送到一个程序的事件。默认情况下，它们通常会终止一个程序的运行。
 
-trap����Ĳ�����Ϊ�����֣�ǰһ�����ǽ��յ�ָ���ź�ʱ��Ҫ��ȡ���ж�����һ������Ҫ�������ź�����
+trap命令的参数分为两部分，前一部分是接收到指定信号时将要采取的行动，后一部分是要处理的信号名。
 
-���ס���ű�����ͨ�����Դ��ϵ��µ�˳�����ִ�еģ����Ա��������뱣�����ǲ��ִ�����ǰָ��trap���
+请记住，脚本程序通常是以从上到下的顺序解释执行的，所以必须在你想保护的那部分代码以前指定trap命令。
 
-���Ҫ����ĳ���źŵĴ�����������Ĭ��ֵ��ֻ��򵥵Ľ�command����Ϊ-�����Ҫ����ĳ���źţ��Ͱ�command����Ϊ���ַ���������һ������������trap����г���ǰ���õ��źż����ж����嵥��
+如果要重置某个信号的处理条件到其默认值，只需简单的将command设置为-。如果要忽略某个信号，就把command设置为空字符串‘’。一个不带参数的trap命令将列出当前设置的信号及其行动的清单。
 
-��2-11�г���X/Open�淶����涨���ܹ�������ıȽ���Ҫ��һЩ�źţ���������������Ǵ�ͳ���źű�ţ�������ϸ����ο�signal�����ֲ�ĵ��߲��֣�man 7 signal����
+表2-11列出了X/Open规范里面规定的能够被捕获的比较重要的一些信号（括号里面的数字是传统的信号编号）。更多细节请参考signal在线手册的第七部分（man 7 signal）。
 
 
-��     ��
-˵     ��
+信     号
+说     明
 
 HUP(1)
-����ͨ�����ն˵��߻��û��˳�������
+挂起，通常因终端掉线或用户退出而引发
 
 INT(2)
-�жϣ�ͨ������Ctrl+C��ϼ�������
+中断，通常因按下Ctrl+C组合键而引发
 
 QUIT(3)
-�˳���ͨ������Ctrl+/��ϼ�������
+退出，通常因按下Ctrl+/组合键而引发
 
 ABRT(6)
-��ֹ��ͨ����ĳЩ���ص�ִ�д��������
+中止，通常因某些严重的执行错误而引发
 
 ALRM(14)
-������ͨ������������ʱ
+报警，通常用来处理超时
 
 TERM(15)
 
-��ֹ��ͨ����ϵͳ�ػ�ʱ����
+终止，通常在系统关机时发送
